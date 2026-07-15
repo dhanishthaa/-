@@ -1200,8 +1200,8 @@ function smartMailto(e, email){
 /* ============== SUPABASE (auth + per-user invoice counter) ============== */
 // SAFE to expose: Supabase anon key + URL are public by design.
 // Real security comes from Row Level Security policies set in the DB (see supabase-schema.sql).
-const SUPABASE_URL = 'https://YOUR-PROJECT-REF.supabase.co';
-const SUPABASE_ANON_KEY = 'YOUR-ANON-PUBLIC-KEY';
+const SUPABASE_URL = 'https://nhdjqitrvyblhmbpgkax.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_0nuGKl-VCaCkscSOkPclHw_yzry6NoY';
 const supabaseClient = (SUPABASE_URL.indexOf('YOUR-PROJECT-REF') === -1)
   ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
   : null;
