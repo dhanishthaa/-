@@ -10,6 +10,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400;1,500;1,600;1,700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link href="https://fonts.cdnfonts.com/css/brittany-signature" rel="stylesheet">
 <link href="https://fonts.cdnfonts.com/css/ciguatera" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 
 <style>
 *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
@@ -685,25 +687,6 @@ footer::before{ content:''; position:absolute; top:0; left:0; right:0; height:1p
   </div>
 </footer>
 
-<div class="modal-overlay" id="authModal">
-  <div class="modal-panel">
-    <button class="modal-close" data-hoverable onclick="closeModal('authModal')">×</button>
-    <div class="auth-tabs">
-      <button class="auth-tab is-active" id="tabSignin" onclick="switchAuthTab('signin')">Sign In</button>
-      <button class="auth-tab" id="tabSignup" onclick="switchAuthTab('signup')">Sign Up</button>
-    </div>
-    <div class="modal-title">Welcome back.</div>
-    <div class="modal-sub" id="authSub">Enter the house of Dhanishtha.</div>
-    <form onsubmit="handleAuth(event)">
-      <div class="field" id="fieldName" style="display:none;"><input type="text" placeholder=" " id="authName"><label>Full Name</label></div>
-      <div class="field"><input type="email" placeholder=" " required id="authEmail"><label>Email Address</label></div>
-      <div class="field"><input type="password" placeholder=" " required id="authPass"><label>Password</label></div>
-      <button type="submit" class="btn btn-gold auth-submit" data-hoverable id="authSubmitBtn">Sign In</button>
-    </form>
-    <div class="auth-alt" id="authAlt">New here? <a onclick="switchAuthTab('signup')">Create an account</a></div>
-  </div>
-</div>
-
 <div class="modal-overlay" id="cartModal">
   <div class="modal-panel cart-panel">
     <button class="modal-close" data-hoverable onclick="closeModal('cartModal')">×</button>
@@ -712,6 +695,43 @@ footer::before{ content:''; position:absolute; top:0; left:0; right:0; height:1p
     <div id="cartItems"></div>
     <div class="cart-subtotal"><span>Subtotal</span><strong id="cartSubtotal">₹0</strong></div>
     <button class="btn btn-gold auth-submit" data-hoverable onclick="goToCheckoutDetails()" id="checkoutBtn">Checkout · ₹0</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="authModal">
+  <div class="modal-panel">
+    <button class="modal-close" data-hoverable onclick="closeModal('authModal')">×</button>
+    <div class="modal-title" id="authModalTitle">Sign In</div>
+    <div class="modal-sub" id="authModalSub">Sign in to place your order and track invoices.</div>
+
+    <form id="authFormSignin" onsubmit="handleSignIn(event)">
+      <div class="field"><input type="email" placeholder=" " required id="authSigninEmail"><label>Email Address</label></div>
+      <div class="field"><input type="password" placeholder=" " required id="authSigninPassword"><label>Password</label></div>
+      <button type="submit" class="btn btn-gold auth-submit" data-hoverable>Sign In</button>
+      <p style="font-size:12.5px; margin-top:14px; text-align:center;">
+        <a href="javascript:void(0)" onclick="showAuthTab('signup')" style="text-decoration:underline;">Create account</a>
+        &nbsp;·&nbsp;
+        <a href="javascript:void(0)" onclick="showAuthTab('forgot')" style="text-decoration:underline;">Forgot password?</a>
+      </p>
+    </form>
+
+    <form id="authFormSignup" style="display:none;" onsubmit="handleSignUp(event)">
+      <div class="field"><input type="text" placeholder=" " required id="authSignupName"><label>First Name</label></div>
+      <div class="field"><input type="email" placeholder=" " required id="authSignupEmail"><label>Email Address</label></div>
+      <div class="field"><input type="password" placeholder=" " required minlength="6" id="authSignupPassword"><label>Password (min 6 chars)</label></div>
+      <button type="submit" class="btn btn-gold auth-submit" data-hoverable>Create Account</button>
+      <p style="font-size:12.5px; margin-top:14px; text-align:center;">
+        <a href="javascript:void(0)" onclick="showAuthTab('signin')" style="text-decoration:underline;">Already have an account? Sign in</a>
+      </p>
+    </form>
+
+    <form id="authFormForgot" style="display:none;" onsubmit="handleForgotPassword(event)">
+      <div class="field"><input type="email" placeholder=" " required id="authForgotEmail"><label>Email Address</label></div>
+      <button type="submit" class="btn btn-gold auth-submit" data-hoverable>Send Reset Link</button>
+      <p style="font-size:12.5px; margin-top:14px; text-align:center;">
+        <a href="javascript:void(0)" onclick="showAuthTab('signin')" style="text-decoration:underline;">Back to sign in</a>
+      </p>
+    </form>
   </div>
 </div>
 
@@ -1161,20 +1181,6 @@ function closeModal(id){ document.getElementById(id).classList.remove('is-open')
 document.querySelectorAll('.modal-overlay').forEach(ov => { ov.addEventListener('click', (e) => { if(e.target === ov) closeModal(ov.id); }); });
 document.addEventListener('keydown', (e) => { if(e.key === 'Escape'){ document.querySelectorAll('.modal-overlay.is-open').forEach(m => closeModal(m.id)); closeMobileMenu(); } });
 
-function switchAuthTab(mode){
-  const isSignup = mode === 'signup';
-  document.getElementById('tabSignin').classList.toggle('is-active', !isSignup);
-  document.getElementById('tabSignup').classList.toggle('is-active', isSignup);
-  document.getElementById('fieldName').style.display = isSignup ? 'block' : 'none';
-  document.querySelector('.modal-title').textContent = isSignup ? 'Create your account.' : 'Welcome back.';
-  document.getElementById('authSub').textContent = isSignup ? 'A few details to enter the house.' : 'Enter the house of Dhanishtha.';
-  document.getElementById('authSubmitBtn').textContent = isSignup ? 'Create Account' : 'Sign In';
-  document.getElementById('authAlt').innerHTML = isSignup
-    ? 'Already a member? <a onclick="switchAuthTab(\'signin\')">Sign in</a>'
-    : 'New here? <a onclick="switchAuthTab(\'signup\')">Create an account</a>';
-}
-function handleAuth(e){ e.preventDefault(); showToast('This is a UI preview — connect a backend to enable real sign-in.'); closeModal('authModal'); }
-
 /* ============== SMART MAILTO ============== */
 function smartMailto(e, email){
   e.preventDefault();
@@ -1191,12 +1197,84 @@ function smartMailto(e, email){
   return false;
 }
 
+/* ============== SUPABASE (auth + per-user invoice counter) ============== */
+// SAFE to expose: Supabase anon key + URL are public by design.
+// Real security comes from Row Level Security policies set in the DB (see supabase-schema.sql).
+const SUPABASE_URL = 'https://YOUR-PROJECT-REF.supabase.co';
+const SUPABASE_ANON_KEY = 'YOUR-ANON-PUBLIC-KEY';
+const supabaseClient = (SUPABASE_URL.indexOf('YOUR-PROJECT-REF') === -1)
+  ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+  : null;
+
+let pendingCheckoutAfterAuth = false;
+
+function showAuthTab(tab){
+  document.getElementById('authFormSignin').style.display = tab === 'signin' ? 'block' : 'none';
+  document.getElementById('authFormSignup').style.display = tab === 'signup' ? 'block' : 'none';
+  document.getElementById('authFormForgot').style.display = tab === 'forgot' ? 'block' : 'none';
+  const titles = { signin:'Sign In', signup:'Create Account', forgot:'Reset Password' };
+  const subs = {
+    signin:'Sign in to place your order and track invoices.',
+    signup:'Just needs your first name, email and a password.',
+    forgot:'We\'ll email you a link to reset your password.'
+  };
+  document.getElementById('authModalTitle').textContent = titles[tab];
+  document.getElementById('authModalSub').textContent = subs[tab];
+}
+
+async function handleSignIn(e){
+  e.preventDefault();
+  if(!supabaseClient){ showToast('Supabase not configured yet.'); return; }
+  const email = document.getElementById('authSigninEmail').value.trim();
+  const password = document.getElementById('authSigninPassword').value;
+  const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+  if(error){ showToast(error.message); return; }
+  closeModal('authModal');
+  showToast('Signed in.');
+  if(pendingCheckoutAfterAuth){ pendingCheckoutAfterAuth = false; openModal('checkoutDetailsModal'); }
+}
+
+async function handleSignUp(e){
+  e.preventDefault();
+  if(!supabaseClient){ showToast('Supabase not configured yet.'); return; }
+  const firstName = document.getElementById('authSignupName').value.trim();
+  const email = document.getElementById('authSignupEmail').value.trim();
+  const password = document.getElementById('authSignupPassword').value;
+  const { error } = await supabaseClient.auth.signUp({
+    email, password,
+    options: { data: { first_name: firstName } }
+  });
+  if(error){ showToast(error.message); return; }
+  showToast('Account created. Check your email to confirm, then sign in.');
+  showAuthTab('signin');
+}
+
+async function handleForgotPassword(e){
+  e.preventDefault();
+  if(!supabaseClient){ showToast('Supabase not configured yet.'); return; }
+  const email = document.getElementById('authForgotEmail').value.trim();
+  const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+    redirectTo: window.location.origin + window.location.pathname
+  });
+  if(error){ showToast(error.message); return; }
+  showToast('Reset link sent. Check your email.');
+  showAuthTab('signin');
+}
+
+async function getInvoiceNumber(){
+  if(!supabaseClient) return null;
+  const { data, error } = await supabaseClient.rpc('next_invoice_number');
+  if(error){ console.error(error); return null; }
+  return data; // integer counter, unique per logged-in user
+}
+
 /* ============== CART ============== */
 const SELLER_UPI_ID = 'param.dave.1111@okhdfcbank';
 const SELLER_UPI_NAME = 'Dhanishtha';
-// TODO: fill these in after creating a Telegram bot via @BotFather
-const TELEGRAM_BOT_TOKEN = 'YOUR_TELEGRAM_BOT_TOKEN';
-const TELEGRAM_CHAT_ID = 'YOUR_TELEGRAM_CHAT_ID';
+// SECURITY: bot token/chat id NEVER go here — this file is public on GitHub Pages.
+// Instead we call a small serverless proxy (Cloudflare Worker) that holds the
+// secret token server-side. Fill in your deployed worker URL below (safe to expose).
+const TELEGRAM_PROXY_URL = 'https://YOUR-WORKER-NAME.YOUR-SUBDOMAIN.workers.dev/send-invoice';
 
 function buildUpiLink(amount, note){
   return 'upi://pay?pa=' + encodeURIComponent(SELLER_UPI_ID)
@@ -1210,13 +1288,95 @@ function buildUpiLink(amount, note){
 function openUpiApp(amount, note){
   window.location.href = buildUpiLink(amount, note);
 }
-// Fire-and-forget invoice send to Telegram so checkout isn't blocked. Requires bot token + chat id above.
-function sendInvoiceToTelegram(caption){
-  if(TELEGRAM_BOT_TOKEN === 'YOUR_TELEGRAM_BOT_TOKEN') return; // not configured yet
-  fetch('https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage', {
+
+// Builds a black & white minimalist invoice PDF (base64) matching the house reference design.
+// order = { invoiceId, dateStr, billTo:{fullName,address,city,state,pincode,phone,email}, items:[{name,qty,unitPrice}], subtotal }
+function buildInvoicePdfBase64(order){
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit:'pt', format:'a4' }); // 595 x 842 pt
+  const pageW = 595, marginX = 40;
+  let y = 60;
+
+  // Brand + date
+  doc.setFont('helvetica','bold'); doc.setFontSize(30);
+  doc.text('DHANISHTHA', marginX, y);
+  doc.setFont('helvetica','italic'); doc.setFontSize(11);
+  doc.text(order.dateStr, pageW - marginX, y - 4, { align:'right' });
+  y += 45;
+
+  // Seller / Bill To columns
+  const colW = (pageW - marginX*2) / 2;
+  doc.setFont('helvetica','bold'); doc.setFontSize(12);
+  doc.text('Seller Name', marginX, y);
+  doc.text('Bill To', marginX + colW, y);
+  y += 18;
+  doc.setFont('helvetica','normal'); doc.setFontSize(10.5);
+  const sellerLines = ['DHANISHTHA','Gujarat, India','+91 78598 98490','dhanishthh@gmail.com'];
+  const buyerLines = [
+    order.billTo.fullName,
+    order.billTo.address + ', ' + order.billTo.city,
+    order.billTo.state + ' - ' + order.billTo.pincode,
+    order.billTo.phone,
+    order.billTo.email
+  ];
+  let sy = y, by = y;
+  sellerLines.forEach(function(l){ doc.text(l, marginX, sy); sy += 15; });
+  buyerLines.forEach(function(l){ doc.text(l, marginX + colW, by); by += 15; });
+  y = Math.max(sy, by) + 10;
+
+  doc.setDrawColor(20,24,31); doc.setLineWidth(0.5);
+  doc.line(marginX, y, pageW - marginX, y);
+  y += 25;
+
+  // Invoice Id / Date row
+  doc.setFont('helvetica','normal'); doc.setFontSize(11);
+  doc.text('Invoice Id-  ' + order.invoiceId, marginX, y); y += 18;
+  doc.text('Date          ' + order.dateStr, marginX, y); y += 25;
+
+  // Table header
+  doc.setFont('helvetica','bold'); doc.setFontSize(10.5);
+  const cQty = marginX + 260, cPrice = marginX + 340, cAmt = marginX + 440;
+  doc.text('DESCRIPTION', marginX, y);
+  doc.text('QTY', cQty, y);
+  doc.text('UNIT PRICE', cPrice, y);
+  doc.text('AMOUNT', cAmt, y);
+  y += 8;
+  doc.setLineWidth(1.2);
+  doc.line(marginX, y, pageW - marginX, y);
+  y += 20;
+
+  doc.setFont('helvetica','normal'); doc.setFontSize(10.5);
+  order.items.forEach(function(item){
+    const amount = item.qty * item.unitPrice;
+    doc.text(item.name, marginX, y);
+    doc.text(String(item.qty), cQty, y);
+    doc.text(formatInr(item.unitPrice), cPrice, y);
+    doc.text(formatInr(amount), cAmt, y);
+    y += 16;
+    doc.setLineWidth(0.3); doc.setDrawColor(180,180,180);
+    doc.line(marginX, y - 6, pageW - marginX, y - 6);
+    y += 10;
+  });
+
+  y += 15;
+  doc.setDrawColor(20,24,31); doc.setLineWidth(1.2);
+  doc.line(marginX, y, pageW - marginX, y);
+  y += 22;
+  doc.setFont('helvetica','bold'); doc.setFontSize(12);
+  doc.text('SUBTOTAL', cPrice, y);
+  doc.text(formatInr(order.subtotal), cAmt, y);
+
+  return doc.output('datauristring').split(',')[1]; // base64 only
+}
+
+// Fire-and-forget invoice send: builds a designed PDF + a plain caption, posts both to our proxy.
+function sendInvoiceToTelegram(order, captionText){
+  if(TELEGRAM_PROXY_URL.indexOf('YOUR-WORKER-NAME') !== -1) return; // proxy not configured yet
+  const pdfBase64 = buildInvoicePdfBase64(order);
+  fetch(TELEGRAM_PROXY_URL, {
     method:'POST',
     headers:{ 'Content-Type':'application/json' },
-    body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: caption, parse_mode:'HTML' })
+    body: JSON.stringify({ caption: captionText, pdfBase64: pdfBase64, filename: order.invoiceId + '.pdf' })
   }).catch(function(){ /* silent — do not block checkout UX */ });
 }
 function getCatalogItem(id){
@@ -1277,13 +1437,24 @@ function cartSubtotalValue(){
   }, 0);
 }
 
-function goToCheckoutDetails(){
+async function goToCheckoutDetails(){
   if(!CART.length){ showToast('Your bag is empty.'); return; }
   closeModal('cartModal');
+  if(supabaseClient){
+    const { data:{ session } } = await supabaseClient.auth.getSession();
+    if(!session){
+      pendingCheckoutAfterAuth = true;
+      showAuthTab('signin');
+      openModal('authModal');
+      return;
+    }
+  }
   openModal('checkoutDetailsModal');
 }
 
-function handleCheckoutDetails(e){
+let lastInvoiceId = null;
+
+async function handleCheckoutDetails(e){
   e.preventDefault();
   shippingDetails = {
     fullName: document.getElementById('ckFullName').value.trim(),
@@ -1298,19 +1469,32 @@ function handleCheckoutDetails(e){
   };
   closeModal('checkoutDetailsModal');
 
-  // 1) background invoice send to Telegram — does not block the UI
+  // Invoice ID: DH-<first 2 letters of name>-0001, per-user running counter (Supabase)
+  const namePrefix = (shippingDetails.fullName.replace(/[^a-zA-Z]/g,'').slice(0,2) || 'XX').toUpperCase();
+  const counter = await getInvoiceNumber();
+  lastInvoiceId = counter ? ('DH-' + namePrefix + '-' + String(counter).padStart(4,'0')) : ('DH-' + namePrefix + '-0000');
+
+  // 1) background invoice PDF send to Telegram — does not block the UI
   const subtotalNow = cartSubtotalValue();
-  const invoiceLines = CART.map(function(entry){
+  const invoiceItems = CART.map(function(entry){
     const item = getCatalogItem(entry.id);
-    return item ? ('• ' + item.name + ' × ' + entry.qty + ' — ' + formatInr(priceToNumber(item.price) * entry.qty)) : '';
-  }).join('\n');
+    return item ? { name: item.name, qty: entry.qty, unitPrice: priceToNumber(item.price) } : null;
+  }).filter(Boolean);
+  const dateStr = new Date().toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
   sendInvoiceToTelegram(
-    '<b>New Order — Dhanishtha</b>\n' +
+    {
+      invoiceId: lastInvoiceId,
+      dateStr: dateStr,
+      billTo: shippingDetails,
+      items: invoiceItems,
+      subtotal: subtotalNow
+    },
+    'New Order — Dhanishtha\n' +
+    'Invoice ID: ' + lastInvoiceId + '\n' +
     'Name: ' + shippingDetails.fullName + '\n' +
     'Email: ' + shippingDetails.email + '\n' +
     'Phone: ' + shippingDetails.phone + '\n' +
     'Address: ' + shippingDetails.address + ', ' + shippingDetails.city + ', ' + shippingDetails.state + ' - ' + shippingDetails.pincode + '\n\n' +
-    invoiceLines + '\n\n' +
     'Total: ' + formatInr(subtotalNow)
   );
 
@@ -1391,7 +1575,16 @@ function handleDonate(){
   if(['Paytm','Google Pay','Navi','UPI ID'].indexOf(selectedDonatePayMethod) !== -1){
     openUpiApp(val, 'Donation to Dhanishtha');
   }
-  sendInvoiceToTelegram('<b>New Donation — Dhanishtha</b>\nAmount: ' + formatInr(val) + '\nMethod: ' + selectedDonatePayMethod);
+  sendInvoiceToTelegram(
+    {
+      invoiceId: 'DH-DN-' + Date.now().toString().slice(-4),
+      dateStr: new Date().toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' }),
+      billTo: { fullName:'Donor', address:'-', city:'-', state:'-', pincode:'-', phone:'-', email:'-' },
+      items: [{ name:'Donation', qty:1, unitPrice: val }],
+      subtotal: val
+    },
+    'New Donation — Dhanishtha\nAmount: ' + formatInr(val) + '\nMethod: ' + selectedDonatePayMethod
+  );
   closeModal('donateModal');
   selectedDonatePayMethod = null;
   document.getElementById('donateAmount').value = '';
