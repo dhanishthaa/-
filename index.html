@@ -1379,6 +1379,24 @@ function sendInvoiceToTelegram(order, captionText){
     body: JSON.stringify({ caption: captionText, pdfBase64: pdfBase64, filename: order.invoiceId + '.pdf' })
   }).catch(function(){ /* silent — do not block checkout UX */ });
 }
+// Fire-and-forget invoice EMAIL to the customer via our proxy (Brevo API key stays server-side).
+function sendInvoiceEmail(order){
+  if(TELEGRAM_PROXY_URL.indexOf('YOUR-WORKER-NAME') !== -1) return; // proxy not configured yet
+  if(!order.billTo || !order.billTo.email) return;
+  const pdfBase64 = buildInvoicePdfBase64(order);
+  const emailUrl = TELEGRAM_PROXY_URL.replace('/send-invoice', '/send-invoice-email');
+  fetch(emailUrl, {
+    method:'POST',
+    headers:{ 'Content-Type':'application/json' },
+    body: JSON.stringify({
+      toEmail: order.billTo.email,
+      toName: order.billTo.fullName,
+      subject: 'Your Dhanishtha Invoice — ' + order.invoiceId,
+      pdfBase64: pdfBase64,
+      filename: order.invoiceId + '.pdf'
+    })
+  }).catch(function(){ /* silent — do not block checkout UX */ });
+}
 function getCatalogItem(id){
   return PRODUCTS.find(function(x){ return x.id === id; }) || TESTER_KITS.find(function(x){ return x.id === id; });
 }
@@ -1481,14 +1499,15 @@ async function handleCheckoutDetails(e){
     return item ? { name: item.name, qty: entry.qty, unitPrice: priceToNumber(item.price) } : null;
   }).filter(Boolean);
   const dateStr = new Date().toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
+  const order = {
+    invoiceId: lastInvoiceId,
+    dateStr: dateStr,
+    billTo: shippingDetails,
+    items: invoiceItems,
+    subtotal: subtotalNow
+  };
   sendInvoiceToTelegram(
-    {
-      invoiceId: lastInvoiceId,
-      dateStr: dateStr,
-      billTo: shippingDetails,
-      items: invoiceItems,
-      subtotal: subtotalNow
-    },
+    order,
     'New Order — Dhanishtha\n' +
     'Invoice ID: ' + lastInvoiceId + '\n' +
     'Name: ' + shippingDetails.fullName + '\n' +
@@ -1497,6 +1516,7 @@ async function handleCheckoutDetails(e){
     'Address: ' + shippingDetails.address + ', ' + shippingDetails.city + ', ' + shippingDetails.state + ' - ' + shippingDetails.pincode + '\n\n' +
     'Total: ' + formatInr(subtotalNow)
   );
+  sendInvoiceEmail(order);
 
   // 2) forward to payment
   selectedPayMethod = null;
