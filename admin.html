@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dhanishtha — Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<style>
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+:root{
+  --ivory:#F6F1E7; --ink:#14181F; --ink-dim:#5B5A52;
+  --navy:#161310; --navy-2:#211D17; --gold:#C7A252; --gold-bright:#E7CD8B;
+  --wine:#7A1F31; --line:rgba(246,241,231,.10); --line-strong:rgba(246,241,231,.20);
+  --ok:#7fbd8f; --warn:#e0ac4f; --danger:#e08a97;
+  --font-display:'Playfair Display', serif; --font-mono:'Montserrat', sans-serif;
+  --glass-bg: rgba(33,29,23,.55); --glass-border: rgba(246,241,231,.12);
+}
+body{
+  background: var(--navy);
+  background-image:
+    radial-gradient(ellipse 60% 50% at 15% 0%, rgba(199,162,82,.10), transparent 60%),
+    radial-gradient(ellipse 50% 40% at 100% 100%, rgba(122,31,49,.10), transparent 60%);
+  background-attachment: fixed;
+  color:var(--ivory); font-family:var(--font-mono); font-size:14px;
+}
+a{ color:inherit; }
+button,input,select,textarea{ font-family:inherit; font-size:inherit; color:inherit; }
+input,select,textarea{
+  background:rgba(20,24,31,.4); border:1px solid var(--line-strong); padding:11px 13px;
+  border-radius:6px; width:100%; backdrop-filter:blur(6px);
+}
+input:focus,select:focus,textarea:focus{ outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(199,162,82,.15); }
+button{ cursor:pointer; background:none; border:none; }
+table{ width:100%; border-collapse:collapse; font-size:13px; }
+th,td{ text-align:left; padding:12px 14px; border-bottom:1px solid var(--line); }
+th{ color:var(--gold-bright); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; font-weight:600; }
+tr:hover td{ background:rgba(246,241,231,.02); }
+
+/* ---------- glass utility ---------- */
+.glass{
+  background: var(--glass-bg);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px -12px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.04);
+}
+
+/* ---------- LOGIN SCREEN ---------- */
+#loginScreen{ min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px; }
+.login-box{ border-radius:14px; padding:44px 40px; width:100%; max-width:380px; position:relative; }
+.login-box::before{ content:''; position:absolute; top:0; left:0; right:0; height:2px; border-radius:14px 14px 0 0; background:linear-gradient(90deg,var(--gold-bright),var(--gold)); }
+.login-box h1{ font-family:var(--font-display); font-style:italic; font-weight:500; font-size:26px; margin-bottom:6px; letter-spacing:.01em; }
+.login-box p{ color:var(--ink-dim); font-size:12.5px; margin-bottom:28px; font-family:var(--font-mono); }
+.field{ margin-bottom:18px; }
+.field label{ display:block; font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-dim); margin-bottom:7px; font-family:var(--font-mono); font-weight:500; }
+.btn{ padding:12px 22px; border-radius:6px; font-size:12.5px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; display:inline-flex; align-items:center; gap:8px; transition:.25s; font-family:var(--font-mono); }
+.btn-gold{ background:linear-gradient(135deg,var(--gold-bright),var(--gold)); color:var(--ink); }
+.btn-gold:hover{ filter:brightness(1.08); transform:translateY(-1px); }
+.btn-ghost{ border:1px solid var(--line-strong); color:var(--ivory); background:rgba(255,255,255,.03); backdrop-filter:blur(8px); }
+.btn-ghost:hover{ border-color:var(--gold); color:var(--gold-bright); }
+.btn-danger{ background:var(--wine); color:#fff; }
+.btn-block{ width:100%; justify-content:center; }
+.error-msg{ color:var(--danger); font-size:12.5px; margin-top:10px; display:none; }
+#deniedScreen{ min-height:100vh; display:flex; align-items:center; justify-content:center; text-align:center; padding:20px; }
+#deniedScreen h1{ font-family:var(--font-display); font-style:italic; font-weight:500; }
+
+/* ---------- APP SHELL ---------- */
+#app{ display:none; min-height:100vh; }
+.sidebar{ width:240px; flex-shrink:0; padding:26px 0; position:fixed; top:0; bottom:0; overflow-y:auto; border-radius:0 18px 18px 0; }
+.sidebar-brand{ font-family:var(--font-display); font-style:italic; font-weight:500; font-size:21px; letter-spacing:.02em; padding:0 24px 22px; border-bottom:1px solid var(--line); margin-bottom:16px; }
+.sidebar-brand span{ color:var(--gold-bright); }
+.nav-item{ display:flex; align-items:center; gap:12px; padding:12px 24px; font-size:12.5px; letter-spacing:.02em; color:var(--ink-dim); cursor:pointer; border-left:2px solid transparent; transition:.15s; }
+.nav-item:hover{ color:var(--ivory); background:rgba(246,241,231,.03); }
+.nav-item.is-active{ color:var(--gold-bright); border-left-color:var(--gold); background:rgba(199,162,82,.08); }
+.main{ margin-left:264px; flex:1; padding:30px 36px 60px; width:calc(100% - 264px); }
+.topbar{ display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; }
+.topbar h2{ font-family:var(--font-display); font-style:italic; font-weight:500; font-size:26px; letter-spacing:.01em; }
+.topbar-right{ display:flex; align-items:center; gap:16px; font-size:12px; color:var(--ink-dim); }
+
+.stat-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px; margin-bottom:32px; }
+.stat-card{ border-radius:12px; padding:22px; }
+.stat-card .label{ font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-dim); margin-bottom:10px; }
+.stat-card .value{ font-family:var(--font-display); font-style:italic; font-size:28px; font-weight:600; color:var(--gold-bright); }
+
+.panel{ border-radius:12px; padding:24px; margin-bottom:24px; }
+.panel-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:10px; }
+.panel-head h3{ font-family:var(--font-display); font-style:italic; font-weight:500; font-size:18px; }
+.pill{ display:inline-block; padding:4px 11px; border-radius:20px; font-size:10.5px; font-weight:600; text-transform:capitalize; letter-spacing:.02em; }
+.pill-pending{ background:rgba(224,172,79,.15); color:var(--warn); }
+.pill-paid,.pill-approved,.pill-delivered,.pill-resolved,.pill-admin{ background:rgba(127,189,143,.15); color:var(--ok); }
+.pill-shipped,.pill-in_progress,.pill-staff{ background:rgba(127,163,221,.15); color:#9dc0f0; }
+.pill-cancelled,.pill-rejected{ background:rgba(224,138,151,.15); color:var(--danger); }
+.pill-customer{ background:rgba(246,241,231,.08); color:var(--ink-dim); }
+.icon-btn{ padding:7px 12px; font-size:11.5px; letter-spacing:.02em; border:1px solid var(--line-strong); border-radius:6px; color:var(--ink-dim); background:rgba(255,255,255,.02); }
+.icon-btn:hover{ color:var(--gold-bright); border-color:var(--gold); }
+.empty-state{ text-align:center; padding:40px 20px; color:var(--ink-dim); font-size:13px; }
+.search-input{ max-width:280px; }
+.modal-overlay{ position:fixed; inset:0; background:rgba(10,8,6,.55); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; z-index:999; padding:20px; opacity:0; pointer-events:none; transition:.3s; }
+.modal-overlay.is-open{ opacity:1; pointer-events:auto; }
+.modal-box{ border-radius:14px; padding:30px; width:100%; max-width:460px; max-height:88vh; overflow-y:auto; position:relative; }
+.modal-box::before{ content:''; position:absolute; top:0; left:0; right:0; height:2px; border-radius:14px 14px 0 0; background:linear-gradient(90deg,var(--gold-bright),var(--gold)); }
+.modal-box h3{ font-family:var(--font-display); font-style:italic; font-weight:500; margin-bottom:20px; font-size:19px; }
+.form-row{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.toast{ position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(20px); background:linear-gradient(135deg,var(--gold-bright),var(--gold)); color:var(--ink); font-weight:600; font-size:12.5px; letter-spacing:.02em; padding:13px 24px; border-radius:8px; z-index:2000; opacity:0; transition:.3s; pointer-events:none; box-shadow:0 12px 30px -10px rgba(0,0,0,.5); }
+.toast.is-visible{ opacity:1; transform:translateX(-50%) translateY(0); }
+code{ background:rgba(255,255,255,.06); padding:2px 6px; border-radius:4px; font-family:var(--font-mono); font-size:12px; }
+@media (max-width:860px){
+  .sidebar{ width:74px; border-radius:0; }
+  .sidebar-brand{ display:none; }
+  .nav-item span.label{ display:none; }
+  .nav-item{ justify-content:center; padding:14px 0; }
+  .main{ margin-left:74px; width:calc(100% - 74px); padding:20px; }
+  .form-row{ grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+<body>
+
+<!-- ================= LOGIN ================= -->
+<div id="loginScreen">
+  <div class="login-box glass">
+    <h1>Dhanishtha <span style="color:var(--gold-bright)">Admin</span></h1>
+    <p>Sign in with your admin account.</p>
+    <form id="loginForm">
+      <div class="field"><label>Email</label><input type="email" id="loginEmail" required></div>
+      <div class="field"><label>Password</label><input type="password" id="loginPassword" required></div>
+      <button type="submit" class="btn btn-gold btn-block">Sign In</button>
+      <p class="error-msg" id="loginError"></p>
+    </form>
+  </div>
+</div>
+
+<!-- ================= ACCESS DENIED ================= -->
+<div id="deniedScreen" style="display:none;">
+  <div>
+    <h1 style="margin-bottom:12px;">Access denied</h1>
+    <p style="color:var(--ink-dim); margin-bottom:20px;">This account doesn't have admin access.</p>
+    <button class="btn btn-ghost" onclick="signOut()">Sign out</button>
+  </div>
+</div>
+
+<!-- ================= APP ================= -->
+<div id="app">
+  <aside class="sidebar glass">
+    <div class="sidebar-brand">DHANISHTHA <span>Admin</span></div>
+    <nav id="sideNav"></nav>
+  </aside>
+  <main class="main">
+    <div class="topbar">
+      <h2 id="pageTitle">Dashboard Overview</h2>
+      <div class="topbar-right">
+        <span id="adminEmailLabel"></span>
+        <button class="icon-btn" onclick="signOut()">Sign Out</button>
+      </div>
+    </div>
+    <div id="pageContent"></div>
+  </main>
+</div>
+
+<div class="modal-overlay" id="genericModal">
+  <div class="modal-box glass" id="genericModalBox"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============ CONFIG — must match temporary.html ============ */
+const SUPABASE_URL = 'https://nhdjqitrvyblhmbpgkax.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_0nuGKl-VCaCkscSOkPclHw_yzry6NoY';
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let currentUser = null;
+let currentRole = null;
+
+function formatInr(n){ return '₹' + Number(n||0).toLocaleString('en-IN'); }
+function fmtDate(d){ return new Date(d).toLocaleString('en-IN', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' }); }
+let toastTimer;
+function showToast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('is-visible'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('is-visible'),3000); }
+
+/* ============ AUTH ============ */
+document.getElementById('loginForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  const errEl = document.getElementById('loginError');
+  errEl.style.display = 'none';
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  if(error){ errEl.textContent = error.message; errEl.style.display = 'block'; return; }
+  await checkAccessAndLoad();
+});
+
+async function checkAccessAndLoad(){
+  const { data:{ user } } = await supabase.auth.getUser();
+  if(!user){ return; }
+  currentUser = user;
+  const { data: profile, error } = await supabase.from('profiles').select('role, full_name').eq('user_id', user.id).single();
+  if(error || !profile || (profile.role !== 'admin' && profile.role !== 'staff')){
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('deniedScreen').style.display = 'flex';
+    return;
+  }
+  currentRole = profile.role;
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('deniedScreen').style.display = 'none';
+  document.getElementById('app').style.display = 'flex';
+  document.getElementById('adminEmailLabel').textContent = user.email + ' · ' + profile.role;
+  buildNav();
+  navigateTo('overview');
+}
+
+async function signOut(){
+  await supabase.auth.signOut();
+  location.reload();
+}
+
+(async function initAuth(){
+  const { data:{ session } } = await supabase.auth.getSession();
+  if(session) await checkAccessAndLoad();
+})();
+
+/* ============ NAV ============ */
+const NAV_ITEMS = [
+  { id:'overview', label:'Dashboard Overview', icon:'📊' },
+  { id:'products', label:'Product Management', icon:'🧴' },
+  { id:'orders', label:'Order Management', icon:'📦' },
+  { id:'users', label:'User Management', icon:'👤' },
+  { id:'inventory', label:'Inventory', icon:'📋' },
+  { id:'coupons', label:'Coupons', icon:'🏷️' },
+  { id:'reviews', label:'Reviews', icon:'⭐' },
+  { id:'reports', label:'Reports', icon:'📄' },
+  { id:'analytics', label:'Analytics', icon:'📈' },
+  { id:'newsletter', label:'Newsletter', icon:'✉️' },
+  { id:'support', label:'Support', icon:'💬' },
+  { id:'settings', label:'Settings', icon:'⚙️' },
+  { id:'roles', label:'Role Management', icon:'🔐', adminOnly:true }
+];
+function buildNav(){
+  const nav = document.getElementById('sideNav');
+  nav.innerHTML = NAV_ITEMS
+    .filter(function(i){ return !i.adminOnly || currentRole === 'admin'; })
+    .map(function(i){
+      return '<div class="nav-item" data-id="'+i.id+'" onclick="navigateTo(\''+i.id+'\')"><span>'+i.icon+'</span><span class="label">'+i.label+'</span></div>';
+    }).join('');
+}
+const PAGE_TITLES = {}; NAV_ITEMS.forEach(function(i){ PAGE_TITLES[i.id] = i.label; });
+
+function navigateTo(id){
+  document.querySelectorAll('.nav-item').forEach(function(el){ el.classList.toggle('is-active', el.dataset.id === id); });
+  document.getElementById('pageTitle').textContent = PAGE_TITLES[id] || '';
+  const renderers = {
+    overview: renderOverview, products: renderProducts, orders: renderOrders,
+    users: renderUsers, inventory: renderInventory, coupons: renderCoupons,
+    reviews: renderReviews, reports: renderReports, analytics: renderAnalytics,
+    newsletter: renderNewsletter, support: renderSupport, settings: renderSettings,
+    roles: renderRoles
+  };
+  const fn = renderers[id];
+  document.getElementById('pageContent').innerHTML = '<p class="empty-state">Loading…</p>';
+  if(fn) fn();
+}
+
+function closeModal(){ document.getElementById('genericModal').classList.remove('is-open'); }
+function openModal(html){ document.getElementById('genericModalBox').innerHTML = html; document.getElementById('genericModal').classList.add('is-open'); }
+document.getElementById('genericModal').addEventListener('click', function(e){ if(e.target === this) closeModal(); });
+
+/* ============ 1. DASHBOARD OVERVIEW ============ */
+async function renderOverview(){
+  const [{ data: orders }, { data: products }, { data: users }, { data: reviews }] = await Promise.all([
+    supabase.from('orders').select('*').order('created_at', { ascending:false }),
+    supabase.from('products').select('id'),
+    supabase.from('profiles').select('user_id'),
+    supabase.from('reviews').select('id').eq('status','pending')
+  ]);
+  const revenue = (orders||[]).filter(function(o){ return o.status !== 'cancelled'; }).reduce(function(s,o){ return s + o.subtotal; }, 0);
+  const recent = (orders||[]).slice(0,6);
+  document.getElementById('pageContent').innerHTML =
+    '<div class="stat-grid">'
+    + statCard('Total Revenue', formatInr(revenue))
+    + statCard('Total Orders', (orders||[]).length)
+    + statCard('Products', (products||[]).length)
+    + statCard('Registered Users', (users||[]).length)
+    + statCard('Pending Reviews', (reviews||[]).length)
+    + '</div>'
+    + '<div class="panel glass"><div class="panel-head"><h3>Recent Orders</h3></div>'
+    + (recent.length ? '<table><thead><tr><th>Invoice</th><th>Customer</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead><tbody>'
+      + recent.map(function(o){
+          return '<tr><td>'+o.invoice_id+'</td><td>'+(o.full_name||'-')+'</td><td>'+formatInr(o.subtotal)+'</td>'
+            + '<td><span class="pill pill-'+o.status+'">'+o.status+'</span></td><td>'+fmtDate(o.created_at)+'</td></tr>';
+        }).join('') + '</tbody></table>'
+      : '<p class="empty-state">No orders yet.</p>')
+    + '</div>';
+}
+function statCard(label, value){
+  return '<div class="stat-card glass"><div class="label">'+label+'</div><div class="value">'+value+'</div></div>';
+}
+
+/* ============ 2. PRODUCT MANAGEMENT ============ */
+async function renderProducts(){
+  const { data: products, error } = await supabase.from('products').select('*').order('created_at', { ascending:false });
+  let rows = '';
+  if(error){ rows = '<tr><td colspan="6">Error loading products: '+error.message+'</td></tr>'; }
+  else if(!products || !products.length){ rows = '<tr><td colspan="6" style="text-align:center; color:var(--ink-dim);">No products yet. Add your first one.</td></tr>'; }
+  else {
+    rows = products.map(function(p){
+      return '<tr><td>'+p.name+'</td><td>'+p.category+'</td><td>'+formatInr(p.price)+'</td><td>'+p.stock+'</td>'
+        + '<td><span class="pill '+(p.active?'pill-approved':'pill-cancelled')+'">'+(p.active?'active':'hidden')+'</span></td>'
+        + '<td><button class="icon-btn" onclick="editProduct(\''+p.id+'\')">Edit</button> '
+        + '<button class="icon-btn" onclick="deleteProduct(\''+p.id+'\')">Delete</button></td></tr>';
+    }).join('');
+  }
+  document.getElementById('pageContent').innerHTML =
+    '<div class="panel glass"><div class="panel-head"><h3>All Products</h3><button class="btn btn-gold" onclick="editProduct(null)">+ Add Product</button></div>'
+    + '<table><thead><tr><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Status</th><th>Actions</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+}
+async function editProduct(id){
+  let p = { id:'', name:'', code:'', notes:'', price:0, description:'', image_url:'', category:'fragrance', stock:0, active:true };
+  if(id){
+    const { data } = await supabase.from('products').select('*').eq('id', id).single();
+    if(data) p = data;
+  }
+  openModal(
+    '<h3>'+(id?'Edit':'Add')+' Product</h3>'
+    + '<form id="productForm">'
+    + '<div class="field"><label>ID (slug, e.g. velour-noir)</label><input id="pf_id" value="'+p.id+'" '+(id?'readonly':'')+' required></div>'
+    + '<div class="field"><label>Name</label><input id="pf_name" value="'+esc(p.name)+'" required></div>'
+    + '<div class="form-row"><div class="field"><label>Category</label><input id="pf_category" value="'+esc(p.category||'')+'"></div>'
+    + '<div class="field"><label>Price (₹)</label><input type="number" id="pf_price" value="'+p.price+'" required></div></div>'
+    + '<div class="field"><label>Notes (e.g. oud · amber · musk)</label><input id="pf_notes" value="'+esc(p.notes||'')+'"></div>'
+    + '<div class="field"><label>Description</label><textarea id="pf_description" rows="3">'+esc(p.description||'')+'</textarea></div>'
+    + '<div class="field"><label>Image URL</label><input id="pf_image" value="'+esc(p.image_url||'')+'"></div>'
+    + '<div class="form-row"><div class="field"><label>Stock</label><input type="number" id="pf_stock" value="'+p.stock+'"></div>'
+    + '<div class="field"><label>Status</label><select id="pf_active"><option value="true" '+(p.active?'selected':'')+'>Active</option><option value="false" '+(!p.active?'selected':'')+'>Hidden</option></select></div></div>'
+    + '<div style="display:flex; gap:10px; margin-top:8px;"><button type="submit" class="btn btn-gold">Save</button><button type="button" class="btn btn-ghost" onclick="closeModal()">Cancel</button></div>'
+    + '</form>'
+  );
+  document.getElementById('productForm').addEventListener('submit', async function(e){
+    e.preventDefault();
+    const payload = {
+      id: document.getElementById('pf_id').value.trim(),
+      name: document.getElementById('pf_name').value.trim(),
+      category: document.getElementById('pf_category').value.trim(),
+      price: Number(document.getElementById('pf_price').value),
+      notes: document.getElementById('pf_notes').value.trim(),
+      description: document.getElementById('pf_description').value.trim(),
+      image_url: document.getElementById('pf_image').value.trim(),
+      stock: Number(document.getElementById('pf_stock').value),
+      active: document.getElementById('pf_active').value === 'true',
+      updated_at: new Date().toISOString()
+    };
+    const { error } = await supabase.from('products').upsert(payload);
+    if(error){ showToast('Error: ' + error.message); return; }
+    closeModal(); showToast('Product saved.'); renderProducts();
+  });
+}
+async function deleteProduct(id){
+  if(!confirm('Delete this product permanently?')) return;
+  const { error } = await supabase.from('products').delete().eq('id', id);
+  if(error){ showToast('Error: ' + error.message); return; }
+  showToast('Product deleted.'); renderProducts();
+}
+
+/* ============ 3. ORDER MANAGEMENT ============ */
+async function renderOrders(){
+  const { data: orders, error } = await supabase.from('orders').select('*').order('created_at', { ascending:false });
+  let rows = '';
+  if(error){ rows = '<tr><td colspan="7">Error: '+error.message+'</td></tr>'; }
+  else if(!orders || !orders.length){ rows = '<tr><td colspan="7" style="text-align:center; color:var(--ink-dim);">No orders yet.</td></tr>'; }
+  else {
+    rows = orders.map(function(o){
+      return '<tr><td>'+o.invoice_id+'</td><td>'+(o.full_name||'-')+'<br><span style="color:var(--ink-dim); font-size:11.5px;">'+(o.email||'')+'</span></td>'
+        + '<td>'+formatInr(o.subtotal)+'</td><td>'+(o.payment_method||'-')+'</td>'
+        + '<td><span class="pill pill-'+o.status+'">'+o.status+'</span></td>'
+        + '<td>'+fmtDate(o.created_at)+'</td>'
+        + '<td><button class="icon-btn" onclick="viewOrder(\''+o.id+'\')">Manage</button></td></tr>';
+    }).join('');
+  }
+  document.getElementById('pageContent').innerHTML =
+    '<div class="panel glass"><div class="panel-head"><h3>All Orders</h3></div>'
+    + '<table><thead><tr><th>Invoice</th><th>Customer</th><th>Amount</th><th>Method</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+}
+async function viewOrder(id){
+  const { data: o } = await supabase.from('orders').select('*').eq('id', id).single();
+  if(!o) return;
+  const items = Array.isArray(o.items) ? o.items : [];
+  openModal(
+    '<h3>Order '+o.invoice_id+'</h3>'
+    + '<p style="color:var(--ink-dim); font-size:12.5px; margin-bottom:14px;">'+o.full_name+' · '+o.email+' · '+o.phone+'</p>'
+    + '<p style="font-size:12.5px; margin-bottom:14px;">'+o.address+', '+o.city+', '+o.state+' - '+o.pincode+'</p>'
+    + '<table style="margin-bottom:16px;"><thead><tr><th>Item</th><th>Qty</th><th>Amount</th></tr></thead><tbody>'
+    + items.map(function(it){ return '<tr><td>'+it.name+'</td><td>'+it.qty+'</td><td>'+formatInr(it.qty*it.unitPrice)+'</td></tr>'; }).join('')
+    + '</tbody></table>'
+    + '<p style="margin-bottom:16px; font-weight:700;">Total: '+formatInr(o.subtotal)+'</p>'
+    + '<div class="field"><label>Status</label><select id="orderStatus">'
+    + ['pending','paid','shipped','delivered','cancelled'].map(function(s){ return '<option value="'+s+'" '+(o.status===s?'selected':'')+'>'+s+'</option>'; }).join('')
+    + '</select></div>'
+    + '<div class="field"><label>AWB / Tracking Number</label><input id="orderAwb" value="'+esc(o.awb_number||'')+'"></div>'
+    + '<div style="display:flex; gap:10px;"><button class="btn btn-gold" onclick="saveOrderStatus(\''+o.id+'\')">Save</button><button class="btn btn-ghost" onclick="closeModal()">Close</button></div>'
+  );
+}
+async function saveOrderStatus(id){
+  const status = document.getElementById('orderStatus').value;
+  const awb_number = document.getElementById('orderAwb').value.trim();
+  const { error } = await supabase.from('orders').update({ status:status, awb_number:awb_number, updated_at:new Date().toISOString() }).eq('id', id);
+  if(error){ showToast('Error: ' + error.message); return; }
+  closeModal(); showToast('Order updated.'); renderOrders();
+}
+
+/* ============ 4. USER MANAGEMENT ============ */
+async function renderUsers(){
+  const { data: users, error } = await supabase.from('profiles').select('*').order('created_at', { ascending:false });
+  let rows = '';
+  if(error){ rows = '<tr><td colspan="4">Error: '+error.message+'</td></tr>'; }
+  else if(!users || !users.length){ rows = '<tr><td colspan="4" style="text-align:center; color:var(--ink-dim);">No users yet.</td></tr>'; }
+  else {
+    rows = users.map(function(u){
+      return '<tr><td>'+(u.full_name||'-')+'</td><td style="font-family:monospace; font-size:11px;">'+u.user_id+'</td>'
+        + '<td><span class="pill pill-'+u.role+'">'+u.role+'</span></td><td>'+fmtDate(u.created_at)+'</td></tr>';
+    }).join('');
+  }
+  document.getElementById('pageContent').innerHTML =
+    '<div class="panel glass"><div class="panel-head"><h3>Registered Users</h3></div>'
+    + '<table><thead><tr><th>Name</th><th>User ID</th><th>Role</th><th>Joined</th></tr></thead><tbody>'+rows+'</tbody></table></div>'
+    + '<p style="color:var(--ink-dim); font-size:12px;">To change a role, use <strong>Role Management</strong> in the sidebar.</p>';
+}
+
+/* ============ 5. INVENTORY ============ */
+async function renderInventory(){
+  const { data: products, error } = await supabase.from('products').select('*').order('stock', { ascending:true });
+  let rows = '';
+  if(error){ rows = '<tr><td colspan="3">Error: '+error.message+'</td></tr>'; }
+  else if(!products || !products.length){ rows = '<tr><td colspan="3" style="text-align:center; color:var(--ink-dim);">No products yet.</td></tr>'; }
+  else {
+    rows = products.map(function(p){
+      const low = p.stock <= 5;
+      return '<tr><td>'+p.name+'</td>'
+        + '<td><input type="number" style="width:90px; display:inline-block;" id="stock_'+p.id+'" value="'+p.stock+'"></td>'
+        + '<td>'+(low ? '<span class="pill pill-cancelled">low stock</span>' : '<span class="pill pill-approved">ok</span>')
+        + ' <button class="icon-btn" onclick="updateStock(\''+p.id+'\')">Update</button></td></tr>';
+    }).join('');
+  }
+  document.getElementById('pageContent').innerHTML =
+    '<div class="panel glass"><div class="panel-head"><h3>Inventory Levels</h3></div>'
+    + '<table><thead><tr><th>Product</th><th>Stock</th><th></th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+}
+async function updateStock(id){
+  const val = Number(document.getElementById('stock_'+id).value);
+  const { error } = await supabase.from('products').update({ stock: val, updated_at:new Date().toISOString() }).eq('id', id);
+  if(error){ showToast('Error: ' + error.message); return; }
+  showToast('Stock updated.'); renderInventory();
+}
+
+/* ============ 6. COUPONS ============ */
+async function renderCoupons(){
+  const { data: coupons, error } = await supabase.from('coupons').select('*').order('created_at', { ascending:false });
+  let rows = '';
+  if(error){ rows = '<tr><td colspan="6">Error: '+error.message+'</td></tr>'; }
+  else if(!coupons || !coupons.length){ rows = '<tr><td colspan="6" style="text-align:center; color:var(--ink-dim);">No coupons yet.</td></tr>'; }
+  else {
+    rows = coupons.map(function(c){
+      return '<tr><td>'+c.code+'</td><td>'+(c.discount_type==='percent' ? c.discount_value+'%' : formatInr(c.discount_value))+'</td>'
+        + '<td>'+(c.used_count||0)+' / '+(c.usage_limit||'∞')+'</td>'
+        + '<td>'+(c.expires_at ? fmtDate(c.expires_at) : '-')+'</td>'
+        + '<td><span class="pill '+(c.active?'pill-approved':'pill-cancelled')+'">'+(c.active?'active':'off')+'</span></td>'
+        + '<td><button class="icon-btn" onclick="editCoupon(\''+c.code+'\')">Edit</button> <button class="icon-btn" onclick="deleteCoupon(\''+c.code+'\')">Delete</button></td></tr>';
+    }).join('');
+  }
+  document.getElementById('pageContent').innerHTML =
+    '<div class="panel glass"><div class="panel-head"><h3>Coupons</h3><button class="btn btn-gold" onclick="editCoupon(null)">+ Add Coupon</button></div>'
+    + '<table><thead><tr><th>Code</th><th>Discount</th><th>Used</th><th>Expires</th><th>Status</th><th>Actions</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+}
+async function editCoupon(code){
+  let c = { code:'', discount_type:'percent', discount_value:10, min_order:0, usage_limit:'', active:true, expires_at:'' };
+  if(code){ const { data } = await supabase.from('coupons').select('*').eq('code', code).single(); if(data) c = data; }
+  openModal(
+    '<h3>'+(code?'Edit':'Add')+' Coupon</h3>'
+    + '<form id="couponForm">'
+    + '<div class="field"><label>Code</label><input id="cf_code" value="'+esc(c.code)+'" '+(code?'readonly':'')+' required style="text-transform:uppercase;"></div>'
+    + '<div class="form-row"><div class="field"><label>Type</label><select id="cf_type"><option value="percent" '+(c.discount_type==='percent'?'selected':'')+'>Percent %</option><option value="flat" '+(c.discount_type==='flat'?'selected':'')+'>Flat ₹</option></select></div>'
+    + '<div class="field"><label>Value</label><input type="number" id="cf_value" value="'+c.discount_value+'" required></div></div>'
+    + '<div class="form-row"><div class="field"><label>Min Order (₹)</label><input type="number" id="cf_min" value="'+(c.min_order||0)+'"></div>'
+    + '<div class="field"><label>Usage Limit</label><input type="number" id="cf_limit" value="'+(c.usage_limit||'')+'"></div></div>'
+    + '<div class="field"><label>Expires At</label><input type="date" id="cf_expires" value="'+(c.expires_at ? String(c.expires_at).slice(0,10) : '')+'"></div>'
+    + '<div class="field"><label>Status</label><select id="cf_active"><option value="true" '+(c.active?'selected':'')+'>Active</option><option value="false" '+(!c.active?'selected':'')+'>Off</option></select></div>'
+    + '<div style="display:flex; gap:10px;"><button type="submit" class="btn btn-gold">Save</button><button type="button" class="btn btn-ghost" onclick="closeModal()">Cancel</button></div>'
+    + '</form>'
+  );
+  document.getElementById('couponForm').addEventListener('submit', async function(e){
+    e.preventDefault();
+    const payload = {
+      code: document.getElementById('cf_code').value.trim().toUpperCase(),
+      discount_type: document.getElementById('cf_type').value,
+      discount_value: Number(document.getElementById('cf_value').value),
+      min_order: Number(document.getElementById('cf_min').value || 0),
+      usage_limit: document.getElementById('cf_limit').value ? Number(document.getElementById('cf_limit').value) : null,
+      expires_at: document.getElementById('cf_expires').value || null,
+      active: document.getElementById('cf_active').value === 'true'
+    };
+    const { error } = await supabase.from('coupons').upsert(payload);
+    if(error){ showToast('Error: ' + error.message); return; }
+    closeModal(); showToast('Coupon saved.'); renderCoupons();
+  });
+}
+async function deleteCoupon(code){
+  if(!confirm('Delete coupon ' + code + '?')) return;
+  const { error } = await supabase.from('coupons').delete().eq('code', code);
+  if(error){ showToast('Error: ' + error.message); return; }
+  showToast('Coupon deleted.'); renderCoupons();
+}
+
+/* ============ 7. REVIEWS ============ */
+async function renderReviews(){
+  const { data: reviews, error } = await supabase.from('reviews').select('*').order('created_at', { ascending:false });
+  let rows = '';
+  if(error){ rows = '<tr><td colspan="5">Error: '+error.message+'</td></tr>'; }
+  else if(!reviews || !reviews.length){ rows = '<tr><td colspan="5" style="text-align:center; color:var(--ink-dim);">No reviews yet.</td></tr>'; }
+  else {
+    rows = reviews.map(function(r){
+      return '<tr><td>'+(r.product_id||'-')+'</td><td>'+(r.reviewer_name||'-')+'</td><td>'+'★'.repeat(r.rating)+'</td>'
+        + '<td style="max-width:260px;">'+esc(r.comment||'')+'</td>'
+        + '<td><span class="pill pill-'+r.status+'">'+r.status+'</span> '
+        + (r.status==='pending' ? '<button class="icon-btn" onclick="moderateReview(\''+r.id+'\',\'approved\')">Approve</button> <button class="icon-btn" onclick="moderateReview(\''+r.id+'\',\'rejected\')">Reject</button>' : '')
+        + '</td></tr>';
+    }).join('');
+  }
+  document.getElementById('pageContent').innerHTML =
+    '<div class="panel glass"><div class="panel-head"><h3>Reviews</h3></div>'
+    + '<table><thead><tr><th>Product</th><th>Reviewer</th><th>Rating</th><th>Comment</th><th>Status</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+}
+async function moderateReview(id, status){
+  const { error } = await supabase.from('reviews').update({ status:status }).eq('id', id);
+  if(error){ showToast('Error: ' + error.message); return; }
+  showToast('Review ' + status + '.'); renderReviews();
+}
+
+/* ============ 8. REPORTS ============ */
+async function renderReports(){
+  const { data: orders } = await supabase.from('orders').select('*');
+  document.getElementById('pageContent').innerHTML =
+    '<div class="panel glass"><div class="panel-head"><h3>Export Reports</h3></div>'
+    + '<p style="color:var(--ink-dim); font-size:13px; margin-bottom:18px;">Download raw data as CSV for offline analysis (Excel/Sheets).</p>'
+    + '<div style="display:flex; gap:12px; flex-wrap:wrap;">'
+    + '<button class="btn btn-ghost" onclick="exportCsv(\'orders\')">Export Orders CSV</button>'
+    + '<button class="btn btn-ghost" onclick="exportCsv(\'products\')">Export Products CSV</button>'
+    + '<button class="btn btn-ghost" onclick="exportCsv(\'newsletter_subscribers\')">Export Subscribers CSV</button>'
+    + '</div></div>';
+}
+async function exportCsv(table){
+  const { data, error } = await supabase.from(table).select('*');
+  if(error || !data || !data.length){ showToast('No data to export.'); return; }
+  const headers = Object.keys(data[0]);
+  const csvRows = [headers.join(',')].concat(data.map(function(row){
+    return headers.map(function(h){
+      let v = row[h];
+      if(v === null || v === undefined) v = '';
+      if(typeof v === 'object') v = JSON.stringify(v);
+      return '"' + String(v).replace(/"/g,'""') + '"';
+    }).join(',');
+  }));
+  const blob = new Blob([csvRows.join('\n')], { type:'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = table + '.csv'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+/* ============ 9. ANALYTICS ============ */
+let analyticsChart = null;
+async function renderAnalytics(){
+  document.getElementById('pageContent').innerHTML =
+    '<div class="panel glass"><div class="panel-head"><h3>Order Status Distribution</h3></div><canvas id="statusChart" height="90"></canvas></div>'
+    + '<div class="panel glass"><div class="panel-head"><h3>Revenue — Last 14 Days</h3></div><canvas id="revenueChart" height="90"></canvas></div>';
+  const { data: orders } = await supabase.from('orders').select('status, subtotal, created_at');
+  const statusCounts = {};
+  (orders||[]).forEach(function(o){ statusCounts[o.status] = (statusCounts[o.status]||0) + 1; });
+  if(analyticsChart) analyticsChart.destroy();
+  analyticsChart = new Chart(document.getElementById('statusChart'), {
+    type:'doughnut',
+    data:{ labels:Object.keys(statusCounts), datasets:[{ data:Object.values(statusCounts), backgroundColor:['#c78a25','#3f9e5c','#7fa8dd','#8a6fd8','#a8394a'] }] },
+    options:{ plugins:{ legend:{ labels:{ color:'#F6F1E7' } } } }
+  });
+  const days = [];
+  for(let i=13;i>=0;i--){ const d = new Date(); d.setDate(d.getDate()-i); days.push(d.toISOString().slice(0,10)); }
+  const revByDay = days.map(function(day){
+    return (orders||[]).filter(function(o){ return o.created_at.slice(0,10)===day && o.status!=='cancelled'; }).reduce(function(s,o){ return s+o.subtotal; },0);
+  });
+  new Chart(document.getElementById('revenueChart'), {
+    type:'bar',
+    data:{ labels:days.map(function(d){ return d.slice(5); }), datasets:[{ label:'Revenue (₹)', data:revByDay, backgroundColor:'#C7A252' }] },
+    options:{ plugins:{ legend:{ labels:{ color:'#F6F1E7' } } }, scales:{ x:{ ticks:{ color:'#F6F1E7' } }, y:{ ticks:{ color:'#F6F1E7' } } } }
+  });
+}
+
+/* ============ 10. NEWSLETTER ============ */
+async function renderNewsletter(){
+  const { data: subs, error } = await supabase.from('newsletter_subscribers').select('*').order('subscribed_at', { ascending:false });
+  let rows = '';
+  if(error){ rows = '<tr><td colspan="2">Error: '+error.message+'</td></tr>'; }
+  else if(!subs || !subs.length){ rows = '<tr><td colspan="2" style="text-align:center; color:var(--ink-dim);">No subscribers yet.</td></tr>'; }
+  else { rows = subs.map(function(s){ return '<tr><td>'+s.email+'</td><td>'+fmtDate(s.subscribed_at)+'</td></tr>'; }).join(''); }
+  document.getElementById('pageContent').innerHTML =
+    '<div class="panel glass"><div class="panel-head"><h3>Newsletter Subscribers ('+(subs?subs.length:0)+')</h3><button class="btn btn-ghost" onclick="exportCsv(\'newsletter_subscribers\')">Export CSV</button></div>'
+    + '<table><thead><tr><th>Email</th><th>Subscribed</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+}
+
+/* ============ 11. SUPPORT ============ */
+async function renderSupport(){
+  const { data: tickets, error } = await supabase.from('support_tickets').select('*').order('created_at', { ascending:false });
+  let rows = '';
+  if(error){ rows = '<tr><td colspan="5">Error: '+error.message+'</td></tr>'; }
+  else if(!tickets || !tickets.length){ rows = '<tr><td colspan="5" style="text-align:center; color:var(--ink-dim);">No support tickets yet.</td></tr>'; }
+  else {
+    rows = tickets.map(function(t){
+      return '<tr><td>'+t.name+'<br><span style="color:var(--ink-dim); font-size:11.5px;">'+t.email+'</span></td>'
+        + '<td>'+t.subject+'</td><td style="max-width:220px;">'+esc(t.message||'')+'</td>'
+        + '<td><span class="pill pill-'+t.status+'">'+t.status+'</span></td>'
+        + '<td><select onchange="updateTicketStatus(\''+t.id+'\', this.value)">'
+        + ['open','in_progress','resolved'].map(function(s){ return '<option value="'+s+'" '+(t.status===s?'selected':'')+'>'+s+'</option>'; }).join('')
+        + '</select></td></tr>';
+    }).join('');
+  }
+  document.getElementById('pageContent').innerHTML =
+    '<div class="panel glass"><div class="panel-head"><h3>Support Tickets</h3></div>'
+    + '<table><thead><tr><th>From</th><th>Subject</th><th>Message</th><th>Status</th><th>Update</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+}
+async function updateTicketStatus(id, status){
+  const { error } = await supabase.from('support_tickets').update({ status:status }).eq('id', id);
+  if(error){ showToast('Error: ' + error.message); return; }
+  showToast('Ticket updated.');
+}
+
+/* ============ 12. SETTINGS ============ */
+function renderSettings(){
+  document.getElementById('pageContent').innerHTML =
+    '<div class="panel glass"><div class="panel-head"><h3>Site Settings</h3></div>'
+    + '<p style="color:var(--ink-dim); font-size:13px; line-height:1.7;">'
+    + 'Site-wide settings (UPI ID, Telegram/Brevo integration, SMTP) live as constants inside <code>temporary.html</code> and the Cloudflare Worker secrets — '
+    + 'they are intentionally kept out of the database for security. To change them, edit those files directly and redeploy.'
+    + '</p>'
+    + '<div style="margin-top:20px;"><strong>Your signed-in account:</strong><br>'+currentUser.email+' · role: '+currentRole+'</div>'
+    + '</div>';
+}
+
+/* ============ 13. ROLE MANAGEMENT ============ */
+async function renderRoles(){
+  if(currentRole !== 'admin'){
+    document.getElementById('pageContent').innerHTML = '<p class="empty-state">Only full admins can manage roles.</p>';
+    return;
+  }
+  const { data: users, error } = await supabase.from('profiles').select('*').order('created_at', { ascending:false });
+  let rows = '';
+  if(error){ rows = '<tr><td colspan="3">Error: '+error.message+'</td></tr>'; }
+  else {
+    rows = (users||[]).map(function(u){
+      return '<tr><td>'+(u.full_name||'-')+'<br><span style="color:var(--ink-dim); font-size:11px; font-family:monospace;">'+u.user_id+'</span></td>'
+        + '<td><span class="pill pill-'+u.role+'">'+u.role+'</span></td>'
+        + '<td><select onchange="changeRole(\''+u.user_id+'\', this.value)">'
+        + ['customer','staff','admin'].map(function(r){ return '<option value="'+r+'" '+(u.role===r?'selected':'')+'>'+r+'</option>'; }).join('')
+        + '</select></td></tr>';
+    }).join('');
+  }
+  document.getElementById('pageContent').innerHTML =
+    '<div class="panel glass"><div class="panel-head"><h3>Role Management</h3></div>'
+    + '<p style="color:var(--ink-dim); font-size:12.5px; margin-bottom:14px;">Promote trusted users to <strong>staff</strong> (day-to-day operations) or <strong>admin</strong> (full access incl. role changes).</p>'
+    + '<table><thead><tr><th>User</th><th>Current Role</th><th>Change To</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+}
+async function changeRole(userId, role){
+  const { error } = await supabase.from('profiles').update({ role:role }).eq('user_id', userId);
+  if(error){ showToast('Error: ' + error.message); return; }
+  showToast('Role updated.'); renderRoles();
+}
+
+/* ============ BASIC DETERRENTS — right-click / devtools shortcuts (deterrent only) ============ */
+document.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+document.addEventListener('keydown', function(e){
+  const k = e.key.toUpperCase();
+  const blockCombo = k === 'F12' || (e.ctrlKey && e.shiftKey && (k==='I'||k==='J'||k==='C')) || (e.ctrlKey && k==='U');
+  if(blockCombo) e.preventDefault();
+});
+
+/* ============ helpers ============ */
+function esc(str){ return String(str==null?'':str).replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+</script>
+</body>
+</html>
