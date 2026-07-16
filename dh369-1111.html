@@ -335,6 +335,18 @@ async function renderProducts(){
     '<div class="panel glass"><div class="panel-head"><h3>All Products</h3><button class="btn btn-gold" onclick="editProduct(null)">+ Add Product</button></div>'
     + '<table><thead><tr><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Status</th><th>Actions</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
 }
+async function handleImageUpload(input){
+  const file = input.files[0];
+  if(!file) return;
+  showToast('Uploading image…');
+  const ext = file.name.split('.').pop();
+  const path = 'products/' + Date.now() + '-' + Math.random().toString(36).slice(2) + '.' + ext;
+  const { error: upErr } = await supabaseClient.storage.from('product-images').upload(path, file);
+  if(upErr){ showToast('Upload failed: ' + upErr.message); return; }
+  const { data } = supabaseClient.storage.from('product-images').getPublicUrl(path);
+  document.getElementById('pf_image').value = data.publicUrl;
+  showToast('Image uploaded.');
+}
 async function editProduct(id){
   let p = { id:'', name:'', code:'', notes:'', price:0, description:'', image_url:'', category:'fragrance', stock:0, active:true };
   if(id){
@@ -350,7 +362,11 @@ async function editProduct(id){
     + '<div class="field"><label>Price (₹)</label><input type="number" id="pf_price" value="'+p.price+'" required></div></div>'
     + '<div class="field"><label>Notes (e.g. oud · amber · musk)</label><input id="pf_notes" value="'+esc(p.notes||'')+'"></div>'
     + '<div class="field"><label>Description</label><textarea id="pf_description" rows="3">'+esc(p.description||'')+'</textarea></div>'
+    + '<div class="field"><label>Product Image</label>'
+    + '<input type="file" id="pf_imageFile" accept="image/*" onchange="handleImageUpload(this)">'
+    + '<p style="font-size:11px; color:var(--ink-dim); margin-top:6px;">Uploading replaces the URL below automatically. Or paste a URL directly.</p></div>'
     + '<div class="field"><label>Image URL</label><input id="pf_image" value="'+esc(p.image_url||'')+'"></div>'
+    + (p.image_url ? '<img src="'+esc(p.image_url)+'" style="max-width:120px; border-radius:6px; margin:-8px 0 16px; display:block;">' : '')
     + '<div class="form-row"><div class="field"><label>Stock</label><input type="number" id="pf_stock" value="'+p.stock+'"></div>'
     + '<div class="field"><label>Status</label><select id="pf_active"><option value="true" '+(p.active?'selected':'')+'>Active</option><option value="false" '+(!p.active?'selected':'')+'>Hidden</option></select></div></div>'
     + '<div style="display:flex; gap:10px; margin-top:8px;"><button type="submit" class="btn btn-gold">Save</button><button type="button" class="btn btn-ghost" onclick="closeModal()">Cancel</button></div>'
