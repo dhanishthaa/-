@@ -843,28 +843,28 @@ footer::before{ content:''; position:absolute; top:0; left:0; right:0; height:1p
 <script>
 /* ============== PRODUCT DATA ============== */
 const PRODUCTS = [
-  { id:'velour-noir', code:'No. 01', name:'Velour Noir', notes:'Smoked oud · black amber · leather', price:'₹5,800', seed:'dhx-p1', img:'picture1.jpg',
-    desc:'A midnight accord built on smoked oud and black amber, wrapped in worn leather. Velour Noir opens dark and stays that way — dense, resinous, and unhurried. Wear it after sundown, on skin that already knows what it wants.' },
-  { id:'ambre-royale', code:'No. 02', name:'Ambre Royale', notes:'Golden amber · saffron · vanilla wood', price:'₹6,200', seed:'dhx-p2', img:'picture2.jpg',
-    desc:'Golden amber warmed with saffron threads and a base of vanilla wood. Ambre Royale is the house\'s most opulent composition — a scent for rooms with high ceilings and long dinners.' },
-  { id:'white-iris', code:'No. 03', name:'White Iris', notes:'Iris · cashmere musk · soft cedar', price:'₹5,400', seed:'dhx-p3', img:'picture3.jpg',
-    desc:'Powdery iris root softened with cashmere musk and a whisper of cedar. White Iris reads close to the skin — cool, restrained, and quietly expensive.' },
-  { id:'santal-blanc', code:'No. 04', name:'Santal Blanc', notes:'Sandalwood · white tea · musk', price:'₹5,600', seed:'dhx-p4', img:'picture4.jpg',
-    desc:'Creamy Mysore-style sandalwood laid over white tea and clean musk. Santal Blanc is built for everyday wear — soft, warm, and never loud.' },
-  { id:'rose-absolue', code:'No. 05', name:'Rose Absolue', notes:'Damask rose · pink pepper · musk', price:'₹5,200', seed:'dhx-p5', img:'picture5.jpg',
-    desc:'Damask rose absolue given a sharp edge of pink pepper before settling into skin musk. Rose Absolue is a modern reading of a very old note.' },
-  { id:'oud-imperial', code:'No. 06', name:'Oud Impérial', notes:'Dark oud · tobacco · aged leather', price:'₹6,800', seed:'dhx-p6', img:'picture6.jpg',
-    desc:'The house\'s deepest oud, aged with tobacco leaf and old leather. Oud Impérial is dense and slow to unfold — give it an hour before you judge it.' },
-  { id:'jasmin-nocturne', code:'No. 07', name:'Jasmin Nocturne', notes:'Night jasmine · tuberose · amber', price:'₹5,900', seed:'dhx-p7', img:'picture7.jpg',
-    desc:'Jasmine picked at night, layered with tuberose and a low amber base. Jasmin Nocturne is white floral without the sweetness — narcotic, not saccharine.' },
-  { id:'vetiver-sauvage', code:'No. 08', name:'Vétiver Sauvage', notes:'Vétiver · bergamot · cedarwood', price:'₹5,500', seed:'dhx-p8', img:'picture8.jpg',
-    desc:'Raw Haitian vétiver brightened with bergamot and dried down on cedarwood. Vétiver Sauvage is green, dry, and built for daylight.' },
-  { id:'fleur-de-sel', code:'No. 09', name:'Fleur de Sel', notes:'Sea salt accord · orris · driftwood', price:'₹5,300', seed:'dhx-p9', img:'picture9.jpg',
-    desc:'A mineral sea-salt accord over powdery orris and sun-bleached driftwood. Fleur de Sel is the house\'s coastal note — airy and slightly saline.' },
-  { id:'cuir-antique', code:'No. 10', name:'Cuir Antique', notes:'Vintage leather · iris · incense', price:'₹6,400', seed:'dhx-p10', img:'picture10.jpg',
-    desc:'Vintage leather softened with iris and a trace of church incense. Cuir Antique is the closest thing in the collection to a signature scent for one person only.' }
+  { id:'kawaii-marshmallow', code:'No. 01', name:'Kawaii Marshmallow', notes:'Marshmallow · vanilla chocolate · musk', price:'₹5,200', seed:'dhx-p1', img:'picture1.jpg',
+    desc:'A soft, sugar-dusted gourmand built on pillowy marshmallow and vanilla chocolate, warmed with a low musk base. Kawaii Marshmallow is playful and comforting — sweet without tipping into cloying.' },
+  { id:'eclat-courinne', code:'No. 02', name:'Éclat Courinné', notes:'Aqua accord · lavender · citrus', price:'₹5,400', seed:'dhx-p2', img:'picture2.jpg',
+    desc:'A bright aquatic accord layered with lavender and fresh citrus. Éclat Courinné is clean and effortless — the house\'s lightest composition, built for daylight hours.' },
+  { id:'lesprit-epice', code:'No. 03', name:'L\'Esprit Épicé', notes:'Geranium · rose · leather · oud', price:'₹6,400', seed:'dhx-p3', img:'picture3.jpg',
+    desc:'Geranium and rose sharpened with leather and a dark oud base. L\'Esprit Épicé is spiced and structured — a scent with real backbone.' },
+  { id:'17k-pirate', code:'No. 04', name:'17K Pirate', notes:'Pineapple · birch · oakmoss', price:'₹5,600', seed:'dhx-p4', img:'picture4.jpg',
+    desc:'Juicy pineapple over smoky birch and earthy oakmoss. 17K Pirate is unexpected and a little rebellious — sweet fruit anchored by something rougher underneath.' },
+  { id:'sacree-marine', code:'No. 05', name:'Sacrée Marine', notes:'Honey · lotus · fresh accord', price:'₹5,300', seed:'dhx-p5', img:'picture5.jpg',
+    desc:'Honeyed lotus set against a crisp fresh accord. Sacrée Marine is soft and luminous — the house\'s gentlest floral, worn close to the skin.' },
+  { id:'nuit-de-velours', code:'No. 06', name:'Nuit de Velours', notes:'Rose · black currant · patchouli', price:'₹6,200', seed:'dhx-p6', img:'picture6.jpg',
+    desc:'Dark rose deepened with tart black currant and a rich patchouli base. Nuit de Velours is moody and enveloping — built for after dark.' },
+  { id:'fiery-soul', code:'No. 07', name:'Fiery Soul', notes:'Rum · saffron · oud', price:'₹6,800', seed:'dhx-p7', img:'picture7.jpg',
+    desc:'Warm rum and threads of saffron laid over a smouldering oud base. Fiery Soul is the house\'s boldest composition — intense and slow to fade.' },
+  { id:'enigme-imperial', code:'No. 08', name:'Énigme Imperial', notes:'Spiced herbs · lavender', price:'₹5,900', seed:'dhx-p8', img:'picture8.jpg',
+    desc:'A herbal accord of warm spices and lavender, restrained and a little mysterious. Énigme Imperial reveals itself slowly rather than announcing itself.' },
+  { id:'sweet-seduction', code:'No. 09', name:'Sweet Seduction', notes:'Coffee · pink pepper · jasmine', price:'₹5,700', seed:'dhx-p9', img:'picture9.jpg',
+    desc:'Dark roasted coffee sharpened with pink pepper and softened by jasmine. Sweet Seduction is rich and magnetic — a scent that lingers in a room.' },
+  { id:'reve-oud', code:'No. 10', name:'Rêve Oud', notes:'Cucumber · bubblegum · orange · oud', price:'₹6,000', seed:'dhx-p10', img:'picture10.jpg',
+    desc:'An unusual pairing of cool cucumber and sweet bubblegum against bright orange and a grounding oud base. Rêve Oud is playful, modern, and entirely its own.' }
 ];
-const NAKSHATRA_IDS = ['velour-noir','oud-imperial','cuir-antique','jasmin-nocturne'];
+const NAKSHATRA_IDS = ['fiery-soul','nuit-de-velours','reve-oud','enigme-imperial'];
 const TESTER_KITS = [
   { id:'discovery-coffret', name:'The Discovery Coffret', eyebrow:'The Discovery Coffret', title:'Ten scents, <em>one box</em>.',
     desc:'A 2ml vial of every composition in the house, boxed in cedar for those who have not yet chosen a signature.',
@@ -1155,6 +1155,28 @@ revealEls.forEach(el => io.observe(el));
 window.__io = io;
 
 renderGrids();
+
+// Pull live products from Supabase (added via the admin panel) and use them
+// instead of the static fallback list above, if any exist. Falls back silently
+// to the built-in PRODUCTS list if Supabase isn't configured or has none yet.
+async function loadLiveProducts(){
+  if(!supabaseClient) return;
+  try{
+    const { data, error } = await supabaseClient.from('products').select('*').eq('active', true);
+    if(error || !data || !data.length) return;
+    const mapped = data.map(function(p){
+      return {
+        id: p.id, code: p.code || '', name: p.name,
+        notes: p.notes || '', price: '₹' + Number(p.price).toLocaleString('en-IN'),
+        seed: p.id, img: p.image_url || 'picture1.jpg', desc: p.description || ''
+      };
+    });
+    PRODUCTS.length = 0;
+    mapped.forEach(function(p){ PRODUCTS.push(p); });
+    renderGrids();
+  } catch(e){ /* silent — static fallback list stays visible */ }
+}
+loadLiveProducts();
 renderCart();
 
 function toggleMobileMenu(){
@@ -1210,7 +1232,7 @@ function smartMailto(e, email){
     }
   }, 600);
   return false;
-} 
+}
 
 /* ============== SUPABASE (auth + per-user invoice counter) ============== */
 // SAFE to expose: Supabase anon key + URL are public by design.
