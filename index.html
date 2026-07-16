@@ -1525,6 +1525,7 @@ async function goToCheckoutDetails(){
 }
 
 let lastInvoiceId = null;
+let lastOrderDbId = null;
 
 async function handleCheckoutDetails(e){
   e.preventDefault();
@@ -1572,6 +1573,31 @@ async function handleCheckoutDetails(e){
   );
   sendInvoiceEmail(order);
 
+  // 3) save the order in Supabase so it shows up in Admin Panel > Order Management
+  let savedOrderId = null;
+  if(supabaseClient){
+    try{
+      const { data:{ user } } = await supabaseClient.auth.getUser();
+      const { data: savedOrder, error: saveErr } = await supabaseClient.from('orders').insert({
+        invoice_id: lastInvoiceId,
+        user_id: user ? user.id : null,
+        full_name: shippingDetails.fullName,
+        email: shippingDetails.email,
+        phone: shippingDetails.phone,
+        address: shippingDetails.address,
+        city: shippingDetails.city,
+        state: shippingDetails.state,
+        country: shippingDetails.country,
+        pincode: shippingDetails.pincode,
+        items: invoiceItems,
+        subtotal: subtotalNow,
+        status: 'pending'
+      }).select('id').single();
+      if(!saveErr && savedOrder) savedOrderId = savedOrder.id;
+    } catch(e){ /* silent — invoice already sent via Telegram/email either way */ }
+  }
+  lastOrderDbId = savedOrderId;
+
   // 2) forward to payment
   selectedPayMethod = null;
   document.querySelectorAll('#payMethods .pay-method').forEach(function(p){ p.classList.remove('is-selected'); });
@@ -1599,13 +1625,18 @@ function selectPay(btn, method){
   }
 }
 
-function handleCheckout(){
+async function handleCheckout(){
   if(!CART.length){ showToast('Your bag is empty.'); return; }
   if(!selectedPayMethod){ showToast('Please choose a payment method.'); return; }
   const subtotal = cartSubtotalValue();
-  const orderNo = 'DHX-' + Math.floor(10000 + Math.random()*89999);
+  const orderNo = lastInvoiceId || ('DHX-' + Math.floor(10000 + Math.random()*89999));
   if(['Paytm','Google Pay','Navi','UPI ID'].indexOf(selectedPayMethod) !== -1){
     openUpiApp(subtotal, 'Order ' + orderNo);
+  }
+  if(supabaseClient && lastOrderDbId){
+    try{
+      await supabaseClient.from('orders').update({ status:'paid', payment_method:selectedPayMethod, updated_at:new Date().toISOString() }).eq('id', lastOrderDbId);
+    } catch(e){ /* silent — order already recorded as pending either way */ }
   }
   closeModal('paymentModal');
   CART = [];
