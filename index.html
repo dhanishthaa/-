@@ -1181,6 +1181,21 @@ function closeModal(id){ document.getElementById(id).classList.remove('is-open')
 document.querySelectorAll('.modal-overlay').forEach(ov => { ov.addEventListener('click', (e) => { if(e.target === ov) closeModal(ov.id); }); });
 document.addEventListener('keydown', (e) => { if(e.key === 'Escape'){ document.querySelectorAll('.modal-overlay.is-open').forEach(m => closeModal(m.id)); closeMobileMenu(); } });
 
+/* ============== BASIC DETERRENTS — right-click / devtools shortcuts ============== */
+// NOTE: this only deters casual users. It does NOT stop anyone determined —
+// view-source, disabling JS, or browser dev menus still work. Real protection
+// for secrets is server-side (Worker), not this.
+document.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+document.addEventListener('keydown', function(e){
+  const k = e.key.toUpperCase();
+  const blockCombo =
+    k === 'F12' ||
+    (e.ctrlKey && e.shiftKey && (k === 'I' || k === 'J' || k === 'C')) ||
+    (e.ctrlKey && k === 'U');
+  if(blockCombo){ e.preventDefault(); }
+});
+document.addEventListener('dragstart', function(e){ e.preventDefault(); });
+
 /* ============== SMART MAILTO ============== */
 function smartMailto(e, email){
   e.preventDefault();
@@ -1269,14 +1284,29 @@ async function getInvoiceNumber(){
 }
 
 /* ============== CART ============== */
-const SELLER_UPI_ID = 'param.dave.1111@okhdfcbank';
-const SELLER_UPI_NAME = 'Dhanishtha';
+// UPI details are NOT hardcoded here anymore — fetched at runtime from the
+// Worker (which holds them as secrets), so they never sit in the GitHub repo
+// or git history in plain text. NOTE: this still shows up in the browser's
+// network tab at payment time — real tamper-proofing needs a payment gateway.
+let SELLER_UPI_ID = null;
+let SELLER_UPI_NAME = 'Dhanishtha';
+async function loadUpiDetails(){
+  if(TELEGRAM_PROXY_URL.indexOf('YOUR-WORKER-NAME') !== -1) return;
+  try{
+    const upiUrl = TELEGRAM_PROXY_URL.replace('/send-invoice', '/get-upi');
+    const res = await fetch(upiUrl);
+    const data = await res.json();
+    if(data.upiId){ SELLER_UPI_ID = data.upiId; SELLER_UPI_NAME = data.upiName || 'Dhanishtha'; }
+  } catch(e){ /* silent — payment buttons will just no-op until this loads */ }
+}
+loadUpiDetails();
 // SECURITY: bot token/chat id NEVER go here — this file is public on GitHub Pages.
 // Instead we call a small serverless proxy (Cloudflare Worker) that holds the
 // secret token server-side. Fill in your deployed worker URL below (safe to expose).
 const TELEGRAM_PROXY_URL = 'https://YOUR-WORKER-NAME.YOUR-SUBDOMAIN.workers.dev/send-invoice';
 
 function buildUpiLink(amount, note){
+  if(!SELLER_UPI_ID){ showToast('Payment details still loading — try again in a moment.'); return '#'; }
   return 'upi://pay?pa=' + encodeURIComponent(SELLER_UPI_ID)
     + '&pn=' + encodeURIComponent(SELLER_UPI_NAME)
     + '&am=' + amount
@@ -1286,7 +1316,9 @@ function buildUpiLink(amount, note){
 // Opens the device's UPI app chooser (Paytm/GPay/Navi/etc.) with amount pre-filled.
 // Amount cannot be locked once inside the UPI app itself — that screen belongs to the app, not this site.
 function openUpiApp(amount, note){
-  window.location.href = buildUpiLink(amount, note);
+  const link = buildUpiLink(amount, note);
+  if(link === '#') return;
+  window.location.href = link;
 }
 
 // Builds a black & white minimalist invoice PDF (base64) matching the house reference design.
