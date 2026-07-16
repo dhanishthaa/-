@@ -172,7 +172,7 @@ code{ background:rgba(255,255,255,.06); padding:2px 6px; border-radius:4px; font
 /* ============ CONFIG — must match temporary.html ============ */
 const SUPABASE_URL = 'https://azggwkbzlihmquzpvdmf.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_nit6Giy4-k4zOjVg0qLS9g_RYjz2CzJ';
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 let currentUser = null;
 let currentRole = null;
@@ -189,16 +189,16 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
   const password = document.getElementById('loginPassword').value;
   const errEl = document.getElementById('loginError');
   errEl.style.display = 'none';
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
   if(error){ errEl.textContent = error.message; errEl.style.display = 'block'; return; }
   await checkAccessAndLoad();
 });
 
 async function checkAccessAndLoad(){
-  const { data:{ user } } = await supabase.auth.getUser();
+  const { data:{ user } } = await supabaseClient.auth.getUser();
   if(!user){ return; }
   currentUser = user;
-  const { data: profile, error } = await supabase.from('profiles').select('role, full_name').eq('user_id', user.id).single();
+  const { data: profile, error } = await supabaseClient.from('profiles').select('role, full_name').eq('user_id', user.id).single();
   if(error || !profile || (profile.role !== 'admin' && profile.role !== 'staff')){
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('deniedScreen').style.display = 'flex';
@@ -214,12 +214,12 @@ async function checkAccessAndLoad(){
 }
 
 async function signOut(){
-  await supabase.auth.signOut();
+  await supabaseClient.auth.signOut();
   location.reload();
 }
 
 (async function initAuth(){
-  const { data:{ session } } = await supabase.auth.getSession();
+  const { data:{ session } } = await supabaseClient.auth.getSession();
   if(session) await checkAccessAndLoad();
 })();
 
@@ -271,10 +271,10 @@ document.getElementById('genericModal').addEventListener('click', function(e){ i
 /* ============ 1. DASHBOARD OVERVIEW ============ */
 async function renderOverview(){
   const [{ data: orders }, { data: products }, { data: users }, { data: reviews }] = await Promise.all([
-    supabase.from('orders').select('*').order('created_at', { ascending:false }),
-    supabase.from('products').select('id'),
-    supabase.from('profiles').select('user_id'),
-    supabase.from('reviews').select('id').eq('status','pending')
+    supabaseClient.from('orders').select('*').order('created_at', { ascending:false }),
+    supabaseClient.from('products').select('id'),
+    supabaseClient.from('profiles').select('user_id'),
+    supabaseClient.from('reviews').select('id').eq('status','pending')
   ]);
   const revenue = (orders||[]).filter(function(o){ return o.status !== 'cancelled'; }).reduce(function(s,o){ return s + o.subtotal; }, 0);
   const recent = (orders||[]).slice(0,6);
@@ -301,7 +301,7 @@ function statCard(label, value){
 
 /* ============ 2. PRODUCT MANAGEMENT ============ */
 async function renderProducts(){
-  const { data: products, error } = await supabase.from('products').select('*').order('created_at', { ascending:false });
+  const { data: products, error } = await supabaseClient.from('products').select('*').order('created_at', { ascending:false });
   let rows = '';
   if(error){ rows = '<tr><td colspan="6">Error loading products: '+error.message+'</td></tr>'; }
   else if(!products || !products.length){ rows = '<tr><td colspan="6" style="text-align:center; color:var(--ink-dim);">No products yet. Add your first one.</td></tr>'; }
@@ -320,7 +320,7 @@ async function renderProducts(){
 async function editProduct(id){
   let p = { id:'', name:'', code:'', notes:'', price:0, description:'', image_url:'', category:'fragrance', stock:0, active:true };
   if(id){
-    const { data } = await supabase.from('products').select('*').eq('id', id).single();
+    const { data } = await supabaseClient.from('products').select('*').eq('id', id).single();
     if(data) p = data;
   }
   openModal(
@@ -352,21 +352,21 @@ async function editProduct(id){
       active: document.getElementById('pf_active').value === 'true',
       updated_at: new Date().toISOString()
     };
-    const { error } = await supabase.from('products').upsert(payload);
+    const { error } = await supabaseClient.from('products').upsert(payload);
     if(error){ showToast('Error: ' + error.message); return; }
     closeModal(); showToast('Product saved.'); renderProducts();
   });
 }
 async function deleteProduct(id){
   if(!confirm('Delete this product permanently?')) return;
-  const { error } = await supabase.from('products').delete().eq('id', id);
+  const { error } = await supabaseClient.from('products').delete().eq('id', id);
   if(error){ showToast('Error: ' + error.message); return; }
   showToast('Product deleted.'); renderProducts();
 }
 
 /* ============ 3. ORDER MANAGEMENT ============ */
 async function renderOrders(){
-  const { data: orders, error } = await supabase.from('orders').select('*').order('created_at', { ascending:false });
+  const { data: orders, error } = await supabaseClient.from('orders').select('*').order('created_at', { ascending:false });
   let rows = '';
   if(error){ rows = '<tr><td colspan="7">Error: '+error.message+'</td></tr>'; }
   else if(!orders || !orders.length){ rows = '<tr><td colspan="7" style="text-align:center; color:var(--ink-dim);">No orders yet.</td></tr>'; }
@@ -384,7 +384,7 @@ async function renderOrders(){
     + '<table><thead><tr><th>Invoice</th><th>Customer</th><th>Amount</th><th>Method</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
 }
 async function viewOrder(id){
-  const { data: o } = await supabase.from('orders').select('*').eq('id', id).single();
+  const { data: o } = await supabaseClient.from('orders').select('*').eq('id', id).single();
   if(!o) return;
   const items = Array.isArray(o.items) ? o.items : [];
   openModal(
@@ -405,14 +405,14 @@ async function viewOrder(id){
 async function saveOrderStatus(id){
   const status = document.getElementById('orderStatus').value;
   const awb_number = document.getElementById('orderAwb').value.trim();
-  const { error } = await supabase.from('orders').update({ status:status, awb_number:awb_number, updated_at:new Date().toISOString() }).eq('id', id);
+  const { error } = await supabaseClient.from('orders').update({ status:status, awb_number:awb_number, updated_at:new Date().toISOString() }).eq('id', id);
   if(error){ showToast('Error: ' + error.message); return; }
   closeModal(); showToast('Order updated.'); renderOrders();
 }
 
 /* ============ 4. USER MANAGEMENT ============ */
 async function renderUsers(){
-  const { data: users, error } = await supabase.from('profiles').select('*').order('created_at', { ascending:false });
+  const { data: users, error } = await supabaseClient.from('profiles').select('*').order('created_at', { ascending:false });
   let rows = '';
   if(error){ rows = '<tr><td colspan="4">Error: '+error.message+'</td></tr>'; }
   else if(!users || !users.length){ rows = '<tr><td colspan="4" style="text-align:center; color:var(--ink-dim);">No users yet.</td></tr>'; }
@@ -430,7 +430,7 @@ async function renderUsers(){
 
 /* ============ 5. INVENTORY ============ */
 async function renderInventory(){
-  const { data: products, error } = await supabase.from('products').select('*').order('stock', { ascending:true });
+  const { data: products, error } = await supabaseClient.from('products').select('*').order('stock', { ascending:true });
   let rows = '';
   if(error){ rows = '<tr><td colspan="3">Error: '+error.message+'</td></tr>'; }
   else if(!products || !products.length){ rows = '<tr><td colspan="3" style="text-align:center; color:var(--ink-dim);">No products yet.</td></tr>'; }
@@ -449,14 +449,14 @@ async function renderInventory(){
 }
 async function updateStock(id){
   const val = Number(document.getElementById('stock_'+id).value);
-  const { error } = await supabase.from('products').update({ stock: val, updated_at:new Date().toISOString() }).eq('id', id);
+  const { error } = await supabaseClient.from('products').update({ stock: val, updated_at:new Date().toISOString() }).eq('id', id);
   if(error){ showToast('Error: ' + error.message); return; }
   showToast('Stock updated.'); renderInventory();
 }
 
 /* ============ 6. COUPONS ============ */
 async function renderCoupons(){
-  const { data: coupons, error } = await supabase.from('coupons').select('*').order('created_at', { ascending:false });
+  const { data: coupons, error } = await supabaseClient.from('coupons').select('*').order('created_at', { ascending:false });
   let rows = '';
   if(error){ rows = '<tr><td colspan="6">Error: '+error.message+'</td></tr>'; }
   else if(!coupons || !coupons.length){ rows = '<tr><td colspan="6" style="text-align:center; color:var(--ink-dim);">No coupons yet.</td></tr>'; }
@@ -475,7 +475,7 @@ async function renderCoupons(){
 }
 async function editCoupon(code){
   let c = { code:'', discount_type:'percent', discount_value:10, min_order:0, usage_limit:'', active:true, expires_at:'' };
-  if(code){ const { data } = await supabase.from('coupons').select('*').eq('code', code).single(); if(data) c = data; }
+  if(code){ const { data } = await supabaseClient.from('coupons').select('*').eq('code', code).single(); if(data) c = data; }
   openModal(
     '<h3>'+(code?'Edit':'Add')+' Coupon</h3>'
     + '<form id="couponForm">'
@@ -500,21 +500,21 @@ async function editCoupon(code){
       expires_at: document.getElementById('cf_expires').value || null,
       active: document.getElementById('cf_active').value === 'true'
     };
-    const { error } = await supabase.from('coupons').upsert(payload);
+    const { error } = await supabaseClient.from('coupons').upsert(payload);
     if(error){ showToast('Error: ' + error.message); return; }
     closeModal(); showToast('Coupon saved.'); renderCoupons();
   });
 }
 async function deleteCoupon(code){
   if(!confirm('Delete coupon ' + code + '?')) return;
-  const { error } = await supabase.from('coupons').delete().eq('code', code);
+  const { error } = await supabaseClient.from('coupons').delete().eq('code', code);
   if(error){ showToast('Error: ' + error.message); return; }
   showToast('Coupon deleted.'); renderCoupons();
 }
 
 /* ============ 7. REVIEWS ============ */
 async function renderReviews(){
-  const { data: reviews, error } = await supabase.from('reviews').select('*').order('created_at', { ascending:false });
+  const { data: reviews, error } = await supabaseClient.from('reviews').select('*').order('created_at', { ascending:false });
   let rows = '';
   if(error){ rows = '<tr><td colspan="5">Error: '+error.message+'</td></tr>'; }
   else if(!reviews || !reviews.length){ rows = '<tr><td colspan="5" style="text-align:center; color:var(--ink-dim);">No reviews yet.</td></tr>'; }
@@ -532,14 +532,14 @@ async function renderReviews(){
     + '<table><thead><tr><th>Product</th><th>Reviewer</th><th>Rating</th><th>Comment</th><th>Status</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
 }
 async function moderateReview(id, status){
-  const { error } = await supabase.from('reviews').update({ status:status }).eq('id', id);
+  const { error } = await supabaseClient.from('reviews').update({ status:status }).eq('id', id);
   if(error){ showToast('Error: ' + error.message); return; }
   showToast('Review ' + status + '.'); renderReviews();
 }
 
 /* ============ 8. REPORTS ============ */
 async function renderReports(){
-  const { data: orders } = await supabase.from('orders').select('*');
+  const { data: orders } = await supabaseClient.from('orders').select('*');
   document.getElementById('pageContent').innerHTML =
     '<div class="panel glass"><div class="panel-head"><h3>Export Reports</h3></div>'
     + '<p style="color:var(--ink-dim); font-size:13px; margin-bottom:18px;">Download raw data as CSV for offline analysis (Excel/Sheets).</p>'
@@ -550,7 +550,7 @@ async function renderReports(){
     + '</div></div>';
 }
 async function exportCsv(table){
-  const { data, error } = await supabase.from(table).select('*');
+  const { data, error } = await supabaseClient.from(table).select('*');
   if(error || !data || !data.length){ showToast('No data to export.'); return; }
   const headers = Object.keys(data[0]);
   const csvRows = [headers.join(',')].concat(data.map(function(row){
@@ -574,7 +574,7 @@ async function renderAnalytics(){
   document.getElementById('pageContent').innerHTML =
     '<div class="panel glass"><div class="panel-head"><h3>Order Status Distribution</h3></div><canvas id="statusChart" height="90"></canvas></div>'
     + '<div class="panel glass"><div class="panel-head"><h3>Revenue — Last 14 Days</h3></div><canvas id="revenueChart" height="90"></canvas></div>';
-  const { data: orders } = await supabase.from('orders').select('status, subtotal, created_at');
+  const { data: orders } = await supabaseClient.from('orders').select('status, subtotal, created_at');
   const statusCounts = {};
   (orders||[]).forEach(function(o){ statusCounts[o.status] = (statusCounts[o.status]||0) + 1; });
   if(analyticsChart) analyticsChart.destroy();
@@ -597,7 +597,7 @@ async function renderAnalytics(){
 
 /* ============ 10. NEWSLETTER ============ */
 async function renderNewsletter(){
-  const { data: subs, error } = await supabase.from('newsletter_subscribers').select('*').order('subscribed_at', { ascending:false });
+  const { data: subs, error } = await supabaseClient.from('newsletter_subscribers').select('*').order('subscribed_at', { ascending:false });
   let rows = '';
   if(error){ rows = '<tr><td colspan="2">Error: '+error.message+'</td></tr>'; }
   else if(!subs || !subs.length){ rows = '<tr><td colspan="2" style="text-align:center; color:var(--ink-dim);">No subscribers yet.</td></tr>'; }
@@ -609,7 +609,7 @@ async function renderNewsletter(){
 
 /* ============ 11. SUPPORT ============ */
 async function renderSupport(){
-  const { data: tickets, error } = await supabase.from('support_tickets').select('*').order('created_at', { ascending:false });
+  const { data: tickets, error } = await supabaseClient.from('support_tickets').select('*').order('created_at', { ascending:false });
   let rows = '';
   if(error){ rows = '<tr><td colspan="5">Error: '+error.message+'</td></tr>'; }
   else if(!tickets || !tickets.length){ rows = '<tr><td colspan="5" style="text-align:center; color:var(--ink-dim);">No support tickets yet.</td></tr>'; }
@@ -628,7 +628,7 @@ async function renderSupport(){
     + '<table><thead><tr><th>From</th><th>Subject</th><th>Message</th><th>Status</th><th>Update</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
 }
 async function updateTicketStatus(id, status){
-  const { error } = await supabase.from('support_tickets').update({ status:status }).eq('id', id);
+  const { error } = await supabaseClient.from('support_tickets').update({ status:status }).eq('id', id);
   if(error){ showToast('Error: ' + error.message); return; }
   showToast('Ticket updated.');
 }
@@ -651,7 +651,7 @@ async function renderRoles(){
     document.getElementById('pageContent').innerHTML = '<p class="empty-state">Only full admins can manage roles.</p>';
     return;
   }
-  const { data: users, error } = await supabase.from('profiles').select('*').order('created_at', { ascending:false });
+  const { data: users, error } = await supabaseClient.from('profiles').select('*').order('created_at', { ascending:false });
   let rows = '';
   if(error){ rows = '<tr><td colspan="3">Error: '+error.message+'</td></tr>'; }
   else {
@@ -669,7 +669,7 @@ async function renderRoles(){
     + '<table><thead><tr><th>User</th><th>Current Role</th><th>Change To</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
 }
 async function changeRole(userId, role){
-  const { error } = await supabase.from('profiles').update({ role:role }).eq('user_id', userId);
+  const { error } = await supabaseClient.from('profiles').update({ role:role }).eq('user_id', userId);
   if(error){ showToast('Error: ' + error.message); return; }
   showToast('Role updated.'); renderRoles();
 }
