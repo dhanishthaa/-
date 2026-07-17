@@ -1156,13 +1156,13 @@ window.__io = io;
 
 renderGrids();
 
-// Pull live products from Supabase (added via the admin panel) and use them
+// Pull live products from  (added via the admin panel) and use them
 // instead of the static fallback list above, if any exist. Falls back silently
-// to the built-in PRODUCTS list if Supabase isn't configured or has none yet.
+// to the built-in PRODUCTS list if  isn't configured or has none yet.
 async function loadLiveProducts(){
-  if(!supabaseClient) return;
+  if(!Client) return;
   try{
-    const { data, error } = await supabaseClient.from('products').select('*').eq('active', true);
+    const { data, error } = await Client.from('products').select('*').eq('active', true);
     if(error || !data || !data.length) return;
     const mapped = data.map(function(p){
       const gallery = (p.image_urls || '').split(',').map(function(s){ return s.trim(); }).filter(Boolean);
@@ -1236,8 +1236,8 @@ function smartMailto(e, email){
   return false;
 }
 
-/* ============== SUPABASE (auth + per-user invoice counter) ============== */
-// SAFE to expose: Supabase anon key + URL are public by design.
+/* ==============  (auth + per-user invoice counter) ============== */
+// SAFE to expose:  anon key + URL are public by design.
 // Real security comes from Row Level Security policies set in the DB (see supabase-schema.sql).
 const SUPABASE_URL = 'https://nhdjqitrvyblhmbpgkax.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_0nuGKl-VCaCkscSOkPclHw_yzry6NoY';
