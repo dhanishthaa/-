@@ -335,20 +335,42 @@ async function renderProducts(){
     '<div class="panel glass"><div class="panel-head"><h3>All Products</h3><button class="btn btn-gold" onclick="editProduct(null)">+ Add Product</button></div>'
     + '<table><thead><tr><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Status</th><th>Actions</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
 }
-async function handleImageUpload(input){
+async function handleImageUpload(input, targetFieldId){
   const file = input.files[0];
   if(!file) return;
   showToast('Uploading image…');
+  const url = await uploadOneImage(file);
+  if(!url) return;
+  document.getElementById(targetFieldId).value = url;
+  showToast('Image uploaded.');
+}
+async function handleGalleryUpload(input){
+  const files = Array.from(input.files || []);
+  if(!files.length) return;
+  showToast('Uploading ' + files.length + ' image(s)…');
+  const urls = [];
+  for(const file of files){
+    const url = await uploadOneImage(file);
+    if(url) urls.push(url);
+  }
+  const existing = document.getElementById('pf_imageUrls').value.trim();
+  const combined = (existing ? existing.split(',').map(function(s){ return s.trim(); }).filter(Boolean) : []).concat(urls);
+  document.getElementById('pf_imageUrls').value = combined.join(', ');
+  document.getElementById('pf_galleryPreview').innerHTML = combined.map(function(u){
+    return '<img src="'+esc(u)+'" style="width:56px; height:56px; object-fit:cover; border-radius:5px;">';
+  }).join('');
+  showToast('Gallery updated.');
+}
+async function uploadOneImage(file){
   const ext = file.name.split('.').pop();
   const path = 'products/' + Date.now() + '-' + Math.random().toString(36).slice(2) + '.' + ext;
   const { error: upErr } = await supabaseClient.storage.from('product-images').upload(path, file);
-  if(upErr){ showToast('Upload failed: ' + upErr.message); return; }
+  if(upErr){ showToast('Upload failed: ' + upErr.message); return null; }
   const { data } = supabaseClient.storage.from('product-images').getPublicUrl(path);
-  document.getElementById('pf_image').value = data.publicUrl;
-  showToast('Image uploaded.');
+  return data.publicUrl;
 }
 async function editProduct(id){
-  let p = { id:'', name:'', code:'', notes:'', price:0, description:'', image_url:'', category:'fragrance', stock:0, active:true };
+  let p = { id:'', name:'', code:'', notes:'', price:0, description:'', image_url:'', image_urls:'', category:'fragrance', stock:0, active:true };
   if(id){
     const { data } = await supabaseClient.from('products').select('*').eq('id', id).single();
     if(data) p = data;
@@ -362,11 +384,18 @@ async function editProduct(id){
     + '<div class="field"><label>Price (₹)</label><input type="number" id="pf_price" value="'+p.price+'" required></div></div>'
     + '<div class="field"><label>Notes (e.g. oud · amber · musk)</label><input id="pf_notes" value="'+esc(p.notes||'')+'"></div>'
     + '<div class="field"><label>Description</label><textarea id="pf_description" rows="3">'+esc(p.description||'')+'</textarea></div>'
-    + '<div class="field"><label>Product Image</label>'
-    + '<input type="file" id="pf_imageFile" accept="image/*" onchange="handleImageUpload(this)">'
-    + '<p style="font-size:11px; color:var(--ink-dim); margin-top:6px;">Uploading replaces the URL below automatically. Or paste a URL directly.</p></div>'
-    + '<div class="field"><label>Image URL</label><input id="pf_image" value="'+esc(p.image_url||'')+'"></div>'
-    + (p.image_url ? '<img src="'+esc(p.image_url)+'" style="max-width:120px; border-radius:6px; margin:-8px 0 16px; display:block;">' : '')
+    + '<div class="field"><label>Cover Image</label>'
+    + '<input type="file" id="pf_imageFile" accept="image/*" onchange="handleImageUpload(this,\'pf_image\')">'
+    + '<p style="font-size:11px; color:var(--ink-dim); margin-top:6px;">Main image shown in listings. Or paste a URL directly below.</p></div>'
+    + '<div class="field"><label>Cover Image URL</label><input id="pf_image" value="'+esc(p.image_url||'')+'"></div>'
+    + (p.image_url ? '<img src="'+esc(p.image_url)+'" style="max-width:110px; border-radius:6px; margin:-8px 0 16px; display:block;">' : '')
+    + '<div class="field"><label>Gallery Images (extra photos shown on product page)</label>'
+    + '<input type="file" id="pf_galleryFile" accept="image/*" multiple onchange="handleGalleryUpload(this)">'
+    + '<p style="font-size:11px; color:var(--ink-dim); margin-top:6px;">Select multiple files at once, or edit the URL list below directly (comma-separated).</p></div>'
+    + '<div class="field"><label>Gallery Image URLs (comma-separated)</label><textarea id="pf_imageUrls" rows="2">'+esc(p.image_urls||'')+'</textarea></div>'
+    + '<div id="pf_galleryPreview" style="display:flex; gap:8px; flex-wrap:wrap; margin:-8px 0 16px;">'
+    + (p.image_urls ? p.image_urls.split(',').map(function(u){ return u.trim() ? '<img src="'+esc(u.trim())+'" style="width:56px; height:56px; object-fit:cover; border-radius:5px;">' : ''; }).join('') : '')
+    + '</div>'
     + '<div class="form-row"><div class="field"><label>Stock</label><input type="number" id="pf_stock" value="'+p.stock+'"></div>'
     + '<div class="field"><label>Status</label><select id="pf_active"><option value="true" '+(p.active?'selected':'')+'>Active</option><option value="false" '+(!p.active?'selected':'')+'>Hidden</option></select></div></div>'
     + '<div style="display:flex; gap:10px; margin-top:8px;"><button type="submit" class="btn btn-gold">Save</button><button type="button" class="btn btn-ghost" onclick="closeModal()">Cancel</button></div>'
@@ -382,6 +411,7 @@ async function editProduct(id){
       notes: document.getElementById('pf_notes').value.trim(),
       description: document.getElementById('pf_description').value.trim(),
       image_url: document.getElementById('pf_image').value.trim(),
+      image_urls: document.getElementById('pf_imageUrls').value.trim(),
       stock: Number(document.getElementById('pf_stock').value),
       active: document.getElementById('pf_active').value === 'true',
       updated_at: new Date().toISOString()
