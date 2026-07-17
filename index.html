@@ -936,7 +936,7 @@ function openProduct(id){
   document.getElementById('pInfoDesc').textContent = p.desc;
   document.getElementById('pInfoAddBtn').onclick = function(){ addToCart(p.id); };
 
-  const seeds = [p.img, p.img, p.img];
+  const seeds = (p.gallery && p.gallery.length) ? [p.img].concat(p.gallery) : [p.img, p.img, p.img];
   const slider = document.getElementById('productSlider');
   currentSlide = 0;
   slider.innerHTML = seeds.map(function(s,i){
@@ -1165,10 +1165,12 @@ async function loadLiveProducts(){
     const { data, error } = await supabaseClient.from('products').select('*').eq('active', true);
     if(error || !data || !data.length) return;
     const mapped = data.map(function(p){
+      const gallery = (p.image_urls || '').split(',').map(function(s){ return s.trim(); }).filter(Boolean);
       return {
         id: p.id, code: p.code || '', name: p.name,
         notes: p.notes || '', price: '₹' + Number(p.price).toLocaleString('en-IN'),
-        seed: p.id, img: p.image_url || 'picture1.jpg', desc: p.description || ''
+        seed: p.id, img: p.image_url || 'picture1.jpg', desc: p.description || '',
+        gallery: gallery.length ? gallery : null
       };
     });
     PRODUCTS.length = 0;
