@@ -61,6 +61,8 @@
 - [x] Restyle Nakshatra “Coming soon — isth” as larger text inside a blurred translucent box.
 - [x] Ensure the Nakshatra brand text is lowercase `isth`.
 - [x] Remove “Scroll to compose” from the hero caption.
+- [x] Make Nakshatra “Coming soon — isth” large, white, lowercase, rectangular, and elegantly translucent with controlled blur.
+- [x] Contain the About-section imagery and section edges so no layer crosses the marked boundaries.
 - [ ] Analyze the newly attached lifestyle references and update the visual language toward natural, tactile product storytelling.
 - [x] Add high-quality realistic flower-blur atmosphere assets without making the interface feel decorative or cheap.
 - [x] Replace cropped/vector logo usage with the full supplied PNG logo and scale it up in header, hero, footer, favicon, and admin surfaces.
