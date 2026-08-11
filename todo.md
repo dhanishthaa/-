@@ -32,6 +32,10 @@
 - [x] Remove the visible background plate from Asset8 while preserving its black mark.
 - [x] Apply the transparent logo treatment in landing, header, hero, footer, admin, and favicon usage.
 - [x] Validate the logo over both light and dark backgrounds without changing unrelated UI.
+- [x] Slightly reduce the landing HELLO font size.
+- [x] Enlarge the transparent landing isth logo and improve its contrast.
+- [x] Increase the landing quote size while keeping the two-line wording.
+- [x] Preserve all non-landing UI unchanged.
 - [ ] Analyze the newly attached lifestyle references and update the visual language toward natural, tactile product storytelling.
 - [x] Add high-quality realistic flower-blur atmosphere assets without making the interface feel decorative or cheap.
 - [x] Replace cropped/vector logo usage with the full supplied PNG logo and scale it up in header, hero, footer, favicon, and admin surfaces.
