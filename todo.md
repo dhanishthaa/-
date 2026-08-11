@@ -83,3 +83,4 @@
 - [x] Correct email casing and use “Queries” as the contact heading.
 - [x] Replace the footer descriptor with “estd. 2021” and add the exact isth Instagram redirect.
 - [x] Add a dedicated About section with the corrected lifestyle positioning.
+- [x] Refine the landing scroll handoff into a slow curtain-like upward fold with cinematic blur revealing the main website.
