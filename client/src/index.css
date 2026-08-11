@@ -307,9 +307,11 @@ em { font-style:italic; }
 .landing-flower-veil { position:absolute; inset:0; z-index:-3; background:radial-gradient(circle at 49% 42%,rgba(245,241,235,.13),transparent 24%),linear-gradient(180deg,rgba(17,17,17,.13),rgba(17,17,17,.48) 73%,rgba(17,17,17,.82)),linear-gradient(90deg,rgba(17,17,17,.32),transparent 58%,rgba(91,13,24,.28)); mix-blend-mode:multiply; }
 .landing-grain { position:absolute; inset:0; z-index:-2; pointer-events:none; opacity:.16; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.42'/%3E%3C/svg%3E"); mix-blend-mode:screen; }
 .landing-header-rail { position:absolute; inset:0 0 auto; height:96px; z-index:0; background:linear-gradient(180deg,rgba(17,17,17,.24),transparent); }
-.ss1-landing .hello-word { left:50%; top:9vh; z-index:2; width:max-content; margin:0; color:rgba(245,241,235,.94); font:400 clamp(150px,29vw,430px)/.69 var(--serif); letter-spacing:-.11em; text-align:left; transform-origin:center top; mix-blend-mode:screen; }
-.ss1-landing .hello-word span { display:block; }
-.ss1-landing .hello-word span + span { margin-top:-.055em; margin-left:.42em; }
+.ss1-landing .hello-word { left:50%; top:9vh; z-index:2; width:max-content; margin:0; color:rgba(245,241,235,.94); font:400 clamp(104px,20vw,300px)/.9 var(--serif); letter-spacing:-.085em; white-space:nowrap; text-align:center; transform-origin:center top; mix-blend-mode:screen; }
+.ss1-landing .hello-word .hello-type { display:inline-block; width:0; overflow:hidden; white-space:nowrap; vertical-align:bottom; }
+.ss1-landing .hello-word.is-ready .hello-type { animation:ss1-type-hello 1.35s steps(5,end) .15s forwards; }
+.ss1-landing .hello-caret { display:inline-block; width:.045em; height:.78em; margin-left:.08em; vertical-align:-.04em; background:currentColor; opacity:.8; animation:ss1-caret-blink .7s steps(1,end) infinite; }
+.ss1-landing .hello-word.is-ready .hello-caret { animation:ss1-caret-blink .7s steps(1,end) 1.55s 3,ss1-caret-hide .1s linear 3.65s forwards; }
 .ss1-landing .hello-word.is-ready { animation:ss1-hello-in 1.2s var(--ease) both; }
 .ss1-landing .landing-center { position:absolute; z-index:4; top:57%; left:50%; width:min(520px,calc(100% - 40px)); display:flex; flex-direction:column; align-items:center; text-align:center; opacity:0; transform:translate(-50%,calc(-50% + 26px)); transition:opacity .95s var(--ease),transform .95s var(--ease); }
 .ss1-landing .landing-center.is-ready { opacity:1; transform:translate(-50%,-50%); }
@@ -324,6 +326,9 @@ em { font-style:italic; }
 .ss1-landing.is-exiting .landing-stage { animation:ss1-exit .62s var(--ease) both; }
 @keyframes landing-flower-breathe { from { transform:scale(1.08) translate3d(0,0,0); } to { transform:scale(1.17) translate3d(-1.3%,1%,0); } }
 @keyframes ss1-hello-in { from { opacity:0; transform:translate3d(-50%,4vh,0) scale(.92); } to { opacity:1; transform:translate3d(-50%,0,0) scale(1); } }
+@keyframes ss1-type-hello { from { width:0; } to { width:5ch; } }
+@keyframes ss1-caret-blink { 0%,49% { opacity:.8; } 50%,100% { opacity:0; } }
+@keyframes ss1-caret-hide { to { opacity:0; } }
 @keyframes ss1-exit { to { opacity:0; filter:blur(18px); transform:scale(1.035); } }
 .nakshatra-visuals { position:absolute; z-index:1; right:9vw; top:50%; display:flex; align-items:center; gap:18px; transform:translateY(-50%) rotate(-4deg); }
 .nakshatra-image-card { position:relative; width:min(20vw,235px); aspect-ratio:.8; overflow:hidden; background:#271d1a; border:1px solid rgba(245,241,235,.18); box-shadow:22px 26px 50px rgba(0,0,0,.34); }
@@ -349,4 +354,4 @@ em { font-style:italic; }
 .footer-top p { text-transform:none; }
 .footer-links a { text-transform:none; }
 @media (max-width:900px) { .nakshatra-visuals { right:-5vw; } .nakshatra-image-card { width:26vw; } }
-@media (max-width:620px) { .ss1-landing { min-height:146svh; } .ss1-landing .hello-word { top:11vh; font-size:clamp(128px,39vw,188px); } .ss1-landing .landing-center { top:60%; } .landing-logo-plate { width:116px; height:88px; } .landing-logo-plate img { height:62px; max-width:90px; } .landing-quote { font-size:22px; } .landing-meta { inset-inline:20px; font-size:8px; } .nakshatra-visuals { top:69%; right:-16vw; gap:10px; transform:translateY(-50%) rotate(-4deg); } .nakshatra-image-card { width:43vw; } .story-image-placeholder { padding:24px; } .story-notes { gap:6px; } .story-notes span { font-size:8px; } }
+@media (max-width:620px) { .ss1-landing { min-height:146svh; } .ss1-landing .hello-word { top:11vh; font-size:clamp(76px,22vw,118px); } .ss1-landing .landing-center { top:60%; } .landing-logo-plate { width:116px; height:88px; } .landing-logo-plate img { height:62px; max-width:90px; } .landing-quote { font-size:22px; } .landing-meta { inset-inline:20px; font-size:8px; } .nakshatra-visuals { top:69%; right:-16vw; gap:10px; transform:translateY(-50%) rotate(-4deg); } .nakshatra-image-card { width:43vw; } .story-image-placeholder { padding:24px; } .story-notes { gap:6px; } .story-notes span { font-size:8px; } }

@@ -40,7 +40,7 @@ export default function Landing() {
       <div className="landing-flower-veil" aria-hidden="true" />
       <div className="landing-grain" aria-hidden="true" />
       <div className="landing-header-rail" aria-hidden="true" />
-      <div className={`hello-word ${ready ? "is-ready" : ""}`} style={{ transform: `translate3d(0,${helloY}vh,0) scale(${helloScale})`, opacity: 1 - progress * 0.98 }} aria-hidden="true"><span>hel</span><span>lo</span></div>
+      <div className={`hello-word ${ready ? "is-ready" : ""}`} style={{ transform: `translate3d(-50%,${helloY}vh,0) scale(${helloScale})`, opacity: 1 - progress * 0.98 }} aria-label="HELLO"><span className="hello-type">HELLO</span><span className="hello-caret" aria-hidden="true" /></div>
       <div className={`landing-center ${ready ? "is-ready" : ""}`}>
         <div className="landing-logo-plate"><img src={readLogoUrl()} alt="isth" /></div>
         <p className="landing-quote">{BRAND_QUOTE}</p>

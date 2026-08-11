@@ -11,6 +11,8 @@
 - [ ] Implement security requirements from `pasted_content_3.txt`, including Supabase Auth, role-aware RLS, storage policies, reset flow, validation, safe uploads, and generic auth errors.
 - [ ] Add optional video sections with safe controls and admin removal/edit support.
 - [x] Validate desktop/mobile layouts, reduced motion, build output, and security documentation.
+- [x] Replace stacked lowercase `hel / lo` with exact uppercase `HELLO` on one horizontal line.
+- [x] Add a smooth typewriter reveal for `HELLO` and preserve scroll-driven shrink/upward handoff.
 - [ ] Analyze the newly attached lifestyle references and update the visual language toward natural, tactile product storytelling.
 - [x] Add high-quality realistic flower-blur atmosphere assets without making the interface feel decorative or cheap.
 - [x] Replace cropped/vector logo usage with the full supplied PNG logo and scale it up in header, hero, footer, favicon, and admin surfaces.
