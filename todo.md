@@ -55,6 +55,12 @@
 - [x] Remove the “Composed in India” hero caption.
 - [x] Fix the hero image/caption overflow at the bottom-right edge.
 - [x] Enlarge the hero isth logo again.
+- [x] Remove “A quieter kind of presence” from the public site.
+- [x] Remove “The isth point of view” from the public site.
+- [x] Remove “The next constellation” from the public site.
+- [x] Restyle Nakshatra “Coming soon — isth” as larger text inside a blurred translucent box.
+- [x] Ensure the Nakshatra brand text is lowercase `isth`.
+- [x] Remove “Scroll to compose” from the hero caption.
 - [ ] Analyze the newly attached lifestyle references and update the visual language toward natural, tactile product storytelling.
 - [x] Add high-quality realistic flower-blur atmosphere assets without making the interface feel decorative or cheap.
 - [x] Replace cropped/vector logo usage with the full supplied PNG logo and scale it up in header, hero, footer, favicon, and admin surfaces.
