@@ -386,3 +386,11 @@ em { font-style:italic; }
 .home-hero .hero-identity { width:300px; height:240px; margin-bottom:24px; padding:0; background:transparent; box-shadow:none; }
 .home-hero .hero-identity img { width:auto; height:240px; max-width:320px; filter:invert(1) drop-shadow(0 6px 16px rgba(0,0,0,.84)); }
 @media (max-width:620px) { .site-nav { padding-block:4px; } .site-nav .site-brand .brand-logo { height:26px; max-width:92px; } .home-hero .hero-identity { width:220px; height:180px; margin-bottom:18px; } .home-hero .hero-identity img { height:180px; max-width:220px; } }
+
+/* SS1–SS2 polish: exact logo colors, larger responsive nav type, equal hero CTA heights. */
+.site-nav .desktop-nav { font-size:clamp(11px,.9vw,14px); letter-spacing:.16em; gap:clamp(26px,3vw,48px); }
+.site-nav:not(.is-scrolled) .site-brand img,.home-hero .hero-identity img,.landing-logo-plate img,.site-footer .footer-brand img,.admin-sidebar .admin-brand img { filter:invert(1); }
+.site-nav.is-scrolled .site-brand img,.admin-login-mark img { filter:none; }
+.hero-cta-row .cherry-button,.hero-cta-row .outline-button { height:50px; min-height:50px; display:inline-flex; align-items:center; justify-content:center; }
+@media (max-width:1100px) and (min-width:901px) { .site-nav .desktop-nav { font-size:12px; gap:28px; } }
+@media (max-width:620px) { .site-nav .desktop-nav { font-size:11px; gap:22px; } .hero-cta-row .cherry-button,.hero-cta-row .outline-button { height:50px; min-height:50px; } }
