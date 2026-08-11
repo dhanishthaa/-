@@ -42,6 +42,10 @@
 - [x] Make HELLO substantially smaller than the current landing version.
 - [x] Make the transparent isth logo substantially larger than the current landing version.
 - [x] Center the HELLO, logo, quote, and CTA as one exact vertical composition.
+- [x] Make the home navbar thinner.
+- [x] Make the navbar Asset8 logo smaller.
+- [x] Make the hero logo above the copy much larger and higher contrast.
+- [x] Remove the “Fine fragrance house” line from the home hero.
 - [ ] Analyze the newly attached lifestyle references and update the visual language toward natural, tactile product storytelling.
 - [x] Add high-quality realistic flower-blur atmosphere assets without making the interface feel decorative or cheap.
 - [x] Replace cropped/vector logo usage with the full supplied PNG logo and scale it up in header, hero, footer, favicon, and admin surfaces.

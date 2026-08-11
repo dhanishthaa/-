@@ -40,7 +40,7 @@ export default function Home() {
     <main>
       <section className="home-hero">
         <div className="home-hero-image" aria-hidden="true" /><div className="home-hero-flower" aria-hidden="true" /><div className="home-hero-overlay" aria-hidden="true" />
-        <div className="home-hero-content"><div className="hero-identity"><img src={readLogoUrl()} alt="isth" /></div><p className="eyebrow light">Fine fragrance house</p><h1>A scent can<br /><em>change the air.</em></h1><p className="hero-description">isth composes modern signatures from notes that stay close, then open slowly.</p><div className="hero-cta-row"><a className="cherry-button hero-whatsapp" href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`} target="_blank" rel="noreferrer"><MessageCircle size={17} /> WhatsApp the house</a><a className="outline-button" href="#collection">Explore the Collection <ArrowDown size={14} /></a></div></div>
+        <div className="home-hero-content"><div className="hero-identity"><img src={readLogoUrl()} alt="isth" /></div><h1>A scent can<br /><em>change the air.</em></h1><p className="hero-description">isth composes modern signatures from notes that stay close, then open slowly.</p><div className="hero-cta-row"><a className="cherry-button hero-whatsapp" href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`} target="_blank" rel="noreferrer"><MessageCircle size={17} /> WhatsApp the house</a><a className="outline-button" href="#collection">Explore the Collection <ArrowDown size={14} /></a></div></div>
         <div className="hero-caption"><span>Composed in India</span><span>Scroll to compose</span></div>
       </section>
 
