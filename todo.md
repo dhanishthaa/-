@@ -39,6 +39,9 @@
 - [x] Reduce the landing HELLO size further.
 - [x] Enlarge the transparent landing isth logo further.
 - [x] Preserve the quote and every other UI element unchanged.
+- [x] Make HELLO substantially smaller than the current landing version.
+- [x] Make the transparent isth logo substantially larger than the current landing version.
+- [x] Center the HELLO, logo, quote, and CTA as one exact vertical composition.
 - [ ] Analyze the newly attached lifestyle references and update the visual language toward natural, tactile product storytelling.
 - [x] Add high-quality realistic flower-blur atmosphere assets without making the interface feel decorative or cheap.
 - [x] Replace cropped/vector logo usage with the full supplied PNG logo and scale it up in header, hero, footer, favicon, and admin surfaces.
