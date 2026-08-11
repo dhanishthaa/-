@@ -32,10 +32,10 @@ export default function Home() {
   return <div className="site-shell">
     <header className={`site-nav ${scrolled ? "is-scrolled" : ""}`}>
       <Link href="/home" className="site-brand"><img className="brand-logo brand-logo-dark" src={readLogoUrl()} alt="isth" /></Link>
-      <nav className="desktop-nav" aria-label="Main navigation"><a href="#collection">Collection</a><a href="#about">About</a><a href="#contact">Queries</a></nav>
+      <nav className="desktop-nav" aria-label="Main navigation"><a href="#collection">Collection</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
       <div className="site-actions"><a className="action-link" href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`} target="_blank" rel="noreferrer"><MessageCircle size={15} /><span>Enquire</span></a><button className="menu-toggle" onClick={() => setMenuOpen((open) => !open)} aria-label={menuOpen ? "Close navigation" : "Open navigation"}>{menuOpen ? <X size={19} /> : <Menu size={19} />}</button></div>
     </header>
-    <div className={`mobile-drawer ${menuOpen ? "is-open" : ""}`}><nav><a href="#collection" onClick={() => setMenuOpen(false)}>Collection</a><a href="#about" onClick={() => setMenuOpen(false)}>About</a><a href="#contact" onClick={() => setMenuOpen(false)}>Queries</a></nav></div>
+    <div className={`mobile-drawer ${menuOpen ? "is-open" : ""}`}><nav><a href="#collection" onClick={() => setMenuOpen(false)}>Collection</a><a href="#about" onClick={() => setMenuOpen(false)}>About</a><a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a></nav></div>
 
     <main>
       <section className="home-hero">

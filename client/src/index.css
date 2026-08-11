@@ -375,6 +375,6 @@ em { font-style:italic; }
 /* Focused SS2 home correction: thinner chrome, smaller nav mark, larger contrast-safe hero mark. */
 .site-nav { min-height:44px; padding-block:4px; }
 .site-nav .site-brand .brand-logo { width:auto; height:28px; max-width:100px; }
-.home-hero .hero-identity { width:156px; height:112px; margin-bottom:24px; padding:0; background:transparent; box-shadow:none; }
-.home-hero .hero-identity img { width:auto; height:100px; max-width:150px; filter:invert(1) drop-shadow(0 4px 12px rgba(0,0,0,.78)); }
-@media (max-width:620px) { .site-nav { padding-block:4px; } .site-nav .site-brand .brand-logo { height:26px; max-width:92px; } .home-hero .hero-identity { width:124px; height:90px; margin-bottom:18px; } .home-hero .hero-identity img { height:82px; max-width:124px; } }
+.home-hero .hero-identity { width:230px; height:180px; margin-bottom:24px; padding:0; background:transparent; box-shadow:none; }
+.home-hero .hero-identity img { width:auto; height:180px; max-width:240px; filter:invert(1) drop-shadow(0 5px 14px rgba(0,0,0,.82)); }
+@media (max-width:620px) { .site-nav { padding-block:4px; } .site-nav .site-brand .brand-logo { height:26px; max-width:92px; } .home-hero .hero-identity { width:188px; height:146px; margin-bottom:18px; } .home-hero .hero-identity img { height:146px; max-width:190px; } }
