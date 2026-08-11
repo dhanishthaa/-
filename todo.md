@@ -89,3 +89,5 @@
 - [x] Restore the original full-screen HELLO landing composition as the unmistakable first screen at `/`.
 - [x] Shorten the HELLO landing scroll distance and make its exit visibly blur and fade before routing.
 - [x] Ensure both landing scroll and Explore the Collection CTA enter `/home` at the top hero/header.
+- [x] Diagnose missing logo and image assets on deployed `isth.in`.
+- [x] Correct production asset hosting paths and verify deployed visual assets locally.

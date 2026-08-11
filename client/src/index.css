@@ -29,7 +29,7 @@ img { display:block; max-width:100%; }
 .mobile-drawer nav { display:flex; flex-direction:column; gap:24px; font:italic 32px var(--serif); }
 .mobile-drawer > span { color:var(--gold); font:10px var(--mono); letter-spacing:.16em; }
 .home-hero { height:min(100svh,920px); min-height:680px; position:relative; overflow:hidden; background:var(--ink); color:var(--ivory); isolation:isolate; }
-.home-hero-image { position:absolute; inset:0; background:url('/manus-storage/isth-hero-editorial_ed190768.png') center/cover; filter:saturate(.78) contrast(1.03); z-index:-2; }
+.home-hero-image { position:absolute; inset:0; background:url('/assets/isth-hero-editorial_ed190768.png') center/cover; filter:saturate(.78) contrast(1.03); z-index:-2; }
 .home-hero-overlay { position:absolute; inset:0; z-index:-1; background:linear-gradient(90deg,rgba(17,17,17,.72),rgba(17,17,17,.19) 56%,rgba(17,17,17,.32)),linear-gradient(0deg,rgba(17,17,17,.78),transparent 40%); }
 .home-hero-content { position:absolute; left:clamp(20px,9vw,140px); bottom:clamp(90px,13vh,160px); max-width:580px; }
 .eyebrow { display:flex; gap:10px; align-items:center; color:var(--cherry); font:10px var(--mono); letter-spacing:.17em; text-transform:uppercase; }
@@ -141,7 +141,7 @@ em { font-style:italic; }
 .dialog-close { position:absolute; top:18px; right:18px; color:var(--ink); font-size:26px; line-height:1; border:0; background:none; }
 .product-dialog .cherry-button { margin-top:30px; }
 .landing-page { position:relative; min-height:100svh; overflow:hidden; isolation:isolate; background:var(--ink); color:var(--ivory); }
-.landing-image { position:absolute; inset:0; z-index:-2; background:url('/manus-storage/isth-hero-editorial_ed190768.png') center/cover; filter:saturate(.72) brightness(.86); transform:scale(1.02); animation:landing-breathe 12s ease-in-out infinite alternate; }
+.landing-image { position:absolute; inset:0; z-index:-2; background:url('/assets/isth-hero-editorial_ed190768.png') center/cover; filter:saturate(.72) brightness(.86); transform:scale(1.02); animation:landing-breathe 12s ease-in-out infinite alternate; }
 .landing-scrim { position:absolute; inset:0; z-index:-1; background:linear-gradient(90deg,rgba(17,17,17,.83),rgba(17,17,17,.17) 66%,rgba(17,17,17,.52)),linear-gradient(0deg,rgba(17,17,17,.75),transparent 55%); }
 .landing-nav { position:absolute; inset:0 0 auto; display:flex; justify-content:space-between; align-items:center; padding:26px clamp(20px,4vw,56px); color:var(--ivory); }
 .brand-mark { font-size:22px; }
@@ -240,7 +240,7 @@ em { font-style:italic; }
 .ingredient-marquee div { display:inline-block; min-width:max-content; padding:20px 0 22px; font:clamp(34px,5vw,72px)/1 var(--serif); letter-spacing:-.04em; animation:marquee-drift 32s linear infinite; }
 @keyframes marquee-drift { from { transform:translateX(0); } to { transform:translateX(-50%); } }
 .quote-video-section { min-height:720px; position:relative; overflow:hidden; display:flex; align-items:center; padding:clamp(80px,12vw,150px) clamp(20px,9vw,140px); background:#161214; color:var(--ivory); isolation:isolate; }
-.quote-video-backdrop { position:absolute; inset:0; z-index:-2; background:linear-gradient(90deg,rgba(17,17,17,.9),rgba(17,17,17,.3)),url('/manus-storage/isth-floral-forest-atmosphere_855c0ca2.png') center/cover; }
+.quote-video-backdrop { position:absolute; inset:0; z-index:-2; background:linear-gradient(90deg,rgba(17,17,17,.9),rgba(17,17,17,.3)),url('/assets/isth-floral-forest-atmosphere_855c0ca2.png') center/cover; }
 .quote-video-backdrop::after { content:""; position:absolute; inset:0; background:radial-gradient(circle at 70% 46%,rgba(181,154,98,.18),transparent 20%),linear-gradient(180deg,transparent,rgba(17,17,17,.55)); mix-blend-mode:screen; }
 .quote-video-backdrop video { width:100%; height:100%; object-fit:cover; opacity:.6; mix-blend-mode:screen; filter:saturate(.65) contrast(1.05); }
 .quote-video-copy { max-width:760px; }
@@ -291,9 +291,9 @@ em { font-style:italic; }
 @media (max-width:620px) { .site-brand,.brand-mark { padding:6px 9px; min-width:68px; min-height:62px; } .site-brand .brand-logo,.brand-mark .brand-logo { height:52px; max-width:88px; } .footer-brand .brand-logo,.admin-brand .brand-logo { height:44px; max-width:78px; } .brand-logo { height:22px; } .hero-cta-row { align-items:stretch; flex-direction:column; width:max-content; max-width:100%; } .hero-cta-row .cherry-button,.hero-cta-row .outline-button { width:100%; } .ingredient-marquee div { padding:15px 0 17px; } .quote-video-copy h2 { font-size:clamp(50px,15vw,72px); } .quote-video-meta { flex-direction:column; gap:7px; } .nakshatra-bottles { top:66%; right:-24vw; width:82vw; } .nakshatra-bottle.tower { height:230px; } .nakshatra-bottle.cosmos { height:280px; } .hello-word { top:150px; font-size:clamp(120px,38vw,180px); } .landing-page .landing-copy { bottom:126px; } .landing-page .landing-copy h1 { font-size:clamp(52px,15vw,72px); } .admin-login-mark .brand-logo { height:54px; max-width:100px; } }
 
 /* Organic floral atmosphere: realistic blur used as scent-in-air, never as a repeated ornament. */
-.home-hero-flower { position:absolute; z-index:-1; top:0; right:0; width:min(48vw,760px); height:100%; opacity:.28; background:url('/manus-storage/isth-floral-forest-atmosphere_855c0ca2.png') center/cover; filter:saturate(.62) blur(.2px); mix-blend-mode:screen; mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.28) 36%,#000 82%); animation:floral-drift 18s ease-in-out infinite alternate; }
+.home-hero-flower { position:absolute; z-index:-1; top:0; right:0; width:min(48vw,760px); height:100%; opacity:.28; background:url('/assets/isth-floral-forest-atmosphere_855c0ca2.png') center/cover; filter:saturate(.62) blur(.2px); mix-blend-mode:screen; mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.28) 36%,#000 82%); animation:floral-drift 18s ease-in-out infinite alternate; }
 .story-section { position:relative; isolation:isolate; }
-.story-flower { position:absolute; inset:0 0 0 50%; z-index:-1; opacity:.48; background:url('/manus-storage/isth-floral-blush-atmosphere_7def68ba.png') center/cover; mix-blend-mode:multiply; filter:saturate(.7) contrast(.92); mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.35) 32%,#000 70%); animation:floral-drift 22s ease-in-out infinite alternate-reverse; }
+.story-flower { position:absolute; inset:0 0 0 50%; z-index:-1; opacity:.48; background:url('/assets/isth-floral-blush-atmosphere_7def68ba.png') center/cover; mix-blend-mode:multiply; filter:saturate(.7) contrast(.92); mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.35) 32%,#000 70%); animation:floral-drift 22s ease-in-out infinite alternate-reverse; }
 .home-hero .site-brand { box-shadow:0 16px 32px rgba(0,0,0,.18); }
 .home-hero .site-nav { padding-top:18px; }
 .footer-brand { padding:10px 13px; }
@@ -325,7 +325,7 @@ em { font-style:italic; }
 @keyframes nav-image-in { from { opacity:0; transform:scale(1.08); } to { opacity:1; transform:scale(1); } }
 .ss1-landing { min-height:156svh; background:var(--ink); }
 .ss1-landing .landing-stage { position:sticky; top:0; height:100svh; min-height:650px; overflow:hidden; isolation:isolate; background:#1b1014; }
-.landing-flower-search { position:absolute; inset:-5%; z-index:-4; background:url('/manus-storage/isth-landing-flower-search_58a38a07.jpg') center/cover; filter:saturate(.7) contrast(.96) brightness(.78); transform:scale(1.08); animation:landing-flower-breathe 18s ease-in-out infinite alternate; }
+.landing-flower-search { position:absolute; inset:-5%; z-index:-4; background:url('/assets/isth-landing-flower-search_58a38a07.jpg') center/cover; filter:saturate(.7) contrast(.96) brightness(.78); transform:scale(1.08); animation:landing-flower-breathe 18s ease-in-out infinite alternate; }
 .landing-flower-veil { position:absolute; inset:0; z-index:-3; background:radial-gradient(circle at 49% 42%,rgba(245,241,235,.13),transparent 24%),linear-gradient(180deg,rgba(17,17,17,.13),rgba(17,17,17,.48) 73%,rgba(17,17,17,.82)),linear-gradient(90deg,rgba(17,17,17,.32),transparent 58%,rgba(91,13,24,.28)); mix-blend-mode:multiply; }
 .landing-grain { position:absolute; inset:0; z-index:-2; pointer-events:none; opacity:.16; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.42'/%3E%3C/svg%3E"); mix-blend-mode:screen; }
 .landing-header-rail { position:absolute; inset:0 0 auto; height:96px; z-index:0; background:linear-gradient(180deg,rgba(17,17,17,.24),transparent); }
@@ -360,7 +360,7 @@ em { font-style:italic; }
 .nakshatra-image-card img { width:100%; height:100%; object-fit:cover; opacity:.78; mix-blend-mode:screen; }
 .nakshatra-image-card::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,transparent 50%,rgba(17,17,17,.72)); }
 .nakshatra-image-card span { position:absolute; z-index:1; left:13px; right:13px; bottom:14px; color:rgba(245,241,235,.72); font:8px var(--mono); letter-spacing:.08em; line-height:1.35; text-transform:uppercase; }
-.story-image-placeholder { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:flex-end; padding:42px; background:linear-gradient(140deg,rgba(245,241,235,.1),rgba(91,13,24,.1)),url('/manus-storage/isth-ingredients-editorial_4fe9c8a1.png') center/cover; filter:saturate(.72) contrast(.92); }
+.story-image-placeholder { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:flex-end; padding:42px; background:linear-gradient(140deg,rgba(245,241,235,.1),rgba(91,13,24,.1)),url('/assets/isth-ingredients-editorial_4fe9c8a1.png') center/cover; filter:saturate(.72) contrast(.92); }
 .story-image-placeholder span { color:rgba(17,17,17,.72); font:10px var(--mono); letter-spacing:.14em; text-transform:uppercase; }
 .story-image-placeholder small { margin-top:6px; color:rgba(17,17,17,.48); font:11px var(--sans); }
 .story-notes { display:flex; flex-wrap:wrap; gap:8px; margin:25px 0 4px; }
@@ -369,9 +369,9 @@ em { font-style:italic; }
 .story-note-photo { position:relative; height:82px; overflow:hidden; display:flex; align-items:flex-end; padding:8px; background-size:cover; background-position:center; box-shadow:0 9px 18px rgba(17,17,17,.09); }
 .story-note-photo::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,transparent 35%,rgba(17,17,17,.56)); }
 .story-note-photo span { position:relative; z-index:1; color:var(--ivory); font:8px var(--mono); letter-spacing:.05em; text-transform:uppercase; }
-.note-rose { background-image:url('/manus-storage/isth-ingredients-editorial_4fe9c8a1.png'); background-position:18% center; }
-.note-amber { background-image:url('/manus-storage/isth-ingredients-editorial_4fe9c8a1.png'); background-position:52% center; filter:saturate(.7) sepia(.25); }
-.note-musk { background-image:url('/manus-storage/isth-ingredients-editorial_4fe9c8a1.png'); background-position:86% center; filter:saturate(.65) brightness(.88); }
+.note-rose { background-image:url('/assets/isth-ingredients-editorial_4fe9c8a1.png'); background-position:18% center; }
+.note-amber { background-image:url('/assets/isth-ingredients-editorial_4fe9c8a1.png'); background-position:52% center; filter:saturate(.7) sepia(.25); }
+.note-musk { background-image:url('/assets/isth-ingredients-editorial_4fe9c8a1.png'); background-position:86% center; filter:saturate(.65) brightness(.88); }
 .story-flower { z-index:0; opacity:.42; }
 .story-copy { position:relative; z-index:1; }
 .quote-video-meta { display:none; }
@@ -398,7 +398,7 @@ em { font-style:italic; }
 /* SS1 landing transition: the stage behaves like a slow, tactile curtain lifting into the home experience. */
 .ss1-landing { min-height:205svh; overflow:visible; }
 .ss1-landing .landing-stage { overflow:visible; }
-.ss1-landing .landing-stage::after { content:""; position:absolute; inset:0; z-index:0; background:linear-gradient(90deg,rgba(17,17,17,.82),rgba(17,17,17,.22) 68%,rgba(17,17,17,.48)),linear-gradient(0deg,rgba(17,17,17,.72),transparent 58%),url('/manus-storage/isth-hero-editorial_ed190768.png') center/cover; opacity:.96; }
+.ss1-landing .landing-stage::after { content:""; position:absolute; inset:0; z-index:0; background:linear-gradient(90deg,rgba(17,17,17,.82),rgba(17,17,17,.22) 68%,rgba(17,17,17,.48)),linear-gradient(0deg,rgba(17,17,17,.72),transparent 58%),url('/assets/isth-hero-editorial_ed190768.png') center/cover; opacity:.96; }
 .ss1-landing .landing-curtain-surface { position:absolute; inset:0; z-index:2; overflow:hidden; isolation:isolate; transform-origin:50% 0%; transform:translate3d(0,var(--fold-lift),0) scaleY(var(--fold-scale)); filter:blur(var(--fold-blur)); border-radius:0 0 var(--fold-radius) var(--fold-radius); opacity:1; will-change:transform,filter,border-radius,opacity; transition:transform 1.08s cubic-bezier(.76,0,.18,1),filter 1.08s cubic-bezier(.76,0,.18,1),border-radius 1.08s cubic-bezier(.76,0,.18,1),opacity 1.08s cubic-bezier(.76,0,.18,1); }
 .ss1-landing .landing-curtain-surface .landing-flower-search { z-index:0; }
 .ss1-landing .landing-curtain-surface .landing-flower-veil { z-index:1; }
