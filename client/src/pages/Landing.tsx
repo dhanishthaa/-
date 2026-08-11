@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { useLocation } from "wouter";
-import { BRAND_QUOTE, readLogoUrl } from "@/data/brand";
+import { readLogoUrl } from "@/data/brand";
 
 export default function Landing() {
   const [, setLocation] = useLocation();
@@ -43,10 +43,9 @@ export default function Landing() {
       <div className={`hello-word ${ready ? "is-ready" : ""}`} style={{ transform: `translate3d(-50%,${helloY}vh,0) scale(${helloScale})`, opacity: 1 - progress * 0.98 }} aria-label="HELLO"><span className="hello-type">HELLO</span><span className="hello-caret" aria-hidden="true" /></div>
       <div className={`landing-center ${ready ? "is-ready" : ""}`}>
         <div className="landing-logo-plate"><img src={readLogoUrl()} alt="isth" /></div>
-        <p className="landing-quote">{BRAND_QUOTE}</p>
+        <p className="landing-quote"><span>Embrace the fragrance.</span><span>Become isth.</span></p>
         <button className="landing-enter" onClick={goToCollection}>Explore the Collection <ArrowRight size={15} /></button>
       </div>
-      <div className="landing-meta"><span>isth / 2026</span><span>Scroll to enter</span></div>
       <div className="landing-progress" aria-hidden="true"><span style={{ transform: `scaleX(${progress})` }} /></div>
     </div>
   </main>;

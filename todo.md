@@ -13,6 +13,16 @@
 - [x] Validate desktop/mobile layouts, reduced motion, build output, and security documentation.
 - [x] Replace stacked lowercase `hel / lo` with exact uppercase `HELLO` on one horizontal line.
 - [x] Add a smooth typewriter reveal for `HELLO` and preserve scroll-driven shrink/upward handoff.
+- [x] Thin the landing nav and add 3–4 AI-generated editorial images that auto-rotate every few seconds.
+- [x] Remove the ingredient marquee completely.
+- [x] Remove “The scent library” and “Wear it close” labels.
+- [x] Force the brand quote to exactly two lines: “Embrace the fragrance.” and “Become isth.”
+- [x] Remove landing metadata such as `isth / 2026`; keep the blurred fold handoff into the home hero and make Explore the Collection enter that same hero.
+- [x] Remove every Nakshatra product/perfume image and keep only premium coming-soon copy.
+- [x] Add AI-generated perfume notes and ingredients imagery.
+- [x] Make About a real section and add About to the main navigation.
+- [x] Normalize every support email to lowercase `isth.support@gmail.com`.
+- [x] Add the full isth PNG logo in the marked hero copy area.
 - [ ] Analyze the newly attached lifestyle references and update the visual language toward natural, tactile product storytelling.
 - [x] Add high-quality realistic flower-blur atmosphere assets without making the interface feel decorative or cheap.
 - [x] Replace cropped/vector logo usage with the full supplied PNG logo and scale it up in header, hero, footer, favicon, and admin surfaces.
