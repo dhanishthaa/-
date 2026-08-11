@@ -13,19 +13,18 @@ export default function ProductBottle({ product, compact = false }: { product: P
   return (
     <article className={`product-card ${product.featured ? "is-featured" : ""} ${compact ? "is-compact" : ""}`} style={{ "--product-tone": product.color } as CSSProperties}>
       <button className="product-visual" onClick={() => setOpen(true)} aria-label={`View details for ${product.name}`}>
-        {product.image ? <img src={product.image} alt="" loading="lazy" /> : <div className="bottle-stage" aria-hidden="true"><div className="bottle-cap" /><div className="bottle-body"><span>ISTH</span><small>EAU DE PARFUM</small></div></div>}
-        <span className="product-index">{product.id.slice(0, 2).toUpperCase()}</span>
+        {product.image ? <img src={product.image} alt="" loading="lazy" /> : <div className="bottle-stage" aria-hidden="true"><div className="bottle-cap" /><div className="bottle-body"><span>isth</span><small>EAU DE PARFUM</small></div></div>}
         <span className="product-open"><ArrowUpRight size={16} strokeWidth={1.4} /></span>
       </button>
       <div className="product-card-copy">
-        <div><p className="product-collection">{product.collection}</p><h3>{product.name}</h3></div>
+        <div><p className="product-collection">{product.collection} / {product.size}</p><h3>{product.name}</h3></div>
         <button className="product-buy" onClick={() => window.open(whatsappUrl, "_blank", "noopener,noreferrer")}><MessageCircle size={13} /> Buy now</button>
       </div>
       <p className="product-notes">{product.notes}</p>
       {open && <div className="product-dialog-backdrop" role="presentation" onClick={() => setOpen(false)}>
         <div className="product-dialog" role="dialog" aria-modal="true" aria-label={`${product.name} details`} onClick={(event) => event.stopPropagation()}>
           <button className="dialog-close" onClick={() => setOpen(false)} aria-label="Close details">×</button>
-          <span className="eyebrow">ISTH / {product.collection}</span>
+          <span className="eyebrow">isth / {product.collection}</span>
           <h2>{product.name}</h2>
           <p className="dialog-notes">{product.notes}</p>
           <p>{product.description}</p>

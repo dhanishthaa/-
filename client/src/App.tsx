@@ -8,6 +8,7 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import Landing from "./pages/Landing";
 import Admin from "./pages/Admin";
+import MotionRoot from "./components/MotionRoot";
 
 function Router() {
   return <Switch>
@@ -20,5 +21,5 @@ function Router() {
 }
 
 export default function App() {
-  return <ErrorBoundary><ThemeProvider defaultTheme="light"><TooltipProvider><Toaster /><Router /></TooltipProvider></ThemeProvider></ErrorBoundary>;
+  return <ErrorBoundary><ThemeProvider defaultTheme="light"><TooltipProvider><MotionRoot><Toaster /><Router /></MotionRoot></TooltipProvider></ThemeProvider></ErrorBoundary>;
 }

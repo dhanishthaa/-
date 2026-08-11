@@ -218,3 +218,79 @@ em { font-style:italic; }
 @media (max-width:900px) { .desktop-nav { display:none; } .menu-toggle { display:block; } .intro-strip,.section-heading,.contact-section { grid-template-columns:1fr; gap:30px; } .intro-number { order:-1; } .featured-grid>.reveal:nth-child(1),.featured-grid>.reveal:nth-child(2),.featured-grid>.reveal:nth-child(3) { grid-column:span 6; margin-top:0; } .featured-grid>.reveal:nth-child(3) { grid-column:span 12; } .note-card { min-height:280px; } .catalog-grid { grid-template-columns:repeat(2,1fr); } .nakshatra-orbit { right:-8vw; width:47vw; opacity:.7; } .admin-shell { grid-template-columns:1fr; } .admin-sidebar { min-height:auto; padding:18px 20px; flex-direction:row; align-items:center; gap:20px; } .admin-side-nav { display:none; } .admin-side-bottom { margin:0 0 0 auto; display:flex; } .admin-side-bottom .admin-status { display:none; } .admin-content { padding:34px 20px 50px; } }
 @media (max-width:620px) { .site-nav { padding:19px 20px; } .action-link span { display:none; } .home-hero { min-height:640px; } .home-hero-content { bottom:88px; } .home-hero h1,.landing-copy h1 { font-size:clamp(46px,14vw,70px); } .hero-caption span:last-child { display:none; } .intro-strip,.collection-section,.contact-section { padding-left:20px; padding-right:20px; } .featured-grid { gap:36px 12px; } .featured-grid>.reveal:nth-child(1),.featured-grid>.reveal:nth-child(2) { grid-column:span 12; } .featured-grid>.reveal:nth-child(2) { margin-top:10px; } .featured-grid>.reveal:nth-child(3) { margin-top:0; } .note-card { min-height:260px; } .catalog-heading { margin-top:90px; align-items:start; flex-direction:column; gap:17px; } .catalog-grid { gap:42px 12px; } .product-card-copy { display:block; } .product-buy { margin-top:10px; } .nakshatra-section { min-height:630px; padding-left:20px; padding-right:20px; } .nakshatra-orbit { right:-24vw; top:62%; width:80vw; } .story-section { grid-template-columns:1fr; } .story-image { min-height:420px; } .story-copy { padding:70px 20px; } .footer-top,.footer-bottom { flex-direction:column; } .footer-links { gap:45px; } .footer-bottom { gap:10px; } .landing-nav-center { display:none; } .landing-bottom span:last-child { display:none; } .admin-login { display:block; } .admin-login-card { padding:22px 0 42px; } .admin-login-aside { min-height:180px; } .admin-login-mark { margin:70px 0 38px; } .admin-header { align-items:start; flex-direction:column; } .admin-stats { grid-template-columns:1fr; } .admin-stats>div { min-height:120px; } .admin-table-head { display:none; } .admin-row { grid-template-columns:1fr auto; gap:10px; padding:18px 0; } .admin-row>span { grid-column:1/-1; } .admin-row-actions { grid-column:2; grid-row:1; } .editor-form { grid-template-columns:1fr; } .editor-form .wide,.checkbox-label { grid-column:1; } }
 @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } *,*::before,*::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; } }
+
+/* isth elevation overrides: richer editorial rhythm, larger motion moments, and the supplied black logo treated as a tactile plate. */
+.brand-logo { display:block; width:auto; height:28px; max-width:120px; object-fit:contain; }
+.brand-logo-dark,.brand-logo-light { filter:none; }
+.site-brand,.brand-mark,.footer-brand,.admin-brand { background:var(--ivory); color:var(--ink); padding:8px 12px; border-radius:1px; box-shadow:0 8px 18px rgba(17,17,17,.07); }
+.site-brand .brand-logo,.brand-mark .brand-logo { width:auto; height:64px; max-width:112px; }
+.site-brand,.brand-mark { min-width:94px; min-height:80px; justify-content:center; }
+.site-nav.is-scrolled .site-brand { background:transparent; box-shadow:none; padding-left:0; }
+.hero-cta-row { display:flex; align-items:center; flex-wrap:wrap; gap:15px; }
+.hero-whatsapp { padding:16px 22px; font-size:10px; box-shadow:0 13px 30px rgba(91,13,24,.3); }
+.ingredient-marquee { overflow:hidden; border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:#eee9e2; color:rgba(91,13,24,.82); white-space:nowrap; }
+.ingredient-marquee div { display:inline-block; min-width:max-content; padding:20px 0 22px; font:clamp(34px,5vw,72px)/1 var(--serif); letter-spacing:-.04em; animation:marquee-drift 32s linear infinite; }
+@keyframes marquee-drift { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+.quote-video-section { min-height:720px; position:relative; overflow:hidden; display:flex; align-items:center; padding:clamp(80px,12vw,150px) clamp(20px,9vw,140px); background:#161214; color:var(--ivory); isolation:isolate; }
+.quote-video-backdrop { position:absolute; inset:0; z-index:-2; background:linear-gradient(90deg,rgba(17,17,17,.9),rgba(17,17,17,.3)),url('/manus-storage/isth-floral-forest-atmosphere_855c0ca2.png') center/cover; }
+.quote-video-backdrop::after { content:""; position:absolute; inset:0; background:radial-gradient(circle at 70% 46%,rgba(181,154,98,.18),transparent 20%),linear-gradient(180deg,transparent,rgba(17,17,17,.55)); mix-blend-mode:screen; }
+.quote-video-backdrop video { width:100%; height:100%; object-fit:cover; opacity:.6; mix-blend-mode:screen; filter:saturate(.65) contrast(1.05); }
+.quote-video-copy { max-width:760px; }
+.quote-video-copy h2 { margin:24px 0 38px; font:400 clamp(52px,8vw,125px)/.9 var(--serif); letter-spacing:-.06em; }
+.quote-video-meta { position:absolute; inset:auto clamp(20px,4vw,56px) 24px; display:flex; justify-content:space-between; color:rgba(245,241,235,.55); font:9px var(--mono); letter-spacing:.14em; text-transform:uppercase; }
+.nakshatra-section { min-height:700px; }
+.nakshatra-bottles { position:absolute; right:10vw; top:50%; width:min(38vw,500px); height:440px; transform:translateY(-50%); }
+.nakshatra-bottle { position:absolute; bottom:40px; width:48%; filter:drop-shadow(0 30px 20px rgba(0,0,0,.32)); animation:float-bottle 8s ease-in-out infinite alternate; }
+.nakshatra-bottle img { width:100%; height:100%; object-fit:cover; mix-blend-mode:screen; opacity:.84; }
+.nakshatra-bottle.tower { left:3%; height:290px; transform:rotate(-8deg); }
+.nakshatra-bottle.cosmos { right:2%; height:350px; transform:rotate(8deg); animation-delay:-3s; }
+@keyframes float-bottle { from { transform:translate3d(0,8px,0) rotate(-8deg); } to { transform:translate3d(0,-12px,0) rotate(-4deg); } }
+.nakshatra-bottle.cosmos { animation-name:float-bottle-cosmos; }
+@keyframes float-bottle-cosmos { from { transform:translate3d(0,-4px,0) rotate(8deg); } to { transform:translate3d(0,14px,0) rotate(4deg); } }
+.landing-page { min-height:180svh; background:var(--ivory); color:var(--ink); }
+.landing-stage { position:sticky; top:0; height:100svh; min-height:640px; overflow:hidden; isolation:isolate; background:var(--ink); color:var(--ivory); }
+.landing-page .landing-image { animation:landing-breathe 15s ease-in-out infinite alternate; }
+.landing-page .landing-nav { z-index:3; }
+.landing-page .landing-nav .brand-mark { color:var(--ink); }
+.landing-page .landing-copy { z-index:2; }
+.hello-word { position:absolute; z-index:1; left:clamp(20px,5vw,75px); top:clamp(95px,16vh,170px); color:var(--ivory); font:400 clamp(130px,28vw,430px)/.72 var(--serif); letter-spacing:-.09em; transform-origin:left top; will-change:transform,opacity; transition:opacity .15s linear; pointer-events:none; }
+.hello-word.is-ready { animation:hello-arrive 1.2s var(--ease) both; }
+@keyframes hello-arrive { from { opacity:0; transform:translate3d(-5vw,0,0) scale(.94); } to { opacity:1; transform:translate3d(0,0,0) scale(1); } }
+.landing-page .landing-copy h1 { font-size:clamp(56px,8vw,126px); }
+.landing-page .landing-copy .landing-kicker { max-width:390px; line-height:1.45; }
+.landing-page .landing-nav .brand-logo { height:50px; max-width:92px; }
+.landing-page .landing-bottom { z-index:3; }
+.admin-login-mark { min-height:42px; }
+.admin-login-mark .brand-logo { height:62px; max-width:190px; }
+.admin-sidebar .admin-brand { padding:9px 12px; width:max-content; }
+.admin-sidebar .admin-brand .brand-logo { height:27px; }
+.admin-login-actions { display:flex; align-items:center; gap:18px; flex-wrap:wrap; }
+.plain-button { border:0; background:none; padding:0; color:var(--cherry); font:10px var(--mono); letter-spacing:.08em; text-transform:uppercase; }
+.plain-button:hover { color:var(--cherry-hover); }
+.admin-media-panel { margin-top:58px; padding-top:32px; border-top:1px solid var(--line); }
+.admin-media-panel h2 { margin:14px 0 10px; font:400 36px var(--serif); letter-spacing:-.04em; }
+.admin-media-panel > div > p:not(.eyebrow) { max-width:520px; color:#81786F; font-size:13px; }
+.media-form { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:28px; }
+.media-form label { display:grid; grid-template-columns:auto 1fr; align-items:center; gap:8px; color:#67625C; font:10px var(--mono); letter-spacing:.1em; text-transform:uppercase; }
+.media-form label input { grid-column:1/-1; width:100%; border:1px solid rgba(17,17,17,.2); padding:12px; color:var(--ink); background:rgba(255,255,255,.32); font:13px var(--sans); letter-spacing:0; text-transform:none; }
+.media-form label input[type=file] { padding:10px; font-size:11px; }
+.editor-form select { width:100%; border:1px solid rgba(17,17,17,.2); padding:13px 14px; color:var(--ink); background:rgba(255,255,255,.32); }
+.product-card { transition:transform .6s var(--ease); }
+.product-card:hover { transform:translateY(-4px); }
+.product-size { color:var(--cherry); }
+.product-dialog .dialog-notes { line-height:1.7; }
+@media (max-width:900px) { .quote-video-section { min-height:620px; } .nakshatra-bottles { right:-6vw; width:52vw; opacity:.8; } .media-form { grid-template-columns:1fr; } }
+@media (max-width:620px) { .site-brand,.brand-mark { padding:6px 9px; min-width:68px; min-height:62px; } .site-brand .brand-logo,.brand-mark .brand-logo { height:52px; max-width:88px; } .footer-brand .brand-logo,.admin-brand .brand-logo { height:44px; max-width:78px; } .brand-logo { height:22px; } .hero-cta-row { align-items:stretch; flex-direction:column; width:max-content; max-width:100%; } .hero-cta-row .cherry-button,.hero-cta-row .outline-button { width:100%; } .ingredient-marquee div { padding:15px 0 17px; } .quote-video-copy h2 { font-size:clamp(50px,15vw,72px); } .quote-video-meta { flex-direction:column; gap:7px; } .nakshatra-bottles { top:66%; right:-24vw; width:82vw; } .nakshatra-bottle.tower { height:230px; } .nakshatra-bottle.cosmos { height:280px; } .hello-word { top:150px; font-size:clamp(120px,38vw,180px); } .landing-page .landing-copy { bottom:126px; } .landing-page .landing-copy h1 { font-size:clamp(52px,15vw,72px); } .admin-login-mark .brand-logo { height:54px; max-width:100px; } }
+
+/* Organic floral atmosphere: realistic blur used as scent-in-air, never as a repeated ornament. */
+.home-hero-flower { position:absolute; z-index:-1; top:0; right:0; width:min(48vw,760px); height:100%; opacity:.28; background:url('/manus-storage/isth-floral-forest-atmosphere_855c0ca2.png') center/cover; filter:saturate(.62) blur(.2px); mix-blend-mode:screen; mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.28) 36%,#000 82%); animation:floral-drift 18s ease-in-out infinite alternate; }
+.story-section { position:relative; isolation:isolate; }
+.story-flower { position:absolute; inset:0 0 0 50%; z-index:-1; opacity:.48; background:url('/manus-storage/isth-floral-blush-atmosphere_7def68ba.png') center/cover; mix-blend-mode:multiply; filter:saturate(.7) contrast(.92); mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.35) 32%,#000 70%); animation:floral-drift 22s ease-in-out infinite alternate-reverse; }
+.home-hero .site-brand { box-shadow:0 16px 32px rgba(0,0,0,.18); }
+.home-hero .site-nav { padding-top:18px; }
+.footer-brand { padding:10px 13px; }
+.footer-brand img { filter:none; width:auto; max-width:112px; height:56px; object-fit:contain; }
+@keyframes floral-drift { from { transform:scale(1.02) translate3d(0,0,0); } to { transform:scale(1.08) translate3d(-10px,-8px,0); } }
+.site-brand img.brand-logo-dark,.brand-mark img.brand-logo-dark,.footer-brand img.brand-logo-dark,.admin-brand img.brand-logo-light { filter:none; }
+.landing-nav-meta,.landing-bottom,.admin-login-aside > span,.footer-bottom { text-transform:none; }
+@media (max-width:620px) { .site-brand .brand-logo,.brand-mark .brand-logo,.footer-brand .brand-logo,.admin-brand .brand-logo { width:auto; } }
