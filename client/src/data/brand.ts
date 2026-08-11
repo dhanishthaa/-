@@ -1,5 +1,5 @@
 // Quiet Atelier style reminder: the brand layer stays lowercase, spare, and editable without coupling content to layout.
-export const DEFAULT_LOGO_URL = "/manus-storage/isth-logo-full-black_ed369e50.png";
+export const DEFAULT_LOGO_URL = "/manus-storage/isth-asset8-logo_eb9c9fdb.svg";
 export const DEFAULT_WHATSAPP_NUMBER = "917859898490";
 export const DEFAULT_WHATSAPP_TEXT = "Hello isth, I am interested in purchasing";
 export const BRAND_QUOTE = "Embrace the fragrance. Become isth.";
@@ -11,7 +11,7 @@ const VIDEO_KEY = "isth-video-url";
 export function readLogoUrl() {
   if (typeof window === "undefined") return DEFAULT_LOGO_URL;
   const stored = window.localStorage.getItem(LOGO_KEY);
-  if (!stored || stored.includes("isth-logo_") || stored.includes("isth-logo-black")) return DEFAULT_LOGO_URL;
+  if (!stored || stored.includes("isth-logo")) return DEFAULT_LOGO_URL;
   return stored;
 }
 

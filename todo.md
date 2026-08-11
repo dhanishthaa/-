@@ -23,6 +23,9 @@
 - [x] Make About a real section and add About to the main navigation.
 - [x] Normalize every support email to lowercase `isth.support@gmail.com`.
 - [x] Add the full isth PNG logo in the marked hero copy area.
+- [x] Replace every public and admin logo source with the supplied `Asset8.svg` only.
+- [x] Preserve all existing layout, copy, motion, colors, and interactions during the logo-only pass.
+- [x] Verify there are no remaining references to the previous logo assets.
 - [ ] Analyze the newly attached lifestyle references and update the visual language toward natural, tactile product storytelling.
 - [x] Add high-quality realistic flower-blur atmosphere assets without making the interface feel decorative or cheap.
 - [x] Replace cropped/vector logo usage with the full supplied PNG logo and scale it up in header, hero, footer, favicon, and admin surfaces.
