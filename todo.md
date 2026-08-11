@@ -10,9 +10,21 @@
 - [ ] Add admin controls for logo, bottle images, product content, video assets, and public site settings.
 - [ ] Implement security requirements from `pasted_content_3.txt`, including Supabase Auth, role-aware RLS, storage policies, reset flow, validation, safe uploads, and generic auth errors.
 - [ ] Add optional video sections with safe controls and admin removal/edit support.
-- [ ] Validate desktop/mobile layouts, reduced motion, build output, and security documentation.
+- [x] Validate desktop/mobile layouts, reduced motion, build output, and security documentation.
 - [ ] Analyze the newly attached lifestyle references and update the visual language toward natural, tactile product storytelling.
 - [x] Add high-quality realistic flower-blur atmosphere assets without making the interface feel decorative or cheap.
 - [x] Replace cropped/vector logo usage with the full supplied PNG logo and scale it up in header, hero, footer, favicon, and admin surfaces.
 - [x] Remove all gold star symbols and related decorative star treatments.
 - [x] Add a contrast-safe full logo plate in the two-girl home hero while preserving readability over the image.
+- [x] Replace the current landing background with a full-viewport HQ flower-blur atmosphere and tighten the hello line spacing.
+- [x] Center the full PNG isth logo, exact quote, and “Explore the Collection” CTA on the landing page.
+- [x] Make scroll shrink and lift hello into the header, then transition the landing away with blur into the SS2 main hero; CTA must jump to the same destination.
+- [x] Remove “Fine fragrance house” from the main header and use the bold PNG logo instead.
+- [x] Make the main nav transparent with frosted glass and subtle grain texture.
+- [x] Use “Explore the collection” consistently across all public CTAs.
+- [x] Remove the motion metadata labels from the quote section.
+- [x] Present Nakshatra as an undecided premium segment with an explicit coming-soon treatment.
+- [x] Add a left image placeholder and perfume-note imagery to the notes/story section.
+- [x] Correct email casing and use “Queries” as the contact heading.
+- [x] Replace the footer descriptor with “estd. 2021” and add the exact isth Instagram redirect.
+- [x] Add a dedicated About section with the corrected lifestyle positioning.

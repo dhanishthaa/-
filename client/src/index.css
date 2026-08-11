@@ -261,7 +261,7 @@ em { font-style:italic; }
 .landing-page .landing-nav .brand-logo { height:50px; max-width:92px; }
 .landing-page .landing-bottom { z-index:3; }
 .admin-login-mark { min-height:42px; }
-.admin-login-mark .brand-logo { height:62px; max-width:190px; }
+.admin-login-mark .brand-logo { width:auto; height:62px; max-width:190px; }
 .admin-sidebar .admin-brand { padding:9px 12px; width:max-content; }
 .admin-sidebar .admin-brand .brand-logo { height:27px; }
 .admin-login-actions { display:flex; align-items:center; gap:18px; flex-wrap:wrap; }
@@ -294,3 +294,59 @@ em { font-style:italic; }
 .site-brand img.brand-logo-dark,.brand-mark img.brand-logo-dark,.footer-brand img.brand-logo-dark,.admin-brand img.brand-logo-light { filter:none; }
 .landing-nav-meta,.landing-bottom,.admin-login-aside > span,.footer-bottom { text-transform:none; }
 @media (max-width:620px) { .site-brand .brand-logo,.brand-mark .brand-logo,.footer-brand .brand-logo,.admin-brand .brand-logo { width:auto; } }
+
+/* SS1–SS11 correction pass: flower-led opening, glass-grain navigation, premium image placeholders, and a quieter footer. */
+.site-nav { background:rgba(245,241,235,.045); backdrop-filter:blur(16px) saturate(115%); border-bottom:1px solid rgba(245,241,235,.08); }
+.site-nav::after { content:""; position:absolute; inset:0; pointer-events:none; opacity:.13; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.26'/%3E%3C/svg%3E"); mix-blend-mode:soft-light; }
+.site-nav > * { position:relative; z-index:1; }
+.site-nav.is-scrolled { background:rgba(245,241,235,.68); border-bottom-color:rgba(17,17,17,.12); }
+.site-nav.is-scrolled::after { opacity:.16; }
+.ss1-landing { min-height:156svh; background:var(--ink); }
+.ss1-landing .landing-stage { position:sticky; top:0; height:100svh; min-height:650px; overflow:hidden; isolation:isolate; background:#1b1014; }
+.landing-flower-search { position:absolute; inset:-5%; z-index:-4; background:url('/manus-storage/isth-landing-flower-search_58a38a07.jpg') center/cover; filter:saturate(.7) contrast(.96) brightness(.78); transform:scale(1.08); animation:landing-flower-breathe 18s ease-in-out infinite alternate; }
+.landing-flower-veil { position:absolute; inset:0; z-index:-3; background:radial-gradient(circle at 49% 42%,rgba(245,241,235,.13),transparent 24%),linear-gradient(180deg,rgba(17,17,17,.13),rgba(17,17,17,.48) 73%,rgba(17,17,17,.82)),linear-gradient(90deg,rgba(17,17,17,.32),transparent 58%,rgba(91,13,24,.28)); mix-blend-mode:multiply; }
+.landing-grain { position:absolute; inset:0; z-index:-2; pointer-events:none; opacity:.16; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.42'/%3E%3C/svg%3E"); mix-blend-mode:screen; }
+.landing-header-rail { position:absolute; inset:0 0 auto; height:96px; z-index:0; background:linear-gradient(180deg,rgba(17,17,17,.24),transparent); }
+.ss1-landing .hello-word { left:50%; top:9vh; z-index:2; width:max-content; margin:0; color:rgba(245,241,235,.94); font:400 clamp(150px,29vw,430px)/.69 var(--serif); letter-spacing:-.11em; text-align:left; transform-origin:center top; mix-blend-mode:screen; }
+.ss1-landing .hello-word span { display:block; }
+.ss1-landing .hello-word span + span { margin-top:-.055em; margin-left:.42em; }
+.ss1-landing .hello-word.is-ready { animation:ss1-hello-in 1.2s var(--ease) both; }
+.ss1-landing .landing-center { position:absolute; z-index:4; top:57%; left:50%; width:min(520px,calc(100% - 40px)); display:flex; flex-direction:column; align-items:center; text-align:center; opacity:0; transform:translate(-50%,calc(-50% + 26px)); transition:opacity .95s var(--ease),transform .95s var(--ease); }
+.ss1-landing .landing-center.is-ready { opacity:1; transform:translate(-50%,-50%); }
+.landing-logo-plate { display:grid; place-items:center; width:142px; height:108px; padding:14px 16px; background:var(--ivory); box-shadow:0 24px 70px rgba(0,0,0,.32); }
+.landing-logo-plate img { width:auto; height:76px; max-width:112px; object-fit:contain; }
+.landing-quote { margin:22px 0 0; max-width:430px; color:var(--ivory); font:400 clamp(21px,2.2vw,31px)/1.1 var(--serif); letter-spacing:-.025em; }
+.ss1-landing .landing-enter { margin-top:30px; color:var(--ivory); border-color:rgba(245,241,235,.65); background:rgba(17,17,17,.14); backdrop-filter:blur(9px); }
+.ss1-landing .landing-enter:hover { color:var(--ink); background:var(--ivory); }
+.landing-meta { position:absolute; z-index:4; inset:auto 28px 24px; display:flex; justify-content:space-between; color:rgba(245,241,235,.64); font:9px var(--mono); letter-spacing:.16em; text-transform:uppercase; }
+.ss1-landing .landing-progress { z-index:5; background:rgba(245,241,235,.16); }
+.ss1-landing .landing-progress span { background:var(--ivory); animation:none; transform-origin:left; }
+.ss1-landing.is-exiting .landing-stage { animation:ss1-exit .62s var(--ease) both; }
+@keyframes landing-flower-breathe { from { transform:scale(1.08) translate3d(0,0,0); } to { transform:scale(1.17) translate3d(-1.3%,1%,0); } }
+@keyframes ss1-hello-in { from { opacity:0; transform:translate3d(-50%,4vh,0) scale(.92); } to { opacity:1; transform:translate3d(-50%,0,0) scale(1); } }
+@keyframes ss1-exit { to { opacity:0; filter:blur(18px); transform:scale(1.035); } }
+.nakshatra-visuals { position:absolute; z-index:1; right:9vw; top:50%; display:flex; align-items:center; gap:18px; transform:translateY(-50%) rotate(-4deg); }
+.nakshatra-image-card { position:relative; width:min(20vw,235px); aspect-ratio:.8; overflow:hidden; background:#271d1a; border:1px solid rgba(245,241,235,.18); box-shadow:22px 26px 50px rgba(0,0,0,.34); }
+.nakshatra-image-card:nth-child(2) { transform:translateY(38px) rotate(9deg); }
+.nakshatra-image-card img { width:100%; height:100%; object-fit:cover; opacity:.78; mix-blend-mode:screen; }
+.nakshatra-image-card::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,transparent 50%,rgba(17,17,17,.72)); }
+.nakshatra-image-card span { position:absolute; z-index:1; left:13px; right:13px; bottom:14px; color:rgba(245,241,235,.72); font:8px var(--mono); letter-spacing:.08em; line-height:1.35; text-transform:uppercase; }
+.story-image-placeholder { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:flex-end; padding:42px; background:linear-gradient(140deg,rgba(245,241,235,.1),rgba(91,13,24,.1)),url('/manus-storage/isth-floral-blush-atmosphere_7def68ba.png') center/cover; filter:saturate(.72) contrast(.92); }
+.story-image-placeholder span { color:rgba(17,17,17,.72); font:10px var(--mono); letter-spacing:.14em; text-transform:uppercase; }
+.story-image-placeholder small { margin-top:6px; color:rgba(17,17,17,.48); font:11px var(--sans); }
+.story-notes { display:flex; flex-wrap:wrap; gap:8px; margin:25px 0 4px; }
+.story-notes span { padding:7px 10px; border:1px solid rgba(91,13,24,.2); color:var(--cherry); font:9px var(--mono); letter-spacing:.1em; text-transform:uppercase; }
+.story-note-grid { display:grid; grid-template-columns:repeat(3,72px); gap:10px; margin:28px 0 4px; }
+.story-note-photo { position:relative; height:82px; overflow:hidden; display:flex; align-items:flex-end; padding:8px; background-size:cover; background-position:center; box-shadow:0 9px 18px rgba(17,17,17,.09); }
+.story-note-photo::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,transparent 35%,rgba(17,17,17,.56)); }
+.story-note-photo span { position:relative; z-index:1; color:var(--ivory); font:8px var(--mono); letter-spacing:.05em; text-transform:uppercase; }
+.note-rose { background-image:url('/manus-storage/isth-floral-blush-atmosphere_7def68ba.png'); }
+.note-amber { background-image:url('/manus-storage/isth-floral-forest-atmosphere_855c0ca2.png'); filter:saturate(.7) sepia(.25); }
+.note-musk { background-image:url('/manus-storage/isth-landing-flower-search_58a38a07.jpg'); filter:saturate(.65) brightness(.88); }
+.story-flower { z-index:0; opacity:.42; }
+.story-copy { position:relative; z-index:1; }
+.quote-video-meta { display:none; }
+.footer-top p { text-transform:none; }
+.footer-links a { text-transform:none; }
+@media (max-width:900px) { .nakshatra-visuals { right:-5vw; } .nakshatra-image-card { width:26vw; } }
+@media (max-width:620px) { .ss1-landing { min-height:146svh; } .ss1-landing .hello-word { top:11vh; font-size:clamp(128px,39vw,188px); } .ss1-landing .landing-center { top:60%; } .landing-logo-plate { width:116px; height:88px; } .landing-logo-plate img { height:62px; max-width:90px; } .landing-quote { font-size:22px; } .landing-meta { inset-inline:20px; font-size:8px; } .nakshatra-visuals { top:69%; right:-16vw; gap:10px; transform:translateY(-50%) rotate(-4deg); } .nakshatra-image-card { width:43vw; } .story-image-placeholder { padding:24px; } .story-notes { gap:6px; } .story-notes span { font-size:8px; } }
