@@ -29,6 +29,9 @@
 - [x] Reduce the main nav height and vertical padding without changing the logo or nav content.
 - [x] Remove the small rotating editorial image block marked in red.
 - [x] Preserve all other landing, hero, collection, and admin behavior.
+- [x] Remove the visible background plate from Asset8 while preserving its black mark.
+- [x] Apply the transparent logo treatment in landing, header, hero, footer, admin, and favicon usage.
+- [x] Validate the logo over both light and dark backgrounds without changing unrelated UI.
 - [ ] Analyze the newly attached lifestyle references and update the visual language toward natural, tactile product storytelling.
 - [x] Add high-quality realistic flower-blur atmosphere assets without making the interface feel decorative or cheap.
 - [x] Replace cropped/vector logo usage with the full supplied PNG logo and scale it up in header, hero, footer, favicon, and admin surfaces.
