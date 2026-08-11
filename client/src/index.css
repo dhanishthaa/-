@@ -321,7 +321,7 @@ em { font-style:italic; }
 .landing-flower-veil { position:absolute; inset:0; z-index:-3; background:radial-gradient(circle at 49% 42%,rgba(245,241,235,.13),transparent 24%),linear-gradient(180deg,rgba(17,17,17,.13),rgba(17,17,17,.48) 73%,rgba(17,17,17,.82)),linear-gradient(90deg,rgba(17,17,17,.32),transparent 58%,rgba(91,13,24,.28)); mix-blend-mode:multiply; }
 .landing-grain { position:absolute; inset:0; z-index:-2; pointer-events:none; opacity:.16; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.42'/%3E%3C/svg%3E"); mix-blend-mode:screen; }
 .landing-header-rail { position:absolute; inset:0 0 auto; height:96px; z-index:0; background:linear-gradient(180deg,rgba(17,17,17,.24),transparent); }
-.ss1-landing .hello-word { left:50%; top:9vh; z-index:2; width:max-content; margin:0; color:rgba(245,241,235,.94); font:400 clamp(90px,17vw,260px)/.9 var(--serif); letter-spacing:-.085em; white-space:nowrap; text-align:center; transform-origin:center top; mix-blend-mode:screen; }
+.ss1-landing .hello-word { left:50%; top:9vh; z-index:2; width:max-content; margin:0; color:rgba(245,241,235,.94); font:400 clamp(78px,14vw,220px)/.9 var(--serif); letter-spacing:-.085em; white-space:nowrap; text-align:center; transform-origin:center top; mix-blend-mode:screen; }
 .ss1-landing .hello-word .hello-type { display:inline-block; width:0; overflow:hidden; white-space:nowrap; vertical-align:bottom; }
 .ss1-landing .hello-word.is-ready .hello-type { animation:ss1-type-hello 1.35s steps(5,end) .15s forwards; }
 .ss1-landing .hello-caret { display:inline-block; width:.045em; height:.78em; margin-left:.08em; vertical-align:-.04em; background:currentColor; opacity:.8; animation:ss1-caret-blink .7s steps(1,end) infinite; }
@@ -330,7 +330,7 @@ em { font-style:italic; }
 .ss1-landing .landing-center { position:absolute; z-index:4; top:57%; left:50%; width:min(520px,calc(100% - 40px)); display:flex; flex-direction:column; align-items:center; text-align:center; opacity:0; transform:translate(-50%,calc(-50% + 26px)); transition:opacity .95s var(--ease),transform .95s var(--ease); }
 .ss1-landing .landing-center.is-ready { opacity:1; transform:translate(-50%,-50%); }
 .landing-logo-plate { display:grid; place-items:center; width:142px; height:108px; padding:0; background:transparent; box-shadow:none; }
-.landing-logo-plate img { width:auto; height:94px; max-width:146px; object-fit:contain; }
+.landing-logo-plate img { width:auto; height:112px; max-width:176px; object-fit:contain; }
 .landing-logo-plate img { filter:invert(1) drop-shadow(0 3px 10px rgba(17,17,17,.72)); }
 .landing-quote { margin:22px 0 0; max-width:460px; color:var(--ivory); font:400 clamp(24px,2.6vw,36px)/1.08 var(--serif); letter-spacing:-.025em; text-shadow:0 2px 16px rgba(17,17,17,.22); }
 .landing-quote span { display:block; }
@@ -370,4 +370,4 @@ em { font-style:italic; }
 .footer-top p { text-transform:none; }
 .footer-links a { text-transform:none; }
 @media (max-width:900px) { .nakshatra-visuals { display:none !important; } }
-@media (max-width:620px) { .ss1-landing { min-height:146svh; } .ss1-landing .hello-word { top:11vh; font-size:clamp(70px,20vw,108px); } .ss1-landing .landing-center { top:60%; } .landing-logo-plate { width:126px; height:96px; } .landing-logo-plate img { height:78px; max-width:112px; } .landing-quote { font-size:24px; } .landing-meta { inset-inline:20px; font-size:8px; } .story-image-placeholder { padding:24px; } .story-notes { gap:6px; } .story-notes span { font-size:8px; } .site-nav { padding-block:6px; } .site-brand img { height:32px; } .home-hero .hero-identity { width:84px; height:52px; margin-bottom:14px; } .home-hero .hero-identity img { height:38px; max-width:66px; } }
+@media (max-width:620px) { .ss1-landing { min-height:146svh; } .ss1-landing .hello-word { top:11vh; font-size:clamp(60px,18vw,94px); } .ss1-landing .landing-center { top:60%; } .landing-logo-plate { width:136px; height:106px; } .landing-logo-plate img { height:94px; max-width:134px; } .landing-quote { font-size:24px; } .landing-meta { inset-inline:20px; font-size:8px; } .story-image-placeholder { padding:24px; } .story-notes { gap:6px; } .story-notes span { font-size:8px; } .site-nav { padding-block:6px; } .site-brand img { height:32px; } .home-hero .hero-identity { width:84px; height:52px; margin-bottom:14px; } .home-hero .hero-identity img { height:38px; max-width:66px; } }
