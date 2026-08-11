@@ -84,3 +84,6 @@
 - [x] Replace the footer descriptor with “estd. 2021” and add the exact isth Instagram redirect.
 - [x] Add a dedicated About section with the corrected lifestyle positioning.
 - [x] Refine the landing scroll handoff into a slow curtain-like upward fold with cinematic blur revealing the main website.
+- [x] Restore the landing page as the true root entry screen at `/`.
+- [x] Restore the requested home navbar order: About, Collection, Contact.
+- [x] Restore the original full-screen HELLO landing composition as the unmistakable first screen at `/`.

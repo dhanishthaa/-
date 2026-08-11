@@ -12,6 +12,7 @@ export default function Landing() {
   const handoff = useRef(false);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const intro = window.setTimeout(() => setReady(true), 260);
     let frame = 0;
     let handoffTimer: number | undefined;
