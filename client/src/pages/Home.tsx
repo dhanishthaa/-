@@ -16,13 +16,6 @@ export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [products, setProducts] = useState<Product[]>(defaultProducts);
   const [videoUrl, setVideoUrl] = useState("");
-  const [navImageIndex, setNavImageIndex] = useState(0);
-  const navImages = [
-    "/manus-storage/isth-nav-flower-01_80fea5d9.png",
-    "/manus-storage/isth-nav-flower-02_e89ec82a.png",
-    "/manus-storage/isth-nav-flower-03_1c9cafd0.png",
-    "/manus-storage/isth-ingredients-editorial_4fe9c8a1.png",
-  ];
 
   useEffect(() => {
     setProducts(readLocalProducts());
@@ -33,11 +26,6 @@ export default function Home() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    const timer = window.setInterval(() => setNavImageIndex((index) => (index + 1) % navImages.length), 4200);
-    return () => window.clearInterval(timer);
-  }, [navImages.length]);
-
   const featured = useMemo(() => products.filter((product) => product.featured).slice(0, 2), [products]);
   const more = useMemo(() => products.filter((product) => !product.featured), [products]);
 
@@ -45,7 +33,6 @@ export default function Home() {
     <header className={`site-nav ${scrolled ? "is-scrolled" : ""}`}>
       <Link href="/home" className="site-brand"><img className="brand-logo brand-logo-dark" src={readLogoUrl()} alt="isth" /></Link>
       <nav className="desktop-nav" aria-label="Main navigation"><a href="#collection">Collection</a><a href="#about">About</a><a href="#contact">Queries</a></nav>
-      <div className="nav-image-rotator" aria-label="isth editorial imagery"><img key={navImages[navImageIndex]} src={navImages[navImageIndex]} alt="" /></div>
       <div className="site-actions"><a className="action-link" href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`} target="_blank" rel="noreferrer"><MessageCircle size={15} /><span>Enquire</span></a><button className="menu-toggle" onClick={() => setMenuOpen((open) => !open)} aria-label={menuOpen ? "Close navigation" : "Open navigation"}>{menuOpen ? <X size={19} /> : <Menu size={19} />}</button></div>
     </header>
     <div className={`mobile-drawer ${menuOpen ? "is-open" : ""}`}><nav><a href="#collection" onClick={() => setMenuOpen(false)}>Collection</a><a href="#about" onClick={() => setMenuOpen(false)}>About</a><a href="#contact" onClick={() => setMenuOpen(false)}>Queries</a></nav></div>

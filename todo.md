@@ -26,6 +26,9 @@
 - [x] Replace every public and admin logo source with the supplied `Asset8.svg` only.
 - [x] Preserve all existing layout, copy, motion, colors, and interactions during the logo-only pass.
 - [x] Verify there are no remaining references to the previous logo assets.
+- [x] Reduce the main nav height and vertical padding without changing the logo or nav content.
+- [x] Remove the small rotating editorial image block marked in red.
+- [x] Preserve all other landing, hero, collection, and admin behavior.
 - [ ] Analyze the newly attached lifestyle references and update the visual language toward natural, tactile product storytelling.
 - [x] Add high-quality realistic flower-blur atmosphere assets without making the interface feel decorative or cheap.
 - [x] Replace cropped/vector logo usage with the full supplied PNG logo and scale it up in header, hero, footer, favicon, and admin surfaces.

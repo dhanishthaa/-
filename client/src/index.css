@@ -301,8 +301,8 @@ em { font-style:italic; }
 .site-nav > * { position:relative; z-index:1; }
 .site-nav.is-scrolled { background:rgba(245,241,235,.68); border-bottom-color:rgba(17,17,17,.12); }
 .site-nav.is-scrolled::after { opacity:.16; }
-.site-nav { min-height:64px; padding-block:13px; }
-.site-brand img { width:auto; height:38px; }
+.site-nav { min-height:52px; padding-block:8px; }
+.site-brand img { width:auto; height:34px; }
 .nav-image-rotator { width:64px; height:30px; overflow:hidden; border:1px solid rgba(245,241,235,.36); opacity:.86; }
 .nav-image-rotator img { width:100%; height:100%; display:block; object-fit:cover; animation:nav-image-in .8s var(--ease) both; }
 .home-hero .hero-identity { display:grid; place-items:center; width:98px; height:62px; margin-bottom:18px; padding:8px 12px; background:rgba(245,241,235,.94); box-shadow:0 14px 34px rgba(0,0,0,.16); }
@@ -363,4 +363,4 @@ em { font-style:italic; }
 .footer-top p { text-transform:none; }
 .footer-links a { text-transform:none; }
 @media (max-width:900px) { .nakshatra-visuals { display:none !important; } }
-@media (max-width:620px) { .ss1-landing { min-height:146svh; } .ss1-landing .hello-word { top:11vh; font-size:clamp(76px,22vw,118px); } .ss1-landing .landing-center { top:60%; } .landing-logo-plate { width:116px; height:88px; } .landing-logo-plate img { height:62px; max-width:90px; } .landing-quote { font-size:22px; } .landing-meta { inset-inline:20px; font-size:8px; } .story-image-placeholder { padding:24px; } .story-notes { gap:6px; } .story-notes span { font-size:8px; } .nav-image-rotator { display:none; } .site-nav { padding-block:9px; } .site-brand img { height:36px; } .home-hero .hero-identity { width:84px; height:52px; margin-bottom:14px; } .home-hero .hero-identity img { height:38px; max-width:66px; } }
+@media (max-width:620px) { .ss1-landing { min-height:146svh; } .ss1-landing .hello-word { top:11vh; font-size:clamp(76px,22vw,118px); } .ss1-landing .landing-center { top:60%; } .landing-logo-plate { width:116px; height:88px; } .landing-logo-plate img { height:62px; max-width:90px; } .landing-quote { font-size:22px; } .landing-meta { inset-inline:20px; font-size:8px; } .story-image-placeholder { padding:24px; } .story-notes { gap:6px; } .story-notes span { font-size:8px; } .site-nav { padding-block:6px; } .site-brand img { height:32px; } .home-hero .hero-identity { width:84px; height:52px; margin-bottom:14px; } .home-hero .hero-identity img { height:38px; max-width:66px; } }
