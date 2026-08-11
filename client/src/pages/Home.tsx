@@ -18,6 +18,7 @@ export default function Home() {
   const [videoUrl, setVideoUrl] = useState("");
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     setProducts(readLocalProducts());
     setVideoUrl(readVideoUrl());
     fetchRemoteProducts().then((remote) => { if (remote?.length) setProducts(remote); });

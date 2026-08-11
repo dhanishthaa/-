@@ -19,12 +19,12 @@ export default function Landing() {
     const onScroll = () => {
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
-        const next = Math.min(1, Math.max(0, window.scrollY / Math.max(1, window.innerHeight * 0.9)));
+        const next = Math.min(1, Math.max(0, window.scrollY / Math.max(1, window.innerHeight * 0.72)));
         setProgress(next);
-        if (next > 0.91 && !handoff.current) {
+        if (next > 0.84 && !handoff.current) {
           handoff.current = true;
           setExiting(true);
-          handoffTimer = window.setTimeout(() => setLocation("/home"), 1580);
+          handoffTimer = window.setTimeout(() => setLocation("/home"), 1120);
         }
       });
     };
@@ -36,7 +36,7 @@ export default function Landing() {
     if (handoff.current) return;
     handoff.current = true;
     setExiting(true);
-    window.setTimeout(() => setLocation("/home"), 1580);
+    window.setTimeout(() => setLocation("/home"), 1120);
   };
   const helloScale = 1 - progress * 0.76;
   const helloY = progress * -54;

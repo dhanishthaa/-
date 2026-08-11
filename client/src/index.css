@@ -399,7 +399,7 @@ em { font-style:italic; }
 .ss1-landing { min-height:205svh; overflow:visible; }
 .ss1-landing .landing-stage { overflow:visible; }
 .ss1-landing .landing-stage::after { content:""; position:absolute; inset:0; z-index:0; background:linear-gradient(90deg,rgba(17,17,17,.82),rgba(17,17,17,.22) 68%,rgba(17,17,17,.48)),linear-gradient(0deg,rgba(17,17,17,.72),transparent 58%),url('/manus-storage/isth-hero-editorial_ed190768.png') center/cover; opacity:.96; }
-.ss1-landing .landing-curtain-surface { position:absolute; inset:0; z-index:2; overflow:hidden; isolation:isolate; transform-origin:50% 0%; transform:translate3d(0,var(--fold-lift),0) scaleY(var(--fold-scale)); filter:blur(var(--fold-blur)); border-radius:0 0 var(--fold-radius) var(--fold-radius); will-change:transform,filter,border-radius; transition:transform 1.52s cubic-bezier(.76,0,.18,1),filter 1.52s cubic-bezier(.76,0,.18,1),border-radius 1.52s cubic-bezier(.76,0,.18,1); }
+.ss1-landing .landing-curtain-surface { position:absolute; inset:0; z-index:2; overflow:hidden; isolation:isolate; transform-origin:50% 0%; transform:translate3d(0,var(--fold-lift),0) scaleY(var(--fold-scale)); filter:blur(var(--fold-blur)); border-radius:0 0 var(--fold-radius) var(--fold-radius); opacity:1; will-change:transform,filter,border-radius,opacity; transition:transform 1.08s cubic-bezier(.76,0,.18,1),filter 1.08s cubic-bezier(.76,0,.18,1),border-radius 1.08s cubic-bezier(.76,0,.18,1),opacity 1.08s cubic-bezier(.76,0,.18,1); }
 .ss1-landing .landing-curtain-surface .landing-flower-search { z-index:0; }
 .ss1-landing .landing-curtain-surface .landing-flower-veil { z-index:1; }
 .ss1-landing .landing-curtain-surface .landing-grain { z-index:2; }
@@ -408,6 +408,6 @@ em { font-style:italic; }
 .ss1-landing .landing-curtain-surface .landing-center { z-index:5; }
 .ss1-landing .landing-curtain-surface .landing-progress { z-index:6; opacity:0; }
 .ss1-landing.is-exiting .landing-stage { animation:none; }
-.ss1-landing.is-exiting .landing-curtain-surface { transform:translate3d(0,-4vh,0) scaleY(.025); filter:blur(24px); border-radius:0 0 44px 44px; }
+.ss1-landing.is-exiting .landing-curtain-surface { transform:translate3d(0,-3vh,0) scaleY(.025); filter:blur(28px); border-radius:0 0 44px 44px; opacity:0; }
 @media (max-width:620px) { .ss1-landing { min-height:190svh; } .ss1-landing .landing-curtain-surface { transition-duration:1.38s; } .ss1-landing.is-exiting .landing-curtain-surface { transform:translate3d(0,-3vh,0) scaleY(.025); } }
 @media (prefers-reduced-motion:reduce) { .ss1-landing .landing-curtain-surface { transition:none; filter:none; transform:none; border-radius:0; } .ss1-landing.is-exiting .landing-curtain-surface { transform:none; opacity:0; } }
