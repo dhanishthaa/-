@@ -49,6 +49,12 @@
 - [x] Set the home nav sequence to Collection, About, Contact.
 - [x] Replace the nav Queries label with Contact.
 - [x] Make the hero isth logo substantially larger, approximately double its current visible scale.
+- [x] Remove the Enquire action from the navbar.
+- [x] Set footer Explore order to About, The Collection, Nakshatra Collection.
+- [x] Change every public “WhatsApp the house” CTA label to “Queries”.
+- [x] Remove the “Composed in India” hero caption.
+- [x] Fix the hero image/caption overflow at the bottom-right edge.
+- [x] Enlarge the hero isth logo again.
 - [ ] Analyze the newly attached lifestyle references and update the visual language toward natural, tactile product storytelling.
 - [x] Add high-quality realistic flower-blur atmosphere assets without making the interface feel decorative or cheap.
 - [x] Replace cropped/vector logo usage with the full supplied PNG logo and scale it up in header, hero, footer, favicon, and admin surfaces.
