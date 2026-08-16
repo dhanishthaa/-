@@ -1,10 +1,11 @@
 // Quiet Atelier style reminder: the storefront is an asymmetric editorial sequence, not a generic product grid.
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowDown, ArrowRight, Menu, MessageCircle, MoveUpRight, X } from "lucide-react";
 import { Link } from "wouter";
 import Reveal from "@/components/Reveal";
 import ProductBottle from "@/components/ProductBottle";
-import { Dialog, DialogClose, DialogContent } from "@/components/ui/dialog";
+import ProductBottleVisual from "@/components/ProductBottleVisual";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { defaultProducts, readLocalProducts, type Product } from "@/data/products";
 import { fetchRemoteProducts } from "@/lib/supabase";
 import { DEFAULT_WHATSAPP_NUMBER, DEFAULT_WHATSAPP_TEXT, INSTAGRAM_URL, readLogoUrl, readVideoUrl } from "@/data/brand";
@@ -18,6 +19,8 @@ export default function Home() {
   const [products, setProducts] = useState<Product[]>(defaultProducts);
   const [videoUrl, setVideoUrl] = useState("");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [productDialogOpen, setProductDialogOpen] = useState(false);
+  const closeTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -31,6 +34,22 @@ export default function Home() {
 
   const featured = useMemo(() => products.filter((product) => product.featured).slice(0, 2), [products]);
   const more = useMemo(() => products.filter((product) => !product.featured), [products]);
+
+  const openProduct = (product: Product) => {
+    if (closeTimerRef.current) window.clearTimeout(closeTimerRef.current);
+    setSelectedProduct(product);
+    setProductDialogOpen(true);
+  };
+
+  const closeProduct = () => {
+    setProductDialogOpen(false);
+    if (closeTimerRef.current) window.clearTimeout(closeTimerRef.current);
+    const closingId = selectedProduct?.id;
+    closeTimerRef.current = window.setTimeout(() => {
+      setSelectedProduct((current) => current?.id === closingId ? null : current);
+      closeTimerRef.current = null;
+    }, 260);
+  };
 
   return <div className="site-shell editorial-home">
     <header className={`site-nav ${scrolled ? "is-scrolled" : ""}`}>
@@ -49,9 +68,9 @@ export default function Home() {
 
       <section className="intro-strip"><Reveal><h2>For the moment<br /><em>that stays.</em></h2></Reveal><Reveal delay={100}><p className="intro-copy">A considered collection of ten fragrances for the rituals, rooms, and people that make a day feel like your own.</p></Reveal></section>
       <section id="collection" className="collection-section"><div className="section-heading"><Reveal><h2>Find your<br /><em>signature.</em></h2></Reveal><Reveal delay={80}><p>Each isth composition is made to be worn close. Browse by feeling, not by family.</p></Reveal></div><Reveal className="collection-editorial-photo" delay={100}><div aria-hidden="true" /></Reveal>
-        <div className="featured-grid">{featured.map((product, index) => <Reveal key={product.id} delay={index * 80}><ProductBottle product={product} onOpen={setSelectedProduct} /></Reveal>)}<Reveal delay={150} className="collection-note"><div className="note-card"><h3>Not a perfume<br /><em>for everyone.</em></h3><p>It is a signature for the person who found it.</p><a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`} target="_blank" rel="noreferrer">Ask the house <MoveUpRight size={14} /></a></div></Reveal></div>
+        <div className="featured-grid">{featured.map((product, index) => <Reveal key={product.id} delay={index * 80}><ProductBottle product={product} onOpen={openProduct} /></Reveal>)}<Reveal delay={150} className="collection-note"><div className="note-card"><h3>Not a perfume<br /><em>for everyone.</em></h3><p>It is a signature for the person who found it.</p><a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`} target="_blank" rel="noreferrer">Ask the house <MoveUpRight size={14} /></a></div></Reveal></div>
         <div className="catalog-heading"><div><p className="eyebrow">More compositions</p></div><p className="catalog-note">The rest of the library opens in its own time.</p></div>
-        <div className="catalog-grid">{more.map((product, index) => <Reveal key={product.id} delay={(index % 3) * 60}><ProductBottle product={product} compact onOpen={setSelectedProduct} /></Reveal>)}</div>
+        <div className="catalog-grid">{more.map((product, index) => <Reveal key={product.id} delay={(index % 3) * 60}><ProductBottle product={product} compact onOpen={openProduct} /></Reveal>)}</div>
       </section>
 
       <section className="quote-video-section"><div className="quote-video-backdrop" aria-hidden="true">{videoUrl ? <video src={videoUrl} autoPlay muted loop playsInline /> : null}</div><div className="quote-video-copy"><h2><span>Embrace the fragrance.</span><span>Become isth.</span></h2><a className="cherry-button" href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`} target="_blank" rel="noreferrer"><MessageCircle size={17} /> Queries</a></div></section>
@@ -62,14 +81,24 @@ export default function Home() {
 
       <section id="contact" className="contact-section"><div><p className="eyebrow">Queries</p><h2>Come a little<br /><em>closer.</em></h2></div><div className="contact-details"><p>For product details, stockist enquiries, or simply to find the note that fits, speak with us directly.</p><a className="cherry-button" href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`} target="_blank" rel="noreferrer"><MessageCircle size={15} /> Queries</a><a className="text-link" href="mailto:isth.support@gmail.com">isth.support@gmail.com <MoveUpRight size={13} /></a></div></section>
     </main>
-    <Dialog open={Boolean(selectedProduct)} onOpenChange={(open) => { if (!open) setSelectedProduct(null); }}>
-      {selectedProduct && <DialogContent className="product-dialog" showCloseButton={false} aria-label={`${selectedProduct.name} details`}>
-        <DialogClose className="dialog-close" aria-label="Close product details">×</DialogClose>
-        <span className="eyebrow">isth / {selectedProduct.collection}</span>
-        <h2>{selectedProduct.name}</h2>
-        <p className="dialog-notes">{selectedProduct.notes}</p>
-        <p>{selectedProduct.description}</p>
-        <a className="cherry-button" href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`${whatsappText} I’m interested in ${selectedProduct.name}.`)}`} target="_blank" rel="noreferrer"><MessageCircle size={15} /> Ask about this scent</a>
+    <Dialog open={productDialogOpen} onOpenChange={(open) => { if (!open) closeProduct(); }}>
+      {selectedProduct && <DialogContent forceMount className="product-dialog" showCloseButton={false} aria-label={`${selectedProduct.name} details`}>
+        <DialogClose className="dialog-close" aria-label="Close product details"><X size={19} strokeWidth={1.4} /><span className="sr-only">Close product details</span></DialogClose>
+        <div className="product-dialog-layout">
+          <div className="dialog-product-media">
+            <ProductBottleVisual product={selectedProduct} modal />
+          </div>
+          <div className="product-dialog-copy">
+            <span className="dialog-size">{selectedProduct.size}</span>
+            <DialogTitle className="product-dialog-title">{selectedProduct.name}</DialogTitle>
+            <div className="dialog-specs">
+              <div><span>Notes</span><p className="dialog-notes">{selectedProduct.notes}</p></div>
+              <div><span>Composition</span><p className="dialog-description">{selectedProduct.description}</p></div>
+            </div>
+            <DialogDescription className="product-dialog-description">Worn close, then left to open slowly on the skin.</DialogDescription>
+            <a className="cherry-button" href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`${whatsappText} I’m interested in ${selectedProduct.name}.`)}`} target="_blank" rel="noreferrer"><MessageCircle size={15} /> Ask about this scent</a>
+          </div>
+        </div>
       </DialogContent>}
     </Dialog>
     <footer className="site-footer"><div className="footer-top"><div><a href="/home" className="footer-brand"><img className="brand-logo brand-logo-dark" src={readLogoUrl()} alt="isth" /></a><p>estd. 2021</p></div><div className="footer-links"><div><span>Explore</span><Link href="/about">About</Link><a href="#collection">The Collection</a><a href="#nakshatra">Nakshatra Collection</a></div><div><span>Direct</span><a href="mailto:isth.support@gmail.com">Email</a><a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noreferrer">WhatsApp</a><a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">Instagram</a></div></div></div><div className="footer-bottom"><span>© 2026 isth Fragrance House</span><span>Gujarat, India / Mon–Sat, 10am–7pm IST</span><span>Privacy · Terms</span></div></footer>

@@ -42,9 +42,19 @@ describe("isth editorial page integrity", () => {
   it("uses a controlled shared dialog for reliable product details dismissal", () => {
     const home = readProjectFile("client/src/pages/Home.tsx");
 
-    expect(home).toContain('import { Dialog, DialogClose, DialogContent } from "@/components/ui/dialog";');
-    expect(home).toContain('<Dialog open={Boolean(selectedProduct)} onOpenChange={(open) => { if (!open) setSelectedProduct(null); }}>');
-    expect(home).toContain('<DialogClose className="dialog-close" aria-label="Close product details">×</DialogClose>');
+    const visual = readProjectFile("client/src/components/ProductBottleVisual.tsx");
+    const styles = readProjectFile("client/src/index.css");
+    const admin = readProjectFile("client/src/pages/Admin.tsx");
+
+    expect(home).toContain('import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";');
+    expect(home).toContain('<Dialog open={productDialogOpen} onOpenChange={(open) => { if (!open) closeProduct(); }}>');
+    expect(home).toContain('<DialogClose className="dialog-close" aria-label="Close product details">');
+    expect(home).toContain('<DialogTitle className="product-dialog-title">{selectedProduct.name}</DialogTitle>');
+    expect(home).not.toContain('isth / {selectedProduct.collection}');
     expect(home).not.toContain('window.addEventListener("keydown", onKeyDown)');
+    expect(visual).toContain('Image placeholder · editable in admin');
+    expect(admin).toContain('label className="wide">Image URL<input');
+    expect(styles).toContain("@keyframes product-dialog-in");
+    expect(styles).toContain("@keyframes product-dialog-out");
   });
 });

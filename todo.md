@@ -151,3 +151,8 @@ Author: Manus AI
 - [x] Make About hero metadata “Established 2021 · Gujarat, India” solid Cherry red only, with no white highlight, gradient, or shadow.
 - [x] Make the product-details modal cross button close reliably on smartphone touch taps while preserving desktop, backdrop, and Escape closure.
 - [x] Rebuild product-dialog dismissal for every product card so cross button, outside tap/click, and Escape close consistently on mobile and desktop.
+- [x] Remove the "isth / SIGNATURE" label from the product details modal.
+- [x] Add smooth fade-in and fade-out transitions when opening and closing the product details modal.
+- [x] Improve the product modal layout to display the bottle image alongside the size/notes metadata for a more appealing presentation.
+- [x] Ensure all product displays have image placeholders that can be changed via the admin panel.
+- [x] Perform a comprehensive responsive and quality audit across all breakpoints (mobile, tablet, desktop) to fix any remaining bugs or layout issues.

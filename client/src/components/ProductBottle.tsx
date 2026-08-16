@@ -1,7 +1,7 @@
-// Quiet Atelier style reminder: product objects are tactile, softly lit, and intentionally not over-rendered.
 import { type CSSProperties } from "react";
 import { ArrowUpRight, MessageCircle } from "lucide-react";
 import type { Product } from "@/data/products";
+import ProductBottleVisual from "@/components/ProductBottleVisual";
 
 const whatsappNumber = "917859898490";
 const whatsappText = "Hi, can I please get more details on your product?";
@@ -12,7 +12,7 @@ export default function ProductBottle({ product, compact = false, onOpen }: { pr
   return (
     <article className={`product-card ${product.featured ? "is-featured" : ""} ${compact ? "is-compact" : ""}`} style={{ "--product-tone": product.color } as CSSProperties}>
       <button className="product-visual" onClick={() => onOpen?.(product)} aria-label={`View details for ${product.name}`}>
-        {product.image ? <img src={product.image} alt="" loading="lazy" /> : <div className="bottle-stage" aria-hidden="true"><div className="bottle-cap" /><div className="bottle-body"><span>isth</span><small>EAU DE PARFUM</small></div></div>}
+        <ProductBottleVisual product={product} />
         <span className="product-open"><ArrowUpRight size={16} strokeWidth={1.4} /></span>
       </button>
       <div className="product-card-copy">
