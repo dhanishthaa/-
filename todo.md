@@ -163,3 +163,4 @@ Author: Manus AI
 - [x] Remove the eyebrow dash before “The House of isth” on the About page.
 - [x] Align product-modal Notes and Composition labels and values to one stable responsive column system across desktop, tablet, and smartphone widths.
 - [x] Remove catalog-card vertical staggering so all product cards align cleanly in even rows across desktop, tablet, and smartphone viewports.
+- [x] Align Notes and Composition labels and values to a strict baseline-aligned responsive column across all product modals and screen sizes.

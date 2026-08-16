@@ -59,5 +59,7 @@ describe("isth editorial page integrity", () => {
     expect(styles).toContain("@keyframes product-dialog-out");
     expect(styles).toContain(".bottle-placeholder { position:relative; width:100%; height:100%; display:grid; place-items:center; }");
     expect(styles).toContain("width:min(760px,calc(100% - 32px))");
+    expect(styles).toContain("grid-template-columns:104px minmax(0,1fr)");
+    expect(styles).toContain("align-items:baseline");
   });
 });
