@@ -20,20 +20,20 @@ export default function About() {
   return (
     <div className="site-shell bg-[#F5F1EB] text-[#111111] font-sans selection:bg-[#5B0D18] selection:text-[#F5F1EB]">
       {/* Navbar - Exactly matching Home site-nav with absolute centering across screen sizes */}
-      <header className={`site-nav is-scrolled ${scrolled ? "is-scrolled" : ""}`} style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 30, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "24px clamp(20px,4vw,56px)", background: "rgba(245,241,235,0.92)", backdropFilter: "blur(14px)", borderBottom: "1px solid rgba(17,17,17,0.14)", color: "#111111" }}>
-        <Link href="/home" className="site-brand flex items-center gap-2">
-          <img className="brand-logo brand-logo-dark" src={readLogoUrl()} alt="isth" style={{ height: "22px", width: "auto", objectFit: "contain" }} />
+      <header className={`site-nav is-scrolled ${scrolled ? "is-scrolled" : ""}`}>
+        <Link href="/home" className="site-brand">
+          <img className="brand-logo brand-logo-dark" src={readLogoUrl()} alt="isth" />
         </Link>
-        <nav className="desktop-nav" aria-label="Main navigation" style={{ position: "absolute", left: "50%", transform: "translateX(-50%)", display: "flex", gap: "34px", fontFamily: "'IBM Plex Mono', monospace", fontSize: "10px", letterSpacing: ".16em", textTransform: "uppercase" }}>
-          <Link href="/about" style={{ color: "#5B0D18", fontWeight: 600 }}>About</Link>
+        <nav className="desktop-nav" aria-label="Main navigation" style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '34px', font: '10px var(--mono)', letterSpacing: '.16em', textTransform: 'uppercase' }}>
+          <Link href="/about" style={{ color: "var(--cherry)", fontWeight: 600 }}>About</Link>
           <Link href="/home#collection">Collection</Link>
           <Link href="/home#contact">Contact</Link>
         </nav>
-        <div className="site-actions flex items-center gap-5">
-          <Link href="/home" className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.14em] font-mono px-3.5 py-1.5 border border-[#111111]/20 rounded-full hover:bg-[#111111] hover:text-[#F5F1EB] transition-all">
+        <div className="site-actions">
+          <Link href="/home" className="action-link" style={{ fontSize: '10px', fontFamily: 'var(--mono)', letterSpacing: '.14em', textTransform: 'uppercase', padding: '6px 14px', border: '1px solid var(--line)', borderRadius: '999px' }}>
             Back to Home
           </Link>
-          <button className="menu-toggle md:hidden" onClick={() => setMenuOpen((open) => !open)} aria-label={menuOpen ? "Close navigation" : "Open navigation"}>
+          <button className="menu-toggle" onClick={() => setMenuOpen((open) => !open)} aria-label={menuOpen ? "Close navigation" : "Open navigation"}>
             {menuOpen ? <X size={19} /> : <Menu size={19} />}
           </button>
         </div>
