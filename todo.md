@@ -114,6 +114,7 @@
 - [x] Remove every unnecessary decorative frame, circle, outline, border, and box treatment from the Home and About editorial pass before applying the new image-led design.
 - [x] Audit and remove any remaining non-functional decorative pseudo-elements, circles, outlines, and borders from the Home and About correction pass before marking frame removal complete.
 - [x] Force-reset the smartphone landing state and hold the cherry SS1 signature-writing sequence before any completed floral landing render.
+- [x] Match the mobile SS1 cherry gradient, frost, and fine-grain background exactly to the desktop opening treatment.
 
 ## Follow-up scope
 - [x] Analyze the newly attached lifestyle references and update the visual language toward natural, tactile product storytelling.

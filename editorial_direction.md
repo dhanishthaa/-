@@ -85,3 +85,7 @@ The obsolete frame-heavy Home/About CSS block has now been deleted rather than m
 ## Mobile SS1 Lifecycle Check
 
 The landing lifecycle now explicitly resets its ready, signature-complete, progress, and exiting states on entry and on a persisted mobile page restore. Smartphone first-load verification shows the full cherry SS1 field and signature mark before the delayed floral completed state; the mobile hold is intentionally longer than desktop so the opening cannot be skipped.
+
+## Mobile SS1 Gradient Parity Check
+
+The smartphone first-load SS1 now explicitly uses the same layered #5B0D18 cherry gradient, broad frosted wash, and fine grain as the desktop opening. Verification confirms the mobile screen no longer begins from a flat cherry surface before the signature sequence.
