@@ -50,10 +50,10 @@ export default function Home() {
   return <div className="site-shell">
     <header className={`site-nav ${scrolled ? "is-scrolled" : ""}`}>
       <Link href="/home" className="site-brand"><img className="brand-logo brand-logo-dark" src={readLogoUrl()} alt="isth" /></Link>
-      <nav className="desktop-nav" aria-label="Main navigation"><a href="#about">About</a><a href="#collection">Collection</a><a href="#contact">Contact</a></nav>
+      <nav className="desktop-nav" aria-label="Main navigation"><Link href="/about">About</Link><a href="#collection">Collection</a><a href="#contact">Contact</a></nav>
       <div className="site-actions"><button className="menu-toggle" onClick={() => setMenuOpen((open) => !open)} aria-label={menuOpen ? "Close navigation" : "Open navigation"}>{menuOpen ? <X size={19} /> : <Menu size={19} />}</button></div>
     </header>
-    <div className={`mobile-drawer ${menuOpen ? "is-open" : ""}`}><nav><a href="#about" onClick={() => setMenuOpen(false)}>About</a><a href="#collection" onClick={() => setMenuOpen(false)}>Collection</a><a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a></nav></div>
+    <div className={`mobile-drawer ${menuOpen ? "is-open" : ""}`}><nav><Link href="/about" onClick={() => setMenuOpen(false)}>About</Link><a href="#collection" onClick={() => setMenuOpen(false)}>Collection</a><a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a></nav></div>
 
     <main>
       <section className="home-hero">
@@ -87,6 +87,6 @@ export default function Home() {
         <a className="cherry-button" href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`${whatsappText} I’m interested in ${selectedProduct.name}.`)}`} target="_blank" rel="noreferrer"><MessageCircle size={15} /> Ask about this scent</a>
       </div>
     </div>}
-    <footer className="site-footer"><div className="footer-top"><div><a href="/home" className="footer-brand"><img className="brand-logo brand-logo-dark" src={readLogoUrl()} alt="isth" /></a><p>estd. 2021</p></div><div className="footer-links"><div><span>Explore</span><a href="#about">About</a><a href="#collection">The Collection</a><a href="#nakshatra">Nakshatra Collection</a></div><div><span>Direct</span><a href="mailto:isth.support@gmail.com">Email</a><a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noreferrer">WhatsApp</a><a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">Instagram</a></div></div></div><div className="footer-bottom"><span>© 2026 isth Fragrance House</span><span>Gujarat, India / Mon–Sat, 10am–7pm IST</span><span>Privacy · Terms</span></div></footer>
+    <footer className="site-footer"><div className="footer-top"><div><a href="/home" className="footer-brand"><img className="brand-logo brand-logo-dark" src={readLogoUrl()} alt="isth" /></a><p>estd. 2021</p></div><div className="footer-links"><div><span>Explore</span><Link href="/about">About</Link><a href="#collection">The Collection</a><a href="#nakshatra">Nakshatra Collection</a></div><div><span>Direct</span><a href="mailto:isth.support@gmail.com">Email</a><a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noreferrer">WhatsApp</a><a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">Instagram</a></div></div></div><div className="footer-bottom"><span>© 2026 isth Fragrance House</span><span>Gujarat, India / Mon–Sat, 10am–7pm IST</span><span>Privacy · Terms</span></div></footer>
   </div>;
 }
