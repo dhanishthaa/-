@@ -97,3 +97,5 @@
 - [x] Move the landing quote and Explore the Collection CTA clearly lower beneath the signature.
 - [x] Apply and visually confirm exact #5B0D18 with fine grain during the signature typing state.
 - [x] Remove the light-grey square patch behind the animated signature without changing the completed floral landing state.
+- [x] Add visible fine grain and a glass-frost blur treatment to the SS1 cherry signature-writing background.
+- [x] Reframe SS2 with the supplied lily floral background so it fills each screen without stretching.
