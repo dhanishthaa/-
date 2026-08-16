@@ -105,3 +105,4 @@
 - [x] Verify product dialog closure by × button, backdrop click, and Escape key.
 - [x] Centralize product dialog selection so switching between product details does not create competing modal states.
 - [x] Stabilize dialog scroll locking and verify product-to-product interaction has no screen jitter.
+- [x] Make the Nakshatra “Coming soon — isth” badge a sharp-cornered rectangle.

@@ -101,7 +101,7 @@ em { font-style:italic; }
 .nakshatra-inner p { max-width:310px; margin:34px 0; color:rgba(245,241,235,.7); font-size:15px; }
 .coming-soon { display:flex; gap:13px; align-items:center; color:var(--gold); font:10px var(--mono); letter-spacing:.15em; text-transform:uppercase; }
 .coming-soon span { color:var(--ivory); opacity:.5; }
-.coming-soon { min-width:min(420px,100%); justify-content:center; gap:18px; margin-top:34px; padding:20px 30px; border:1px solid rgba(255,255,255,.24); border-radius:10px; color:#fff; background:rgba(255,255,255,.11); box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 18px 44px rgba(0,0,0,.24); backdrop-filter:blur(22px) saturate(125%); font:600 clamp(17px,2vw,24px)/1 var(--sans); letter-spacing:.12em; text-transform:uppercase; }
+.coming-soon { min-width:min(420px,100%); justify-content:center; gap:18px; margin-top:34px; padding:20px 30px; border:1px solid rgba(255,255,255,.24); border-radius:0; color:#fff; background:rgba(255,255,255,.11); box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 18px 44px rgba(0,0,0,.24); backdrop-filter:blur(22px) saturate(125%); font:600 clamp(17px,2vw,24px)/1 var(--sans); letter-spacing:.12em; text-transform:uppercase; }
 .coming-soon span { color:#fff; opacity:.48; }
 .story-section,.story-image { overflow:hidden; }
 @media (max-width:620px) { .coming-soon { min-width:0; width:100%; padding:17px 20px; font-size:14px; letter-spacing:.08em; } }
