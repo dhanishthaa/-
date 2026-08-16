@@ -22,5 +22,20 @@ describe("isth editorial page integrity", () => {
     expect(about).toContain("Philosophy of the Scent");
     expect(about).toContain("Craft &amp; Composition");
     expect(about).toContain('href="/home#collection"');
+    expect(about).toContain('window.scrollTo({ top: 0, left: 0, behavior: "auto" })');
+  });
+
+  it("keeps the mobile landing sequence on the desktop timing and clears its boot chrome", () => {
+    const landing = readProjectFile("client/src/pages/Landing.tsx");
+    const styles = readProjectFile("client/src/index.css");
+
+    expect(landing).toContain("signatureTimer = window.setTimeout");
+    expect(landing).toContain("}, 2420);");
+    expect(landing).not.toContain("isPhone ? 4600 : 2420");
+    expect(landing).toContain('setLandingChrome(false)');
+    expect(landing).toContain('setBrowserThemeColor(active ? LANDING_EDGE : SITE_IVORY)');
+    expect(styles).toContain(".ss1-landing.signature-complete .landing-curtain-surface { background:transparent; }");
+    expect(styles).toContain(".about-feature-mark p { margin:0; color:#5B0D18;");
+    expect(styles).toContain("text-shadow:none;");
   });
 });

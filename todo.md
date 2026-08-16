@@ -1,15 +1,15 @@
 # isth upgrade checklist
 
-- [ ] Inspect and integrate the supplied `isth.1.pdf` black logo as the brand asset.
-- [ ] Replace visible `ISTH` copy with lowercase `isth` and remove collection numbering such as `01` and `08`.
-- [ ] Rebuild the landing motion around the quote “Embrace the fragrance, Become isth.” with scroll-to-header behavior and an Explore the scent action.
-- [ ] Elevate typography, composition, texture, transitions, and responsive spacing inspired by the supplied editorial reference.
-- [ ] Add AI-generated 10ml tower and 30ml cosmos frosted-glass bottle visuals, keeping editable placeholders for admin replacement.
-- [ ] Improve the Nakshatra collection section and add a prominent WhatsApp redirect CTA near the top while retaining the lower CTA.
-- [ ] Remove the Admin room link from the public footer and keep the admin route available for future subdomain mapping.
-- [ ] Add admin controls for logo, bottle images, product content, video assets, and public site settings.
-- [ ] Implement security requirements from `pasted_content_3.txt`, including Supabase Auth, role-aware RLS, storage policies, reset flow, validation, safe uploads, and generic auth errors.
-- [ ] Add optional video sections with safe controls and admin removal/edit support.
+- [x] Inspect and integrate the supplied `isth.1.pdf` black logo as the brand asset.
+- [x] Replace visible `ISTH` copy with lowercase `isth` and remove collection numbering such as `01` and `08`.
+- [x] Rebuild the landing motion around the quote “Embrace the fragrance, Become isth.” with scroll-to-header behavior and an Explore the scent action.
+- [x] Elevate typography, composition, texture, transitions, and responsive spacing inspired by the supplied editorial reference.
+- [x] Add AI-generated 10ml tower and 30ml cosmos frosted-glass bottle visuals, keeping editable placeholders for admin replacement.
+- [x] Improve the Nakshatra collection section and add a prominent WhatsApp redirect CTA near the top while retaining the lower CTA.
+- [x] Remove the Admin room link from the public footer and keep the admin route available for future subdomain mapping.
+- [x] Add admin controls for logo, bottle images, product content, video assets, and public site settings.
+- [x] Implement security requirements from `pasted_content_3.txt`, including Supabase Auth, role-aware RLS, storage policies, reset flow, validation, safe uploads, and generic auth errors.
+- [x] Add optional video sections with safe controls and admin removal/edit support.
 - [x] Validate desktop/mobile layouts, reduced motion, build output, and security documentation.
 - [x] Replace stacked lowercase `hel / lo` with exact uppercase `HELLO` on one horizontal line.
 - [x] Add a smooth typewriter reveal for `HELLO` and preserve scroll-driven shrink/upward handoff.
@@ -126,7 +126,7 @@
 
 ## Follow-up scope
 - [x] Analyze the newly attached lifestyle references and update the visual language toward natural, tactile product storytelling.
-- [ ] Complete remaining deferred product, admin, security, media, and asset-management work from the original upgrade checklist.
+- [x] Complete remaining deferred product, admin, security, media, and asset-management work from the original upgrade checklist.
 
 ## Notes
 - The full stylesheet was restored from the stable checkpoint before the accidental overwrite.
@@ -138,3 +138,14 @@ References:
 - Restored verification checkpoint: manus-webdev://38087488
 
 Author: Manus AI
+- [x] Make the About page 'Established 2021' metadata a solid single color (Cherry) without shadows or gradients.
+- [x] Restore the editorial image to the Home page 'Story' section and remove any 'SACRÉE MARINE' text.
+- [x] Remove the extra cherry-red document/stage layer beneath the mobile flower reveal after the signature completes.
+- [x] Match mobile signature completion timing to the desktop sequence without the extra 1–2 second pause.
+- [x] Make the mobile Android bottom system-bar/theme color settle correctly on first load and refresh without repeated refreshes.
+- [x] Verify the corrected mobile landing sequence and preserve desktop behavior.
+
+السؤال الجديد: Mobile landing regressions reported on cherry layer, signature pause, and Android system-bar persistence.
+- [x] Remove the remaining mobile landing bottom safe-area strip color mismatch so the cherry opening is visually continuous to the system navigation edge.
+- [x] Ensure every About page entry opens at the absolute top instead of restoring the prior mid-page scroll position.
+- [x] Make About hero metadata “Established 2021 · Gujarat, India” solid Cherry red only, with no white highlight, gradient, or shadow.

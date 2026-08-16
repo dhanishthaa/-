@@ -10,6 +10,7 @@ export default function About() {
   const whatsappText = DEFAULT_WHATSAPP_TEXT;
 
   useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
     const handleScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);

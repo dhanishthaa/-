@@ -4,8 +4,24 @@ import { ArrowRight } from "lucide-react";
 import { useLocation } from "wouter";
 import { readLogoUrl } from "@/data/brand";
 
+const LANDING_CHERRY = "#5B0D18";
+const LANDING_EDGE = "#38050d";
+const SITE_IVORY = "#F5F1EB";
+
+function setBrowserThemeColor(color: string) {
+  document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')?.setAttribute("content", color);
+}
+
+function setLandingChrome(active: boolean) {
+  document.documentElement.classList.toggle("isth-landing-boot", active);
+  // Android paints the safe-area/navigation strip from theme-color. Use the
+  // darkest landing-gradient edge so it visually continues the cherry surface.
+  setBrowserThemeColor(active ? LANDING_EDGE : SITE_IVORY);
+}
+
 export default function Landing() {
   const [, setLocation] = useLocation();
+  const restoreSiteChrome = () => setLandingChrome(false); 
   const [ready, setReady] = useState(false);
   const [signatureComplete, setSignatureComplete] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -21,15 +37,20 @@ export default function Landing() {
     };
     const startSequence = () => {
       clearSequence();
+      setLandingChrome(true);
       handoff.current = false;
       setReady(false);
       setSignatureComplete(false);
       setProgress(0);
       setExiting(false);
       window.scrollTo(0, 0);
-      const isPhone = window.matchMedia("(max-width: 620px)").matches;
       intro = window.setTimeout(() => setReady(true), 280);
-      signatureTimer = window.setTimeout(() => setSignatureComplete(true), isPhone ? 4600 : 2420);
+      signatureTimer = window.setTimeout(() => {
+        setSignatureComplete(true);
+        // Once the flower reveal begins, the temporary cherry first-paint layer
+        // must no longer sit beneath it or persist into /home on mobile.
+        restoreSiteChrome();
+      }, 2420);
     };
     startSequence();
     let frame = 0;
@@ -51,13 +72,14 @@ export default function Landing() {
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("pageshow", onPageShow);
-    return () => { clearSequence(); if (handoffTimer) window.clearTimeout(handoffTimer); cancelAnimationFrame(frame); window.removeEventListener("scroll", onScroll); window.removeEventListener("pageshow", onPageShow); };
+    return () => { clearSequence(); if (handoffTimer) window.clearTimeout(handoffTimer); cancelAnimationFrame(frame); window.removeEventListener("scroll", onScroll); window.removeEventListener("pageshow", onPageShow); restoreSiteChrome(); };
   }, [setLocation]);
 
   const goToCollection = () => {
     if (handoff.current) return;
     handoff.current = true;
     setExiting(true);
+    restoreSiteChrome();
     window.setTimeout(() => setLocation("/home"), 1120);
   };
   const ss1Gradient = "radial-gradient(ellipse 72% 88% at 13% 22%, rgba(181,70,88,.68) 0%, rgba(181,70,88,0) 58%), radial-gradient(ellipse 72% 82% at 88% 84%, rgba(35,3,10,.58) 0%, rgba(35,3,10,0) 63%), linear-gradient(128deg, #8b2435 0%, #6f1221 38%, #5B0D18 62%, #38050d 100%)";
