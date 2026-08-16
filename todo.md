@@ -150,3 +150,4 @@ Author: Manus AI
 - [x] Ensure every About page entry opens at the absolute top instead of restoring the prior mid-page scroll position.
 - [x] Make About hero metadata “Established 2021 · Gujarat, India” solid Cherry red only, with no white highlight, gradient, or shadow.
 - [x] Make the product-details modal cross button close reliably on smartphone touch taps while preserving desktop, backdrop, and Escape closure.
+- [x] Rebuild product-dialog dismissal for every product card so cross button, outside tap/click, and Escape close consistently on mobile and desktop.

@@ -4,6 +4,7 @@ import { ArrowDown, ArrowRight, Menu, MessageCircle, MoveUpRight, X } from "luci
 import { Link } from "wouter";
 import Reveal from "@/components/Reveal";
 import ProductBottle from "@/components/ProductBottle";
+import { Dialog, DialogClose, DialogContent } from "@/components/ui/dialog";
 import { defaultProducts, readLocalProducts, type Product } from "@/data/products";
 import { fetchRemoteProducts } from "@/lib/supabase";
 import { DEFAULT_WHATSAPP_NUMBER, DEFAULT_WHATSAPP_TEXT, INSTAGRAM_URL, readLogoUrl, readVideoUrl } from "@/data/brand";
@@ -27,22 +28,6 @@ export default function Home() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  useEffect(() => {
-    if (!selectedProduct) return;
-    const html = document.documentElement;
-    const body = document.body;
-    const previousHtmlOverflow = html.style.overflow;
-    const previousBodyOverflow = body.style.overflow;
-    const previousBodyPadding = body.style.paddingRight;
-    const scrollbarWidth = window.innerWidth - html.clientWidth;
-    html.style.overflow = "hidden";
-    body.style.overflow = "hidden";
-    if (scrollbarWidth > 0) body.style.paddingRight = `${scrollbarWidth}px`;
-    const onKeyDown = (event: KeyboardEvent) => { if (event.key === "Escape") setSelectedProduct(null); };
-    window.addEventListener("keydown", onKeyDown);
-    return () => { html.style.overflow = previousHtmlOverflow; body.style.overflow = previousBodyOverflow; body.style.paddingRight = previousBodyPadding; window.removeEventListener("keydown", onKeyDown); };
-  }, [Boolean(selectedProduct)]);
 
   const featured = useMemo(() => products.filter((product) => product.featured).slice(0, 2), [products]);
   const more = useMemo(() => products.filter((product) => !product.featured), [products]);
@@ -77,16 +62,16 @@ export default function Home() {
 
       <section id="contact" className="contact-section"><div><p className="eyebrow">Queries</p><h2>Come a little<br /><em>closer.</em></h2></div><div className="contact-details"><p>For product details, stockist enquiries, or simply to find the note that fits, speak with us directly.</p><a className="cherry-button" href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`} target="_blank" rel="noreferrer"><MessageCircle size={15} /> Queries</a><a className="text-link" href="mailto:isth.support@gmail.com">isth.support@gmail.com <MoveUpRight size={13} /></a></div></section>
     </main>
-    {selectedProduct && <div className="product-dialog-backdrop" role="presentation" onPointerDown={(event) => { if (event.target === event.currentTarget) setSelectedProduct(null); }}>
-      <div className="product-dialog" role="dialog" aria-modal="true" aria-label={`${selectedProduct.name} details`} onPointerDown={(event) => event.stopPropagation()}>
-        <button type="button" className="dialog-close" onTouchEnd={(event) => { event.stopPropagation(); setSelectedProduct(null); }} onClick={(event) => { event.stopPropagation(); setSelectedProduct(null); }} aria-label="Close product details">×</button>
+    <Dialog open={Boolean(selectedProduct)} onOpenChange={(open) => { if (!open) setSelectedProduct(null); }}>
+      {selectedProduct && <DialogContent className="product-dialog" showCloseButton={false} aria-label={`${selectedProduct.name} details`}>
+        <DialogClose className="dialog-close" aria-label="Close product details">×</DialogClose>
         <span className="eyebrow">isth / {selectedProduct.collection}</span>
         <h2>{selectedProduct.name}</h2>
         <p className="dialog-notes">{selectedProduct.notes}</p>
         <p>{selectedProduct.description}</p>
         <a className="cherry-button" href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`${whatsappText} I’m interested in ${selectedProduct.name}.`)}`} target="_blank" rel="noreferrer"><MessageCircle size={15} /> Ask about this scent</a>
-      </div>
-    </div>}
+      </DialogContent>}
+    </Dialog>
     <footer className="site-footer"><div className="footer-top"><div><a href="/home" className="footer-brand"><img className="brand-logo brand-logo-dark" src={readLogoUrl()} alt="isth" /></a><p>estd. 2021</p></div><div className="footer-links"><div><span>Explore</span><Link href="/about">About</Link><a href="#collection">The Collection</a><a href="#nakshatra">Nakshatra Collection</a></div><div><span>Direct</span><a href="mailto:isth.support@gmail.com">Email</a><a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noreferrer">WhatsApp</a><a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">Instagram</a></div></div></div><div className="footer-bottom"><span>© 2026 isth Fragrance House</span><span>Gujarat, India / Mon–Sat, 10am–7pm IST</span><span>Privacy · Terms</span></div></footer>
   </div>;
 }

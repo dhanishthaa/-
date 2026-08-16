@@ -39,10 +39,12 @@ describe("isth editorial page integrity", () => {
     expect(styles).toContain("text-shadow:none;");
   });
 
-  it("keeps the product details close control touch-safe", () => {
+  it("uses a controlled shared dialog for reliable product details dismissal", () => {
     const home = readProjectFile("client/src/pages/Home.tsx");
 
-    expect(home).toContain('onTouchEnd={(event) => { event.stopPropagation(); setSelectedProduct(null); }}');
-    expect(home).toContain('onClick={(event) => { event.stopPropagation(); setSelectedProduct(null); }}');
+    expect(home).toContain('import { Dialog, DialogClose, DialogContent } from "@/components/ui/dialog";');
+    expect(home).toContain('<Dialog open={Boolean(selectedProduct)} onOpenChange={(open) => { if (!open) setSelectedProduct(null); }}>');
+    expect(home).toContain('<DialogClose className="dialog-close" aria-label="Close product details">×</DialogClose>');
+    expect(home).not.toContain('window.addEventListener("keydown", onKeyDown)');
   });
 });
