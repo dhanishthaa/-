@@ -1,35 +1,58 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "wouter";
-import { ArrowLeft, MessageCircle } from "lucide-react";
-import { DEFAULT_WHATSAPP_NUMBER, DEFAULT_WHATSAPP_TEXT, readLogoUrl } from "@/data/brand";
+import { Menu, MessageCircle, MoveUpRight, X } from "lucide-react";
+import { DEFAULT_WHATSAPP_NUMBER, DEFAULT_WHATSAPP_TEXT, INSTAGRAM_URL, readLogoUrl } from "@/data/brand";
 
 export default function About() {
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const whatsappNumber = DEFAULT_WHATSAPP_NUMBER;
   const whatsappText = DEFAULT_WHATSAPP_TEXT;
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 40);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-[#F5F1EB] text-[#111111] font-sans selection:bg-[#5B0D18] selection:text-[#F5F1EB]">
-      {/* Navbar */}
-      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 bg-[#F5F1EB]/80 backdrop-blur-md border-b border-[#111111]/10">
-        <Link href="/home" className="flex items-center gap-2">
-          <img src={readLogoUrl()} alt="isth" className="h-6 w-auto object-contain invert-0" />
+    <div className="site-shell bg-[#F5F1EB] text-[#111111] font-sans selection:bg-[#5B0D18] selection:text-[#F5F1EB]">
+      {/* Navbar - Exactly matching Home site-nav with absolute centering across screen sizes */}
+      <header className={`site-nav is-scrolled ${scrolled ? "is-scrolled" : ""}`} style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 30, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "24px clamp(20px,4vw,56px)", background: "rgba(245,241,235,0.92)", backdropFilter: "blur(14px)", borderBottom: "1px solid rgba(17,17,17,0.14)", color: "#111111" }}>
+        <Link href="/home" className="site-brand flex items-center gap-2">
+          <img className="brand-logo brand-logo-dark" src={readLogoUrl()} alt="isth" style={{ height: "22px", width: "auto", objectFit: "contain" }} />
         </Link>
-        <nav className="hidden md:flex items-center gap-8 text-sm tracking-wider uppercase">
-          <Link href="/about" className="text-[#5B0D18] font-medium">About</Link>
-          <a href="/home#collection" className="hover:opacity-60 transition-opacity">Collection</a>
-          <a href="/home#contact" className="hover:opacity-60 transition-opacity">Contact</a>
+        <nav className="desktop-nav" aria-label="Main navigation" style={{ position: "absolute", left: "50%", transform: "translateX(-50%)", display: "flex", gap: "34px", fontFamily: "'IBM Plex Mono', monospace", fontSize: "10px", letterSpacing: ".16em", textTransform: "uppercase" }}>
+          <Link href="/about" style={{ color: "#5B0D18", fontWeight: 600 }}>About</Link>
+          <Link href="/home#collection">Collection</Link>
+          <Link href="/home#contact">Contact</Link>
         </nav>
-        <div>
-          <Link href="/home" className="inline-flex items-center gap-2 text-xs uppercase tracking-widest px-4 py-2 border border-[#111111]/20 rounded-full hover:bg-[#111111] hover:text-[#F5F1EB] transition-all">
-            <ArrowLeft size={14} /> Back to Home
+        <div className="site-actions flex items-center gap-5">
+          <Link href="/home" className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.14em] font-mono px-3.5 py-1.5 border border-[#111111]/20 rounded-full hover:bg-[#111111] hover:text-[#F5F1EB] transition-all">
+            Back to Home
           </Link>
+          <button className="menu-toggle md:hidden" onClick={() => setMenuOpen((open) => !open)} aria-label={menuOpen ? "Close navigation" : "Open navigation"}>
+            {menuOpen ? <X size={19} /> : <Menu size={19} />}
+          </button>
         </div>
       </header>
+      
+      <div className={`mobile-drawer ${menuOpen ? "is-open" : ""}`}>
+        <nav>
+          <Link href="/about" onClick={() => setMenuOpen(false)}>About</Link>
+          <Link href="/home#collection" onClick={() => setMenuOpen(false)}>Collection</Link>
+          <Link href="/home#contact" onClick={() => setMenuOpen(false)}>Contact</Link>
+          <Link href="/home" onClick={() => setMenuOpen(false)}>Back to Home</Link>
+        </nav>
+        <span>isth / about</span>
+      </div>
 
-      {/* Hero / Header */}
-      <main className="pt-32 pb-24 px-6 md:px-16 max-w-5xl mx-auto">
+      {/* Main About Content */}
+      <main className="pt-36 pb-24 px-6 md:px-16 max-w-5xl mx-auto">
         <div className="mb-16 text-center">
-          <p className="text-xs uppercase tracking-[0.3em] text-[#5B0D18] mb-4 font-semibold">The House of isth</p>
+          <p className="eyebrow justify-center mb-4">The House of isth</p>
           <h1 className="text-4xl md:text-6xl font-serif font-light tracking-tight mb-6 leading-tight">
             Between the familiar<br /><em>&amp; the unknown.</em>
           </h1>
@@ -43,7 +66,7 @@ export default function About() {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(91,13,24,0.12)_0%,transparent_70%)]" />
           <div className="text-center p-8 z-10">
             <img src={readLogoUrl()} alt="isth logo" className="h-16 w-auto mx-auto mb-4 opacity-90" />
-            <p className="text-xs uppercase tracking-[0.4em] text-[#111111]/60">Established 2021 · Gujarat, India</p>
+            <p className="text-xs uppercase tracking-[0.4em] text-[#111111]/60 font-mono">Established 2021 · Gujarat, India</p>
           </div>
         </div>
 
@@ -65,7 +88,7 @@ export default function About() {
             </p>
             <div className="p-6 bg-[#111111]/5 rounded-xl border border-[#111111]/10">
               <p className="text-sm italic font-serif text-[#5B0D18] mb-2">"Embrace the fragrance, Become isth."</p>
-              <p className="text-xs text-[#111111]/60">A mantra for those who wear their stories inward.</p>
+              <p className="text-xs text-[#111111]/60 font-mono">A mantra for those who wear their stories inward.</p>
             </div>
           </div>
         </div>
@@ -77,10 +100,10 @@ export default function About() {
             <p className="text-sm text-[#111111]/70">Find the signature that speaks to your ritual.</p>
           </div>
           <div className="flex items-center gap-4">
-            <Link href="/home#collection" className="px-6 py-3 bg-[#5B0D18] text-[#F5F1EB] rounded-full text-xs uppercase tracking-widest hover:bg-[#111111] transition-all">
+            <Link href="/home#collection" className="px-6 py-3 bg-[#5B0D18] text-[#F5F1EB] rounded-full text-xs uppercase tracking-widest font-mono hover:bg-[#111111] transition-all">
               View Collection
             </Link>
-            <a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`} target="_blank" rel="noreferrer" className="px-6 py-3 border border-[#111111]/30 text-[#111111] rounded-full text-xs uppercase tracking-widest hover:bg-[#111111] hover:text-[#F5F1EB] transition-all inline-flex items-center gap-2">
+            <a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`} target="_blank" rel="noreferrer" className="px-6 py-3 border border-[#111111]/30 text-[#111111] rounded-full text-xs uppercase tracking-widest font-mono hover:bg-[#111111] hover:text-[#F5F1EB] transition-all inline-flex items-center gap-2">
               <MessageCircle size={14} /> Queries
             </a>
           </div>
@@ -88,31 +111,34 @@ export default function About() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-[#111111] text-[#F5F1EB] py-12 px-6 md:px-16">
+      <footer className="site-footer bg-[#111111] text-[#F5F1EB] py-12 px-6 md:px-16">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-8 pb-8 border-b border-[#F5F1EB]/10">
           <div>
-            <img src={readLogoUrl()} alt="isth" className="h-6 w-auto object-contain brightness-0 invert mb-2" />
-            <p className="text-xs text-[#F5F1EB]/60">estd. 2021</p>
+            <Link href="/home" className="footer-brand">
+              <img className="brand-logo brand-logo-dark" src={readLogoUrl()} alt="isth" style={{ filter: "brightness(0) invert(1)" }} />
+            </Link>
+            <p className="text-xs text-[#F5F1EB]/60 mt-2">estd. 2021</p>
           </div>
-          <div className="flex gap-12 text-sm">
+          <div className="footer-links flex gap-12 text-sm">
             <div>
-              <p className="text-xs uppercase tracking-widest text-[#F5F1EB]/40 mb-3">Explore</p>
-              <ul className="space-y-2 text-[#F5F1EB]/80">
-                <li><Link href="/about" className="hover:text-white transition-colors">About</Link></li>
-                <li><Link href="/home#collection" className="hover:text-white transition-colors">The Collection</Link></li>
-                <li><Link href="/home#nakshatra" className="hover:text-white transition-colors">Nakshatra Collection</Link></li>
-              </ul>
+              <span className="text-xs uppercase tracking-widest text-[#F5F1EB]/40 mb-3 block font-mono">Explore</span>
+              <div className="flex flex-col gap-2 text-[#F5F1EB]/80">
+                <Link href="/about">About</Link>
+                <Link href="/home#collection">The Collection</Link>
+                <Link href="/home#nakshatra">Nakshatra Collection</Link>
+              </div>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-widest text-[#F5F1EB]/40 mb-3">Direct</p>
-              <ul className="space-y-2 text-[#F5F1EB]/80">
-                <li><a href="mailto:isth.support@gmail.com" className="hover:text-white transition-colors">Email</a></li>
-                <li><a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noreferrer" className="hover:text-white transition-colors">WhatsApp</a></li>
-              </ul>
+              <span className="text-xs uppercase tracking-widest text-[#F5F1EB]/40 mb-3 block font-mono">Direct</span>
+              <div className="flex flex-col gap-2 text-[#F5F1EB]/80">
+                <a href="mailto:isth.support@gmail.com">Email</a>
+                <a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noreferrer">WhatsApp</a>
+                <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">Instagram</a>
+              </div>
             </div>
           </div>
         </div>
-        <div className="max-w-6xl mx-auto pt-6 flex flex-col sm:flex-row justify-between text-xs text-[#F5F1EB]/50 gap-4">
+        <div className="max-w-6xl mx-auto pt-6 flex flex-col sm:flex-row justify-between text-xs text-[#F5F1EB]/50 gap-4 font-mono">
           <span>© 2026 isth Fragrance House</span>
           <span>Gujarat, India / Mon–Sat, 10am–7pm IST</span>
         </div>
