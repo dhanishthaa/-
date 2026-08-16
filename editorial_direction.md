@@ -57,3 +57,27 @@ Desktop and mobile checks confirm the Home page preserves its protected hierarch
 ## Final Visual Verification
 
 The desktop Home page now reads as a continuous fragrance editorial with framed hero, curated collection field, cinematic floral quote spread, restrained Nakshatra constellation panel, botanical story layout, and contact folio. The desktop About page now uses an asymmetric masthead, archival misted feature panel, offset narrative columns, hairline quote panel, and folio CTA. Mobile checks confirm that the About page preserves its reading order, content, controls, and footer links while scaling the framing and decorative forms down cleanly.
+
+## Correction Note
+
+The prior magazine pass overemphasised decorative frames instead of image-led storytelling. All extra frames, circles, outlines, borders, and boxed treatments were removed from the Home and About sections. The next implementation uses original generated isth visuals directly in the hero, collection, Nakshatra, and About compositions; supplied reference files remain excluded.
+
+## Frame Removal Verification
+
+Desktop verification confirms the Home and About pages no longer use the rejected decorative frame, circle, or boxed-card language. Functional navigation and actions remain usable, while the page surfaces are now intentionally open for the image-led compositions that follow.
+
+## Final No-Frame Check
+
+Desktop and mobile verification confirm the remaining decorative pseudo-elements and rounded action boxes are removed. The Home and About pages now retain only functional navigation, product controls, and content hierarchy; no decorative frame, circle, card outline, or pill treatment from the rejected editorial pass remains.
+
+## Image-Led Correction Verification
+
+The corrected desktop implementation now uses original isth-specific campaign imagery as the primary visual language: a cinematic people-led Home hero, a collection still-life spread, an abstract non-product Nakshatra visual, and a tactile About feature photograph. The existing product display and copy remain present, but visual storytelling now comes from full compositional imagery rather than decorative framing.
+
+## Mobile Image-Led Check
+
+Mobile verification confirms the new Home hero, collection still-life, Nakshatra atmosphere, story image, and standalone About feature all scale cleanly in a single-column editorial flow. No decorative frames were reintroduced, and the protected product grid, copy, navigation, and footer remain readable and operational.
+
+## Clean Stylesheet Verification
+
+The obsolete frame-heavy Home/About CSS block has now been deleted rather than masked with overrides. A final Home render confirms the featured product images remain available, while the generated campaign art carries the visual hierarchy across the hero, collection, Nakshatra, story, and About spreads.

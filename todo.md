@@ -110,6 +110,9 @@
 - [x] Restore the full stylesheet after the accidental overwrite and safely center the Home/About navigation group without changing other site styling.
 
 - [x] Transform the non-landing Home and About pages into a lifestyle-editorial fragrance magazine experience using the supplied references only as style direction; preserve all existing content, product displays, palette, font families, and the landing page.
+- [x] Remove the frame-heavy editorial treatment and rebuild the non-landing Home and About pages around original isth-specific generated imagery, image-led storytelling, blur-led layers, and art-directed magazine compositions while preserving protected content and the landing page.
+- [x] Remove every unnecessary decorative frame, circle, outline, border, and box treatment from the Home and About editorial pass before applying the new image-led design.
+- [x] Audit and remove any remaining non-functional decorative pseudo-elements, circles, outlines, and borders from the Home and About correction pass before marking frame removal complete.
 
 ## Follow-up scope
 - [ ] Analyze the newly attached lifestyle references and update the visual language toward natural, tactile product storytelling.
