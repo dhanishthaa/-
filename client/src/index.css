@@ -442,3 +442,9 @@ em { font-style:italic; }
 .ss1-landing .landing-center { top:75%; }
 .landing-quote { margin-top:0; }
 @media (max-width:620px) { .signature-writing-mark { top:39%; } .ss1-landing .landing-center { top:73%; } }
+
+/* Verified typing-state correction: cherry field with restrained fine grain; remove filtered segment boxes from the white mark. */
+.ss1-landing:not(.signature-complete) .landing-curtain-surface { background:#5B0D18; }
+.ss1-landing:not(.signature-complete) .landing-grain { display:block; z-index:4; opacity:.12; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.45' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.72'/%3E%3C/svg%3E"); background-size:120px 120px; mix-blend-mode:soft-light; }
+.signature-letter { filter:none; }
+.signature-letter img { filter:invert(1); }
