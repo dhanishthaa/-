@@ -115,6 +115,13 @@
 - [x] Audit and remove any remaining non-functional decorative pseudo-elements, circles, outlines, and borders from the Home and About correction pass before marking frame removal complete.
 - [x] Force-reset the smartphone landing state and hold the cherry SS1 signature-writing sequence before any completed floral landing render.
 - [x] Match the mobile SS1 cherry gradient, frost, and fine-grain background exactly to the desktop opening treatment.
+- [x] Force the mobile SS1 typing surface to use an inline cherry #5B0D18 gradient fallback so it cannot render transparent.
+- [x] Force the mobile SS1 cherry gradient at the document, landing root, stage, and curtain layers to eliminate transparent first paint.
+- [x] Keep the mobile SS1 cherry gradient and frost layer above the flower blur until the signature completes.
+- [x] Replace the collection still-life with an original visual containing only frosted cylindrical 10ml tower and 30ml cosmos bottles with matte-black caps.
+- [x] Regenerate the collection still-life with visible refined lowercase isth branding and product-label hierarchy on both frosted cylindrical bottles.
+- [ ] Remove the specified ABOUT ISTH, Ingredients / atmosphere / ritual, Signature / 10ml tower, and Signature / 50ml cosmos labels without changing other copy.
+- [ ] Make the About hero line “Established 2021 · Gujarat, India” clearly readable using the existing Cherry or Ink brand color.
 
 ## Follow-up scope
 - [x] Analyze the newly attached lifestyle references and update the visual language toward natural, tactile product storytelling.

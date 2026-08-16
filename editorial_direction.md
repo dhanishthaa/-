@@ -89,3 +89,9 @@ The landing lifecycle now explicitly resets its ready, signature-complete, progr
 ## Mobile SS1 Gradient Parity Check
 
 The smartphone first-load SS1 now explicitly uses the same layered #5B0D18 cherry gradient, broad frosted wash, and fine grain as the desktop opening. Verification confirms the mobile screen no longer begins from a flat cherry surface before the signature sequence.
+
+## Branded Collection Bottle Still-Life Check
+
+The collection image now uses an original wide product still-life with only the requested frosted cylindrical forms: a slim 10ml tower bottle and a wider 30ml cosmos bottle, both with matte-black caps. Each bottle visibly carries a refined lowercase isth label, restoring the essential brand treatment absent from the prior image.
+
+Direct asset inspection confirms the final still-life contains one slim frosted tower bottle and one wider frosted cosmos bottle, both capped in matte black and both carrying a visible lowercase isth label with a smaller product-name line. Desktop and mobile collection screenshots confirm the resolved asset—not a generation placeholder—is the live image in the collection section.

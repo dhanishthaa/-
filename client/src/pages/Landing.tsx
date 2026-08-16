@@ -60,14 +60,18 @@ export default function Landing() {
     setExiting(true);
     window.setTimeout(() => setLocation("/home"), 1120);
   };
-  return <main className={`landing-page ss1-landing ${ready ? "signature-writing" : ""} ${signatureComplete ? "signature-complete" : ""} ${exiting ? "is-exiting" : ""}`}>
-    <div className="landing-stage">
+  const ss1Gradient = "radial-gradient(ellipse 72% 88% at 13% 22%, rgba(181,70,88,.68) 0%, rgba(181,70,88,0) 58%), radial-gradient(ellipse 72% 82% at 88% 84%, rgba(35,3,10,.58) 0%, rgba(35,3,10,0) 63%), linear-gradient(128deg, #8b2435 0%, #6f1221 38%, #5B0D18 62%, #38050d 100%)";
+  const ss1SurfaceStyle = signatureComplete ? undefined : { backgroundColor: "#5B0D18", background: ss1Gradient };
+  return <main className={`landing-page ss1-landing ${ready ? "signature-writing" : ""} ${signatureComplete ? "signature-complete" : ""} ${exiting ? "is-exiting" : ""}`} style={ss1SurfaceStyle}>
+    <div className="landing-stage" style={ss1SurfaceStyle}>
       <div className="landing-curtain-surface" style={{
         "--fold-progress": progress,
         "--fold-scale": exiting ? 0.025 : Math.max(0.16, 1 - progress * 0.92),
         "--fold-lift": exiting ? "-4vh" : `${progress * -2.4}vh`,
         "--fold-blur": exiting ? "24px" : `${progress * 1.6}px`,
         "--fold-radius": exiting ? "44px" : `${progress * 18}px`,
+        backgroundColor: signatureComplete ? undefined : "#5B0D18",
+        background: signatureComplete ? undefined : ss1Gradient,
       } as CSSProperties}>
         <div className="landing-flower-search" aria-hidden="true" />
         <div className="landing-flower-veil" aria-hidden="true" />
