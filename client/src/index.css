@@ -538,6 +538,7 @@ em { font-style:italic; }
 .about-editorial .about-footer { margin-top:clamp(72px,9vw,120px); }
 
 @media (max-width:900px) {
+  .site-nav { grid-template-columns:1fr auto; }
   .editorial-home .intro-strip { grid-template-columns:1fr; gap:24px; }
   .collection-editorial-photo { height:clamp(300px,58vw,470px); }
   .editorial-home .story-image { min-height:500px; }
