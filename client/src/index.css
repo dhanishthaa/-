@@ -528,7 +528,7 @@ em { font-style:italic; }
 .about-feature-veil::after { content:none; }
 .about-feature-mark { gap:15px; padding:0; }
 .about-feature-mark img { filter:invert(1) drop-shadow(0 8px 22px rgba(0,0,0,.42)); }
-.about-feature-mark p { color:rgba(245,241,235,.8); text-shadow:0 2px 12px rgba(0,0,0,.36); }
+.about-feature-mark p { color:var(--cherry); text-shadow:none; }
 .about-narrative { gap:clamp(44px,12vw,210px); padding:0 0 clamp(80px,10vw,144px); }
 .about-column-primary { padding-top:0; }
 .about-column-secondary { padding-top:clamp(92px,13vw,190px); padding-bottom:0; }
