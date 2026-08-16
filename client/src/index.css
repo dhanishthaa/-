@@ -434,3 +434,11 @@ em { font-style:italic; }
 .ss1-landing.signature-complete .landing-center.is-ready { transition-delay:.14s; }
 @media (max-width:620px) { .signature-writing-mark { top:41%; width:min(330px,74vw); } .ss1-landing .landing-center { top:64%; } }
 @media (prefers-reduced-motion:reduce) { .signature-letter { opacity:1; transform:none; clip-path:none; } .ss1-landing .landing-flower-search,.ss1-landing .landing-flower-veil,.ss1-landing .landing-grain,.ss1-landing .landing-header-rail { opacity:1; } }
+
+/* Supplied floral reference: clean soft flower blur, no noise layer, with quote and CTA held distinctly below the signature. */
+.ss1-landing .landing-flower-search { inset:-3%; background-image:url('/assets/isth-supplied-flower-blur.jpg'); background-position:center 46%; background-size:cover; filter:saturate(.78) contrast(.94) brightness(.82); animation:none; }
+.ss1-landing .landing-flower-veil { background:linear-gradient(180deg,rgba(17,17,17,.1),rgba(17,17,17,.26) 74%,rgba(17,17,17,.46)),linear-gradient(90deg,rgba(17,17,17,.17),transparent 54%,rgba(91,13,24,.11)); mix-blend-mode:multiply; }
+.ss1-landing .landing-grain { display:none; }
+.ss1-landing .landing-center { top:75%; }
+.landing-quote { margin-top:0; }
+@media (max-width:620px) { .signature-writing-mark { top:39%; } .ss1-landing .landing-center { top:73%; } }

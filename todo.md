@@ -93,3 +93,5 @@
 - [x] Correct production asset hosting paths and verify deployed visual assets locally.
 - [x] Remove HELLO and start the landing screen blank before the handwritten isth signature begins.
 - [x] Animate a large isth signature in i → s → t → h order, then reveal the quote and Explore the Collection CTA.
+- [x] Replace the grain-heavy landing treatment with the supplied clean soft floral blur reference.
+- [x] Move the landing quote and Explore the Collection CTA clearly lower beneath the signature.
