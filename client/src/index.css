@@ -579,7 +579,7 @@ em { font-style:italic; }
 .about-feature-veil { position:absolute; inset:0; background:linear-gradient(90deg,rgba(17,17,17,.26),transparent 58%),url('/manus-storage/isth-editorial-about_139cb5ff.jpg') center/cover; filter:saturate(.82) contrast(.98); }
 .about-feature-mark { position:relative; z-index:1; align-self:center; justify-self:center; display:flex; flex-direction:column; align-items:center; gap:15px; padding:0; text-align:center; }
 .about-feature-mark img { width:auto; height:clamp(68px,9vw,124px); max-width:min(260px,56vw); object-fit:contain; filter:invert(1) drop-shadow(0 8px 22px rgba(0,0,0,.42)); }
-.about-feature-mark p { margin:0; color:rgba(245,241,235,.8); font:10px var(--mono); letter-spacing:.28em; text-transform:uppercase; text-shadow:0 2px 12px rgba(0,0,0,.36); }
+.about-feature-mark p { margin:0; color:var(--cherry); font:600 10px var(--mono); letter-spacing:.28em; text-transform:uppercase; text-shadow:0 1px 0 rgba(245,241,235,.75),0 2px 12px rgba(17,17,17,.2); }
 .about-narrative { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(44px,12vw,210px); padding:0 0 clamp(80px,10vw,144px); }
 .about-column-primary { padding-top:0; }
 .about-column-secondary { padding-top:clamp(92px,13vw,190px); }

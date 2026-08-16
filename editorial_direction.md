@@ -95,3 +95,7 @@ The smartphone first-load SS1 now explicitly uses the same layered #5B0D18 cherr
 The collection image now uses an original wide product still-life with only the requested frosted cylindrical forms: a slim 10ml tower bottle and a wider 30ml cosmos bottle, both with matte-black caps. Each bottle visibly carries a refined lowercase isth label, restoring the essential brand treatment absent from the prior image.
 
 Direct asset inspection confirms the final still-life contains one slim frosted tower bottle and one wider frosted cosmos bottle, both capped in matte black and both carrying a visible lowercase isth label with a smaller product-name line. Desktop and mobile collection screenshots confirm the resolved asset—not a generation placeholder—is the live image in the collection section.
+
+## Public Typography Cleanup Check
+
+The requested About isth and Ingredients / atmosphere / ritual labels have been removed from the Home story treatment, as have the public Signature / format labels from product cards. The About hero metadata line now uses the existing Cherry brand color and is visibly legible over the hero imagery on desktop.

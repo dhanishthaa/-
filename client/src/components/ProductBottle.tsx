@@ -16,7 +16,7 @@ export default function ProductBottle({ product, compact = false, onOpen }: { pr
         <span className="product-open"><ArrowUpRight size={16} strokeWidth={1.4} /></span>
       </button>
       <div className="product-card-copy">
-        <div><p className="product-collection">{product.collection} / {product.size}</p><h3>{product.name}</h3></div>
+        <div><h3>{product.name}</h3></div>
         <button className="product-buy" onClick={() => window.open(whatsappUrl, "_blank", "noopener,noreferrer")}><MessageCircle size={13} /> Buy now</button>
       </div>
       <p className="product-notes">{product.notes}</p>
