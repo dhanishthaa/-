@@ -47,7 +47,7 @@ export default function Home() {
   const featured = useMemo(() => products.filter((product) => product.featured).slice(0, 2), [products]);
   const more = useMemo(() => products.filter((product) => !product.featured), [products]);
 
-  return <div className="site-shell">
+  return <div className="site-shell editorial-home">
     <header className={`site-nav ${scrolled ? "is-scrolled" : ""}`}>
       <Link href="/home" className="site-brand"><img className="brand-logo brand-logo-dark" src={readLogoUrl()} alt="isth" /></Link>
       <nav className="desktop-nav" aria-label="Main navigation"><Link href="/about">About</Link><a href="#collection">Collection</a><a href="#contact">Contact</a></nav>
