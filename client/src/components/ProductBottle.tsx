@@ -1,5 +1,5 @@
 // Quiet Atelier style reminder: product objects are tactile, softly lit, and intentionally not over-rendered.
-import { useState, type CSSProperties } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { ArrowUpRight, MessageCircle } from "lucide-react";
 import type { Product } from "@/data/products";
 
@@ -9,6 +9,16 @@ const whatsappText = "Hi, can I please get more details on your product?";
 export default function ProductBottle({ product, compact = false }: { product: Product; compact?: boolean }) {
   const [open, setOpen] = useState(false);
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`${whatsappText} I’m interested in ${product.name}.`)}`;
+  const closeDialog = () => setOpen(false);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKeyDown = (event: KeyboardEvent) => { if (event.key === "Escape") closeDialog(); };
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKeyDown);
+    return () => { document.body.style.overflow = previousOverflow; window.removeEventListener("keydown", onKeyDown); };
+  }, [open]);
 
   return (
     <article className={`product-card ${product.featured ? "is-featured" : ""} ${compact ? "is-compact" : ""}`} style={{ "--product-tone": product.color } as CSSProperties}>
@@ -21,9 +31,9 @@ export default function ProductBottle({ product, compact = false }: { product: P
         <button className="product-buy" onClick={() => window.open(whatsappUrl, "_blank", "noopener,noreferrer")}><MessageCircle size={13} /> Buy now</button>
       </div>
       <p className="product-notes">{product.notes}</p>
-      {open && <div className="product-dialog-backdrop" role="presentation" onClick={() => setOpen(false)}>
-        <div className="product-dialog" role="dialog" aria-modal="true" aria-label={`${product.name} details`} onClick={(event) => event.stopPropagation()}>
-          <button className="dialog-close" onClick={() => setOpen(false)} aria-label="Close details">×</button>
+      {open && <div className="product-dialog-backdrop" role="presentation" onPointerDown={(event) => { if (event.target === event.currentTarget) closeDialog(); }}>
+        <div className="product-dialog" role="dialog" aria-modal="true" aria-label={`${product.name} details`} onPointerDown={(event) => event.stopPropagation()}>
+          <button type="button" className="dialog-close" onPointerDown={(event) => { event.preventDefault(); event.stopPropagation(); closeDialog(); }} onClick={(event) => { event.preventDefault(); event.stopPropagation(); closeDialog(); }} aria-label="Close product details">×</button>
           <span className="eyebrow">isth / {product.collection}</span>
           <h2>{product.name}</h2>
           <p className="dialog-notes">{product.notes}</p>

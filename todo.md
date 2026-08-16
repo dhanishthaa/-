@@ -101,3 +101,5 @@
 - [x] Reframe SS2 with the supplied lily floral background so it fills each screen without stretching.
 - [x] Add a premium red gradient to the first cherry signature-writing landing state.
 - [x] Strengthen the visibly layered full-screen glass-frost treatment in the first landing state only.
+- [x] Fix the product dialog × close control for every displayed product.
+- [x] Verify product dialog closure by × button, backdrop click, and Escape key.
