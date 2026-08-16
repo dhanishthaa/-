@@ -156,3 +156,6 @@ Author: Manus AI
 - [x] Improve the product modal layout to display the bottle image alongside the size/notes metadata for a more appealing presentation.
 - [x] Ensure all product displays have image placeholders that can be changed via the admin panel.
 - [x] Perform a comprehensive responsive and quality audit across all breakpoints (mobile, tablet, desktop) to fix any remaining bugs or layout issues.
+- [x] Restore refined full-bottle placeholders across every product card without changing their admin-editable image flow.
+- [x] Repair the product-details modal so its media, metadata, close control, and content remain contained and readable at all screen sizes.
+- [x] Visually verify the open product-details modal, close control, containment, and dismissal at desktop and smartphone widths.

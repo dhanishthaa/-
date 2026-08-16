@@ -48,13 +48,16 @@ describe("isth editorial page integrity", () => {
 
     expect(home).toContain('import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";');
     expect(home).toContain('<Dialog open={productDialogOpen} onOpenChange={(open) => { if (!open) closeProduct(); }}>');
+    expect(home).toContain('<DialogContent forceMount className="product-dialog"');
     expect(home).toContain('<DialogClose className="dialog-close" aria-label="Close product details">');
     expect(home).toContain('<DialogTitle className="product-dialog-title">{selectedProduct.name}</DialogTitle>');
     expect(home).not.toContain('isth / {selectedProduct.collection}');
     expect(home).not.toContain('window.addEventListener("keydown", onKeyDown)');
     expect(visual).toContain('Image placeholder · editable in admin');
     expect(admin).toContain('label className="wide">Image URL<input');
-    expect(styles).toContain("@keyframes product-dialog-in");
+    expect(styles).toContain("@keyframes product-dialog-in { from { opacity:0; scale:.975; }");
     expect(styles).toContain("@keyframes product-dialog-out");
+    expect(styles).toContain(".bottle-placeholder { position:relative; width:100%; height:100%; display:grid; place-items:center; }");
+    expect(styles).toContain("width:min(760px,calc(100% - 32px))");
   });
 });

@@ -67,11 +67,12 @@ em { font-style:italic; }
 .product-index { position:absolute; left:14px; top:13px; font:9px var(--mono); letter-spacing:.13em; opacity:.7; }
 .product-open { position:absolute; right:14px; top:13px; display:grid; place-items:center; width:30px; height:30px; background:rgba(245,241,235,.85); transition:background .25s var(--ease),color .25s var(--ease); }
 .product-visual:hover .product-open { background:var(--cherry); color:var(--ivory); }
-.bottle-stage { height:100%; display:grid; place-items:center; position:relative; background:radial-gradient(circle at 50% 42%,color-mix(in srgb,var(--product-tone) 30%,#eee9e2),#d5cec6 70%); }
-.bottle-body { width:34%; height:60%; border:1px solid rgba(17,17,17,.28); background:linear-gradient(105deg,rgba(255,255,255,.34),rgba(255,255,255,.04) 35%,rgba(17,17,17,.2)),color-mix(in srgb,var(--product-tone) 38%,#d7cec4); box-shadow:10px 22px 24px rgba(17,17,17,.14); display:flex; flex-direction:column; justify-content:center; align-items:center; gap:6px; transform:rotate(-1.5deg); }
+.bottle-stage { height:100%; display:grid; place-items:center; position:relative; overflow:hidden; background:radial-gradient(circle at 50% 42%,color-mix(in srgb,var(--product-tone) 30%,#eee9e2),#d5cec6 70%); }
+.bottle-placeholder { position:relative; width:100%; height:100%; display:grid; place-items:center; }
+.bottle-body { width:34%; height:60%; border:1px solid rgba(17,17,17,.28); background:linear-gradient(105deg,rgba(255,255,255,.34),rgba(255,255,255,.04) 35%,rgba(17,17,17,.2)),color-mix(in srgb,var(--product-tone) 38%,#d7cec4); box-shadow:10px 22px 24px rgba(17,17,17,.14); display:flex; flex-direction:column; justify-content:center; align-items:center; gap:6px; transform:translateY(4%) rotate(-1.5deg); }
 .bottle-body span { font:16px var(--serif); letter-spacing:.08em; }
 .bottle-body small { font:5px var(--mono); letter-spacing:.18em; }
-.bottle-cap { width:18%; height:7%; background:#222; margin-bottom:61%; position:absolute; z-index:1; box-shadow:0 2px 2px rgba(0,0,0,.3); }
+.bottle-cap { top:14%; left:50%; width:18%; height:7%; background:#222; margin:0; position:absolute; z-index:1; box-shadow:0 2px 2px rgba(0,0,0,.3); transform:translateX(-50%); }
 .product-card-copy { display:flex; justify-content:space-between; align-items:start; gap:12px; padding-top:17px; }
 .product-collection { margin:0 0 6px; color:var(--gold); font:9px var(--mono); letter-spacing:.14em; text-transform:uppercase; }
 .product-card h3 { margin:0; font:400 clamp(18px,2vw,26px)/1 var(--serif); }
@@ -134,18 +135,17 @@ em { font-style:italic; }
 .footer-links span { margin-bottom:8px; color:var(--gold); font:10px var(--mono); letter-spacing:.14em; text-transform:uppercase; }
 .footer-links a { color:rgba(245,241,235,.67); font-size:13px; }
 .footer-bottom { display:flex; justify-content:space-between; gap:20px; padding-top:18px; border-top:1px solid rgba(245,241,235,.15); color:rgba(245,241,235,.4); font:9px var(--mono); letter-spacing:.08em; text-transform:uppercase; }
-.product-dialog { position:fixed; isolation:isolate; width:min(920px,calc(100% - 40px)); max-height:calc(100svh - 40px); overflow-y:auto; padding:0; background:var(--ivory); color:var(--ink); border:0 !important; border-radius:0 !important; box-shadow:0 30px 100px rgba(0,0,0,.28); will-change:transform,opacity; }
+.product-dialog { position:fixed; isolation:isolate; width:min(760px,calc(100% - 32px)); max-width:min(760px,calc(100% - 32px)) !important; max-height:calc(100dvh - 32px); overflow-y:auto; padding:0; gap:0; background:var(--ivory); color:var(--ink); border:0 !important; border-radius:0 !important; box-shadow:0 30px 100px rgba(0,0,0,.28); will-change:transform,opacity; }
 .product-dialog[data-state="open"] { animation:product-dialog-in .42s var(--ease) both; }
 .product-dialog[data-state="closed"] { animation:product-dialog-out .24s var(--ease) both; }
-.product-dialog-layout { display:grid; grid-template-columns:minmax(280px,.92fr) minmax(320px,1.08fr); min-height:min(600px,calc(100svh - 40px)); }
+.product-dialog-layout { display:grid; grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr); align-items:stretch; min-height:0; }
 .dialog-product-media { min-height:100%; background:var(--product-tone,#ddd5ce); }
-.dialog-product-media .bottle-stage { min-height:min(600px,calc(100svh - 40px)); height:100%; background:radial-gradient(circle at 50% 42%,color-mix(in srgb,var(--product-tone) 34%,#eee9e2),#d5cec6 72%); }
+.dialog-product-media .bottle-stage { min-height:clamp(360px,64vh,540px); height:100%; background:radial-gradient(circle at 50% 42%,color-mix(in srgb,var(--product-tone) 34%,#eee9e2),#d5cec6 72%); }
 .dialog-product-media .bottle-stage > img { width:100%; height:100%; display:block; object-fit:cover; object-position:center; }
-.dialog-product-media .bottle-stage-modal .bottle-placeholder { width:100%; height:100%; display:grid; place-items:center; }
-.dialog-product-media .bottle-stage-modal .bottle-body { width:30%; height:54%; }
-.dialog-product-media .bottle-stage-modal .bottle-cap { width:16%; margin-bottom:55%; }
+.dialog-product-media .bottle-stage-modal .bottle-body { width:32%; height:60%; }
+.dialog-product-media .bottle-stage-modal .bottle-cap { top:14%; width:17%; }
 .bottle-placeholder-note { position:absolute; left:20px; bottom:18px; color:rgba(17,17,17,.58); font:9px var(--mono); letter-spacing:.08em; text-transform:uppercase; }
-.product-dialog-copy { display:flex; flex-direction:column; justify-content:center; min-width:0; padding:clamp(38px,6vw,76px) clamp(30px,6vw,76px) clamp(34px,5vw,60px); }
+.product-dialog-copy { display:flex; flex-direction:column; justify-content:center; min-width:0; padding:clamp(36px,5vw,58px) clamp(30px,5vw,54px); }
 .dialog-size { color:var(--cherry); font:10px var(--mono); letter-spacing:.16em; text-transform:uppercase; }
 .product-dialog-title { margin:24px 0 36px; color:var(--ink); font:400 clamp(42px,5vw,74px)/.9 var(--serif); letter-spacing:-.055em; }
 .dialog-specs { display:grid; gap:24px; padding-top:22px; border-top:1px solid rgba(17,17,17,.16); }
@@ -158,8 +158,8 @@ em { font-style:italic; }
 .dialog-close:hover,.dialog-close:focus-visible { background:var(--cherry); color:var(--ivory); outline:none; }
 .dialog-close:active { transform:scale(.93); }
 .product-dialog .cherry-button { align-self:flex-start; margin-top:30px; }
-@keyframes product-dialog-in { from { opacity:0; transform:translate(-50%,-48%) scale(.975); } to { opacity:1; transform:translate(-50%,-50%) scale(1); } }
-@keyframes product-dialog-out { from { opacity:1; transform:translate(-50%,-50%) scale(1); } to { opacity:0; transform:translate(-50%,-48%) scale(.985); } }
+@keyframes product-dialog-in { from { opacity:0; scale:.975; } to { opacity:1; scale:1; } }
+@keyframes product-dialog-out { from { opacity:1; scale:1; } to { opacity:0; scale:.985; } }
 .landing-page { position:relative; min-height:100svh; overflow:hidden; isolation:isolate; background:var(--ink); color:var(--ivory); }
 .landing-image { position:absolute; inset:0; z-index:-2; background:url('/assets/isth-hero-editorial_ed190768.png') center/cover; filter:saturate(.72) brightness(.86); transform:scale(1.02); animation:landing-breathe 12s ease-in-out infinite alternate; }
 .landing-scrim { position:absolute; inset:0; z-index:-1; background:linear-gradient(90deg,rgba(17,17,17,.83),rgba(17,17,17,.17) 66%,rgba(17,17,17,.52)),linear-gradient(0deg,rgba(17,17,17,.75),transparent 55%); }
@@ -309,6 +309,14 @@ em { font-style:italic; }
 .product-dialog .dialog-notes { line-height:1.7; }
 @media (max-width:900px) { .quote-video-section { min-height:620px; } .nakshatra-bottles { right:-6vw; width:52vw; opacity:.8; } .media-form { grid-template-columns:1fr; } }
 @media (max-width:620px) { .product-dialog { width:calc(100% - 24px); max-height:calc(100svh - 24px); } .product-dialog-layout { grid-template-columns:1fr; min-height:0; } .dialog-product-media { min-height:clamp(220px,47svh,390px); } .dialog-product-media .bottle-stage { min-height:clamp(220px,47svh,390px); } .product-dialog-copy { padding:30px 24px 28px; } .product-dialog-title { margin:18px 0 26px; font-size:clamp(38px,12vw,58px); } .dialog-specs { gap:18px; } .dialog-specs > div { grid-template-columns:72px minmax(0,1fr); gap:12px; } .product-dialog .cherry-button { width:100%; justify-content:center; } .site-brand,.brand-mark { padding:6px 9px; min-width:68px; min-height:62px; } .site-brand .brand-logo,.brand-mark .brand-logo { height:52px; max-width:88px; } .footer-brand .brand-logo,.admin-brand .brand-logo { height:44px; max-width:78px; } .brand-logo { height:22px; } .hero-cta-row { align-items:stretch; flex-direction:column; width:max-content; max-width:100%; } .hero-cta-row .cherry-button,.hero-cta-row .outline-button { width:100%; } .ingredient-marquee div { padding:15px 0 17px; } .quote-video-copy h2 { font-size:clamp(50px,15vw,72px); } .quote-video-meta { flex-direction:column; gap:7px; } .nakshatra-bottles { top:66%; right:-24vw; width:82vw; } .nakshatra-bottle.tower { height:230px; } .nakshatra-bottle.cosmos { height:280px; } .hello-word { top:150px; font-size:clamp(120px,38vw,180px); } .landing-page .landing-copy { bottom:126px; } .landing-page .landing-copy h1 { font-size:clamp(52px,15vw,72px); } .admin-login-mark .brand-logo { height:54px; max-width:100px; } }
+
+@media (max-width:760px) {
+  .product-dialog { width:calc(100% - 24px); max-width:calc(100% - 24px) !important; max-height:calc(100dvh - 24px); }
+  .product-dialog-layout { grid-template-columns:1fr; }
+  .dialog-product-media,.dialog-product-media .bottle-stage { min-height:clamp(250px,42svh,360px); }
+  .product-dialog-copy { padding:30px 24px 28px; }
+  .product-dialog .cherry-button { width:100%; justify-content:center; }
+}
 
 /* Organic floral atmosphere: realistic blur used as scent-in-air, never as a repeated ornament. */
 .home-hero-flower { position:absolute; z-index:-1; top:0; right:0; width:min(48vw,760px); height:100%; opacity:.28; background:url('/assets/isth-floral-forest-atmosphere_855c0ca2.png') center/cover; filter:saturate(.62) blur(.2px); mix-blend-mode:screen; mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.28) 36%,#000 82%); animation:floral-drift 18s ease-in-out infinite alternate; }
