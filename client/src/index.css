@@ -521,8 +521,8 @@ em { font-style:italic; }
 .editorial-home .note-card { min-height:100%; background:var(--cherry); }
 .editorial-home .catalog-heading { margin-top:clamp(96px,13vw,170px); }
 .editorial-home .catalog-grid { gap:clamp(34px,4vw,64px) clamp(16px,2.5vw,34px); }
-.editorial-home .catalog-grid > .reveal:nth-child(4n+2) .product-card { transform:translateY(clamp(20px,3vw,44px)); }
-.editorial-home .catalog-grid > .reveal:nth-child(4n+2) .product-card:hover { transform:translateY(clamp(12px,2vw,35px)); }
+.editorial-home .catalog-grid > .reveal .product-card { transform:none !important; }
+.editorial-home .catalog-grid > .reveal .product-card:hover { transform:translateY(-4px) !important; }
 
 .editorial-home .quote-video-section { min-height:clamp(620px,75vw,850px); }
 .editorial-home .quote-video-backdrop { background:linear-gradient(90deg,rgba(17,17,17,.75),rgba(17,17,17,.13)),url('/assets/isth-floral-forest-atmosphere_855c0ca2.png') center/cover; }

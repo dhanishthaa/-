@@ -159,3 +159,7 @@ Author: Manus AI
 - [x] Restore refined full-bottle placeholders across every product card without changing their admin-editable image flow.
 - [x] Repair the product-details modal so its media, metadata, close control, and content remain contained and readable at all screen sizes.
 - [x] Visually verify the open product-details modal, close control, containment, and dismissal at desktop and smartphone widths.
+- [x] Remove visible “30ml Cosmos”, “10ml tower”, “Image placeholder · editable in admin”, and “Worn close, then left to open slowly on the skin.” labels from the public website.
+- [x] Remove the eyebrow dash before “The House of isth” on the About page.
+- [x] Align product-modal Notes and Composition labels and values to one stable responsive column system across desktop, tablet, and smartphone widths.
+- [x] Remove catalog-card vertical staggering so all product cards align cleanly in even rows across desktop, tablet, and smartphone viewports.
