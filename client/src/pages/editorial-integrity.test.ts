@@ -53,7 +53,7 @@ describe("isth editorial page integrity", () => {
     expect(home).toContain('<DialogTitle className="product-dialog-title">{selectedProduct.name}</DialogTitle>');
     expect(home).not.toContain('isth / {selectedProduct.collection}');
     expect(home).not.toContain('window.addEventListener("keydown", onKeyDown)');
-    expect(visual).toContain('Image placeholder · editable in admin');
+    expect(visual).not.toContain('Image placeholder · editable in admin');
     expect(admin).toContain('label className="wide">Image URL<input');
     expect(styles).toContain("@keyframes product-dialog-in { from { opacity:0; scale:.975; }");
     expect(styles).toContain("@keyframes product-dialog-out");

@@ -89,13 +89,11 @@ export default function Home() {
             <ProductBottleVisual product={selectedProduct} modal />
           </div>
           <div className="product-dialog-copy">
-            <span className="dialog-size">{selectedProduct.size}</span>
             <DialogTitle className="product-dialog-title">{selectedProduct.name}</DialogTitle>
             <div className="dialog-specs">
               <div><span>Notes</span><p className="dialog-notes">{selectedProduct.notes}</p></div>
               <div><span>Composition</span><p className="dialog-description">{selectedProduct.description}</p></div>
             </div>
-            <DialogDescription className="product-dialog-description">Worn close, then left to open slowly on the skin.</DialogDescription>
             <a className="cherry-button" href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`${whatsappText} I’m interested in ${selectedProduct.name}.`)}`} target="_blank" rel="noreferrer"><MessageCircle size={15} /> Ask about this scent</a>
           </div>
         </div>

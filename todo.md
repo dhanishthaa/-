@@ -164,3 +164,4 @@ Author: Manus AI
 - [x] Align product-modal Notes and Composition labels and values to one stable responsive column system across desktop, tablet, and smartphone widths.
 - [x] Remove catalog-card vertical staggering so all product cards align cleanly in even rows across desktop, tablet, and smartphone viewports.
 - [x] Align Notes and Composition labels and values to a strict baseline-aligned responsive column across all product modals and screen sizes.
+- [x] Strictly remove every public occurrence of “30ml Cosmos”, “10ml tower”, “Image Placeholder . Editable in Admin”, and “worn close, then left to open slowly on the skin” from all source files and mock data.

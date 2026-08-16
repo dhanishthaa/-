@@ -19,7 +19,6 @@ export default function ProductBottleVisual({ product, modal = false }: { produc
           </div>
         </div>
       )}
-      {modal && !product.image ? <span className="bottle-placeholder-note">Image placeholder · editable in admin</span> : null}
     </div>
   );
 }
