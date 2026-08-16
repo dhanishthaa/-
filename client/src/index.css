@@ -411,3 +411,26 @@ em { font-style:italic; }
 .ss1-landing.is-exiting .landing-curtain-surface { transform:translate3d(0,-3vh,0) scaleY(.025); filter:blur(28px); border-radius:0 0 44px 44px; opacity:0; }
 @media (max-width:620px) { .ss1-landing { min-height:190svh; } .ss1-landing .landing-curtain-surface { transition-duration:1.38s; } .ss1-landing.is-exiting .landing-curtain-surface { transform:translate3d(0,-3vh,0) scaleY(.025); } }
 @media (prefers-reduced-motion:reduce) { .ss1-landing .landing-curtain-surface { transition:none; filter:none; transform:none; border-radius:0; } .ss1-landing.is-exiting .landing-curtain-surface { transform:none; opacity:0; } }
+
+/* Landing signature opener: blank ink field, original isth mark revealed i → s → t → h, then quote and CTA. */
+.ss1-landing:not(.signature-complete) .landing-stage::after { opacity:0; }
+.ss1-landing .landing-curtain-surface { background:var(--ink); }
+.ss1-landing .landing-flower-search,.ss1-landing .landing-flower-veil,.ss1-landing .landing-grain,.ss1-landing .landing-header-rail { opacity:0; transition:opacity .9s var(--ease); }
+.ss1-landing.signature-complete .landing-flower-search,.ss1-landing.signature-complete .landing-flower-veil,.ss1-landing.signature-complete .landing-grain,.ss1-landing.signature-complete .landing-header-rail { opacity:1; }
+.signature-writing-mark { position:absolute; z-index:5; top:42%; left:50%; width:min(520px,58vw); aspect-ratio:82.38/50.28; transform:translate(-50%,-50%); pointer-events:none; }
+.signature-letter { position:absolute; inset:0; display:block; opacity:0; filter:invert(1) drop-shadow(0 6px 20px rgba(0,0,0,.34)); transform:translate3d(0,10px,0) scale(.98); }
+.signature-letter img { display:block; width:100%; height:100%; object-fit:contain; }
+.signature-i { --signature-left:0%; --signature-right:86%; clip-path:inset(0 86% 0 0); }
+.signature-s { --signature-left:16%; --signature-right:56%; clip-path:inset(0 56% 0 16%); }
+.signature-t { --signature-left:45%; --signature-right:29%; clip-path:inset(0 29% 0 45%); }
+.signature-h { --signature-left:68%; --signature-right:0%; clip-path:inset(0 0 0 68%); }
+.signature-writing .signature-i { animation:signature-write .42s cubic-bezier(.2,.9,.18,1) .12s both; }
+.signature-writing .signature-s { animation:signature-write .52s cubic-bezier(.2,.9,.18,1) .54s both; }
+.signature-writing .signature-t { animation:signature-write .48s cubic-bezier(.2,.9,.18,1) 1.06s both; }
+.signature-writing .signature-h { animation:signature-write .62s cubic-bezier(.2,.9,.18,1) 1.54s both; }
+@keyframes signature-write { from { opacity:0; transform:translate3d(0,10px,0) scale(.98); clip-path:inset(0 calc(100% - var(--signature-left)) 0 var(--signature-left)); } 45% { opacity:1; } to { opacity:1; transform:translate3d(0,0,0) scale(1); clip-path:inset(0 var(--signature-right) 0 var(--signature-left)); } }
+.ss1-landing .landing-center { top:63%; z-index:6; }
+.ss1-landing .landing-center:not(.is-ready) { opacity:0; transform:translate3d(-50%,calc(-50% + 16px),0); pointer-events:none; }
+.ss1-landing.signature-complete .landing-center.is-ready { transition-delay:.14s; }
+@media (max-width:620px) { .signature-writing-mark { top:41%; width:min(330px,74vw); } .ss1-landing .landing-center { top:64%; } }
+@media (prefers-reduced-motion:reduce) { .signature-letter { opacity:1; transform:none; clip-path:none; } .ss1-landing .landing-flower-search,.ss1-landing .landing-flower-veil,.ss1-landing .landing-grain,.ss1-landing .landing-header-rail { opacity:1; } }

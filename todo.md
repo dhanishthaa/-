@@ -91,3 +91,5 @@
 - [x] Ensure both landing scroll and Explore the Collection CTA enter `/home` at the top hero/header.
 - [x] Diagnose missing logo and image assets on deployed `isth.in`.
 - [x] Correct production asset hosting paths and verify deployed visual assets locally.
+- [x] Remove HELLO and start the landing screen blank before the handwritten isth signature begins.
+- [x] Animate a large isth signature in i → s → t → h order, then reveal the quote and Explore the Collection CTA.

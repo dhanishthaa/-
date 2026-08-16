@@ -7,13 +7,15 @@ import { readLogoUrl } from "@/data/brand";
 export default function Landing() {
   const [, setLocation] = useLocation();
   const [ready, setReady] = useState(false);
+  const [signatureComplete, setSignatureComplete] = useState(false);
   const [progress, setProgress] = useState(0);
   const [exiting, setExiting] = useState(false);
   const handoff = useRef(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    const intro = window.setTimeout(() => setReady(true), 260);
+    const intro = window.setTimeout(() => setReady(true), 280);
+    const signatureTimer = window.setTimeout(() => setSignatureComplete(true), 2420);
     let frame = 0;
     let handoffTimer: number | undefined;
     const onScroll = () => {
@@ -29,7 +31,7 @@ export default function Landing() {
       });
     };
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => { window.clearTimeout(intro); if (handoffTimer) window.clearTimeout(handoffTimer); cancelAnimationFrame(frame); window.removeEventListener("scroll", onScroll); };
+    return () => { window.clearTimeout(intro); window.clearTimeout(signatureTimer); if (handoffTimer) window.clearTimeout(handoffTimer); cancelAnimationFrame(frame); window.removeEventListener("scroll", onScroll); };
   }, [setLocation]);
 
   const goToCollection = () => {
@@ -38,10 +40,7 @@ export default function Landing() {
     setExiting(true);
     window.setTimeout(() => setLocation("/home"), 1120);
   };
-  const helloScale = 1 - progress * 0.76;
-  const helloY = progress * -54;
-
-  return <main className={`landing-page ss1-landing ${exiting ? "is-exiting" : ""}`}>
+  return <main className={`landing-page ss1-landing ${ready ? "signature-writing" : ""} ${signatureComplete ? "signature-complete" : ""} ${exiting ? "is-exiting" : ""}`}>
     <div className="landing-stage">
       <div className="landing-curtain-surface" style={{
         "--fold-progress": progress,
@@ -54,9 +53,13 @@ export default function Landing() {
         <div className="landing-flower-veil" aria-hidden="true" />
         <div className="landing-grain" aria-hidden="true" />
         <div className="landing-header-rail" aria-hidden="true" />
-        <div className={`hello-word ${ready ? "is-ready" : ""}`} style={{ transform: `translate3d(-50%,${helloY}vh,0) scale(${helloScale})`, opacity: 1 - progress * 0.98 }} aria-label="HELLO"><span className="hello-type">HELLO</span><span className="hello-caret" aria-hidden="true" /></div>
-        <div className={`landing-center ${ready ? "is-ready" : ""}`}>
-          <div className="landing-logo-plate"><img src={readLogoUrl()} alt="isth" /></div>
+        <div className="signature-writing-mark" aria-label="isth">
+          <span className="signature-letter signature-i"><img src={readLogoUrl()} alt="" /></span>
+          <span className="signature-letter signature-s"><img src={readLogoUrl()} alt="" /></span>
+          <span className="signature-letter signature-t"><img src={readLogoUrl()} alt="" /></span>
+          <span className="signature-letter signature-h"><img src={readLogoUrl()} alt="" /></span>
+        </div>
+        <div className={`landing-center ${signatureComplete ? "is-ready" : ""}`}>
           <p className="landing-quote"><span>Embrace the fragrance.</span><span>Become isth.</span></p>
           <button className="landing-enter" onClick={goToCollection}>Explore the Collection <ArrowRight size={15} /></button>
         </div>
