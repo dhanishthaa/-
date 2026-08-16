@@ -50,7 +50,7 @@ export default function Home() {
   return <div className="site-shell">
     <header className={`site-nav ${scrolled ? "is-scrolled" : ""}`}>
       <Link href="/home" className="site-brand"><img className="brand-logo brand-logo-dark" src={readLogoUrl()} alt="isth" /></Link>
-      <nav className="desktop-nav" aria-label="Main navigation" style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '34px', font: '10px var(--mono)', letterSpacing: '.16em', textTransform: 'uppercase' }}><Link href="/about">About</Link><a href="#collection">Collection</a><a href="#contact">Contact</a></nav>
+      <nav className="desktop-nav" aria-label="Main navigation"><Link href="/about">About</Link><a href="#collection">Collection</a><a href="#contact">Contact</a></nav>
       <div className="site-actions"><button className="menu-toggle" onClick={() => setMenuOpen((open) => !open)} aria-label={menuOpen ? "Close navigation" : "Open navigation"}>{menuOpen ? <X size={19} /> : <Menu size={19} />}</button></div>
     </header>
     <div className={`mobile-drawer ${menuOpen ? "is-open" : ""}`}><nav><Link href="/about" onClick={() => setMenuOpen(false)}>About</Link><a href="#collection" onClick={() => setMenuOpen(false)}>Collection</a><a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a></nav></div>

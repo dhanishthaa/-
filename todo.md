@@ -106,3 +106,20 @@
 - [x] Centralize product dialog selection so switching between product details does not create competing modal states.
 - [x] Stabilize dialog scroll locking and verify product-to-product interaction has no screen jitter.
 - [x] Make the Nakshatra “Coming soon — isth” badge a sharp-cornered rectangle.
+
+- [x] Restore the full stylesheet after the accidental overwrite and safely center the Home/About navigation group without changing other site styling.
+
+## Follow-up scope
+- [ ] Analyze the newly attached lifestyle references and update the visual language toward natural, tactile product storytelling.
+- [ ] Complete remaining deferred product, admin, security, media, and asset-management work from the original upgrade checklist.
+
+## Notes
+- The full stylesheet was restored from the stable checkpoint before the accidental overwrite.
+- Navbar centering was applied with targeted edits only; production build and desktop visual verification passed.
+- The existing mobile drawer behavior remains preserved; no unrelated page styling was changed.
+
+References:
+- Stable rollback checkpoint: manus-webdev://0be7116b
+- Restored verification checkpoint: manus-webdev://38087488
+
+Author: Manus AI

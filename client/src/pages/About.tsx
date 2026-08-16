@@ -24,7 +24,7 @@ export default function About() {
         <Link href="/home" className="site-brand">
           <img className="brand-logo brand-logo-dark" src={readLogoUrl()} alt="isth" />
         </Link>
-        <nav className="desktop-nav" aria-label="Main navigation" style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '34px', font: '10px var(--mono)', letterSpacing: '.16em', textTransform: 'uppercase' }}>
+        <nav className="desktop-nav" aria-label="Main navigation">
           <Link href="/about" style={{ color: "var(--cherry)", fontWeight: 600 }}>About</Link>
           <Link href="/home#collection">Collection</Link>
           <Link href="/home#contact">Contact</Link>
