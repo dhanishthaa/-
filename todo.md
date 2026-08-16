@@ -99,3 +99,5 @@
 - [x] Remove the light-grey square patch behind the animated signature without changing the completed floral landing state.
 - [x] Add visible fine grain and a glass-frost blur treatment to the SS1 cherry signature-writing background.
 - [x] Reframe SS2 with the supplied lily floral background so it fills each screen without stretching.
+- [x] Add a premium red gradient to the first cherry signature-writing landing state.
+- [x] Strengthen the visibly layered full-screen glass-frost treatment in the first landing state only.
