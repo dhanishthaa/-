@@ -94,7 +94,7 @@ export default function Home() {
               <div><span>Notes</span><p className="dialog-notes">{selectedProduct.notes}</p></div>
               <div><span>Composition</span><p className="dialog-description">{selectedProduct.description}</p></div>
             </div>
-            <a className="cherry-button" href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`${whatsappText} I’m interested in ${selectedProduct.name}.`)}`} target="_blank" rel="noreferrer"><MessageCircle size={15} /> Ask about this scent</a>
+            <a className="cherry-button" href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`Hello isth, I am interested in purchasing ${selectedProduct.name}.`)}`} target="_blank" rel="noreferrer"><MessageCircle size={15} /> Ask about this scent</a>
           </div>
         </div>
       </DialogContent>}
