@@ -79,7 +79,7 @@ export default function Home() {
     </main>
     {selectedProduct && <div className="product-dialog-backdrop" role="presentation" onPointerDown={(event) => { if (event.target === event.currentTarget) setSelectedProduct(null); }}>
       <div className="product-dialog" role="dialog" aria-modal="true" aria-label={`${selectedProduct.name} details`} onPointerDown={(event) => event.stopPropagation()}>
-        <button type="button" className="dialog-close" onPointerDown={(event) => { event.preventDefault(); event.stopPropagation(); setSelectedProduct(null); }} onClick={(event) => { event.preventDefault(); event.stopPropagation(); setSelectedProduct(null); }} aria-label="Close product details">×</button>
+        <button type="button" className="dialog-close" onTouchEnd={(event) => { event.stopPropagation(); setSelectedProduct(null); }} onClick={(event) => { event.stopPropagation(); setSelectedProduct(null); }} aria-label="Close product details">×</button>
         <span className="eyebrow">isth / {selectedProduct.collection}</span>
         <h2>{selectedProduct.name}</h2>
         <p className="dialog-notes">{selectedProduct.notes}</p>

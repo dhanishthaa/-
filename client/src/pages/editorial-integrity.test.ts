@@ -38,4 +38,11 @@ describe("isth editorial page integrity", () => {
     expect(styles).toContain(".about-feature-mark p { margin:0; color:#5B0D18;");
     expect(styles).toContain("text-shadow:none;");
   });
+
+  it("keeps the product details close control touch-safe", () => {
+    const home = readProjectFile("client/src/pages/Home.tsx");
+
+    expect(home).toContain('onTouchEnd={(event) => { event.stopPropagation(); setSelectedProduct(null); }}');
+    expect(home).toContain('onClick={(event) => { event.stopPropagation(); setSelectedProduct(null); }}');
+  });
 });

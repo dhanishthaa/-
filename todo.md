@@ -149,3 +149,4 @@ Author: Manus AI
 - [x] Remove the remaining mobile landing bottom safe-area strip color mismatch so the cherry opening is visually continuous to the system navigation edge.
 - [x] Ensure every About page entry opens at the absolute top instead of restoring the prior mid-page scroll position.
 - [x] Make About hero metadata “Established 2021 · Gujarat, India” solid Cherry red only, with no white highlight, gradient, or shadow.
+- [x] Make the product-details modal cross button close reliably on smartphone touch taps while preserving desktop, backdrop, and Escape closure.
