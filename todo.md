@@ -103,3 +103,5 @@
 - [x] Strengthen the visibly layered full-screen glass-frost treatment in the first landing state only.
 - [x] Fix the product dialog × close control for every displayed product.
 - [x] Verify product dialog closure by × button, backdrop click, and Escape key.
+- [x] Centralize product dialog selection so switching between product details does not create competing modal states.
+- [x] Stabilize dialog scroll locking and verify product-to-product interaction has no screen jitter.
