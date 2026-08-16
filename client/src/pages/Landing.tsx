@@ -13,9 +13,25 @@ export default function Landing() {
   const handoff = useRef(false);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-    const intro = window.setTimeout(() => setReady(true), 280);
-    const signatureTimer = window.setTimeout(() => setSignatureComplete(true), 2420);
+    let intro: number | undefined;
+    let signatureTimer: number | undefined;
+    const clearSequence = () => {
+      if (intro) window.clearTimeout(intro);
+      if (signatureTimer) window.clearTimeout(signatureTimer);
+    };
+    const startSequence = () => {
+      clearSequence();
+      handoff.current = false;
+      setReady(false);
+      setSignatureComplete(false);
+      setProgress(0);
+      setExiting(false);
+      window.scrollTo(0, 0);
+      const isPhone = window.matchMedia("(max-width: 620px)").matches;
+      intro = window.setTimeout(() => setReady(true), 280);
+      signatureTimer = window.setTimeout(() => setSignatureComplete(true), isPhone ? 4600 : 2420);
+    };
+    startSequence();
     let frame = 0;
     let handoffTimer: number | undefined;
     const onScroll = () => {
@@ -30,8 +46,12 @@ export default function Landing() {
         }
       });
     };
+    const onPageShow = (event: PageTransitionEvent) => {
+      if (event.persisted) startSequence();
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => { window.clearTimeout(intro); window.clearTimeout(signatureTimer); if (handoffTimer) window.clearTimeout(handoffTimer); cancelAnimationFrame(frame); window.removeEventListener("scroll", onScroll); };
+    window.addEventListener("pageshow", onPageShow);
+    return () => { clearSequence(); if (handoffTimer) window.clearTimeout(handoffTimer); cancelAnimationFrame(frame); window.removeEventListener("scroll", onScroll); window.removeEventListener("pageshow", onPageShow); };
   }, [setLocation]);
 
   const goToCollection = () => {

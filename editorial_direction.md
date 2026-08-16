@@ -81,3 +81,7 @@ Mobile verification confirms the new Home hero, collection still-life, Nakshatra
 ## Clean Stylesheet Verification
 
 The obsolete frame-heavy Home/About CSS block has now been deleted rather than masked with overrides. A final Home render confirms the featured product images remain available, while the generated campaign art carries the visual hierarchy across the hero, collection, Nakshatra, story, and About spreads.
+
+## Mobile SS1 Lifecycle Check
+
+The landing lifecycle now explicitly resets its ready, signature-complete, progress, and exiting states on entry and on a persisted mobile page restore. Smartphone first-load verification shows the full cherry SS1 field and signature mark before the delayed floral completed state; the mobile hold is intentionally longer than desktop so the opening cannot be skipped.
