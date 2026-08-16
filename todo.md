@@ -115,7 +115,7 @@
 - [x] Audit and remove any remaining non-functional decorative pseudo-elements, circles, outlines, and borders from the Home and About correction pass before marking frame removal complete.
 
 ## Follow-up scope
-- [ ] Analyze the newly attached lifestyle references and update the visual language toward natural, tactile product storytelling.
+- [x] Analyze the newly attached lifestyle references and update the visual language toward natural, tactile product storytelling.
 - [ ] Complete remaining deferred product, admin, security, media, and asset-management work from the original upgrade checklist.
 
 ## Notes
