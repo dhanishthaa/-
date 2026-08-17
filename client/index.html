@@ -7,7 +7,19 @@
     <title>ISTH — Fine Fragrance House</title>
     <meta name="description" content="ISTH composes modern fragrance signatures from notes that stay close, then open slowly." />
     <link rel="icon" type="image/svg+xml" href="/assets/isth-logo-111_06bb811c.svg" />
-    <script>if (location.pathname === "/") document.documentElement.classList.add("isth-landing-boot");</script>
+    <script>
+      (function () {
+        var route = new URLSearchParams(window.location.search).get("p");
+        var segments = window.location.pathname.split("/").filter(Boolean);
+        var appRoutes = ["home", "about", "admin"];
+        var isProjectPage = window.location.hostname.endsWith(".github.io") && segments.length > 0 && !appRoutes.includes(segments[0]);
+        var basePath = isProjectPage ? "/" + segments[0] : "";
+        if (route) {
+          window.history.replaceState(null, "", (basePath || "") + route);
+        }
+        if (window.location.pathname === "/" || (basePath && window.location.pathname === basePath + "/")) document.documentElement.classList.add("isth-landing-boot");
+      })();
+    </script>
     <style>html.isth-landing-boot,html.isth-landing-boot body,html.isth-landing-boot #root{min-height:100%;background:#5B0D18}</style>
   </head>
   <body>

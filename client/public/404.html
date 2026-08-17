@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>isth</title>
+    <script>
+      (function () {
+        var segments = window.location.pathname.split("/").filter(Boolean);
+        var appRoutes = ["home", "about", "admin"];
+        var isProjectPage = window.location.hostname.endsWith(".github.io") && segments.length > 0 && !appRoutes.includes(segments[0]);
+        var basePath = isProjectPage ? "/" + segments.shift() : "";
+        var route = "/" + segments.join("/") + window.location.search + window.location.hash;
+        window.location.replace((basePath || "") + "/?p=" + encodeURIComponent(route));
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>
