@@ -43,6 +43,7 @@ describe("private Admin route", () => {
 
     expect(admin).toContain('const [showPassword, setShowPassword] = useState(false)');
     expect(admin).toContain('aria-label={showPassword ? "Hide password" : "Show password"}');
+    expect(admin).toContain('{showPassword ? <Eye size={17} /> : <EyeOff size={17} />}');
     expect(css).toContain('.password-visibility');
     expect(css).toContain('padding:34px 0 76px');
   });
