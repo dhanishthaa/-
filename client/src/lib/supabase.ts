@@ -8,10 +8,8 @@ const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
 export const isSupabaseConfigured = Boolean(url && anonKey);
 export const supabase = isSupabaseConfigured ? createClient(url!, anonKey!) : null;
 
-export function isAuthorizedEmail(email: string | undefined) {
-  const allowList = (import.meta.env.VITE_ADMIN_EMAILS as string | undefined)?.split(",").map((item) => item.trim().toLowerCase()).filter(Boolean);
-  if (!allowList?.length) return true;
-  return Boolean(email && allowList.includes(email.toLowerCase()));
+export function isSuperAdminRole(role: unknown): role is "super_admin" {
+  return role === "super_admin";
 }
 
 function fromRow(row: Record<string, unknown>): Product {
@@ -38,11 +36,11 @@ export async function deleteRemoteProduct(id: string) {
   return !error;
 }
 
-export async function fetchAdminRole(userId: string) {
+export async function fetchAdminRole() {
   if (!supabase) return null;
-  const { data, error } = await supabase.from("admin_profiles").select("role,is_active").eq("user_id", userId).maybeSingle();
-  if (error || !data || data.is_active === false) return null;
-  return data.role === "admin" || data.role === "super_admin" ? data.role : null;
+  const { data, error } = await supabase.rpc("get_my_admin_role");
+  if (error || !isSuperAdminRole(data)) return null;
+  return data;
 }
 
 export async function savePublicSetting(key: string, value: string) {
