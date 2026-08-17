@@ -36,4 +36,14 @@ describe("private Admin route", () => {
     expect(admin).toContain('if (!session?.user.email || !session.user.email_confirmed_at) {');
     expect(admin).toContain('setMessage("Invalid username or password.")');
   });
+
+  it("keeps the password private by default while exposing an accessible visibility toggle", () => {
+    const admin = source("client/src/pages/Admin.tsx");
+    const css = source("client/src/index.css");
+
+    expect(admin).toContain('const [showPassword, setShowPassword] = useState(false)');
+    expect(admin).toContain('aria-label={showPassword ? "Hide password" : "Show password"}');
+    expect(css).toContain('.password-visibility');
+    expect(css).toContain('padding:34px 0 76px');
+  });
 });
