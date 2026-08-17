@@ -16,7 +16,7 @@ function Router() {
     <Route path="/" component={Landing} />
     <Route path="/home" component={Home} />
     <Route path="/about" component={About} />
-    <Route path="/admin" component={Admin} />
+    <Route path="/isth/frag/minda" component={Admin} />
     <Route path="/404" component={NotFound} />
     <Route component={NotFound} />
   </Switch>;

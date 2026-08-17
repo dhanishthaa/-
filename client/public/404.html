@@ -7,7 +7,7 @@
     <script>
       (function () {
         var segments = window.location.pathname.split("/").filter(Boolean);
-        var appRoutes = ["home", "about", "admin"];
+        var appRoutes = ["home", "about", "isth"];
         var isProjectPage = window.location.hostname.endsWith(".github.io") && segments.length > 0 && !appRoutes.includes(segments[0]);
         var basePath = isProjectPage ? "/" + segments.shift() : "";
         var route = "/" + segments.join("/") + window.location.search + window.location.hash;

@@ -50,7 +50,7 @@ export default function Admin() {
 
   const resetPassword = async () => {
     if (!email || !supabase) return setMessage("Enter your email. Password reset becomes available after Supabase is configured.");
-    await supabase.auth.resetPasswordForEmail(email, { redirectTo: `${window.location.origin}/admin` });
+    await supabase.auth.resetPasswordForEmail(email, { redirectTo: `${window.location.origin}/isth/frag/minda` });
     setMessage("If the account is eligible, a reset email has been sent.");
   };
 
