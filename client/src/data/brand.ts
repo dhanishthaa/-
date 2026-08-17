@@ -1,5 +1,5 @@
 // Quiet Atelier style reminder: the brand layer stays lowercase, spare, and editable without coupling content to layout.
-export const DEFAULT_LOGO_URL = "/assets/isth-logo-111_06bb811c.svg";
+export const DEFAULT_LOGO_URL = "./assets/isth-logo-111_06bb811c.svg";
 export const DEFAULT_WHATSAPP_NUMBER = "917859898490";
 export const DEFAULT_WHATSAPP_TEXT = "Hello isth, I am interested in purchasing.";
 export const BRAND_QUOTE = "Embrace the fragrance. Become isth.";

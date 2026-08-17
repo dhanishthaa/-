@@ -168,3 +168,5 @@ Author: Manus AI
 - [x] Correct WhatsApp inquiry copy so product modal button sends “Hello isth, I am interested in purchasing [Product Name].” and general Queries button ends with a proper full stop.
 - [x] Create GitHub Actions workflow at `.github/workflows/static.yml` for static deployment to GitHub Pages.
 - [x] Create GitHub Actions workflow at `.github/workflows/static.yml` with `workflow_dispatch` (Run workflow) and `push` triggers for GitHub Pages.
+- [x] Diagnose and correct the stale GitHub Pages deployment so it serves the current website code.
+- [x] Bundle editorial imagery and configure relative asset paths so GitHub Pages can render the current experience outside the Manus preview.
