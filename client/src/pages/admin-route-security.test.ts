@@ -19,4 +19,10 @@ describe("private Admin route", () => {
     expect(motionRoot).toContain('document.addEventListener("contextmenu"');
     expect(motionRoot).toContain('event.key === "F12"');
   });
+
+  it("builds root-absolute assets so the private nested route can load on isth.in", () => {
+    const viteConfig = source("vite.config.ts");
+
+    expect(viteConfig).toContain('base: "/"');
+  });
 });
