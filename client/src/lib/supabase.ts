@@ -5,7 +5,19 @@ import type { Product } from "@/data/products";
 const url = import.meta.env.VITE_SUPABASE_URL as string | undefined;
 const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
 
-export const isSupabaseConfigured = Boolean(url && anonKey);
+export function isValidSupabaseConfig(candidateUrl: unknown, candidateAnonKey: unknown): candidateUrl is string {
+  if (typeof candidateUrl !== "string" || typeof candidateAnonKey !== "string") return false;
+  if (!candidateUrl.trim() || !candidateAnonKey.trim()) return false;
+  if (candidateUrl.includes("%VITE_") || candidateAnonKey.includes("%VITE_")) return false;
+  try {
+    const parsed = new URL(candidateUrl);
+    return parsed.protocol === "https:" || parsed.protocol === "http:";
+  } catch {
+    return false;
+  }
+}
+
+export const isSupabaseConfigured = isValidSupabaseConfig(url, anonKey);
 export const supabase = isSupabaseConfigured ? createClient(url!, anonKey!) : null;
 
 export function isSuperAdminRole(role: unknown): role is "super_admin" {
