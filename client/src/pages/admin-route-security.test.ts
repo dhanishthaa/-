@@ -46,4 +46,13 @@ describe("private Admin route", () => {
     expect(css).toContain('.password-visibility');
     expect(css).toContain('padding:34px 0 76px');
   });
+
+  it("uses the live private Admin route for reset emails and does not falsely report an API failure as a sent email", () => {
+    const admin = source("client/src/pages/Admin.tsx");
+
+    expect(admin).toContain('new URL("/isth/frag/minda", window.location.origin).toString()');
+    expect(admin).toContain('const { error } = await supabase.auth.resetPasswordForEmail(normalizedEmail, { redirectTo });');
+    expect(admin).toContain('if (error) return setMessage("Unable to send a reset email. Please try again.");');
+    expect(admin).toContain('minLength={6}');
+  });
 });
