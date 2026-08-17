@@ -1,6 +1,6 @@
 // Quiet Atelier style reminder: admin is a calm instrument panel—functional, role-aware, and visually continuous with isth.
 import { FormEvent, useEffect, useState } from "react";
-import { ArrowLeft, BarChart3, Check, Edit3, Eye, ImagePlus, LogOut, Package, Plus, Save, Settings2, Trash2, Video, X } from "lucide-react";
+import { ArrowLeft, BarChart3, Check, Edit3, Eye, ImagePlus, LogOut, Package, Plus, Save, Trash2, Video, X } from "lucide-react";
 import { Link } from "wouter";
 import { defaultProducts, readLocalProducts, writeLocalProducts, type Product } from "@/data/products";
 import { deleteRemoteProduct, fetchAdminRole, fetchRemoteProducts, isSupabaseConfigured, savePublicSetting, supabase, uploadPublicAsset, upsertRemoteProduct } from "@/lib/supabase";
@@ -24,7 +24,13 @@ export default function Admin() {
     const client = supabase;
     if (!client) return;
     const hydrate = async (session: { user: { id: string; email?: string; email_confirmed_at?: string | null } } | null) => {
-      if (!session?.user.email || !session.user.email_confirmed_at) return setUser(null);
+      if (!session?.user.email || !session.user.email_confirmed_at) {
+        if (session?.user) {
+          await client.auth.signOut();
+          setMessage("Invalid username or password.");
+        }
+        return setUser(null);
+      }
       const role = await fetchAdminRole();
       if (role === "super_admin") {
         setUser({ email: session.user.email, id: session.user.id, role });
@@ -32,7 +38,7 @@ export default function Admin() {
       }
       await client.auth.signOut();
       setUser(null);
-      setMessage("This account is not authorised for the isth admin panel.");
+      setMessage("Invalid username or password.");
     };
     client.auth.getSession().then(({ data }) => hydrate(data.session as typeof data.session & { user: { email?: string; email_confirmed_at?: string | null } }));
     const { data: listener } = client.auth.onAuthStateChange((_event, session) => hydrate(session as typeof session & { user: { email?: string; email_confirmed_at?: string | null } }));
@@ -41,15 +47,14 @@ export default function Admin() {
 
   const signIn = async (event: FormEvent) => {
     event.preventDefault(); setMessage("");
-    if (!email || !password) return setMessage("Enter your email and password.");
-    if (!supabase) return setMessage("Admin access is unavailable until Supabase is configured for this deployment.");
+    if (!email || !password) return setMessage("Invalid username or password.");
+    if (!supabase) return setMessage("Invalid username or password.");
     const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) return setMessage("Invalid email or password.");
-    return setMessage("Checking your isth super-admin role…");
+    if (error) return setMessage("Invalid username or password.");
   };
 
   const resetPassword = async () => {
-    if (!email || !supabase) return setMessage("Enter your email. Password reset becomes available after Supabase is configured.");
+    if (!email || !supabase) return setMessage("Invalid username or password.");
     await supabase.auth.resetPasswordForEmail(email, { redirectTo: `${window.location.origin}/isth/frag/minda` });
     setMessage("If the account is eligible, a reset email has been sent.");
   };
@@ -58,7 +63,7 @@ export default function Admin() {
   const saveProduct = async (product: Product) => { const next = isNew ? [...products, product] : products.map((item) => item.id === product.id ? product : item); setProducts(next); writeLocalProducts(next); const synced = await upsertRemoteProduct(product); setActive(null); setIsNew(false); setMessage(synced ? (isSupabaseConfigured ? "Saved to the isth product library." : "Saved to this browser. Connect Supabase for production sync.") : "Saved locally, but Supabase rejected the update."); };
   const deleteProduct = async (id: string) => { const next = products.filter((item) => item.id !== id); setProducts(next); writeLocalProducts(next); const synced = await deleteRemoteProduct(id); setMessage(synced ? (isSupabaseConfigured ? "Product removed from the isth library." : "Product removed from this browser.") : "Removed locally, but Supabase rejected the deletion."); };
 
-  if (!user) return <main className="admin-login"><div className="admin-login-card"><Link className="back-link" href="/home"><ArrowLeft size={14} /> Back to isth</Link><div className="admin-login-mark"><img className="brand-logo brand-logo-dark" src={readLogoUrl()} alt="isth" /></div><p className="eyebrow">Private room / Admin</p><h1>Keep the house<br /><em>in order.</em></h1><p className="admin-intro">Manage compositions, descriptions, bottle formats, and the public scent library from one quiet workspace.</p><form onSubmit={signIn}><label>Email<input type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="you@isth.house" autoComplete="email" required /></label><label>Password<input type="password" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="••••••••" autoComplete="current-password" minLength={10} required /></label><div className="admin-login-actions"><button className="cherry-button" type="submit">Enter the room <ArrowLeft size={14} className="turn-arrow" /></button><button className="plain-button" type="button" onClick={resetPassword}>Forgot password?</button></div></form>{message && <p className="form-message">{message}</p>}<p className="admin-security"><Settings2 size={14} /> {isSupabaseConfigured ? "Supabase Auth, verified email, and secure super-admin verification are required." : "Admin access is locked until Supabase build variables are configured."}</p></div><div className="admin-login-aside"><span>isth / private</span><p>Access is reserved<br />for the house.</p></div></main>;
+  if (!user) return <main className="admin-login"><div className="admin-login-card"><Link className="back-link" href="/home"><ArrowLeft size={14} /> Back to isth</Link><div className="admin-login-mark"><img className="brand-logo brand-logo-dark" src={readLogoUrl()} alt="isth" /></div><p className="eyebrow">Private room / Admin</p><h1>Keep the house<br /><em>in order.</em></h1><p className="admin-intro">Manage compositions, descriptions, bottle formats, and the public scent library from one quiet workspace.</p><form onSubmit={signIn}><label>Email<input type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="you@isth.house" autoComplete="email" required /></label><label>Password<input type="password" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="••••••••" autoComplete="current-password" minLength={10} required /></label><div className="admin-login-actions"><button className="cherry-button" type="submit">Enter the room <ArrowLeft size={14} className="turn-arrow" /></button><button className="plain-button" type="button" onClick={resetPassword}>Forgot password?</button></div></form>{message && <p className="form-message">{message}</p>}</div><div className="admin-login-aside"><span>isth / private</span><p>Access is reserved<br />for the house.</p></div></main>;
 
   return <main className="admin-shell"><aside className="admin-sidebar"><Link href="/home" className="admin-brand"><img className="brand-logo brand-logo-light" src={readLogoUrl()} alt="isth" /></Link><div className="admin-side-nav"><span className="side-label">Workspace</span><button className="is-active"><BarChart3 size={16} /> Overview</button><button><Package size={16} /> Products <span>{products.length}</span></button><button onClick={() => setMediaOpen((open) => !open)}><ImagePlus size={16} /> Brand & media</button><button><Eye size={16} /> Public site</button></div><div className="admin-side-bottom"><span className="admin-status"><i /> {isSupabaseConfigured ? `${user.role ?? "admin"} / connected` : "Local preview"}</span><button onClick={signOut}><LogOut size={15} /> Sign out</button></div></aside><section className="admin-content"><header className="admin-header"><div><p className="eyebrow">Private room / Overview</p><h1>Good morning, <em>house.</em></h1></div><Link className="outline-button dark" href="/home">View storefront <Eye size={14} /></Link></header><div className="admin-stats"><div><span>Published compositions</span><strong>{products.length}</strong><small>in the scent library</small></div><div><span>Public visits</span><strong>—</strong><small>connect analytics to measure</small></div><div><span>Session</span><strong>{user.role === "preview" ? "Preview" : "Live"}</strong><small>{user.email}</small></div></div><div className="admin-section-head"><div><p className="eyebrow">Scent library</p><h2>Compositions</h2></div><button className="cherry-button" onClick={() => { setIsNew(true); setActive({ id: `new-${Date.now()}`, name: "", notes: "", description: "", collection: "Signature", color: "#5B0D18", size: "10ml tower" }); }}><Plus size={15} /> New composition</button></div>{message && <div className="admin-toast"><Check size={15} /> {message}<button onClick={() => setMessage("")}><X size={13} /></button></div>}<div className="admin-table"><div className="admin-table-head"><span>Composition</span><span>Format</span><span>Notes</span><span>Actions</span></div>{products.map((product) => <div className="admin-row" key={product.id}><div className="admin-product-cell"><span className="admin-swatch" style={{ background: product.color }} /><div><strong>{product.name}</strong><small>{product.id}</small></div></div><span>{product.size}</span><span>{product.notes}</span><div className="admin-row-actions"><button onClick={() => { setIsNew(false); setActive(product); }} aria-label={`Edit ${product.name}`}><Edit3 size={15} /></button><button onClick={() => deleteProduct(product.id)} aria-label={`Delete ${product.name}`}><Trash2 size={15} /></button></div></div>)}</div>{mediaOpen && <MediaSettings />}</section>{active && <ProductEditor product={active} isNew={isNew} onSave={saveProduct} onClose={() => { setActive(null); setIsNew(false); }} />}</main>;
 }

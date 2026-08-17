@@ -25,4 +25,15 @@ describe("private Admin route", () => {
 
     expect(viteConfig).toContain('base: "/"');
   });
+
+  it("does not disclose infrastructure details from the Admin sign-in screen", () => {
+    const admin = source("client/src/pages/Admin.tsx");
+
+    expect(admin).toContain("Invalid username or password.");
+    expect(admin).not.toContain("Admin access is unavailable until Supabase is configured");
+    expect(admin).not.toContain("Admin access is locked until Supabase build variables are configured");
+    expect(admin).not.toContain("This account is not authorised for the isth admin panel.");
+    expect(admin).toContain('if (!session?.user.email || !session.user.email_confirmed_at) {');
+    expect(admin).toContain('setMessage("Invalid username or password.")');
+  });
 });
