@@ -44,6 +44,7 @@ describe("isth editorial page integrity", () => {
 
     expect(styles).toContain('@media (min-width:901px) and (max-height:760px)');
     expect(styles).toContain('.editorial-home .home-hero { height:100svh; min-height:0; }');
+    expect(styles).toContain('.editorial-home .home-hero-image { background-position:center 20%; }');
     expect(styles).toContain('.signature-writing-mark { top:40%; width:min(390px,42vw); }');
   });
 

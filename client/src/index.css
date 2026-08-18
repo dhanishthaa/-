@@ -653,7 +653,7 @@ em { font-style:italic; }
 /* Short desktop viewports (including 1366×768 browser windows): preserve the full editorial composition without allowing the hero CTAs to sit against the lower edge. */
 @media (min-width:901px) and (max-height:760px) {
   .editorial-home .home-hero { height:100svh; min-height:0; }
-  .editorial-home .home-hero-image { background-position:center 44%; }
+  .editorial-home .home-hero-image { background-position:center 20%; }
   .editorial-home .home-hero-content { left:clamp(64px,9vw,122px); bottom:clamp(24px,4.5vh,42px); max-width:500px; }
   .home-hero .hero-identity { width:190px; height:124px; margin-bottom:8px; }
   .home-hero .hero-identity img { height:124px; max-width:190px; }
