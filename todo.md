@@ -14,3 +14,5 @@
 - [x] Wire every visible Admin sidebar button to a functional Overview, Products, Brand & media, or Public site action.
 - [x] Generate one verified ChatGPT Images 2 Kawaii Marshmallow campaign visual using the requested isth-branded cylindrical tower-or-cosmic bottle direction; use the tower-bottle variant for this scent and implement the CSS motion responsively.
 - [x] Verify the final Kawaii Marshmallow managed image renders successfully, rather than as a generation placeholder, at both 1440×900 and 390×844.
+- [x] Replace the Kawaii Marshmallow horizontal cover movement with a true vertical wipe and verify the watermark-free isth campaign treatment on desktop, tablet, and smartphone layouts.
+- [x] Transform Kawaii Marshmallow into a reusable premium product card with category metadata, notes, accessible inquiry action, responsive image treatment, and original vertical reveal motion; retain only real product information and do not fabricate price or ratings.
