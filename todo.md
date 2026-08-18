@@ -11,3 +11,4 @@
 - [ ] Deploy the missing get_my_admin_role RPC function in Supabase project nhdjqitrvyblhmbpgkax and verify it returns a super-admin role for the intended account.
 - [x] Adjust the short-desktop Home hero image focal crop so both models' faces remain fully visible.
 - [x] Visually verify at 1366×604 that both Home hero model faces remain fully inside the viewport.
+- [x] Wire every visible Admin sidebar button to a functional Overview, Products, Brand & media, or Public site action.
