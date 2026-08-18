@@ -10,9 +10,10 @@ export type Product = {
   featured?: boolean;
 };
 
-export const KAWAII_MARSHMALLOW_DESKTOP_IMAGE = "/manus-storage/isth-kawaii-marshmallow-approved-bottle_7bdf1288.png";
-export const KAWAII_MARSHMALLOW_MOBILE_IMAGE = "/manus-storage/isth-kawaii-marshmallow-approved-bottle_7bdf1288.png";
+export const KAWAII_MARSHMALLOW_DESKTOP_IMAGE = "/manus-storage/isth-kawaii-marshmallow-campaign-v2_cf2e6424.jpg";
+export const KAWAII_MARSHMALLOW_MOBILE_IMAGE = "/manus-storage/isth-kawaii-marshmallow-campaign-v2_cf2e6424.jpg";
 const LEGACY_KAWAII_MARSHMALLOW_IMAGE = "/assets/isth-bottle-10ml_630d74f3.png";
+const PASTED_KAWAII_REFERENCE_IMAGE = "/manus-storage/isth-kawaii-marshmallow-approved-bottle_7bdf1288.png";
 
 export const defaultProducts: Product[] = [
   { id: "kawaii-marshmallow", name: "Kawaii Marshmallow", notes: "marshmallow · vanilla chocolate · musk", description: "A soft gourmand with a musky finish — sweet without losing its composure.", collection: "Signature", image: KAWAII_MARSHMALLOW_DESKTOP_IMAGE, color: "#B98778", size: "Edition", featured: true },
@@ -30,7 +31,7 @@ export const defaultProducts: Product[] = [
 const STORAGE_KEY = "isth-products-v1";
 
 export function normalizeProductMedia(product: Product): Product {
-  if (product.id === "kawaii-marshmallow" && (!product.image || product.image === LEGACY_KAWAII_MARSHMALLOW_IMAGE)) {
+  if (product.id === "kawaii-marshmallow" && (!product.image || product.image === LEGACY_KAWAII_MARSHMALLOW_IMAGE || product.image === PASTED_KAWAII_REFERENCE_IMAGE)) {
     return { ...product, image: KAWAII_MARSHMALLOW_DESKTOP_IMAGE };
   }
   return product;
