@@ -8,3 +8,6 @@
 - [x] Correct the reversed password visibility icon/state in the Admin login form.
 - [ ] Capture the intended account's private Supabase sign-in and get_my_admin_role failure result to identify the exact rejection condition.
 - [x] Rebalance landing and Home hero composition for the 1366×768 desktop viewport without regressing tablet or mobile layouts.
+- [ ] Deploy the missing get_my_admin_role RPC function in Supabase project nhdjqitrvyblhmbpgkax and verify it returns a super-admin role for the intended account.
+- [x] Adjust the short-desktop Home hero image focal crop so both models' faces remain fully visible.
+- [x] Visually verify at 1366×604 that both Home hero model faces remain fully inside the viewport.
