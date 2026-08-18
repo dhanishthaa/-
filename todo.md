@@ -21,3 +21,4 @@
 - [x] Implement the reference-led pointer and touch image reveal for the existing quote section using one connected pointer-tracked fluid ink-splash mask with fully dissolved edges and exact cursor/finger alignment while keeping its text visible.
 - [x] Remove the pasted Kawaii screenshot from storefront media and restore the original generated isth bottle visual.
 - [x] Restore the warm beige editorial image frame around Kawaii Marshmallow on the shared product card across all screen sizes.
+- [x] Replace the ineffective Kawaii frame treatment with the visibly thicker warm beige outer frame shown in the supplied reference.

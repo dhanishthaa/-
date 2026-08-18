@@ -84,8 +84,10 @@ describe("isth editorial page integrity", () => {
     expect(styles).not.toContain("@keyframes kawaii-reference-reveal");
     expect(styles).toContain(".bottle-stage-kawaii > img");
     expect(styles).toContain("object-fit:contain");
-    expect(styles).toContain(".product-card.is-kawaii .product-visual { padding:clamp(12px,1.45vw,20px); background:#e5d0b6;");
-    expect(styles).toContain(".product-card.is-kawaii .bottle-stage-kawaii { background:#f2e8da;");
+    expect(styles).toContain(".product-card.is-kawaii .product-visual::after");
+    expect(styles).toContain("border:clamp(16px,2vw,28px) solid #e1c8aa");
+    expect(styles).toContain(".product-card.is-kawaii .product-open { z-index:2;");
+    expect(styles).toContain(".product-card.is-kawaii .bottle-stage-kawaii { background:#f7edde;");
     expect(styles).toContain(".dialog-product-media .bottle-stage-kawaii > img");
   });
 

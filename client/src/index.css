@@ -72,8 +72,10 @@ em { font-style:italic; }
 .bottle-stage > picture > img { width:100%; height:100%; display:block; object-fit:cover; object-position:center; }
 .bottle-stage-kawaii { background:#ead7c1; }
 .bottle-stage-kawaii > img { width:100%; height:100%; display:block; padding:clamp(8px,2vw,20px); object-fit:contain; object-position:center; }
-.product-card.is-kawaii .product-visual { padding:clamp(12px,1.45vw,20px); background:#e5d0b6; }
-.product-card.is-kawaii .bottle-stage-kawaii { background:#f2e8da; }
+.product-card.is-kawaii .product-visual { padding:0; background:#e1c8aa; }
+.product-card.is-kawaii .product-visual::after { content:""; position:absolute; inset:0; z-index:1; pointer-events:none; border:clamp(16px,2vw,28px) solid #e1c8aa; box-shadow:inset 0 0 0 1px rgba(126,91,61,.2); }
+.product-card.is-kawaii .product-open { z-index:2; }
+.product-card.is-kawaii .bottle-stage-kawaii { background:#f7edde; }
 .product-card.is-kawaii .bottle-stage-kawaii > img { padding:0; }
 .dialog-product-media .bottle-stage-kawaii > img { padding:clamp(16px,3vw,34px); object-fit:contain; object-position:center; }
 .bottle-placeholder { position:relative; width:100%; height:100%; display:grid; place-items:center; }
