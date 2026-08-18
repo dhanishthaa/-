@@ -72,31 +72,27 @@ describe("isth editorial page integrity", () => {
     expect(styles).toContain("align-items:baseline");
   });
 
-  it("uses the reference reveal structure around the original branded Kawaii campaign visual", () => {
+  it("keeps Kawaii Marshmallow on the shared simple product-card visual path", () => {
     const products = readProjectFile("client/src/data/products.ts");
     const visual = readProjectFile("client/src/components/ProductBottleVisual.tsx");
     const styles = readProjectFile("client/src/index.css");
 
-    expect(products).toContain('KAWAII_MARSHMALLOW_DESKTOP_IMAGE = "/manus-storage/isth-kawaii-marshmallow-campaign-v2_cf2e6424.jpg"');
+    expect(products).toContain('KAWAII_MARSHMALLOW_DESKTOP_IMAGE = "/manus-storage/isth-kawaii-marshmallow-approved-bottle_7bdf1288.png"');
     expect(products).toContain("export function normalizeProductMedia");
-    expect(visual).toContain('className={`bottle-stage ${useKawaiiCampaign ? "bottle-stage-kawaii-reveal" : ""} ${modal ? "bottle-stage-modal" : ""}`}');
-    expect(visual).not.toContain("KAWAII_MARSHMALLOW_PORTRAIT_VIDEO");
-    expect(styles).toContain("@keyframes kawaii-reference-reveal");
-    expect(styles).toContain("animation:kawaii-reference-reveal 7.4s var(--ease) infinite");
-    expect(styles).toContain("transform:translate3d(0,-102%,0)");
+    expect(visual).toContain('className={`bottle-stage ${isKawaii ? "bottle-stage-kawaii" : ""} ${modal ? "bottle-stage-modal" : ""}`}');
+    expect(visual).not.toContain("KAWAII_MARSHMALLOW_DESKTOP_IMAGE");
+    expect(styles).not.toContain("@keyframes kawaii-reference-reveal");
+    expect(styles).toContain(".bottle-stage-kawaii > img");
+    expect(styles).toContain("object-fit:contain");
+    expect(styles).toContain(".dialog-product-media .bottle-stage-kawaii > img");
   });
 
-  it("uses a dedicated accessible Kawaii product-card component without fabricated commerce claims", () => {
+  it("uses the shared simple product card for Kawaii without fabricated commerce claims", () => {
     const home = readProjectFile("client/src/pages/Home.tsx");
-    const card = readProjectFile("client/src/components/KawaiiProductCard.tsx");
-    const styles = readProjectFile("client/src/index.css");
 
-    expect(home).toContain('product.id === "kawaii-marshmallow" ? <KawaiiProductCard');
-    expect(card).toContain('aria-labelledby={`${product.id}-title`}');
-    expect(card).toContain("isth · Eau de parfum");
-    expect(card).toContain("Ask about this scent");
-    expect(card).not.toContain("rating");
-    expect(card).not.toContain("₹");
-    expect(styles).toContain(".kawaii-card-media:focus-visible,.kawaii-inquiry:focus-visible");
+    expect(home).toContain('<ProductBottle product={product} onOpen={openProduct} />');
+    expect(home).not.toContain("KawaiiProductCard");
+    expect(home).not.toContain("rating");
+    expect(home).not.toContain("₹");
   });
 });

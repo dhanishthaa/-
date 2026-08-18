@@ -5,7 +5,6 @@ import { Link } from "wouter";
 import Reveal from "@/components/Reveal";
 import ProductBottle from "@/components/ProductBottle";
 import ProductBottleVisual from "@/components/ProductBottleVisual";
-import KawaiiProductCard from "@/components/KawaiiProductCard";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { defaultProducts, readLocalProducts, type Product } from "@/data/products";
 import { fetchRemoteProducts } from "@/lib/supabase";
@@ -69,7 +68,7 @@ export default function Home() {
 
       <section className="intro-strip"><Reveal><h2>For the moment<br /><em>that stays.</em></h2></Reveal><Reveal delay={100}><p className="intro-copy">A considered collection of ten fragrances for the rituals, rooms, and people that make a day feel like your own.</p></Reveal></section>
       <section id="collection" className="collection-section"><div className="section-heading"><Reveal><h2>Find your<br /><em>signature.</em></h2></Reveal><Reveal delay={80}><p>Each isth composition is made to be worn close. Browse by feeling, not by family.</p></Reveal></div><Reveal className="collection-editorial-photo" delay={100}><div aria-hidden="true" /></Reveal>
-        <div className="featured-grid">{featured.map((product, index) => <Reveal key={product.id} delay={index * 80}>{product.id === "kawaii-marshmallow" ? <KawaiiProductCard product={product} onOpen={openProduct} /> : <ProductBottle product={product} onOpen={openProduct} />}</Reveal>)}<Reveal delay={150} className="collection-note"><div className="note-card"><h3>Not a perfume<br /><em>for everyone.</em></h3><p>It is a signature for the person who found it.</p><a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`} target="_blank" rel="noreferrer">Ask the house <MoveUpRight size={14} /></a></div></Reveal></div>
+        <div className="featured-grid">{featured.map((product, index) => <Reveal key={product.id} delay={index * 80}><ProductBottle product={product} onOpen={openProduct} /></Reveal>)}<Reveal delay={150} className="collection-note"><div className="note-card"><h3>Not a perfume<br /><em>for everyone.</em></h3><p>It is a signature for the person who found it.</p><a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`} target="_blank">Ask the house <MoveUpRight size={14} /></a></div></Reveal></div>
         <div className="catalog-heading"><div><p className="eyebrow">More compositions</p></div><p className="catalog-note">The rest of the library opens in its own time.</p></div>
         <div className="catalog-grid">{more.map((product, index) => <Reveal key={product.id} delay={(index % 3) * 60}><ProductBottle product={product} compact onOpen={openProduct} /></Reveal>)}</div>
       </section>

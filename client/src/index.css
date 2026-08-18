@@ -70,6 +70,9 @@ em { font-style:italic; }
 .bottle-stage { height:100%; display:grid; place-items:center; position:relative; overflow:hidden; background:radial-gradient(circle at 50% 42%,color-mix(in srgb,var(--product-tone) 30%,#eee9e2),#d5cec6 70%); }
 .bottle-stage > img,.bottle-stage > picture { width:100%; height:100%; display:block; }
 .bottle-stage > picture > img { width:100%; height:100%; display:block; object-fit:cover; object-position:center; }
+.bottle-stage-kawaii { background:#ead7c1; }
+.bottle-stage-kawaii > img { width:100%; height:100%; display:block; padding:clamp(8px,2vw,20px); object-fit:contain; object-position:center; }
+.dialog-product-media .bottle-stage-kawaii > img { padding:clamp(16px,3vw,34px); object-fit:contain; object-position:center; }
 .bottle-placeholder { position:relative; width:100%; height:100%; display:grid; place-items:center; }
 .bottle-body { width:34%; height:60%; border:1px solid rgba(17,17,17,.28); background:linear-gradient(105deg,rgba(255,255,255,.34),rgba(255,255,255,.04) 35%,rgba(17,17,17,.2)),color-mix(in srgb,var(--product-tone) 38%,#d7cec4); box-shadow:10px 22px 24px rgba(17,17,17,.14); display:flex; flex-direction:column; justify-content:center; align-items:center; gap:6px; transform:translateY(4%) rotate(-1.5deg); }
 .bottle-body span { font:16px var(--serif); letter-spacing:.08em; }
@@ -81,30 +84,6 @@ em { font-style:italic; }
 .product-buy { display:flex; align-items:center; gap:5px; padding:7px 0; color:var(--cherry); border:0; background:none; font:9px var(--mono); text-transform:uppercase; letter-spacing:.1em; white-space:nowrap; }
 .product-buy:hover { color:var(--cherry-hover); }
 .product-notes { margin:8px 0 0; color:#78716A; font-size:12px; }
-.is-kawaii .bottle-stage { isolation:isolate; background:#d9c9b2; }
-.is-kawaii .bottle-stage > picture { position:relative; z-index:0; }
-.is-kawaii .bottle-stage-kawaii-reveal::before { content:"isth"; position:absolute; z-index:2; inset:0; display:grid; place-items:center; pointer-events:none; background:linear-gradient(135deg,#16110f,#5B0D18 52%,#b98778); color:var(--ivory); font:400 clamp(44px,8vw,88px)/1 var(--serif); letter-spacing:-.07em; transform:translate3d(0,0,0); animation:kawaii-reference-reveal 7.4s var(--ease) infinite; }
-.is-kawaii .bottle-stage-kawaii-reveal::after { content:""; position:absolute; z-index:1; inset:0; pointer-events:none; background:linear-gradient(180deg,rgba(255,250,242,.08),transparent 45%,rgba(75,38,30,.12)); }
-.dialog-product-media .bottle-stage-kawaii-reveal::before { content:"isth"; position:absolute; z-index:2; inset:0; display:grid; place-items:center; pointer-events:none; background:linear-gradient(135deg,#16110f,#5B0D18 52%,#b98778); color:var(--ivory); font:400 clamp(56px,8vw,112px)/1 var(--serif); letter-spacing:-.07em; transform:translate3d(0,0,0); animation:kawaii-reference-reveal 7.4s var(--ease) infinite; }
-.dialog-product-media .bottle-stage-kawaii-reveal::after { content:""; position:absolute; z-index:1; inset:0; pointer-events:none; background:linear-gradient(180deg,rgba(255,250,242,.08),transparent 45%,rgba(75,38,30,.12)); }
-@keyframes kawaii-reference-reveal { 0%,9% { transform:translate3d(0,0,0); } 21%,78% { transform:translate3d(0,-102%,0); } 91%,100% { transform:translate3d(0,0,0); } }
-.kawaii-product-card { min-width:0; background:linear-gradient(148deg,#fffaf4,#f1dfd6); box-shadow:0 16px 34px rgba(65,38,32,.09); }
-.kawaii-card-media { position:relative; width:100%; aspect-ratio:4/5; padding:0; overflow:hidden; border:0; background:#dccdb9; color:var(--ink); text-align:left; }
-.kawaii-card-media:focus-visible,.kawaii-inquiry:focus-visible { outline:2px solid var(--cherry); outline-offset:4px; }
-.kawaii-card-media .bottle-stage { height:100%; }
-.kawaii-card-open { position:absolute; z-index:4; top:14px; right:14px; display:grid; width:32px; height:32px; place-items:center; background:rgba(245,241,235,.92); transition:background .22s var(--ease),color .22s var(--ease); }
-.kawaii-card-media:hover .kawaii-card-open { background:var(--cherry); color:var(--ivory); }
-.kawaii-card-info { padding:clamp(18px,2.3vw,28px); }
-.kawaii-category { margin:0 0 9px; color:#76544b; font:9px var(--mono); letter-spacing:.13em; text-transform:uppercase; }
-.kawaii-card-info h3 { margin:0; font:400 clamp(27px,3vw,42px)/.95 var(--serif); letter-spacing:-.045em; }
-.kawaii-description { max-width:34ch; margin:14px 0 0; color:#6d625c; font-size:13px; line-height:1.55; }
-.kawaii-notes { margin:19px 0 0; padding-top:12px; border-top:1px solid rgba(91,13,24,.18); }
-.kawaii-notes div { display:grid; grid-template-columns:68px minmax(0,1fr); gap:10px; align-items:baseline; }
-.kawaii-notes dt { color:#76544b; font:9px var(--mono); letter-spacing:.11em; text-transform:uppercase; }
-.kawaii-notes dd { margin:0; color:#3c302c; font-size:12px; line-height:1.45; }
-.kawaii-inquiry { display:inline-flex; align-items:center; gap:7px; margin-top:22px; padding-bottom:3px; border-bottom:1px solid currentColor; color:var(--cherry); font:10px var(--mono); letter-spacing:.08em; text-transform:uppercase; transition:color .22s var(--ease); }
-.kawaii-inquiry:hover { color:var(--cherry-hover); }
-@media (max-width:620px) { .kawaii-card-info { padding:20px; } .kawaii-card-info h3 { font-size:clamp(32px,10vw,44px); } .kawaii-description { font-size:13px; } .kawaii-inquiry { min-height:34px; align-items:center; } }
 .note-card { min-height:330px; padding:30px; background:var(--cherry); color:var(--ivory); display:flex; flex-direction:column; justify-content:space-between; }
 .note-card-mark { color:var(--gold); font-size:20px; }
 .note-card .eyebrow { color:var(--gold); }
@@ -168,6 +147,7 @@ em { font-style:italic; }
 .dialog-product-media { min-height:100%; background:var(--product-tone,#ddd5ce); }
 .dialog-product-media .bottle-stage { min-height:clamp(360px,64vh,540px); height:100%; background:radial-gradient(circle at 50% 42%,color-mix(in srgb,var(--product-tone) 34%,#eee9e2),#d5cec6 72%); }
 .dialog-product-media .bottle-stage > img { width:100%; height:100%; display:block; object-fit:cover; object-position:center; }
+.dialog-product-media .bottle-stage-kawaii > img { padding:clamp(16px,3vw,34px); object-fit:contain; object-position:center; }
 .dialog-product-media .bottle-stage-modal .bottle-body { width:32%; height:60%; }
 .dialog-product-media .bottle-stage-modal .bottle-cap { top:14%; width:17%; }
 .bottle-placeholder-note { position:absolute; left:20px; bottom:18px; color:rgba(17,17,17,.58); font:9px var(--mono); letter-spacing:.08em; text-transform:uppercase; }

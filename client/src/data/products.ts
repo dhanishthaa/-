@@ -10,8 +10,8 @@ export type Product = {
   featured?: boolean;
 };
 
-export const KAWAII_MARSHMALLOW_DESKTOP_IMAGE = "/manus-storage/isth-kawaii-marshmallow-campaign-v2_cf2e6424.jpg";
-export const KAWAII_MARSHMALLOW_MOBILE_IMAGE = "/manus-storage/isth-kawaii-marshmallow-campaign-v2_cf2e6424.jpg";
+export const KAWAII_MARSHMALLOW_DESKTOP_IMAGE = "/manus-storage/isth-kawaii-marshmallow-approved-bottle_7bdf1288.png";
+export const KAWAII_MARSHMALLOW_MOBILE_IMAGE = "/manus-storage/isth-kawaii-marshmallow-approved-bottle_7bdf1288.png";
 const LEGACY_KAWAII_MARSHMALLOW_IMAGE = "/assets/isth-bottle-10ml_630d74f3.png";
 
 export const defaultProducts: Product[] = [
