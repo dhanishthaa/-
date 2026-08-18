@@ -84,10 +84,13 @@ describe("isth editorial page integrity", () => {
     expect(styles).not.toContain("@keyframes kawaii-reference-reveal");
     expect(styles).toContain(".bottle-stage-kawaii > img");
     expect(styles).toContain("object-fit:contain");
-    expect(styles).toContain(".product-card.is-kawaii .product-visual::after");
-    expect(styles).toContain("border:clamp(16px,2vw,28px) solid #e1c8aa");
-    expect(styles).toContain(".product-card.is-kawaii .product-open { z-index:2;");
-    expect(styles).toContain(".product-card.is-kawaii .bottle-stage-kawaii { background:#f7edde;");
+    expect(styles).toContain(".bottle-stage-kawaii { background:#ead7c1;");
+    expect(styles).not.toContain(".product-card.is-kawaii .product-visual::after");
+    expect(styles).not.toContain("border:clamp(16px,2vw,28px) solid #e1c8aa");
+    expect(styles).toContain(".product-card.is-kawaii .product-visual { background:#eee9e2;");
+    expect(styles).toContain(".product-card.is-kawaii .bottle-stage-kawaii { background:transparent;");
+    expect(styles).toContain(".product-card.is-kawaii .bottle-stage-kawaii > img { padding:0; object-fit:contain;");
+    expect(styles).not.toContain(".product-card.is-kawaii .bottle-stage-kawaii > img { padding:0; object-fit:cover;");
     expect(styles).toContain(".dialog-product-media .bottle-stage-kawaii > img");
   });
 
@@ -109,6 +112,8 @@ describe("isth editorial page integrity", () => {
     expect(home).not.toContain("revealQuoteAt");
     expect(home).not.toContain("quote-reveal-prompt");
     expect(styles).toContain(".quote-video-backdrop { position:absolute; inset:0; z-index:-2;");
+    expect(styles).toContain(".quote-video-copy h2 span { white-space:nowrap; }");
+    expect(styles).toContain(".quote-video-copy h2 { font-size:clamp(28px,8.8vw,42px);");
     expect(styles).not.toContain("--quote-floral-mask");
     expect(styles).not.toContain(".quote-video-section.is-revealing");
     expect(styles).toContain(".quote-video-copy { position:relative; z-index:2;");

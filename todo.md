@@ -23,3 +23,6 @@
 - [x] Restore the warm beige editorial image frame around Kawaii Marshmallow on the shared product card across all screen sizes.
 - [x] Replace the ineffective Kawaii frame treatment with the visibly thicker warm beige outer frame shown in the supplied reference.
 - [x] Restore the quote section to its normal pre-experiment presentation and remove the failed pointer-controlled splash reveal.
+- [x] Remove the unintended beige outer border/frame from the Kawaii Marshmallow product image.
+- [x] Format the quote exactly as two lines: “Embrace the fragrance.” and “Become isth.”
+- [x] Remove the Kawaii border without cropping the approved full-bottle image; retain a distortion-safe contain treatment and no Kawaii-only overlay frame.
