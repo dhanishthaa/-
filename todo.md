@@ -18,3 +18,5 @@
 - [x] Transform Kawaii Marshmallow into a reusable premium product card with category metadata, notes, accessible inquiry action, responsive image treatment, and original vertical reveal motion; retain only real product information and do not fabricate price or ratings.
 - [x] Restore Kawaii Marshmallow to the original simple product-card layout with only its standard image, name, notes, and Buy now action.
 - [x] Preserve the user-approved frosted cylindrical tower bottle, matte-black cap, and lowercase isth label without distortion in both the restored Kawaii card and product-detail modal.
+- [x] Implement the reference-led pointer and touch image reveal for the existing quote section using one connected pointer-tracked fluid ink-splash mask with fully dissolved edges and exact cursor/finger alignment while keeping its text visible.
+- [x] Remove the pasted Kawaii screenshot from storefront media and restore the original generated isth bottle visual.
