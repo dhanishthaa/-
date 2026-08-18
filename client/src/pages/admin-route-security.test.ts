@@ -56,4 +56,17 @@ describe("private Admin route", () => {
     expect(admin).toContain('if (error) return setMessage("Unable to send a reset email. Please try again.");');
     expect(admin).toContain('minLength={6}');
   });
+
+  it("wires every visible Admin workspace action to a functional navigation or storefront action", () => {
+    const admin = source("client/src/pages/Admin.tsx");
+
+    expect(admin).toContain('const [workspaceView, setWorkspaceView] = useState<WorkspaceView>("overview")');
+    expect(admin).toContain('activateWorkspace("overview")');
+    expect(admin).toContain('activateWorkspace("products")');
+    expect(admin).toContain('activateWorkspace("media")');
+    expect(admin).toContain('target?.scrollIntoView({ behavior: "smooth", block: "start" })');
+    expect(admin).toContain('window.open("/home", "_blank", "noopener,noreferrer")');
+    expect(admin).toContain('ref={productsRef}');
+    expect(admin).toContain('ref={mediaRef}');
+  });
 });
