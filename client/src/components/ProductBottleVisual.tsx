@@ -5,14 +5,14 @@ export default function ProductBottleVisual({ product, modal = false }: { produc
   const useKawaiiCampaign = product.id === "kawaii-marshmallow" && product.image === KAWAII_MARSHMALLOW_DESKTOP_IMAGE;
   return (
     <div
-      className={`bottle-stage ${modal ? "bottle-stage-modal" : ""}`}
+      className={`bottle-stage ${useKawaiiCampaign ? "bottle-stage-kawaii-reveal" : ""} ${modal ? "bottle-stage-modal" : ""}`}
       style={{ "--product-tone": product.color } as CSSProperties}
       aria-label={product.image ? `${product.name} bottle` : `${product.name} bottle placeholder`}
     >
       {useKawaiiCampaign ? (
         <picture>
           <source media="(max-width: 620px)" srcSet={KAWAII_MARSHMALLOW_MOBILE_IMAGE} />
-          <img src={KAWAII_MARSHMALLOW_DESKTOP_IMAGE} alt={`${product.name} bottle`} loading={modal ? "eager" : "lazy"} />
+          <img src={KAWAII_MARSHMALLOW_DESKTOP_IMAGE} alt={`${product.name} isth bottle`} loading={modal ? "eager" : "lazy"} />
         </picture>
       ) : product.image ? (
         <img src={product.image} alt={`${product.name} bottle`} loading={modal ? "eager" : "lazy"} />

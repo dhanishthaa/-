@@ -83,11 +83,12 @@ em { font-style:italic; }
 .product-notes { margin:8px 0 0; color:#78716A; font-size:12px; }
 .product-card.is-kawaii .product-visual { isolation:isolate; background:#d9c9b2; box-shadow:0 20px 35px rgba(91,13,24,.12); }
 .product-card.is-kawaii .bottle-stage { isolation:isolate; background:#d9c9b2; }
-.product-card.is-kawaii .bottle-stage > img,.product-card.is-kawaii .bottle-stage > picture { position:relative; z-index:0; object-position:center; transform:scale(1.01); transition:transform .8s var(--ease),filter .8s var(--ease); filter:saturate(.82) contrast(.98) brightness(1.02); }
-.product-card.is-kawaii .bottle-stage::before { content:""; position:absolute; z-index:1; inset:-18% auto -18% -42%; width:38%; pointer-events:none; opacity:0; transform:skewX(-17deg) translate3d(-130%,0,0); background:linear-gradient(90deg,transparent,rgba(255,249,235,.62),transparent); mix-blend-mode:screen; animation:kawaii-light-sweep 10s var(--ease) infinite; }
-.product-card.is-kawaii .bottle-stage::after { content:""; position:absolute; z-index:1; inset:0; pointer-events:none; background:linear-gradient(180deg,rgba(255,250,242,.09),transparent 44%,rgba(75,38,30,.16)); }
-.product-card.is-kawaii .product-visual:hover .bottle-stage > img,.product-card.is-kawaii .product-visual:hover .bottle-stage > picture { transform:scale(1.045); filter:saturate(.9) contrast(1); }
-@keyframes kawaii-light-sweep { 0%,28% { opacity:0; transform:skewX(-17deg) translate3d(-130%,0,0); } 40% { opacity:.72; } 68% { opacity:0; transform:skewX(-17deg) translate3d(470%,0,0); } 100% { opacity:0; transform:skewX(-17deg) translate3d(470%,0,0); } }
+.product-card.is-kawaii .bottle-stage > picture { position:relative; z-index:0; }
+.product-card.is-kawaii .bottle-stage-kawaii-reveal::before { content:"isth"; position:absolute; z-index:2; inset:0; display:grid; place-items:center; pointer-events:none; background:linear-gradient(135deg,#16110f,#5B0D18 52%,#b98778); color:var(--ivory); font:400 clamp(44px,8vw,88px)/1 var(--serif); letter-spacing:-.07em; transform:translate3d(0,0,0); animation:kawaii-reference-reveal 7.4s var(--ease) infinite; }
+.product-card.is-kawaii .bottle-stage-kawaii-reveal::after { content:""; position:absolute; z-index:1; inset:0; pointer-events:none; background:linear-gradient(180deg,rgba(255,250,242,.08),transparent 45%,rgba(75,38,30,.12)); }
+.dialog-product-media .bottle-stage-kawaii-reveal::before { content:"isth"; position:absolute; z-index:2; inset:0; display:grid; place-items:center; pointer-events:none; background:linear-gradient(135deg,#16110f,#5B0D18 52%,#b98778); color:var(--ivory); font:400 clamp(56px,8vw,112px)/1 var(--serif); letter-spacing:-.07em; transform:translate3d(0,0,0); animation:kawaii-reference-reveal 7.4s var(--ease) infinite; }
+.dialog-product-media .bottle-stage-kawaii-reveal::after { content:""; position:absolute; z-index:1; inset:0; pointer-events:none; background:linear-gradient(180deg,rgba(255,250,242,.08),transparent 45%,rgba(75,38,30,.12)); }
+@keyframes kawaii-reference-reveal { 0%,9% { transform:translate3d(0,0,0); } 21%,78% { transform:translate3d(0,-102%,0); } 91%,100% { transform:translate3d(0,0,0); } }
 .note-card { min-height:330px; padding:30px; background:var(--cherry); color:var(--ivory); display:flex; flex-direction:column; justify-content:space-between; }
 .note-card-mark { color:var(--gold); font-size:20px; }
 .note-card .eyebrow { color:var(--gold); }

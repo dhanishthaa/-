@@ -72,16 +72,17 @@ describe("isth editorial page integrity", () => {
     expect(styles).toContain("align-items:baseline");
   });
 
-  it("uses branded responsive Kawaii Marshmallow campaign imagery with a reduced-motion-safe CSS treatment", () => {
+  it("uses the reference reveal structure around the original branded Kawaii campaign visual", () => {
     const products = readProjectFile("client/src/data/products.ts");
     const visual = readProjectFile("client/src/components/ProductBottleVisual.tsx");
     const styles = readProjectFile("client/src/index.css");
 
     expect(products).toContain('KAWAII_MARSHMALLOW_DESKTOP_IMAGE = "/manus-storage/isth-kawaii-marshmallow-campaign-v2_cf2e6424.jpg"');
-    expect(products).toContain('KAWAII_MARSHMALLOW_MOBILE_IMAGE = "/manus-storage/isth-kawaii-marshmallow-campaign-v2_cf2e6424.jpg"');
     expect(products).toContain("export function normalizeProductMedia");
-    expect(visual).toContain('<source media="(max-width: 620px)" srcSet={KAWAII_MARSHMALLOW_MOBILE_IMAGE} />');
-    expect(styles).toContain("animation:kawaii-light-sweep 10s var(--ease) infinite");
-    expect(styles).toContain("@media (prefers-reduced-motion:reduce)");
+    expect(visual).toContain('className={`bottle-stage ${useKawaiiCampaign ? "bottle-stage-kawaii-reveal" : ""} ${modal ? "bottle-stage-modal" : ""}`}');
+    expect(visual).not.toContain("KAWAII_MARSHMALLOW_PORTRAIT_VIDEO");
+    expect(styles).toContain("@keyframes kawaii-reference-reveal");
+    expect(styles).toContain("animation:kawaii-reference-reveal 7.4s var(--ease) infinite");
+    expect(styles).toContain("transform:translate3d(0,-102%,0)");
   });
 });
