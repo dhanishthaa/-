@@ -100,28 +100,17 @@ describe("isth editorial page integrity", () => {
     expect(home).not.toContain("₹");
   });
 
-  it("keeps quote text above a pointer-and-touch image reveal", () => {
+  it("keeps the quote section in its normal static presentation", () => {
     const home = readProjectFile("client/src/pages/Home.tsx");
     const styles = readProjectFile("client/src/index.css");
 
-    expect(home).toContain("onPointerDown={revealQuoteAt}");
-    expect(home).toContain("onPointerMove={revealQuoteAt}");
-    expect(home).toContain("onPointerLeave={fadeQuoteReveal}");
-    expect(home).toContain("onPointerUp={fadeQuoteReveal}");
-    expect(home).toContain("quote-reveal-prompt");
-    expect(home).toContain('section.style.setProperty("--quote-reveal-x", `${point.renderedX}px`)');
-    expect(home).toContain('section.style.setProperty("--quote-reveal-y", `${point.renderedY}px`)');
-    expect(home).not.toContain('section.style.setProperty("--quote-reveal-x", `${point.renderedX}%`)');
-    expect(styles).toContain("--quote-floral-mask:url(\"data:image/svg+xml");
-    expect(styles).toContain("feTurbulence type='fractalNoise'");
-    expect(styles).toContain("feDisplacementMap");
-    expect(styles).toContain("radialGradient id='inkFade'");
-    expect(styles).toContain("feGaussianBlur in='distorted' stdDeviation='3.8'");
-    expect(styles).toContain("stop-opacity='0'");
-    expect(styles).toContain("-webkit-mask-image:var(--quote-floral-mask)");
-    expect(styles).not.toContain("clip-path:polygon(calc(var(--quote-reveal-x)");
-    expect(styles).not.toContain("mask-image:radial-gradient");
-    expect(styles).toContain(".quote-video-section.is-revealing .quote-video-backdrop");
+    expect(home).toContain('<section className="quote-video-section">');
+    expect(home).not.toContain("quote-pointer-reveal");
+    expect(home).not.toContain("revealQuoteAt");
+    expect(home).not.toContain("quote-reveal-prompt");
+    expect(styles).toContain(".quote-video-backdrop { position:absolute; inset:0; z-index:-2;");
+    expect(styles).not.toContain("--quote-floral-mask");
+    expect(styles).not.toContain(".quote-video-section.is-revealing");
     expect(styles).toContain(".quote-video-copy { position:relative; z-index:2;");
   });
 });

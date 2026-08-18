@@ -20,10 +20,6 @@ export default function Home() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [productDialogOpen, setProductDialogOpen] = useState(false);
   const closeTimerRef = useRef<number | null>(null);
-  const quoteRevealRef = useRef<HTMLElement | null>(null);
-  const quoteRevealFrameRef = useRef<number | null>(null);
-  const quoteRevealExitTimerRef = useRef<number | null>(null);
-  const quoteRevealPointRef = useRef({ x: 0, y: 0, renderedX: 0, renderedY: 0, initialized: false });
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -33,8 +29,6 @@ export default function Home() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", onScroll);
-      if (quoteRevealFrameRef.current) window.cancelAnimationFrame(quoteRevealFrameRef.current);
-      if (quoteRevealExitTimerRef.current) window.clearTimeout(quoteRevealExitTimerRef.current);
     };
   }, []);
 
@@ -55,41 +49,6 @@ export default function Home() {
       setSelectedProduct((current) => current?.id === closingId ? null : current);
       closeTimerRef.current = null;
     }, 260);
-  };
-
-  const animateQuoteReveal = () => {
-    const section = quoteRevealRef.current;
-    if (!section) return;
-    const point = quoteRevealPointRef.current;
-    point.renderedX = point.x;
-    point.renderedY = point.y;
-    section.style.setProperty("--quote-reveal-x", `${point.renderedX}px`);
-    section.style.setProperty("--quote-reveal-y", `${point.renderedY}px`);
-    quoteRevealFrameRef.current = null;
-  };
-
-  const revealQuoteAt = (event: React.PointerEvent<HTMLElement>) => {
-    const section = quoteRevealRef.current;
-    if (!section) return;
-    const bounds = section.getBoundingClientRect();
-    const nextX = Math.min(bounds.width, Math.max(0, event.clientX - bounds.left));
-    const nextY = Math.min(bounds.height, Math.max(0, event.clientY - bounds.top));
-    const point = quoteRevealPointRef.current;
-    point.x = nextX;
-    point.y = nextY;
-    if (!point.initialized) {
-      point.renderedX = nextX;
-      point.renderedY = nextY;
-      point.initialized = true;
-    }
-    section.classList.add("is-revealing");
-    if (quoteRevealExitTimerRef.current) window.clearTimeout(quoteRevealExitTimerRef.current);
-    if (!quoteRevealFrameRef.current) quoteRevealFrameRef.current = window.requestAnimationFrame(animateQuoteReveal);
-  };
-
-  const fadeQuoteReveal = () => {
-    if (quoteRevealExitTimerRef.current) window.clearTimeout(quoteRevealExitTimerRef.current);
-    quoteRevealExitTimerRef.current = window.setTimeout(() => quoteRevealRef.current?.classList.remove("is-revealing"), 720);
   };
 
   return <div className="site-shell editorial-home">
@@ -114,7 +73,7 @@ export default function Home() {
         <div className="catalog-grid">{more.map((product, index) => <Reveal key={product.id} delay={(index % 3) * 60}><ProductBottle product={product} compact onOpen={openProduct} /></Reveal>)}</div>
       </section>
 
-      <section ref={quoteRevealRef} className="quote-video-section quote-pointer-reveal" onPointerDown={revealQuoteAt} onPointerMove={revealQuoteAt} onPointerLeave={fadeQuoteReveal} onPointerUp={fadeQuoteReveal}><div className="quote-video-backdrop" aria-hidden="true" /><div className="quote-video-copy"><h2><span>Embrace the fragrance.</span><span>Become isth.</span></h2><a className="cherry-button" href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`} target="_blank" rel="noreferrer"><MessageCircle size={17} /> Queries</a></div><p className="quote-reveal-prompt" aria-hidden="true">Move to reveal</p></section>
+      <section className="quote-video-section"><div className="quote-video-backdrop" aria-hidden="true" /><div className="quote-video-copy"><h2><span>Embrace the fragrance.</span><span>Become isth.</span></h2><a className="cherry-button" href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`} target="_blank" rel="noreferrer"><MessageCircle size={17} /> Queries</a></div></section>
 
       <section id="nakshatra" className="nakshatra-section"><div className="nakshatra-texture" aria-hidden="true" /><div className="nakshatra-inner"><h2>NAKSHATRA<br /><em>collection.</em></h2><p>A new premium segment is taking shape. Ten new compositions, arriving when the night is right.</p><span className="coming-soon">Coming soon <span>—</span> isth</span></div></section>
 
