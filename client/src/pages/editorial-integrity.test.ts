@@ -39,6 +39,14 @@ describe("isth editorial page integrity", () => {
     expect(styles).toContain("text-shadow:none;");
   });
 
+  it("contains a dedicated short-desktop hero composition for 1366×768 browser windows", () => {
+    const styles = readProjectFile("client/src/index.css");
+
+    expect(styles).toContain('@media (min-width:901px) and (max-height:760px)');
+    expect(styles).toContain('.editorial-home .home-hero { height:100svh; min-height:0; }');
+    expect(styles).toContain('.signature-writing-mark { top:40%; width:min(390px,42vw); }');
+  });
+
   it("uses a controlled shared dialog for reliable product details dismissal", () => {
     const home = readProjectFile("client/src/pages/Home.tsx");
 
