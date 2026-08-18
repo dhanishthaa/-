@@ -71,4 +71,17 @@ describe("isth editorial page integrity", () => {
     expect(styles).toContain("grid-template-columns:104px minmax(0,1fr)");
     expect(styles).toContain("align-items:baseline");
   });
+
+  it("uses branded responsive Kawaii Marshmallow campaign imagery with a reduced-motion-safe CSS treatment", () => {
+    const products = readProjectFile("client/src/data/products.ts");
+    const visual = readProjectFile("client/src/components/ProductBottleVisual.tsx");
+    const styles = readProjectFile("client/src/index.css");
+
+    expect(products).toContain('KAWAII_MARSHMALLOW_DESKTOP_IMAGE = "/manus-storage/isth-kawaii-marshmallow-campaign-v2_cf2e6424.jpg"');
+    expect(products).toContain('KAWAII_MARSHMALLOW_MOBILE_IMAGE = "/manus-storage/isth-kawaii-marshmallow-campaign-v2_cf2e6424.jpg"');
+    expect(products).toContain("export function normalizeProductMedia");
+    expect(visual).toContain('<source media="(max-width: 620px)" srcSet={KAWAII_MARSHMALLOW_MOBILE_IMAGE} />');
+    expect(styles).toContain("animation:kawaii-light-sweep 10s var(--ease) infinite");
+    expect(styles).toContain("@media (prefers-reduced-motion:reduce)");
+  });
 });

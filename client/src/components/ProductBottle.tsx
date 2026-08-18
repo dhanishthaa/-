@@ -10,7 +10,7 @@ export default function ProductBottle({ product, compact = false, onOpen }: { pr
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`${whatsappText} I’m interested in ${product.name}.`)}`;
 
   return (
-    <article className={`product-card ${product.featured ? "is-featured" : ""} ${compact ? "is-compact" : ""}`} style={{ "--product-tone": product.color } as CSSProperties}>
+    <article className={`product-card ${product.id === "kawaii-marshmallow" ? "is-kawaii" : ""} ${product.featured ? "is-featured" : ""} ${compact ? "is-compact" : ""}`} style={{ "--product-tone": product.color } as CSSProperties}>
       <button className="product-visual" onClick={() => onOpen?.(product)} aria-label={`View details for ${product.name}`}>
         <ProductBottleVisual product={product} />
         <span className="product-open"><ArrowUpRight size={16} strokeWidth={1.4} /></span>

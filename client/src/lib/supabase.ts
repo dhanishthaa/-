@@ -1,6 +1,6 @@
 // Quiet Atelier style reminder: infrastructure UI should feel as considered as the storefront, with calm states and no visual noise.
 import { createClient } from "@supabase/supabase-js";
-import type { Product } from "@/data/products";
+import { normalizeProductMedia, type Product } from "@/data/products";
 
 const url = import.meta.env.VITE_SUPABASE_URL as string | undefined;
 const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
@@ -26,7 +26,7 @@ export function isSuperAdminRole(role: unknown): role is "super_admin" {
 
 function fromRow(row: Record<string, unknown>): Product {
   const size = row.size === "10ml tower" ? "10ml tower" : "30ml cosmos";
-  return { id: String(row.id), name: String(row.name ?? ""), notes: String(row.notes ?? ""), description: String(row.description ?? ""), collection: String(row.collection ?? "Signature"), image: row.image_url ? String(row.image_url) : undefined, color: String(row.color ?? "#5B0D18"), size, featured: Boolean(row.featured) };
+  return normalizeProductMedia({ id: String(row.id), name: String(row.name ?? ""), notes: String(row.notes ?? ""), description: String(row.description ?? ""), collection: String(row.collection ?? "Signature"), image: row.image_url ? String(row.image_url) : undefined, color: String(row.color ?? "#5B0D18"), size, featured: Boolean(row.featured) });
 }
 
 export async function fetchRemoteProducts() {

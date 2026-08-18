@@ -10,8 +10,12 @@ export type Product = {
   featured?: boolean;
 };
 
+export const KAWAII_MARSHMALLOW_DESKTOP_IMAGE = "/manus-storage/isth-kawaii-marshmallow-campaign-v2_cf2e6424.jpg";
+export const KAWAII_MARSHMALLOW_MOBILE_IMAGE = "/manus-storage/isth-kawaii-marshmallow-campaign-v2_cf2e6424.jpg";
+const LEGACY_KAWAII_MARSHMALLOW_IMAGE = "/assets/isth-bottle-10ml_630d74f3.png";
+
 export const defaultProducts: Product[] = [
-  { id: "kawaii-marshmallow", name: "Kawaii Marshmallow", notes: "marshmallow · vanilla chocolate · musk", description: "A soft gourmand with a musky finish — sweet without losing its composure.", collection: "Signature", image: "/assets/isth-bottle-10ml_630d74f3.png", color: "#B98778", size: "Edition", featured: true },
+  { id: "kawaii-marshmallow", name: "Kawaii Marshmallow", notes: "marshmallow · vanilla chocolate · musk", description: "A soft gourmand with a musky finish — sweet without losing its composure.", collection: "Signature", image: KAWAII_MARSHMALLOW_DESKTOP_IMAGE, color: "#B98778", size: "Edition", featured: true },
   { id: "eclat-courinne", name: "Éclat Courinné", notes: "aqua · lavender · citrus", description: "Bright aqua notes and cool lavender, lifted by a clean citrus opening.", collection: "Signature", image: "/assets/isth-bottle-30ml_79079c93.png", color: "#AAB9B0", size: "Edition", featured: true },
   { id: "lesprit-epice", name: "L'Esprit Épicé", notes: "geranium · rose · leather · oud", description: "A rose shadowed by leather and oud, with a spice that lingers close to the skin.", collection: "Signature", color: "#79575C", size: "Edition" },
   { id: "17k-pirate", name: "17K Pirate", notes: "pineapple · birch · oakmoss", description: "Pineapple brightens a smoky birch accord grounded in green oakmoss.", collection: "Signature", color: "#C89F65", size: "Edition" },
@@ -25,11 +29,18 @@ export const defaultProducts: Product[] = [
 
 const STORAGE_KEY = "isth-products-v1";
 
+export function normalizeProductMedia(product: Product): Product {
+  if (product.id === "kawaii-marshmallow" && (!product.image || product.image === LEGACY_KAWAII_MARSHMALLOW_IMAGE)) {
+    return { ...product, image: KAWAII_MARSHMALLOW_DESKTOP_IMAGE };
+  }
+  return product;
+}
+
 export function readLocalProducts(): Product[] {
   if (typeof window === "undefined") return defaultProducts;
   try {
     const saved = window.localStorage.getItem(STORAGE_KEY);
-    return saved ? JSON.parse(saved) : defaultProducts;
+    return saved ? JSON.parse(saved).map(normalizeProductMedia) : defaultProducts;
   } catch {
     return defaultProducts;
   }

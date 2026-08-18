@@ -1,14 +1,20 @@
 import type { CSSProperties } from "react";
-import type { Product } from "@/data/products";
+import { KAWAII_MARSHMALLOW_DESKTOP_IMAGE, KAWAII_MARSHMALLOW_MOBILE_IMAGE, type Product } from "@/data/products";
 
 export default function ProductBottleVisual({ product, modal = false }: { product: Product; modal?: boolean }) {
+  const useKawaiiCampaign = product.id === "kawaii-marshmallow" && product.image === KAWAII_MARSHMALLOW_DESKTOP_IMAGE;
   return (
     <div
       className={`bottle-stage ${modal ? "bottle-stage-modal" : ""}`}
       style={{ "--product-tone": product.color } as CSSProperties}
       aria-label={product.image ? `${product.name} bottle` : `${product.name} bottle placeholder`}
     >
-      {product.image ? (
+      {useKawaiiCampaign ? (
+        <picture>
+          <source media="(max-width: 620px)" srcSet={KAWAII_MARSHMALLOW_MOBILE_IMAGE} />
+          <img src={KAWAII_MARSHMALLOW_DESKTOP_IMAGE} alt={`${product.name} bottle`} loading={modal ? "eager" : "lazy"} />
+        </picture>
+      ) : product.image ? (
         <img src={product.image} alt={`${product.name} bottle`} loading={modal ? "eager" : "lazy"} />
       ) : (
         <div className="bottle-placeholder" aria-hidden="true">
