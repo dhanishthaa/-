@@ -85,4 +85,18 @@ describe("isth editorial page integrity", () => {
     expect(styles).toContain("animation:kawaii-reference-reveal 7.4s var(--ease) infinite");
     expect(styles).toContain("transform:translate3d(0,-102%,0)");
   });
+
+  it("uses a dedicated accessible Kawaii product-card component without fabricated commerce claims", () => {
+    const home = readProjectFile("client/src/pages/Home.tsx");
+    const card = readProjectFile("client/src/components/KawaiiProductCard.tsx");
+    const styles = readProjectFile("client/src/index.css");
+
+    expect(home).toContain('product.id === "kawaii-marshmallow" ? <KawaiiProductCard');
+    expect(card).toContain('aria-labelledby={`${product.id}-title`}');
+    expect(card).toContain("isth · Eau de parfum");
+    expect(card).toContain("Ask about this scent");
+    expect(card).not.toContain("rating");
+    expect(card).not.toContain("₹");
+    expect(styles).toContain(".kawaii-card-media:focus-visible,.kawaii-inquiry:focus-visible");
+  });
 });
