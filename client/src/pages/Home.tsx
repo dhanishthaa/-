@@ -7,7 +7,6 @@ import { Link } from "wouter";
 import Reveal from "@/components/Reveal";
 import ProductBottle from "@/components/ProductBottle";
 import ProductBottleVisual from "@/components/ProductBottleVisual";
-import KawaiiCinematicCurtain from "@/components/KawaiiCinematicCurtain";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { defaultProducts, type Product } from "@/data/products";
 import { fetchRemoteProducts } from "@/lib/supabase";
@@ -162,7 +161,6 @@ export default function Home() {
           <div className="product-dialog-layout">
           <div className="dialog-product-media">
             <ProductBottleVisual product={selectedProduct} modal />
-            {selectedProduct.id === "kawaii-marshmallow" && <KawaiiCinematicCurtain variant="dialog" />}
           </div>
           <div className="product-dialog-copy">
             <DialogTitle className="product-dialog-title">{selectedProduct.name}</DialogTitle>
