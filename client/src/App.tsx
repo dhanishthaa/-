@@ -8,6 +8,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Landing from "./pages/Landing";
 import MotionRoot from "./components/MotionRoot";
+import SeoHead from "./components/SeoHead";
 
 const Home = lazy(() => import("./pages/Home"));
 const About = lazy(() => import("./pages/About"));
@@ -25,5 +26,5 @@ function Router() {
 }
 
 export default function App() {
-  return <ErrorBoundary><ThemeProvider defaultTheme="light"><TooltipProvider><MotionRoot><Toaster /><Router /></MotionRoot></TooltipProvider></ThemeProvider></ErrorBoundary>;
+  return <ErrorBoundary><ThemeProvider defaultTheme="light"><TooltipProvider><MotionRoot><SeoHead /><Toaster /><Router /></MotionRoot></TooltipProvider></ThemeProvider></ErrorBoundary>;
 }

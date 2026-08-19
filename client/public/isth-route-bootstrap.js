@@ -9,6 +9,10 @@
     window.history.replaceState(null, "", (basePath || "") + route);
   }
 
+  if (window.location.pathname === "/home/" || window.location.pathname === "/about/") {
+    window.history.replaceState(null, "", window.location.pathname.slice(0, -1) + window.location.search + window.location.hash);
+  }
+
   if (window.location.pathname === "/" || (basePath && window.location.pathname === basePath + "/")) {
     document.documentElement.classList.add("isth-landing-boot");
   }

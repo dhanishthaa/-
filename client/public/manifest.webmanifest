@@ -1,0 +1,16 @@
+{
+  "name": "isth - Parfums",
+  "short_name": "isth",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#5B0D18",
+  "theme_color": "#5B0D18",
+  "icons": [
+    {
+      "src": "/assets/isth-logo-111_06bb811c.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

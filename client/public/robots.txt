@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /isth/frag/minda
+Disallow: /404
+
+Sitemap: https://isth.in/sitemap.xml

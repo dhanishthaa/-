@@ -5,6 +5,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { defineConfig, type Plugin, type ViteDevServer } from "vite";
 import { vitePluginManusRuntime } from "vite-plugin-manus-runtime";
+import { SEO_PAGES, renderStaticNoscript, renderStaticSeoHead, type SeoPageId } from "./client/src/seo/site";
 
 // =============================================================================
 // Manus Debug Collector - Vite Plugin
@@ -205,11 +206,30 @@ function vitePluginStorageProxy(): Plugin {
 
 const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector(), vitePluginStorageProxy()];
 
+function vitePluginStaticSeoDocuments(): Plugin {
+  const pageIdForDocument = (pathOrFilename: string): SeoPageId => {
+    const normalized = pathOrFilename.replace(/\\/g, "/");
+    if (normalized.includes("/about/")) return "about";
+    if (normalized.includes("/home/")) return "home";
+    return "landing";
+  };
+
+  return {
+    name: "isth-static-seo-documents",
+    transformIndexHtml(html, context) {
+      const page = SEO_PAGES[pageIdForDocument(context.path)];
+      return html
+        .replace("<!--isth-seo-head-->", renderStaticSeoHead(page))
+        .replace("<!--isth-seo-noscript-->", renderStaticNoscript(page));
+    },
+  };
+}
+
 export default defineConfig({
   // isth.in is a custom-domain GitHub Pages deployment. Root-absolute assets
   // keep the app bundle available from every client-side nested route.
   base: "/",
-  plugins,
+  plugins: [vitePluginStaticSeoDocuments(), ...plugins],
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "client", "src"),
@@ -223,6 +243,11 @@ export default defineConfig({
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
     rollupOptions: {
+      input: {
+        landing: path.resolve(import.meta.dirname, "client", "index.html"),
+        home: path.resolve(import.meta.dirname, "client", "home", "index.html"),
+        about: path.resolve(import.meta.dirname, "client", "about", "index.html"),
+      },
       output: {
         manualChunks(id) {
           if (!id.includes("node_modules")) return;
