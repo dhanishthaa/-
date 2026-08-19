@@ -10,7 +10,6 @@ const curtainImages = [
 
 const curtainPositions = ["11% center", "37% center", "63% center", "89% center"];
 const CURTAIN_TIMELINE_DURATION = 2.6;
-const COMPACT_SLOW_TIMING_SCALE = 2.15;
 
 const cinematicPairs = [
   { left: 1, right: 2, start: 0, sweep: 1.25, settle: 0.12, ease: "power3.inOut" },
@@ -25,8 +24,6 @@ export default function KawaiiCinematicCurtain({ variant = "card" }: { variant?:
     if (!curtain) return;
     const panels = Array.from(curtain.querySelectorAll<HTMLElement>(".kawaii-curtain-panel"));
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const compactScreen = window.matchMedia("(max-width: 760px)").matches;
-    const motionScale = compactScreen ? COMPACT_SLOW_TIMING_SCALE : 1;
 
     if (!panels.length) return;
 
@@ -58,7 +55,7 @@ export default function KawaiiCinematicCurtain({ variant = "card" }: { variant?:
             transformOrigin: "center center",
           }, {
             scale: 1,
-            duration: 1.8 * motionScale,
+            duration: 1.8,
             ease: "power2.out",
             force3D: true,
           }, 0.06);
@@ -67,24 +64,23 @@ export default function KawaiiCinematicCurtain({ variant = "card" }: { variant?:
         cinematicPairs.forEach(({ left, right, start, sweep, settle, ease }) => {
           const pair = [panels[left], panels[right]].filter(Boolean) as HTMLElement[];
           if (pair.length !== 2) return;
-          const pairEase = compactScreen ? "power2.inOut" : ease;
 
           timeline
             .to(pair, {
               xPercent: (index) => index === 0 ? -exitDistance * 1.012 : exitDistance * 1.012,
-              duration: sweep * motionScale,
-              ease: pairEase,
+              duration: sweep,
+              ease,
               force3D: true,
-            }, start * motionScale)
+            }, start)
             .to(pair, {
               xPercent: (index) => index === 0 ? -exitDistance : exitDistance,
-              duration: settle * motionScale,
+              duration: settle,
               ease: "power1.out",
               force3D: true,
-            }, (start + sweep) * motionScale);
+            }, start + sweep);
         });
 
-        timeline.call(() => undefined, [], CURTAIN_TIMELINE_DURATION * motionScale);
+        timeline.call(() => undefined, [], CURTAIN_TIMELINE_DURATION);
       };
 
       if (variant === "dialog") {
