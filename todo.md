@@ -46,7 +46,7 @@
 - [x] Compare current navbar logo styling to pre-enhancement committed rules and confirm exact placement restoration.
 - [x] Verify slower navbar fold/unfold states on desktop, tablet, and smartphone layouts after the final logo-restoration changes.
 - [x] Compare exact current and pre-enhancement navbar logo declarations and remove any residual placement difference.
-- [ ] Directly test scroll-down fold and scroll-up unfold at desktop, tablet, and smartphone viewport sizes after the final navigation patch.
+- [x] Directly test scroll-down fold and scroll-up unfold at desktop, tablet, and smartphone viewport sizes after the final navigation patch.
 - [x] Remove the decorative dash before Queries while preserving the label.
 - [x] Make every displayed email mention lowercase as isth.support@gmail.com while preserving mail links.
 - [x] Restore About, Collection, and Contact navbar links at tablet and desktop widths while keeping the hamburger menu only on phone-sized layouts.
@@ -65,3 +65,10 @@
 - [x] Verify the completed Kawaii card and dialog curtain treatment at smartphone, tablet, laptop, and desktop widths for smooth, overflow-free rendering.
 - [x] Rework the Kawaii curtain imagery with stronger light-to-dark and material contrast so individual flaps read clearly while remaining within the seductive bubblegum-marshmallow direction.
 - [x] Rebalance the Kawaii curtain cadence from the current overly slow state into a smoother, moderately paced cinematic reveal for card and dialog views.
+- [x] Make the Kawaii dialog image fill its full media frame without empty side bands while preserving the approved bottle visual.
+- [x] Ensure the Kawaii Marshmallow dialog title and detail layout fit within the viewport without a horizontal scrollbar at all supported screen sizes.
+- [x] Implement the supplied 2.60-second Kawaii cinematic curtain choreography with overlapping independent flap timing, varied non-linear eases, and a final 1.40s–2.60s calm hold.
+- [x] Keep the Kawaii curtain animation transform-only, responsive, overflow-safe, reduced-motion-aware, and free of timing drift across repeated card and dialog plays.
+- [x] Validate the final Kawaii choreography, dialog fit, and full image-frame fill at smartphone, tablet, laptop, and desktop widths.
+- [x] Verify repeat-safe dialog playback and document the intended one-shot card behavior so the Kawaii curtain cannot accumulate animation drift.
+- [x] Run and document final post-change card and dialog checks at 390×844, 768×1024, 1024×768, and 1366×768 for the 2.60-second choreography, fit, and overflow safety.

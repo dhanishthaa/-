@@ -72,7 +72,7 @@ describe("isth editorial page integrity", () => {
     expect(styles).toContain("@keyframes product-dialog-in { from { opacity:0; scale:.975; }");
     expect(styles).toContain("@keyframes product-dialog-out");
     expect(styles).toContain(".bottle-placeholder { position:relative; width:100%; height:100%; display:grid; place-items:center; }");
-    expect(styles).toContain("width:min(760px,calc(100% - 32px))");
+    expect(styles).toContain("width:min(760px,calc(100vw - 32px))");
     expect(styles).toContain("grid-template-columns:104px minmax(0,1fr)");
     expect(styles).toContain("align-items:baseline");
   });
@@ -107,9 +107,12 @@ describe("isth editorial page integrity", () => {
     expect(curtain).toContain('prefers-reduced-motion: reduce');
     expect(curtain).toContain("isth-kawaii-curtain-contrast-v3_3611a666.jpg");
     expect(curtain).toContain("isth-kawaii-curtain-noir-v3_25aa8d0e.jpg");
-    expect(curtain).toContain("duration: 2.75");
-    expect(curtain).toContain('stagger: { each: 0.2, from: "center" }');
-    expect(curtain).toContain('ease: "power2.inOut"');
+    expect(curtain).toContain("const CURTAIN_TIMELINE_DURATION = 2.6");
+    expect(curtain).toContain("const flapMotions = [");
+    expect(curtain).toContain('{ start: 1.1, sweep: 0.22, settle: 0.08, ease: "power3.out" }');
+    expect(curtain).toContain("timeline.call(() => undefined, [], CURTAIN_TIMELINE_DURATION)");
+    expect(curtain).toContain("force3D: true");
+    expect(curtain).toContain("if (reduceMotion)");
     expect(curtain).not.toContain("kawaii-curtain-glint");
     expect(styles).toContain(".editorial-home .kawaii-curtain");
     expect(styles).toContain(".dialog-product-media .kawaii-curtain");
@@ -121,7 +124,11 @@ describe("isth editorial page integrity", () => {
     expect(styles).toContain("@media (prefers-reduced-motion:reduce)");
     expect(styles).toContain(".dialog-product-media .bottle-stage-kawaii > img");
     expect(styles).not.toContain("kawaii-curtain-glint");
-    expect(styles).toContain("will-change:transform");
+    expect(styles).toContain("grid-template-columns:repeat(8,minmax(0,1fr))");
+    expect(styles).toContain("will-change:transform,opacity");
+    expect(styles).toContain("overflow-x:hidden");
+    expect(styles).toContain(".dialog-product-media .bottle-stage-kawaii > img { padding:0; object-fit:cover;");
+    expect(styles).toContain("@media (max-width:720px)");
   });
 
   it("uses the shared simple product card for Kawaii without fabricated commerce claims", () => {
