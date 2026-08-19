@@ -129,6 +129,18 @@ describe("isth editorial page integrity", () => {
     expect(styles).toContain("@keyframes dialog-wave-one");
     expect(styles).toContain("@keyframes dialog-frost-drift");
     expect(styles).toContain(".product-dialog--kawaii-marshmallow .product-dialog-title");
+    expect(styles).toContain("background:linear-gradient(120deg,rgba(245,241,235,.46)");
+    expect(styles).toContain("backdrop-filter:blur(28px) saturate(124%) contrast(102%)");
+    expect(styles).toContain("mix-blend-mode:soft-light");
+  });
+
+  it("keeps the shared isth Parfums lock-up and mobile quote refinement aligned across pages", () => {
+    const styles = readProjectFile("client/src/index.css");
+
+    expect(styles).toContain("--parfums-tracking:clamp(.03em,.35vw,.065em)");
+    expect(styles).toContain("letter-spacing:var(--parfums-tracking)");
+    expect(styles).toContain(".editorial-home .catalog-heading .catalog-label { gap:0; font-size:clamp(12px,1.1vw,15px);");
+    expect(styles).toContain(".editorial-home .quote-video-copy .cherry-button { margin-top:clamp(16px,4vw,28px);");
   });
 
   it("uses the shared simple product card for Kawaii without fabricated commerce claims", () => {

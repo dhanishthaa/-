@@ -23,4 +23,9 @@ describe("static-host security policy", () => {
     expect(routeBootstrap).toContain("window.history.replaceState");
     expect(routeBootstrap).toContain("isth-landing-boot");
   });
+
+  it("uses the requested isth - Parfums browser-tab title", () => {
+    expect(indexDocument).toContain("<title>isth - Parfums</title>");
+    expect(indexDocument).not.toContain("<title>isth - Fragrances</title>");
+  });
 });
