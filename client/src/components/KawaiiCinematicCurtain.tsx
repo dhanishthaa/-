@@ -6,24 +6,14 @@ const curtainImages = [
   "/manus-storage/isth-kawaii-curtain-noir-v3_25aa8d0e.jpg",
   "/manus-storage/isth-kawaii-curtain-contrast-v3_3611a666.jpg",
   "/manus-storage/isth-kawaii-curtain-noir-v3_25aa8d0e.jpg",
-  "/manus-storage/isth-kawaii-curtain-contrast-v3_3611a666.jpg",
-  "/manus-storage/isth-kawaii-curtain-noir-v3_25aa8d0e.jpg",
-  "/manus-storage/isth-kawaii-curtain-contrast-v3_3611a666.jpg",
-  "/manus-storage/isth-kawaii-curtain-noir-v3_25aa8d0e.jpg",
 ];
 
-const curtainPositions = ["4% center", "18% center", "31% center", "44% center", "57% center", "70% center", "83% center", "96% center"];
+const curtainPositions = ["11% center", "37% center", "63% center", "89% center"];
 const CURTAIN_TIMELINE_DURATION = 2.6;
 
-const flapMotions = [
-  { start: 0, sweep: 0.18, settle: 0.1, ease: "power2.inOut" },
-  { start: 0.16, sweep: 0.2, settle: 0.09, ease: "power3.in" },
-  { start: 0.3, sweep: 0.22, settle: 0.09, ease: "sine.inOut" },
-  { start: 0.46, sweep: 0.23, settle: 0.09, ease: "power3.inOut" },
-  { start: 0.62, sweep: 0.25, settle: 0.09, ease: "power2.out" },
-  { start: 0.78, sweep: 0.24, settle: 0.08, ease: "power2.in" },
-  { start: 0.94, sweep: 0.25, settle: 0.09, ease: "sine.out" },
-  { start: 1.1, sweep: 0.22, settle: 0.08, ease: "power3.out" },
+const cinematicPairs = [
+  { left: 1, right: 2, start: 0, sweep: 1.25, settle: 0.12, ease: "power3.inOut" },
+  { left: 0, right: 3, start: 0.38, sweep: 1.35, settle: 0.12, ease: "power3.out" },
 ] as const;
 
 export default function KawaiiCinematicCurtain({ variant = "card" }: { variant?: "card" | "dialog" }) {
@@ -41,9 +31,8 @@ export default function KawaiiCinematicCurtain({ variant = "card" }: { variant?:
       gsap.set(panels, { autoAlpha: 0, xPercent: 0, force3D: true });
 
       const replay = () => {
-        const panelsPerSide = Math.ceil(panels.length / 2);
         const exitDistance = panels.length * 100 + 28;
-        const directionFor = (index: number) => index < panelsPerSide ? -1 : 1;
+        const productStage = curtain.parentElement?.querySelector<HTMLElement>(".bottle-stage-kawaii");
         const timeline = gsap.timeline();
 
         timeline.set(panels, { autoAlpha: 1, xPercent: 0, force3D: true });
@@ -51,29 +40,40 @@ export default function KawaiiCinematicCurtain({ variant = "card" }: { variant?:
         if (reduceMotion) {
           timeline.to(panels, {
             autoAlpha: 0,
-            xPercent: (index) => directionFor(index) * 18,
+            xPercent: (index) => index < 2 ? -18 : 18,
             duration: 0.28,
-            stagger: 0.035,
+            stagger: { each: 0.025, from: "center" },
             ease: "power1.out",
             force3D: true,
           }, 0);
           return;
         }
 
-        flapMotions.forEach(({ start, sweep, settle, ease }, index) => {
-          const panel = panels[index];
-          if (!panel) return;
-          const finalPosition = directionFor(index) * exitDistance;
+        if (productStage) {
+          timeline.fromTo(productStage, {
+            scale: 1.028,
+            transformOrigin: "center center",
+          }, {
+            scale: 1,
+            duration: 1.8,
+            ease: "power2.out",
+            force3D: true,
+          }, 0.06);
+        }
+
+        cinematicPairs.forEach(({ left, right, start, sweep, settle, ease }) => {
+          const pair = [panels[left], panels[right]].filter(Boolean) as HTMLElement[];
+          if (pair.length !== 2) return;
 
           timeline
-            .to(panel, {
-              xPercent: finalPosition * 1.018,
+            .to(pair, {
+              xPercent: (index) => index === 0 ? -exitDistance * 1.012 : exitDistance * 1.012,
               duration: sweep,
               ease,
               force3D: true,
             }, start)
-            .to(panel, {
-              xPercent: finalPosition,
+            .to(pair, {
+              xPercent: (index) => index === 0 ? -exitDistance : exitDistance,
               duration: settle,
               ease: "power1.out",
               force3D: true,

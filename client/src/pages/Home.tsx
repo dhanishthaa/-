@@ -1,5 +1,5 @@
 // Quiet Atelier style reminder: the storefront is an asymmetric editorial sequence, not a generic product grid.
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowDown, ArrowRight, Menu, MessageCircle, MoveUpRight, X } from "lucide-react";
@@ -158,7 +158,7 @@ export default function Home() {
       <section id="contact" className="contact-section editorial-motion-panel"><div><p className="eyebrow">Queries</p><h2>Come a little<br /><em>closer.</em></h2></div><div className="contact-details"><p>For product details, stockist enquiries, or simply to find the note that fits, speak with us directly.</p><a className="cherry-button" href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`} target="_blank" rel="noreferrer"><MessageCircle size={15} /> Queries</a><a className="text-link" href="mailto:isth.support@gmail.com">isth.support@gmail.com <MoveUpRight size={13} /></a></div></section>
     </main>
     <Dialog open={productDialogOpen} onOpenChange={(open) => { if (!open) closeProduct(); }}>
-      {selectedProduct && <DialogContent forceMount className="product-dialog" showCloseButton={false} aria-label={`${selectedProduct.name} details`}>
+      {selectedProduct && <DialogContent forceMount className={`product-dialog product-dialog--${selectedProduct.id}`} overlayClassName={`product-dialog-overlay product-dialog-overlay--${selectedProduct.id}`} style={{ "--dialog-product-tone": selectedProduct.color } as CSSProperties} showCloseButton={false} aria-label={`${selectedProduct.name} details`}>
         <DialogClose className="dialog-close" aria-label="Close product details"><X size={19} strokeWidth={1.4} /><span className="sr-only">Close product details</span></DialogClose>
           <div className="product-dialog-layout">
           <div className="dialog-product-media">

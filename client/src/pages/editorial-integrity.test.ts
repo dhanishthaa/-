@@ -62,7 +62,8 @@ describe("isth editorial page integrity", () => {
 
     expect(home).toContain('import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";');
     expect(home).toContain('<Dialog open={productDialogOpen} onOpenChange={(open) => { if (!open) closeProduct(); }}>');
-    expect(home).toContain('<DialogContent forceMount className="product-dialog"');
+    expect(home).toContain('className={`product-dialog product-dialog--${selectedProduct.id}`}');
+    expect(home).toContain('overlayClassName={`product-dialog-overlay product-dialog-overlay--${selectedProduct.id}`}');
     expect(home).toContain('<DialogClose className="dialog-close" aria-label="Close product details">');
     expect(home).toContain('<DialogTitle className="product-dialog-title">{selectedProduct.name}</DialogTitle>');
     expect(home).not.toContain('isth / {selectedProduct.collection}');
@@ -108,8 +109,10 @@ describe("isth editorial page integrity", () => {
     expect(curtain).toContain("isth-kawaii-curtain-contrast-v3_3611a666.jpg");
     expect(curtain).toContain("isth-kawaii-curtain-noir-v3_25aa8d0e.jpg");
     expect(curtain).toContain("const CURTAIN_TIMELINE_DURATION = 2.6");
-    expect(curtain).toContain("const flapMotions = [");
-    expect(curtain).toContain('{ start: 1.1, sweep: 0.22, settle: 0.08, ease: "power3.out" }');
+    expect(curtain).toContain("const cinematicPairs = [");
+    expect(curtain).toContain("const exitDistance = panels.length * 100 + 28;");
+    expect(curtain).toContain('{ left: 1, right: 2, start: 0, sweep: 1.25, settle: 0.12, ease: "power3.inOut" }');
+    expect(curtain).toContain('{ left: 0, right: 3, start: 0.38, sweep: 1.35, settle: 0.12, ease: "power3.out" }');
     expect(curtain).toContain("timeline.call(() => undefined, [], CURTAIN_TIMELINE_DURATION)");
     expect(curtain).toContain("force3D: true");
     expect(curtain).toContain("if (reduceMotion)");
@@ -124,11 +127,17 @@ describe("isth editorial page integrity", () => {
     expect(styles).toContain("@media (prefers-reduced-motion:reduce)");
     expect(styles).toContain(".dialog-product-media .bottle-stage-kawaii > img");
     expect(styles).not.toContain("kawaii-curtain-glint");
-    expect(styles).toContain("grid-template-columns:repeat(8,minmax(0,1fr))");
+    expect(styles).toContain("grid-template-columns:repeat(4,minmax(0,1fr))");
     expect(styles).toContain("will-change:transform,opacity");
     expect(styles).toContain("overflow-x:hidden");
     expect(styles).toContain(".dialog-product-media .bottle-stage-kawaii > img { padding:0; object-fit:cover;");
     expect(styles).toContain("@media (max-width:720px)");
+    expect(styles).toContain(".product-dialog-overlay { --dialog-base:var(--ink);");
+    expect(styles).toContain(".product-dialog-overlay--kawaii-marshmallow,.product-dialog-overlay--eclat-courinne");
+    expect(styles).toContain(".product-dialog-overlay--lesprit-epice");
+    expect(styles).toContain("@keyframes dialog-wave-one");
+    expect(styles).toContain("@keyframes dialog-frost-drift");
+    expect(styles).toContain(".product-dialog--kawaii-marshmallow .product-dialog-title");
   });
 
   it("uses the shared simple product card for Kawaii without fabricated commerce claims", () => {

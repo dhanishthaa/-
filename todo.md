@@ -66,9 +66,20 @@
 - [x] Rework the Kawaii curtain imagery with stronger light-to-dark and material contrast so individual flaps read clearly while remaining within the seductive bubblegum-marshmallow direction.
 - [x] Rebalance the Kawaii curtain cadence from the current overly slow state into a smoother, moderately paced cinematic reveal for card and dialog views.
 - [x] Make the Kawaii dialog image fill its full media frame without empty side bands while preserving the approved bottle visual.
-- [x] Ensure the Kawaii Marshmallow dialog title and detail layout fit within the viewport without a horizontal scrollbar at all supported screen sizes.
+- [x] Ensure the Kawaii Marshmallow dialog title and detail layout fit within the viewport without a horizontal scrollbar or one-letter word split at all supported screen sizes.
+- [x] Replace the current Kawaii shutter-style curtain effect with a restrained coordinated cinematic 2.5D reveal that feels premium in both card and dialog states.
+- [x] Capture and review controlled mid-animation Kawaii card and dialog frames at 390×844, 768×1024, 1024×768, and 1366×768 to confirm readable panels, clean seams, and a balanced pace.
+- [x] Reduce Kawaii curtain travel to the minimum fully clearing distance so the readable paired motion uses its full intended duration instead of clearing the frame too early.
+- [x] Restore the previously approved Kawaii four-panel curtain exit so every flap fully disappears beyond both sides while retaining the same established timing.
+- [x] Re-run repeat-open QA for the final four-panel Kawaii dialog timing and document at least two successive opens with stable synchronization and no drift.
 - [x] Implement the supplied 2.60-second Kawaii cinematic curtain choreography with overlapping independent flap timing, varied non-linear eases, and a final 1.40s–2.60s calm hold.
 - [x] Keep the Kawaii curtain animation transform-only, responsive, overflow-safe, reduced-motion-aware, and free of timing drift across repeated card and dialog plays.
 - [x] Validate the final Kawaii choreography, dialog fit, and full image-frame fill at smartphone, tablet, laptop, and desktop widths.
 - [x] Verify repeat-safe dialog playback and document the intended one-shot card behavior so the Kawaii curtain cannot accumulate animation drift.
 - [x] Run and document final post-change card and dialog checks at 390×844, 768×1024, 1024×768, and 1366×768 for the 2.60-second choreography, fit, and overflow safety.
+- [x] Replace the visible storefront behind product dialogs with a full-viewport animated isth-palette atmosphere that conceals the page beneath.
+- [x] Apply eight distinct, accessible product-specific gradient-wave and grain atmospheres to the non-Kawaii and non-Éclat product dialogs.
+- [x] Apply frosted glass, blur, and grain atmospheres to the Kawaii Marshmallow and Éclat Courinné dialogs instead of gradient waves.
+- [x] Synchronize the Kawaii curtain sides so both directions open concurrently while retaining the 2.60-second cinematic rhythm.
+- [x] Visually verify a gradient-backed, Kawaii-frosted, and Éclat-frosted dialog at responsive widths after the final timing pass.
+- [x] Run actual browser reduced-motion validation for representative gradient and frosted dialog atmospheres, confirming fallback motion and no overflow.
