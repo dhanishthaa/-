@@ -10,8 +10,8 @@ export type Product = {
   featured?: boolean;
 };
 
-export const KAWAII_MARSHMALLOW_DESKTOP_IMAGE = "/manus-storage/isth-kawaii-marshmallow-campaign-v2_cf2e6424.jpg";
-export const KAWAII_MARSHMALLOW_MOBILE_IMAGE = "/manus-storage/isth-kawaii-marshmallow-campaign-v2_cf2e6424.jpg";
+export const KAWAII_MARSHMALLOW_DESKTOP_IMAGE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663886534315/FQmBYYXPrceKGEBf.jpg";
+export const KAWAII_MARSHMALLOW_MOBILE_IMAGE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663886534315/FQmBYYXPrceKGEBf.jpg";
 const LEGACY_KAWAII_MARSHMALLOW_IMAGE = "/assets/isth-bottle-10ml_630d74f3.png";
 const PASTED_KAWAII_REFERENCE_IMAGE = "/manus-storage/isth-kawaii-marshmallow-approved-bottle_7bdf1288.png";
 
@@ -29,7 +29,7 @@ export const defaultProducts: Product[] = [
 ];
 
 export function normalizeProductMedia(product: Product): Product {
-  if (product.id === "kawaii-marshmallow" && (!product.image || product.image === LEGACY_KAWAII_MARSHMALLOW_IMAGE || product.image === PASTED_KAWAII_REFERENCE_IMAGE)) {
+  if (product.id === "kawaii-marshmallow" && (!product.image || product.image.startsWith("/manus-storage/") || product.image === LEGACY_KAWAII_MARSHMALLOW_IMAGE || product.image === PASTED_KAWAII_REFERENCE_IMAGE)) {
     return { ...product, image: KAWAII_MARSHMALLOW_DESKTOP_IMAGE };
   }
   return product;

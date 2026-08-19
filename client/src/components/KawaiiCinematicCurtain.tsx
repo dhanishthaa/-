@@ -2,10 +2,10 @@ import { useLayoutEffect, useRef, type CSSProperties } from "react";
 import gsap from "gsap";
 
 const curtainImages = [
-  "/manus-storage/isth-kawaii-curtain-contrast-v3_3611a666.jpg",
-  "/manus-storage/isth-kawaii-curtain-noir-v3_25aa8d0e.jpg",
-  "/manus-storage/isth-kawaii-curtain-contrast-v3_3611a666.jpg",
-  "/manus-storage/isth-kawaii-curtain-noir-v3_25aa8d0e.jpg",
+  "https://files.manuscdn.com/user_upload_by_module/session_file/310519663886534315/JaSRuhWVMwZqkrGm.jpg",
+  "https://files.manuscdn.com/user_upload_by_module/session_file/310519663886534315/FQOTXIOSdoVhmIoY.jpg",
+  "https://files.manuscdn.com/user_upload_by_module/session_file/310519663886534315/JaSRuhWVMwZqkrGm.jpg",
+  "https://files.manuscdn.com/user_upload_by_module/session_file/310519663886534315/FQOTXIOSdoVhmIoY.jpg",
 ];
 
 const curtainPositions = ["11% center", "37% center", "63% center", "89% center"];

@@ -1,0 +1,6 @@
+html.isth-landing-boot,
+html.isth-landing-boot body,
+html.isth-landing-boot #root {
+  min-height: 100%;
+  background: #5B0D18;
+}

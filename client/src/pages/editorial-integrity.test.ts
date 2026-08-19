@@ -89,10 +89,12 @@ describe("isth editorial page integrity", () => {
     const visual = readProjectFile("client/src/components/ProductBottleVisual.tsx");
     const styles = readProjectFile("client/src/index.css");
 
-    expect(products).toContain('KAWAII_MARSHMALLOW_DESKTOP_IMAGE = "/manus-storage/isth-kawaii-marshmallow-campaign-v2_cf2e6424.jpg"');
+    expect(products).toContain('KAWAII_MARSHMALLOW_DESKTOP_IMAGE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663886534315/FQmBYYXPrceKGEBf.jpg"');
+    expect(products).toContain('product.image.startsWith("/manus-storage/")');
     expect(products).toContain("export function normalizeProductMedia");
     expect(visual).toContain('className={`bottle-stage ${isKawaii ? "bottle-stage-kawaii" : ""} ${modal ? "bottle-stage-modal" : ""}`}');
-    expect(visual).not.toContain("KAWAII_MARSHMALLOW_DESKTOP_IMAGE");
+    expect(visual).toContain("KAWAII_MARSHMALLOW_DESKTOP_IMAGE");
+    expect(visual).toContain("fallbackToApprovedKawaiiCampaign");
     expect(styles).not.toContain("@keyframes kawaii-reference-reveal");
     expect(styles).toContain(".bottle-stage-kawaii > img");
     expect(styles).toContain("object-fit:contain");
@@ -112,8 +114,8 @@ describe("isth editorial page integrity", () => {
     expect(readProjectFile("client/src/pages/Home.tsx")).toContain('<KawaiiCinematicCurtain variant="dialog" />');
     expect(curtain).toContain("new IntersectionObserver");
     expect(curtain).toContain('prefers-reduced-motion: reduce');
-    expect(curtain).toContain("isth-kawaii-curtain-contrast-v3_3611a666.jpg");
-    expect(curtain).toContain("isth-kawaii-curtain-noir-v3_25aa8d0e.jpg");
+    expect(curtain).toContain("JaSRuhWVMwZqkrGm.jpg");
+    expect(curtain).toContain("FQOTXIOSdoVhmIoY.jpg");
     expect(curtain).toContain("const CURTAIN_TIMELINE_DURATION = 2.6");
     expect(curtain).toContain("const COMPACT_SLOW_TIMING_SCALE = 2.15");
     expect(curtain).toContain('window.matchMedia("(max-width: 760px)")');
