@@ -27,6 +27,8 @@ describe("isth editorial page integrity", () => {
     expect(about).toContain("Philosophy of the Scent");
     expect(about).toContain("Craft &amp; Composition");
     expect(about).toContain('href="/home#collection"');
+    expect(about).toContain('className="contact-lockup about-lockup" aria-label="isth Parfums"');
+    expect(about).not.toContain('The House of isth');
     expect(about).toContain('window.scrollTo({ top: 0, left: 0, behavior: "auto" })');
   });
 
@@ -190,6 +192,7 @@ describe("isth editorial page integrity", () => {
     expect(home).toContain('className="contact-section editorial-motion-panel"');
     expect(home).toContain('className="contact-lockup" aria-label="isth Parfums"');
     expect(home).toContain('<span>Parfums</span>');
+    expect(home).not.toContain('<p className="eyebrow">Queries</p>');
     expect(home).toContain('const [navFolded, setNavFolded] = useState(false);');
     expect(home).toContain('Math.abs(delta) >= 10');
     expect(home).toContain('${navFolded ? "is-folded" : ""}');
@@ -221,7 +224,14 @@ describe("isth editorial page integrity", () => {
     expect(styles).toContain('.text-link[href^="mailto:"] { text-transform:lowercase; }');
     expect(styles).toContain(".contact-section .eyebrow::before { content:none; }");
     expect(styles).toContain('font-family:"Gilroy-ExtraBold","Gilroy ExtraBold",Gilroy,var(--sans)');
-    expect(styles).toContain('font-size:120px');
+    expect(styles).toContain('font-size:128px');
+    expect(styles).toContain('@keyframes contact-lockup-float');
+    expect(styles).toContain('.contact-lockup { animation:none; }');
+    expect(styles).toContain('transform:translateZ(10px)');
+    expect(styles).toContain('.about-editorial .about-lockup');
+    expect(styles).toContain('.about-editorial .about-lockup { justify-content:flex-start;');
+    expect(styles).toContain('background:linear-gradient(110deg,rgba(91,13,24,.13),rgba(245,241,235,.88) 34%,rgba(181,154,98,.10))');
+    expect(styles).toContain('margin:-clamp(26px,3.2vw,46px) 0 clamp(44px,5vw,70px)');
     expect(styles).toContain("@media (min-width:621px) and (max-width:900px)");
     expect(styles).toContain(".site-nav .desktop-nav { display:flex; }");
     expect(styles).toContain(".site-nav .menu-toggle { display:none; }");

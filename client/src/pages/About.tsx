@@ -74,7 +74,7 @@ export default function About() {
       <main className="about-main">
         <section className="about-masthead">
           <div className="about-masthead-copy">
-            <p className="eyebrow about-kicker">The House of isth</p>
+            <div className="contact-lockup about-lockup" aria-label="isth Parfums"><img src={readLogoUrl()} alt="isth" /><span>Parfums</span></div>
             <h1>Between the familiar<br /><em>&amp; the unknown.</em></h1>
           </div>
           <p className="about-lede">

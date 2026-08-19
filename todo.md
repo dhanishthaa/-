@@ -76,6 +76,14 @@
 - [x] Confirm the generated mobile Home hero asset has completed as a real image and visually verify the full intended compact composition without unwanted crop.
 - [x] Add a responsive black isth logo and cherry-red Gilroy ExtraBold “Parfums” lock-up above the existing contact Queries content, using 120px sizing on large screens and proportionate compact sizing with breathing room.
 - [x] Add a responsive black isth logo and cherry-red “Parfums” lock-up in the white contact-section space above the existing Queries content, with generous breathing room.
+- [x] Enlarge and center the isth Parfums lock-up with wider lettering and a restrained responsive floating depth effect, without changing the existing contact content.
+- [x] Replace the About-page “The House of isth” heading label with the exact same responsive centered isth Parfums lock-up used in the contact section.
+- [x] Remove the “Queries” eyebrow label above the “Come a little closer” contact heading.
+- [x] Add a small responsive increase in breathing space below the About-page isth Parfums lock-up before the masthead headline.
+- [x] Raise the left-aligned About-page isth Parfums lock-up slightly within the masthead while retaining its lower breathing space.
+- [x] Explicitly left-align the About-page isth Parfums lock-up with an About-specific override while preserving its shared dimensional treatment.
+- [x] Give the About navbar a distinct Home-style color-and-glass treatment so it does not blend into the ivory page background.
+- [x] Raise the left-aligned About-page isth Parfums lock-up further within the masthead while retaining its lower breathing space.
 - [x] Raise the mobile quote text and Queries action toward the upper-left while retaining a deliberate small inset from the top and left edges.
 - [x] Set the browser tab to a white isth mark and the exact title “isth - Fragrances” on every device.
 - [x] Preserve the approved 1366×768 Kawaii curtain timing while adding a slower readable profile for all compact and smartphone viewports.
