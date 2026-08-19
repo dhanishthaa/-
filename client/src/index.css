@@ -466,6 +466,14 @@ em { font-style:italic; }
 @media (max-width:900px) { .nakshatra-visuals { display:none !important; } }
 @media (max-width:620px) { .ss1-landing { min-height:146svh; } .ss1-landing .hello-word { top:11vh; font-size:clamp(46px,14vw,72px); } .ss1-landing .landing-center { top:60%; width:calc(100% - 28px); } .landing-logo-plate { width:154px; height:124px; } .landing-logo-plate img { height:128px; max-width:170px; } .landing-quote { font-size:24px; } .landing-meta { inset-inline:20px; font-size:8px; } .story-image-placeholder { padding:24px; } .story-notes { gap:6px; } .story-notes span { font-size:8px; } .site-nav { padding-block:6px; } .site-brand img { height:32px; } .home-hero .hero-identity { width:84px; height:52px; margin-bottom:14px; } .home-hero .hero-identity img { height:38px; max-width:66px; } }
 
+@media (max-width:620px) {
+  .editorial-home .quote-video-section { align-items:flex-start; min-height:clamp(520px,130vw,620px); padding:clamp(66px,12svh,92px) 20px 72px; }
+  .editorial-home .quote-video-copy { width:100%; margin:0; padding:0; }
+  .editorial-home .quote-video-copy h2 { margin:0 0 32px; }
+  .editorial-home .quote-video-copy .cherry-button { margin-bottom:40px; }
+  .editorial-home .coming-soon { margin-top:48px; margin-bottom:48px; }
+}
+
 /* Focused SS2 home correction: thinner chrome, smaller nav mark, larger contrast-safe hero mark. */
 .site-nav { min-height:44px; padding-block:4px; }
 .site-nav .site-brand .brand-logo { width:auto; height:28px; max-width:100px; }
@@ -477,6 +485,7 @@ em { font-style:italic; }
 .site-nav .desktop-nav { font-size:clamp(11px,.9vw,14px); letter-spacing:.16em; gap:clamp(26px,3vw,48px); }
 .site-nav:not(.is-scrolled) .site-brand img,.home-hero .hero-identity img,.landing-logo-plate img,.site-footer .footer-brand img,.admin-sidebar .admin-brand img { filter:invert(1); }
 .site-nav.is-scrolled .site-brand img,.admin-login-mark img { filter:none; }
+.site-nav .site-brand,.site-nav.is-scrolled .site-brand { padding-inline:0; }
 .hero-cta-row .cherry-button,.hero-cta-row .outline-button { height:50px; min-height:50px; display:inline-flex; align-items:center; justify-content:center; }
 @media (max-width:1100px) and (min-width:901px) { .site-nav .desktop-nav { font-size:12px; gap:28px; } }
 @media (max-width:620px) { .site-nav .desktop-nav { font-size:11px; gap:22px; } .hero-cta-row .cherry-button,.hero-cta-row .outline-button { height:50px; min-height:50px; } }
@@ -558,7 +567,7 @@ em { font-style:italic; }
 .editorial-home .home-hero:hover .home-hero-image { transform:scale(1.055); filter:saturate(.9) contrast(1.05) brightness(.7); }
 .editorial-home .home-hero-flower { display:none; }
 .editorial-home .home-hero-overlay { background:linear-gradient(90deg,rgba(17,17,17,.72) 0%,rgba(17,17,17,.4) 38%,rgba(17,17,17,.06) 72%),linear-gradient(0deg,rgba(17,17,17,.48),transparent 50%); }
-.editorial-home .home-hero-content { max-width:590px; padding:0; background:none; }
+.editorial-home .home-hero-content { top:clamp(112px,17vh,178px); bottom:auto; max-width:590px; padding:0; background:none; }
 .editorial-home .hero-description { max-width:42ch; }
 .editorial-home .hero-cta-row .cherry-button,.editorial-home .hero-cta-row .outline-button { border-radius:0; }
 
@@ -633,8 +642,10 @@ em { font-style:italic; }
   .about-column-secondary { padding-top:0; }
 }
 @media (max-width:620px) {
-  .editorial-home .home-hero { min-height:660px; }
-  .editorial-home .home-hero-image { background-position:58% center; }
+  .editorial-home .home-hero { min-height:clamp(700px,100svh,900px); }
+  .editorial-home .home-hero-image { background-image:url('/manus-storage/isth-hero-editorial-mobile-v1_00d0cab2.jpg') !important; background-position:center top; background-repeat:no-repeat; background-size:contain; transform:none; }
+  .editorial-home .home-hero:hover .home-hero-image { transform:none; }
+  .editorial-home .home-hero-content { top:clamp(76px,13svh,132px); left:20px; right:20px; max-width:calc(100% - 40px); }
   .editorial-home .home-hero-overlay { background:linear-gradient(90deg,rgba(17,17,17,.68),rgba(17,17,17,.22) 86%),linear-gradient(0deg,rgba(17,17,17,.56),transparent 56%); }
   .collection-editorial-photo { height:330px; margin-bottom:54px; }
   .editorial-home .catalog-grid > .reveal:nth-child(4n+2) .product-card,.editorial-home .catalog-grid > .reveal:nth-child(4n+2) .product-card:hover { transform:none; }

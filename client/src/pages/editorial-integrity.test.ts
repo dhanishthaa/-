@@ -50,6 +50,9 @@ describe("isth editorial page integrity", () => {
     expect(styles).toContain('@media (min-width:901px) and (max-height:760px)');
     expect(styles).toContain('.editorial-home .home-hero { height:100svh; min-height:0; }');
     expect(styles).toContain('.editorial-home .home-hero-image { background-position:center 20%; }');
+    expect(styles).toContain('isth-hero-editorial-mobile-v1_00d0cab2.jpg');
+    expect(styles).toContain('background-size:contain');
+    expect(styles).toContain('top:clamp(112px,17vh,178px)');
     expect(styles).toContain('.signature-writing-mark { top:40%; width:min(390px,42vw); }');
   });
 
@@ -109,11 +112,15 @@ describe("isth editorial page integrity", () => {
     expect(curtain).toContain("isth-kawaii-curtain-contrast-v3_3611a666.jpg");
     expect(curtain).toContain("isth-kawaii-curtain-noir-v3_25aa8d0e.jpg");
     expect(curtain).toContain("const CURTAIN_TIMELINE_DURATION = 2.6");
+    expect(curtain).toContain("const COMPACT_TIMING_SCALE = 1.65");
+    expect(curtain).toContain('window.matchMedia("(max-width: 760px)")');
+    expect(curtain).toContain("const motionScale = compactScreen ? COMPACT_TIMING_SCALE : 1;");
+    expect(curtain).toContain('const pairEase = compactScreen ? "power2.inOut" : ease;');
     expect(curtain).toContain("const cinematicPairs = [");
-    expect(curtain).toContain("const exitDistance = panels.length * 100 + 28;");
+    expect(curtain).toContain("const exitDistance = compactScreen ? 112 : panels.length * 100 + 28;");
     expect(curtain).toContain('{ left: 1, right: 2, start: 0, sweep: 1.25, settle: 0.12, ease: "power3.inOut" }');
     expect(curtain).toContain('{ left: 0, right: 3, start: 0.38, sweep: 1.35, settle: 0.12, ease: "power3.out" }');
-    expect(curtain).toContain("timeline.call(() => undefined, [], CURTAIN_TIMELINE_DURATION)");
+    expect(curtain).toContain("timeline.call(() => undefined, [], CURTAIN_TIMELINE_DURATION * motionScale);");
     expect(curtain).toContain("force3D: true");
     expect(curtain).toContain("if (reduceMotion)");
     expect(curtain).not.toContain("kawaii-curtain-glint");
@@ -205,6 +212,7 @@ describe("isth editorial page integrity", () => {
     expect(styles).toContain(".ss1-landing.signature-complete { background:linear-gradient");
     expect(styles).toContain(".site-nav.is-folded { transform:translate3d(0,calc(-100% - 10px),0) scaleY(.96);");
     expect(styles).toContain("transform .92s cubic-bezier(.16,1,.3,1)");
+    expect(styles).toContain(".site-nav .site-brand,.site-nav.is-scrolled .site-brand { padding-inline:0; }");
     expect(styles).not.toContain(".editorial-home .home-hero-content::before");
     expect(styles).not.toContain(".editorial-home .intro-strip::before");
     expect(styles).not.toContain(".editorial-home .intro-copy::before");

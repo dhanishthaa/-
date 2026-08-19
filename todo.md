@@ -71,6 +71,13 @@
 - [x] Capture and review controlled mid-animation Kawaii card and dialog frames at 390×844, 768×1024, 1024×768, and 1366×768 to confirm readable panels, clean seams, and a balanced pace.
 - [x] Reduce Kawaii curtain travel to the minimum fully clearing distance so the readable paired motion uses its full intended duration instead of clearing the frame too early.
 - [x] Restore the previously approved Kawaii four-panel curtain exit so every flap fully disappears beyond both sides while retaining the same established timing.
+- [x] Remove the remaining sub-pixel vertical navbar logo shift between white and black states, then verify identical placement at mobile, tablet, and desktop widths.
+- [x] Rebalance the Home hero copy and actions vertically across all screen sizes so the lower hero space is used intentionally.
+- [x] Confirm the generated mobile Home hero asset has completed as a real image and visually verify the full intended compact composition without unwanted crop.
+- [x] Raise the mobile quote text and Queries action toward the upper-left while retaining a deliberate small inset from the top and left edges.
+- [x] Set the browser tab to a white isth mark and the exact title “isth - Fragrances” on every device.
+- [x] Preserve the approved 1366×768 Kawaii curtain timing while adding a slower readable profile for all compact and smartphone viewports.
+- [x] Add compact-only breathing space below the quote Queries button and around the Nakshatra Coming soon treatment, preserving the desktop layout.
 - [x] Re-run repeat-open QA for the final four-panel Kawaii dialog timing and document at least two successive opens with stable synchronization and no drift.
 - [x] Implement the supplied 2.60-second Kawaii cinematic curtain choreography with overlapping independent flap timing, varied non-linear eases, and a final 1.40s–2.60s calm hold.
 - [x] Keep the Kawaii curtain animation transform-only, responsive, overflow-safe, reduced-motion-aware, and free of timing drift across repeated card and dialog plays.
