@@ -36,7 +36,11 @@ jobs:
           node-version: 22
           cache: 'pnpm'
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm install --frozen-lockfile
+      - name: Audit production dependencies
+        run: pnpm audit --prod
+      - name: Verify application
+        run: pnpm test && pnpm check
       - name: Build
         run: pnpm build
         env:

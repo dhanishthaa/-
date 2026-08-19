@@ -13,11 +13,11 @@ describe("private Admin route", () => {
     expect(admin).toContain("/isth/frag/minda");
   });
 
-  it("registers limited context-menu and common developer-shortcut deterrents", () => {
+  it("does not rely on client-side DevTools or context-menu blocking as a security control", () => {
     const motionRoot = source("client/src/components/MotionRoot.tsx");
 
-    expect(motionRoot).toContain('document.addEventListener("contextmenu"');
-    expect(motionRoot).toContain('event.key === "F12"');
+    expect(motionRoot).not.toContain('document.addEventListener("contextmenu"');
+    expect(motionRoot).not.toContain('event.key === "F12"');
   });
 
   it("builds root-absolute assets so the private nested route can load on isth.in", () => {
@@ -68,5 +68,18 @@ describe("private Admin route", () => {
     expect(admin).toContain('window.open("/home", "_blank", "noopener,noreferrer")');
     expect(admin).toContain('ref={productsRef}');
     expect(admin).toContain('ref={mediaRef}');
+  });
+
+  it("uses the secured Supabase RPC publishing path and never treats browser storage as product authority", () => {
+    const admin = source("client/src/pages/Admin.tsx");
+    const supabase = source("client/src/lib/supabase.ts");
+
+    expect(admin).not.toContain("writeLocalProducts");
+    expect(admin).not.toContain("readLocalProducts");
+    expect(admin).not.toContain("Saved locally");
+    expect(supabase).toContain('persistSession: false');
+    expect(supabase).toContain('supabase.rpc("admin_upsert_product", payload)');
+    expect(supabase).toContain('supabase.rpc("admin_delete_product", { product_id: id })');
+    expect(supabase).toContain('supabase.rpc("admin_set_site_setting"');
   });
 });

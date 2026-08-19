@@ -9,7 +9,7 @@ import ProductBottle from "@/components/ProductBottle";
 import ProductBottleVisual from "@/components/ProductBottleVisual";
 import KawaiiCinematicCurtain from "@/components/KawaiiCinematicCurtain";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
-import { defaultProducts, readLocalProducts, type Product } from "@/data/products";
+import { defaultProducts, type Product } from "@/data/products";
 import { fetchRemoteProducts } from "@/lib/supabase";
 import { DEFAULT_WHATSAPP_NUMBER, DEFAULT_WHATSAPP_TEXT, INSTAGRAM_URL, readLogoUrl } from "@/data/brand";
 
@@ -30,7 +30,6 @@ export default function Home() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    setProducts(readLocalProducts());
     fetchRemoteProducts().then((remote) => { if (remote?.length) setProducts(remote); });
   }, []);
 

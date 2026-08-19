@@ -84,16 +84,22 @@
 - [x] Explicitly left-align the About-page isth Parfums lock-up with an About-specific override while preserving its shared dimensional treatment.
 - [x] Give the About navbar a distinct Home-style color-and-glass treatment so it does not blend into the ivory page background.
 - [x] Raise the left-aligned About-page isth Parfums lock-up further within the masthead while retaining its lower breathing space.
-- [ ] Reduce the excess About masthead space above the left-aligned isth Parfums lock-up and between it and the main headline, responsively.
-- [ ] Remove inherited contact-only lock-up height from the About masthead and further tighten its headline separation.
-- [ ] Reduce remaining About masthead bottom padding so the headline and following feature sequence sit closer to the raised lock-up.
-- [ ] Convert the About masthead copy into a compact flex sequence with an explicit minimal lock-up-to-headline gap.
-- [ ] Use a contained positioned desktop/tablet headline layout so the About headline can sit directly below the lock-up without inherited grid spacing.
+- [x] Reduce the excess About masthead space above the left-aligned isth Parfums lock-up and between it and the main headline, responsively.
+- [x] Remove inherited contact-only lock-up height from the About masthead and further tighten its headline separation.
+- [x] Reduce remaining About masthead bottom padding so the headline and following feature sequence sit closer to the raised lock-up.
+- [x] Convert the About masthead copy into a compact flex sequence with an explicit minimal lock-up-to-headline gap.
+- [x] Use a contained positioned desktop/tablet headline layout so the About headline can sit directly below the lock-up without inherited grid spacing.
 - [x] Reposition the iOS and smartphone Home hero image so both models’ faces remain visible without changing tablet, laptop, or desktop framing.
 - [x] Match Kawaii Marshmallow’s small-screen curtain timing and pacing exactly to the approved laptop animation profile.
 - [x] Live-verify Kawaii Marshmallow curtain motion at smartphone and laptop widths, confirming identical timing, easing, travel, and final hold behavior.
 - [x] Audit and remove every compact-only Kawaii curtain timing, travel, and replay difference so smartphone/iOS matches the approved laptop choreography exactly.
 - [x] Add and live-verify an explicitly slower Kawaii curtain timing profile for smartphone and iOS-sized screens while preserving the approved laptop profile.
+- [x] Deeply classify every applicable control in the supplied security and enterprise responsiveness specifications against the static GitHub Pages and Supabase architecture.
+- [x] Audit the complete public site and admin implementation for concrete security, data-access, accessibility, performance, and responsive defects.
+- [x] Implement applicable frontend, Supabase, and deployment security hardening without relying on ineffective client-side restrictions.
+- [x] Verify cross-browser rendering scope for the responsive and performance improvements while preserving approved brand content and product copy.
+- [x] Run and document explicit accessibility QA for keyboard focus, forms, reduced motion, and touch targets after the hardening pass.
+- [ ] Push the validated implementation to the selected GitHub repository as explicitly requested by the user.
 - [x] Add a small responsive breathing gap between the Home hero headline and its supporting “isth composes…” copy across all supported devices and browsers, verified at smartphone, tablet, and desktop widths with an iOS-oriented compact layout check.
 - [x] Raise the mobile quote text and Queries action toward the upper-left while retaining a deliberate small inset from the top and left edges.
 - [x] Set the browser tab to a white isth mark and the exact title “isth - Fragrances” on every device.

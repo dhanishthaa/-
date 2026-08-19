@@ -2,7 +2,7 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { ArrowLeft, BarChart3, Check, Edit3, Eye, EyeOff, ImagePlus, LogOut, Package, Plus, Save, Trash2, Video, X } from "lucide-react";
 import { Link } from "wouter";
-import { defaultProducts, readLocalProducts, writeLocalProducts, type Product } from "@/data/products";
+import { defaultProducts, type Product } from "@/data/products";
 import { deleteRemoteProduct, fetchAdminRole, fetchRemoteProducts, isSupabaseConfigured, savePublicSetting, supabase, uploadPublicAsset, upsertRemoteProduct } from "@/lib/supabase";
 import { isSafeAssetFile, isSafeHttpUrl, readLogoUrl, readVideoUrl, writeLogoUrl, writeVideoUrl } from "@/data/brand";
 
@@ -25,7 +25,6 @@ export default function Admin() {
   const mediaRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setProducts(readLocalProducts());
     fetchRemoteProducts().then((remote) => { if (remote?.length) setProducts(remote); });
     const client = supabase;
     if (!client) return;
@@ -71,8 +70,17 @@ export default function Admin() {
   };
 
   const signOut = async () => { if (supabase) await supabase.auth.signOut(); setUser(null); };
-  const saveProduct = async (product: Product) => { const next = isNew ? [...products, product] : products.map((item) => item.id === product.id ? product : item); setProducts(next); writeLocalProducts(next); const synced = await upsertRemoteProduct(product); setActive(null); setIsNew(false); setMessage(synced ? (isSupabaseConfigured ? "Saved to the isth product library." : "Saved to this browser. Connect Supabase for production sync.") : "Saved locally, but Supabase rejected the update."); };
-  const deleteProduct = async (id: string) => { const next = products.filter((item) => item.id !== id); setProducts(next); writeLocalProducts(next); const synced = await deleteRemoteProduct(id); setMessage(synced ? (isSupabaseConfigured ? "Product removed from the isth library." : "Product removed from this browser.") : "Removed locally, but Supabase rejected the deletion."); };
+  const saveProduct = async (product: Product) => {
+    const synced = await upsertRemoteProduct(product);
+    if (!synced) return setMessage("Unable to save this composition. Your secure session may have expired.");
+    const next = isNew ? [...products, product] : products.map((item) => item.id === product.id ? product : item);
+    setProducts(next); setActive(null); setIsNew(false); setMessage("Saved to the isth product library.");
+  };
+  const deleteProduct = async (id: string) => {
+    const synced = await deleteRemoteProduct(id);
+    if (!synced) return setMessage("Unable to remove this composition. Your secure session may have expired.");
+    setProducts((current) => current.filter((item) => item.id !== id)); setMessage("Product removed from the isth library.");
+  };
   const activateWorkspace = (view: WorkspaceView) => {
     setWorkspaceView(view);
     if (view === "media") setMediaOpen(true);
@@ -96,7 +104,22 @@ function ProductEditor({ product, isNew, onSave, onClose }: { product: Product; 
 
 function MediaSettings() {
   const [logo, setLogo] = useState(readLogoUrl()); const [video, setVideo] = useState(readVideoUrl()); const [status, setStatus] = useState("");
-  const handleFile = async (file: File | undefined, kind: "logo" | "video") => { if (!file || !isSafeAssetFile(file)) return setStatus("Use JPG, PNG, WebP, AVIF, MP4, or WebM files up to 10MB."); const remoteUrl = await uploadPublicAsset(file, kind === "logo" ? "brand" : "motion"); const url = remoteUrl || URL.createObjectURL(file); if (kind === "logo") { setLogo(url); writeLogoUrl(url); } else { setVideo(url); writeVideoUrl(url); } if (remoteUrl) await savePublicSetting(kind === "logo" ? "logo_url" : "motion_video_url", remoteUrl); setStatus(remoteUrl ? "Uploaded to Supabase Storage and saved to public settings." : "Saved in this preview. Connect Supabase Storage for production persistence."); };
-  const saveUrl = async (kind: "logo" | "video") => { const value = kind === "logo" ? logo : video; if (value && !isSafeHttpUrl(value) && !value.startsWith("blob:") && !value.startsWith("/assets/") && !value.startsWith("./assets/") && !value.startsWith("/manus-storage/")) return setStatus("Asset URLs must use HTTPS or an approved storage path."); if (kind === "logo") writeLogoUrl(value); else writeVideoUrl(value); const synced = await savePublicSetting(kind === "logo" ? "logo_url" : "motion_video_url", value); setStatus(synced && isSupabaseConfigured ? "Asset setting saved to public settings." : "Asset setting saved."); };
+  const handleFile = async (file: File | undefined, kind: "logo" | "video") => {
+    if (!file || !isSafeAssetFile(file)) return setStatus("Use JPG, PNG, WebP, AVIF, MP4, or WebM files up to 10MB.");
+    const remoteUrl = await uploadPublicAsset(file, kind === "logo" ? "brand" : "motion");
+    if (!remoteUrl) return setStatus("Upload rejected. Confirm your secure Supabase session and storage policy.");
+    const saved = await savePublicSetting(kind === "logo" ? "logo_url" : "motion_video_url", remoteUrl);
+    if (!saved) return setStatus("Upload succeeded, but publishing the setting was rejected.");
+    if (kind === "logo") { setLogo(remoteUrl); writeLogoUrl(remoteUrl); } else { setVideo(remoteUrl); writeVideoUrl(remoteUrl); }
+    setStatus("Uploaded and published through the secured media workflow.");
+  };
+  const saveUrl = async (kind: "logo" | "video") => {
+    const value = kind === "logo" ? logo : video;
+    if (value && !isSafeHttpUrl(value) && !value.startsWith("/assets/") && !value.startsWith("/manus-storage/")) return setStatus("Asset URLs must use HTTPS or an approved storage path.");
+    const synced = await savePublicSetting(kind === "logo" ? "logo_url" : "motion_video_url", value);
+    if (!synced) return setStatus("Setting change rejected. Confirm your secure Supabase session and policy.");
+    if (kind === "logo") writeLogoUrl(value); else writeVideoUrl(value);
+    setStatus("Asset setting saved through the secured publishing workflow.");
+  };
   return <div className="admin-media-panel"><div><p className="eyebrow">Brand & media</p><h2>Shape the public room.</h2><p>Logo and motion slots are editable here. Production uploads must be sent through Supabase Storage policies.</p></div><div className="media-form"><label><ImagePlus size={14} /> Logo URL<input value={logo} onChange={(event) => setLogo(event.target.value)} onBlur={() => saveUrl("logo")} /></label><label><ImagePlus size={14} /> Upload logo<input type="file" accept="image/png,image/jpeg,image/webp,image/avif" onChange={(event) => handleFile(event.target.files?.[0], "logo")} /></label><label><Video size={14} /> Video URL<input value={video} onChange={(event) => setVideo(event.target.value)} onBlur={() => saveUrl("video")} placeholder="https://…/isth-loop.mp4" /></label><label><Video size={14} /> Upload motion video<input type="file" accept="video/mp4,video/webm" onChange={(event) => handleFile(event.target.files?.[0], "video")} /></label></div>{status && <p className="form-message">{status}</p>}</div>;
 }

@@ -232,12 +232,10 @@ describe("isth editorial page integrity", () => {
     expect(styles).toContain('.about-editorial .about-lockup');
     expect(styles).toContain('.about-editorial .about-lockup { justify-content:flex-start;');
     expect(styles).toContain('background:linear-gradient(110deg,rgba(91,13,24,.13),rgba(245,241,235,.88) 34%,rgba(181,154,98,.10))');
-    expect(styles).toContain('padding:clamp(64px,6vw,92px)');
-    expect(styles).toContain('padding:clamp(26px,3vw,42px) 0 clamp(28px,4vw,52px)');
-    expect(styles).toContain('.about-editorial .about-lockup { justify-content:flex-start; min-height:0;');
-    expect(styles).toContain('.about-masthead-copy { display:flex; flex-direction:column; align-items:flex-start; gap:clamp(22px,2vw,32px); }');
-    expect(styles).toContain('margin:-clamp(24px,2.6vw,34px) 0 0');
-    expect(styles).toContain('.about-editorial .about-masthead h1 { position:relative; z-index:1; margin:-clamp(90px,9vw,124px) 0 0 !important; transform:none; }');
+    expect(styles).toContain('padding:clamp(70px,7vw,106px)');
+    expect(styles).toContain('padding:clamp(22px,2.5vw,34px) 0 clamp(28px,4vw,52px)');
+    expect(styles).toContain('.about-editorial .about-lockup { justify-content:flex-start; min-height:0; margin:0; }');
+    expect(styles).toContain('.about-masthead-copy { display:flex; flex-direction:column; align-items:flex-start; gap:clamp(24px,2.2vw,34px); }');
     expect(styles).toContain("@media (min-width:621px) and (max-width:900px)");
     expect(styles).toContain(".site-nav .desktop-nav { display:flex; }");
     expect(styles).toContain(".site-nav .menu-toggle { display:none; }");

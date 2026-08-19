@@ -9,6 +9,17 @@ const __dirname = path.dirname(__filename);
 async function startServer() {
   const app = express();
   const server = createServer(app);
+  app.disable("x-powered-by");
+  app.use((_req, res, next) => {
+    res.setHeader("Content-Security-Policy", "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; img-src 'self' https: data: blob:; media-src 'self' https: blob:; font-src 'self' https://fonts.cdnfonts.com data:; style-src 'self' 'unsafe-inline' https://fonts.cdnfonts.com; script-src 'self' 'unsafe-inline'; connect-src 'self' https://*.supabase.co; upgrade-insecure-requests");
+    res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
+    res.setHeader("Cross-Origin-Resource-Policy", "same-origin");
+    res.setHeader("Permissions-Policy", "camera=(), microphone=(), geolocation=(), payment=(), usb=()");
+    res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+    res.setHeader("X-Content-Type-Options", "nosniff");
+    res.setHeader("X-Frame-Options", "DENY");
+    next();
+  });
 
   // Serve static files from dist/public in production
   const staticPath =
@@ -19,7 +30,7 @@ async function startServer() {
   app.use(express.static(staticPath));
 
   // Handle client-side routing - serve index.html for all routes
-  app.get("*", (_req, res) => {
+  app.get("/{*splat}", (_req, res) => {
     res.sendFile(path.join(staticPath, "index.html"));
   });
 

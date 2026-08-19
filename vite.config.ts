@@ -222,6 +222,18 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (!id.includes("node_modules")) return;
+          if (id.includes("@supabase")) return "supabase";
+          if (id.includes("gsap")) return "motion";
+          if (id.includes("lucide-react")) return "icons";
+          if (id.includes("/node_modules/.pnpm/react@") || id.includes("/node_modules/.pnpm/react-dom@") || id.includes("/node_modules/.pnpm/scheduler@")) return "react-vendor";
+          return "vendor";
+        },
+      },
+    },
   },
   server: {
     port: 3000,

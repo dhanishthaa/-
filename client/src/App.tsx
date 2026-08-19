@@ -1,25 +1,27 @@
 // Quiet Atelier style reminder: routes preserve the slow landing ritual, clear storefront escape, and private admin room.
+import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import Home from "./pages/Home";
-import About from "./pages/About";
 import Landing from "./pages/Landing";
-import Admin from "./pages/Admin";
 import MotionRoot from "./components/MotionRoot";
 
+const Home = lazy(() => import("./pages/Home"));
+const About = lazy(() => import("./pages/About"));
+const Admin = lazy(() => import("./pages/Admin"));
+
 function Router() {
-  return <Switch>
+  return <Suspense fallback={<main className="route-loading" aria-live="polite" aria-label="Loading isth" />}><Switch>
     <Route path="/" component={Landing} />
     <Route path="/home" component={Home} />
     <Route path="/about" component={About} />
     <Route path="/isth/frag/minda" component={Admin} />
     <Route path="/404" component={NotFound} />
     <Route component={NotFound} />
-  </Switch>;
+  </Switch></Suspense>;
 }
 
 export default function App() {

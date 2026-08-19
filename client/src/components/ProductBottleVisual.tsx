@@ -10,7 +10,7 @@ export default function ProductBottleVisual({ product, modal = false }: { produc
       aria-label={product.image ? `${product.name} bottle` : `${product.name} bottle placeholder`}
     >
       {product.image ? (
-        <img src={product.image} alt={`${product.name} bottle`} loading={modal ? "eager" : "lazy"} />
+        <img src={product.image} alt={`${product.name} bottle`} loading={modal ? "eager" : "lazy"} decoding="async" />
       ) : (
         <div className="bottle-placeholder" aria-hidden="true">
           <div className="bottle-cap" />

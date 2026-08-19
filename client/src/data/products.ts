@@ -28,25 +28,9 @@ export const defaultProducts: Product[] = [
   { id: "reve-oud", name: "Rêve Oud", notes: "cucumber · bubblegum · orange · oud", description: "Unexpected freshness over oud: cucumber, orange, and a playful trace of bubblegum.", collection: "Signature", color: "#879A78", size: "Edition" },
 ];
 
-const STORAGE_KEY = "isth-products-v1";
-
 export function normalizeProductMedia(product: Product): Product {
   if (product.id === "kawaii-marshmallow" && (!product.image || product.image === LEGACY_KAWAII_MARSHMALLOW_IMAGE || product.image === PASTED_KAWAII_REFERENCE_IMAGE)) {
     return { ...product, image: KAWAII_MARSHMALLOW_DESKTOP_IMAGE };
   }
   return product;
-}
-
-export function readLocalProducts(): Product[] {
-  if (typeof window === "undefined") return defaultProducts;
-  try {
-    const saved = window.localStorage.getItem(STORAGE_KEY);
-    return saved ? JSON.parse(saved).map(normalizeProductMedia) : defaultProducts;
-  } catch {
-    return defaultProducts;
-  }
-}
-
-export function writeLocalProducts(products: Product[]) {
-  if (typeof window !== "undefined") window.localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
 }
