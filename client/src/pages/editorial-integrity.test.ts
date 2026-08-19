@@ -115,8 +115,10 @@ describe("isth editorial page integrity", () => {
     expect(curtain).toContain("isth-kawaii-curtain-contrast-v3_3611a666.jpg");
     expect(curtain).toContain("isth-kawaii-curtain-noir-v3_25aa8d0e.jpg");
     expect(curtain).toContain("const CURTAIN_TIMELINE_DURATION = 2.6");
-    expect(curtain).toContain("const motionScale = 1;");
-    expect(curtain).toContain("const pairEase = ease;");
+    expect(curtain).toContain("const COMPACT_SLOW_TIMING_SCALE = 2.15");
+    expect(curtain).toContain('window.matchMedia("(max-width: 760px)")');
+    expect(curtain).toContain("const motionScale = compactScreen ? COMPACT_SLOW_TIMING_SCALE : 1;");
+    expect(curtain).toContain('const pairEase = compactScreen ? "power2.inOut" : ease;');
     expect(curtain).toContain("const cinematicPairs = [");
     expect(curtain).toContain("const exitDistance = panels.length * 100 + 28;");
     expect(curtain).toContain('{ left: 1, right: 2, start: 0, sweep: 1.25, settle: 0.12, ease: "power3.inOut" }');

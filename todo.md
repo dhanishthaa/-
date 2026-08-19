@@ -93,6 +93,7 @@
 - [x] Match Kawaii Marshmallow’s small-screen curtain timing and pacing exactly to the approved laptop animation profile.
 - [x] Live-verify Kawaii Marshmallow curtain motion at smartphone and laptop widths, confirming identical timing, easing, travel, and final hold behavior.
 - [x] Audit and remove every compact-only Kawaii curtain timing, travel, and replay difference so smartphone/iOS matches the approved laptop choreography exactly.
+- [x] Add and live-verify an explicitly slower Kawaii curtain timing profile for smartphone and iOS-sized screens while preserving the approved laptop profile.
 - [x] Add a small responsive breathing gap between the Home hero headline and its supporting “isth composes…” copy across all supported devices and browsers, verified at smartphone, tablet, and desktop widths with an iOS-oriented compact layout check.
 - [x] Raise the mobile quote text and Queries action toward the upper-left while retaining a deliberate small inset from the top and left edges.
 - [x] Set the browser tab to a white isth mark and the exact title “isth - Fragrances” on every device.

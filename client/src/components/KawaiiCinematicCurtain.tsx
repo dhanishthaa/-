@@ -10,6 +10,7 @@ const curtainImages = [
 
 const curtainPositions = ["11% center", "37% center", "63% center", "89% center"];
 const CURTAIN_TIMELINE_DURATION = 2.6;
+const COMPACT_SLOW_TIMING_SCALE = 2.15;
 
 const cinematicPairs = [
   { left: 1, right: 2, start: 0, sweep: 1.25, settle: 0.12, ease: "power3.inOut" },
@@ -24,7 +25,8 @@ export default function KawaiiCinematicCurtain({ variant = "card" }: { variant?:
     if (!curtain) return;
     const panels = Array.from(curtain.querySelectorAll<HTMLElement>(".kawaii-curtain-panel"));
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const motionScale = 1;
+    const compactScreen = window.matchMedia("(max-width: 760px)").matches;
+    const motionScale = compactScreen ? COMPACT_SLOW_TIMING_SCALE : 1;
 
     if (!panels.length) return;
 
@@ -65,7 +67,7 @@ export default function KawaiiCinematicCurtain({ variant = "card" }: { variant?:
         cinematicPairs.forEach(({ left, right, start, sweep, settle, ease }) => {
           const pair = [panels[left], panels[right]].filter(Boolean) as HTMLElement[];
           if (pair.length !== 2) return;
-          const pairEase = ease;
+          const pairEase = compactScreen ? "power2.inOut" : ease;
 
           timeline
             .to(pair, {
