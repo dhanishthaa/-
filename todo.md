@@ -26,3 +26,42 @@
 - [x] Remove the unintended beige outer border/frame from the Kawaii Marshmallow product image.
 - [x] Format the quote exactly as two lines: “Embrace the fragrance.” and “Become isth.”
 - [x] Remove the Kawaii border without cropping the approved full-bottle image; retain a distortion-safe contain treatment and no Kawaii-only overlay frame.
+- [x] Create a preview-only elite whole-website UI/UX enhancement pass using React Bits and GSAP principles, improving every public section while preserving all existing content and product-card text and avoiding any GitHub push until approval.
+- [x] Remove the oversized empty post-hero area from the standalone landing route while preserving the intended entry experience.
+- [x] Verify every public route and interactive public state—including landing, storefront, About, navigation, footer, and mobile menu—after the preview enhancement without changing content.
+- [x] Add regression coverage for the whole-site GSAP motion hooks and key editorial enhancement markers across Home and About.
+- [x] Manually verify landing handoff, desktop navigation, mobile menu open/close and links, footer links, and key public CTAs after the preview enhancement.
+- [x] Document explicit evidence that public navigation, footer, and mobile-menu states were tested without content changes.
+- [x] Remove the unnecessary circle, semi-circle, and line decorations from the public-site preview.
+- [x] Remove “The rest of the library opens in its own time.” and the dash before “More compositions.”
+- [x] Audit and remove remaining nonessential preview-only divider and line motifs while retaining only functional interactive affordances.
+- [x] Re-verify the simplified decoration system on desktop and smartphone layouts.
+- [x] Remove product-card frames, catalogue numbering, under-card line strokes, and hover blur effects while preserving product text and imagery.
+- [x] Remove remaining product-card hover glow and blur overlays while preserving product text and bottle imagery.
+- [x] Re-verify the fully non-blurred product-card presentation on desktop and mobile.
+- [x] Add a smooth transform-based navbar fold on scroll down and unfold on scroll up, with reduced-motion support and responsive validation across device sizes.
+- [x] Remove the quote-section image frame and red vertical accent line while preserving its text, image, button, and two-line composition.
+- [x] Restore the isth navbar logo fully inside the navbar, remove the unwanted horizontal stroke, and slow the fold/unfold animation into a smooth responsive transition.
+- [x] Restore the navbar logo to its exact pre-enhancement placement and remove the remaining introductory vertical stroke beside the paragraph.
+- [x] Compare current navbar logo styling to pre-enhancement committed rules and confirm exact placement restoration.
+- [x] Verify slower navbar fold/unfold states on desktop, tablet, and smartphone layouts after the final logo-restoration changes.
+- [x] Compare exact current and pre-enhancement navbar logo declarations and remove any residual placement difference.
+- [ ] Directly test scroll-down fold and scroll-up unfold at desktop, tablet, and smartphone viewport sizes after the final navigation patch.
+- [x] Remove the decorative dash before Queries while preserving the label.
+- [x] Make every displayed email mention lowercase as isth.support@gmail.com while preserving mail links.
+- [x] Restore About, Collection, and Contact navbar links at tablet and desktop widths while keeping the hamburger menu only on phone-sized layouts.
+- [x] Create a preview-only original cinematic animated Kawaii Marshmallow card inspired only by the supplied reference motion, with responsive, touch-safe, and reduced-motion behavior and no GitHub push until approval.
+- [x] Re-verify the final simplified decoration cleanup on smartphone Home and About layouts after the latest divider removals.
+- [x] Verify the Kawaii Marshmallow cinematic card reveal and full-bottle lock-up at a tablet viewport.
+- [x] Replace Kawaii’s plain cinematic color flaps with original matching lifestyle-image curtain slices that fully clear beyond both edges.
+- [x] Replay the same Kawaii lifestyle-curtain animation inside the Kawaii product-detail view while preserving a fully unobstructed final bottle view.
+- [x] Slow the Kawaii lifestyle-curtain animation on the card and product-detail view so every flap and the final bottle lock-up are clearly visible.
+- [x] Confirm the generated ChatGPT Image 2 lifestyle curtain assets have finished and render as final non-placeholder images in the Kawaii card and dialog.
+- [x] Live-verify the slower Kawaii curtain sequence in card and dialog states, including fully offscreen curtain exit and human-readable flap timing.
+- [x] Recreate both Kawaii curtain lifestyle assets in an HD seductive bubblegum-marshmallow and lipstick-kiss editorial direction, with no bottle, packaging, text, logo, or watermark.
+- [x] Remove every Kawaii post-reveal shine or lens-flare effect from the card and dialog experience.
+- [x] Slow the Kawaii curtain panels further so the individual image flaps are clearly readable before the final bottle lock-up.
+- [x] Confirm the existing Admin product image URL control remains the correct management point for the Kawaii product visual, while curtain choreography remains a responsive storefront behavior.
+- [x] Verify the completed Kawaii card and dialog curtain treatment at smartphone, tablet, laptop, and desktop widths for smooth, overflow-free rendering.
+- [x] Rework the Kawaii curtain imagery with stronger light-to-dark and material contrast so individual flaps read clearly while remaining within the seductive bubblegum-marshmallow direction.
+- [x] Rebalance the Kawaii curtain cadence from the current overly slow state into a smoother, moderately paced cinematic reveal for card and dialog views.

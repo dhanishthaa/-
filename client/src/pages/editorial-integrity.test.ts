@@ -8,7 +8,12 @@ describe("isth editorial page integrity", () => {
     const home = readProjectFile("client/src/pages/Home.tsx");
 
     expect(home).toContain('className="site-shell editorial-home"');
+    expect(home).toContain('ref={editorialRootRef}');
+    expect(home).toContain('className="collection-section editorial-motion-panel"');
+    expect(home).toContain('className="quote-video-section editorial-motion-panel"');
     expect(home).toContain("Find your");
+    expect(home).toContain('className="eyebrow catalog-label">More compositions');
+    expect(home).not.toContain("The rest of the library opens in its own time.");
     expect(home).toContain("Not a perfume");
     expect(home).toContain("Coming soon");
     expect(home).toContain("Between the");
@@ -91,7 +96,32 @@ describe("isth editorial page integrity", () => {
     expect(styles).toContain(".product-card.is-kawaii .bottle-stage-kawaii { background:transparent;");
     expect(styles).toContain(".product-card.is-kawaii .bottle-stage-kawaii > img { padding:0; object-fit:contain;");
     expect(styles).not.toContain(".product-card.is-kawaii .bottle-stage-kawaii > img { padding:0; object-fit:cover;");
+    expect(styles).not.toContain(".editorial-home .product-film");
+    expect(styles).not.toContain(".editorial-home .product-spotlight");
+    expect(readProjectFile("client/src/components/ProductBottle.tsx")).not.toContain('className="product-film"');
+    expect(readProjectFile("client/src/components/ProductBottle.tsx")).not.toContain('className="product-spotlight"');
+    const curtain = readProjectFile("client/src/components/KawaiiCinematicCurtain.tsx");
+    expect(readProjectFile("client/src/components/ProductBottle.tsx")).toContain("<KawaiiCinematicCurtain />");
+    expect(readProjectFile("client/src/pages/Home.tsx")).toContain('<KawaiiCinematicCurtain variant="dialog" />');
+    expect(curtain).toContain("new IntersectionObserver");
+    expect(curtain).toContain('prefers-reduced-motion: reduce');
+    expect(curtain).toContain("isth-kawaii-curtain-contrast-v3_3611a666.jpg");
+    expect(curtain).toContain("isth-kawaii-curtain-noir-v3_25aa8d0e.jpg");
+    expect(curtain).toContain("duration: 2.75");
+    expect(curtain).toContain('stagger: { each: 0.2, from: "center" }');
+    expect(curtain).toContain('ease: "power2.inOut"');
+    expect(curtain).not.toContain("kawaii-curtain-glint");
+    expect(styles).toContain(".editorial-home .kawaii-curtain");
+    expect(styles).toContain(".dialog-product-media .kawaii-curtain");
+    expect(styles).not.toContain(".editorial-home .catalog-grid .product-visual::after");
+    expect(styles).not.toContain(".editorial-home .product-card::after");
+    expect(styles).not.toContain(".editorial-home .product-card-copy::before");
+    expect(styles).not.toContain(".editorial-home .product-buy::after");
+    expect(styles).not.toContain("filter:blur(13px)");
+    expect(styles).toContain("@media (prefers-reduced-motion:reduce)");
     expect(styles).toContain(".dialog-product-media .bottle-stage-kawaii > img");
+    expect(styles).not.toContain("kawaii-curtain-glint");
+    expect(styles).toContain("will-change:transform");
   });
 
   it("uses the shared simple product card for Kawaii without fabricated commerce claims", () => {
@@ -107,7 +137,7 @@ describe("isth editorial page integrity", () => {
     const home = readProjectFile("client/src/pages/Home.tsx");
     const styles = readProjectFile("client/src/index.css");
 
-    expect(home).toContain('<section className="quote-video-section">');
+    expect(home).toContain('<section className="quote-video-section editorial-motion-panel">');
     expect(home).not.toContain("quote-pointer-reveal");
     expect(home).not.toContain("revealQuoteAt");
     expect(home).not.toContain("quote-reveal-prompt");
@@ -117,5 +147,55 @@ describe("isth editorial page integrity", () => {
     expect(styles).not.toContain("--quote-floral-mask");
     expect(styles).not.toContain(".quote-video-section.is-revealing");
     expect(styles).toContain(".quote-video-copy { position:relative; z-index:2;");
+    expect(styles).not.toContain(".editorial-home .quote-video-section::before");
+    expect(styles).not.toContain(".editorial-home .quote-video-copy::before");
+  });
+
+  it("keeps the preview-only whole-site editorial enhancements across public routes and mobile navigation", () => {
+    const home = readProjectFile("client/src/pages/Home.tsx");
+    const about = readProjectFile("client/src/pages/About.tsx");
+    const landing = readProjectFile("client/src/pages/Landing.tsx");
+    const product = readProjectFile("client/src/components/ProductBottle.tsx");
+    const styles = readProjectFile("client/src/index.css");
+
+    expect(home).toContain('import gsap from "gsap";');
+    expect(home).toContain('gsap.registerPlugin(ScrollTrigger);');
+    expect(home).toContain('window.matchMedia("(prefers-reduced-motion: reduce)")');
+    expect(home).toContain('window.matchMedia("(pointer: coarse)")');
+    expect(home).toContain('className="nakshatra-section editorial-motion-panel"');
+    expect(home).toContain('className="story-section editorial-motion-panel"');
+    expect(home).toContain('className="contact-section editorial-motion-panel"');
+    expect(home).toContain('const [navFolded, setNavFolded] = useState(false);');
+    expect(home).toContain('Math.abs(delta) >= 10');
+    expect(home).toContain('${navFolded ? "is-folded" : ""}');
+    expect(home).toContain('className={`mobile-drawer ${menuOpen ? "is-open" : ""}`}');
+    expect(product).not.toContain('className="product-film"');
+    expect(product).not.toContain('className="product-spotlight"');
+    expect(about).toContain('className="site-shell about-editorial');
+    expect(about).toContain('const [navFolded, setNavFolded] = useState(false);');
+    expect(about).toContain('${navFolded ? "is-folded" : ""}');
+    expect(landing).toContain('className={`landing-page ss1-landing');
+    expect(styles).toContain(".editorial-home .desktop-nav a::after");
+    expect(styles).not.toContain(".editorial-home .collection-editorial-photo::after");
+    expect(styles).not.toContain(".editorial-home .quote-video-section::before");
+    expect(styles).not.toContain(".editorial-home .site-footer::before");
+    expect(styles).not.toContain(".about-editorial .about-masthead::after");
+    expect(styles).not.toContain(".editorial-home .section-heading::after");
+    expect(styles).not.toContain(".editorial-home .nakshatra-inner::before");
+    expect(styles).toContain(".editorial-home .catalog-heading .catalog-label::before { content:none;");
+    expect(styles).not.toContain(".editorial-home .story-copy::after");
+    expect(styles).not.toContain(".editorial-home .contact-section::before");
+    expect(styles).not.toContain(".about-editorial .about-quote-card::before");
+    expect(styles).toContain(".ss1-landing.signature-complete { background:linear-gradient");
+    expect(styles).toContain(".site-nav.is-folded { transform:translate3d(0,calc(-100% - 10px),0) scaleY(.96);");
+    expect(styles).toContain("transform .92s cubic-bezier(.16,1,.3,1)");
+    expect(styles).not.toContain(".editorial-home .home-hero-content::before");
+    expect(styles).not.toContain(".editorial-home .intro-strip::before");
+    expect(styles).not.toContain(".editorial-home .intro-copy::before");
+    expect(styles).toContain('.text-link[href^="mailto:"] { text-transform:lowercase; }');
+    expect(styles).toContain(".contact-section .eyebrow::before { content:none; }");
+    expect(styles).toContain("@media (min-width:621px) and (max-width:900px)");
+    expect(styles).toContain(".site-nav .desktop-nav { display:flex; }");
+    expect(styles).toContain(".site-nav .menu-toggle { display:none; }");
   });
 });

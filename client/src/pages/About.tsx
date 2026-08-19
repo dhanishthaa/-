@@ -6,19 +6,45 @@ import { DEFAULT_WHATSAPP_NUMBER, DEFAULT_WHATSAPP_TEXT, INSTAGRAM_URL, readLogo
 export default function About() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [navFolded, setNavFolded] = useState(false);
   const whatsappNumber = DEFAULT_WHATSAPP_NUMBER;
   const whatsappText = DEFAULT_WHATSAPP_TEXT;
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-    const handleScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    let frame = 0;
+    const updateNavigation = () => {
+      const nextScrollY = window.scrollY;
+      const delta = nextScrollY - lastScrollY;
+      setScrolled(nextScrollY > 40);
+      if (nextScrollY <= 24) setNavFolded(false);
+      else if (Math.abs(delta) >= 10) setNavFolded(delta > 0);
+      lastScrollY = nextScrollY;
+      frame = 0;
+    };
+    const onScroll = () => {
+      if (!frame) frame = window.requestAnimationFrame(updateNavigation);
+    };
+
+    if (menuOpen) {
+      setNavFolded(false);
+      return;
+    }
+    updateNavigation();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, [menuOpen]);
 
   return (
     <div className="site-shell about-editorial bg-[#F5F1EB] text-[#111111] font-sans selection:bg-[#5B0D18] selection:text-[#F5F1EB]">
-      <header className={`site-nav is-scrolled ${scrolled ? "is-scrolled" : ""}`}>
+      <header className={`site-nav is-scrolled ${scrolled ? "is-scrolled" : ""} ${navFolded ? "is-folded" : ""}`}>
         <Link href="/home" className="site-brand">
           <img className="brand-logo brand-logo-dark" src={readLogoUrl()} alt="isth" />
         </Link>
