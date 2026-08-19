@@ -116,15 +116,15 @@ describe("isth editorial page integrity", () => {
     expect(curtain).toContain('prefers-reduced-motion: reduce');
     expect(curtain).toContain("JaSRuhWVMwZqkrGm.jpg");
     expect(curtain).toContain("FQOTXIOSdoVhmIoY.jpg");
-    expect(curtain).toContain("const CURTAIN_TIMELINE_DURATION = 2.6");
+    expect(curtain).toContain("const CURTAIN_TIMELINE_DURATION = 5.4");
     expect(curtain).not.toContain("COMPACT_SLOW_TIMING_SCALE");
     expect(curtain).not.toContain('window.matchMedia("(max-width: 760px)")');
     expect(curtain).not.toContain("motionScale");
     expect(curtain).not.toContain("pairEase");
     expect(curtain).toContain("const cinematicPairs = [");
     expect(curtain).toContain("const exitDistance = panels.length * 100 + 28;");
-    expect(curtain).toContain('{ left: 1, right: 2, start: 0, sweep: 1.25, settle: 0.12, ease: "power3.inOut" }');
-    expect(curtain).toContain('{ left: 0, right: 3, start: 0.38, sweep: 1.35, settle: 0.12, ease: "power3.out" }');
+    expect(curtain).toContain('{ left: 1, right: 2, start: 0, sweep: 3.25, settle: 0.28, ease: "power3.inOut" }');
+    expect(curtain).toContain('{ left: 0, right: 3, start: 0.95, sweep: 3.55, settle: 0.28, ease: "power3.out" }');
     expect(curtain).toContain("timeline.call(() => undefined, [], CURTAIN_TIMELINE_DURATION);");
     expect(curtain).toContain("force3D: true");
     expect(curtain).toContain("if (reduceMotion)");

@@ -9,11 +9,11 @@ const curtainImages = [
 ];
 
 const curtainPositions = ["11% center", "37% center", "63% center", "89% center"];
-const CURTAIN_TIMELINE_DURATION = 2.6;
+const CURTAIN_TIMELINE_DURATION = 5.4;
 
 const cinematicPairs = [
-  { left: 1, right: 2, start: 0, sweep: 1.25, settle: 0.12, ease: "power3.inOut" },
-  { left: 0, right: 3, start: 0.38, sweep: 1.35, settle: 0.12, ease: "power3.out" },
+  { left: 1, right: 2, start: 0, sweep: 3.25, settle: 0.28, ease: "power3.inOut" },
+  { left: 0, right: 3, start: 0.95, sweep: 3.55, settle: 0.28, ease: "power3.out" },
 ] as const;
 
 export default function KawaiiCinematicCurtain({ variant = "card" }: { variant?: "card" | "dialog" }) {
@@ -55,7 +55,7 @@ export default function KawaiiCinematicCurtain({ variant = "card" }: { variant?:
             transformOrigin: "center center",
           }, {
             scale: 1,
-            duration: 1.8,
+            duration: 4.45,
             ease: "power2.out",
             force3D: true,
           }, 0.06);
