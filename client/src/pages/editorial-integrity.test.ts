@@ -188,6 +188,8 @@ describe("isth editorial page integrity", () => {
     expect(home).toContain('className="nakshatra-section editorial-motion-panel"');
     expect(home).toContain('className="story-section editorial-motion-panel"');
     expect(home).toContain('className="contact-section editorial-motion-panel"');
+    expect(home).toContain('className="contact-lockup" aria-label="isth Parfums"');
+    expect(home).toContain('<span>Parfums</span>');
     expect(home).toContain('const [navFolded, setNavFolded] = useState(false);');
     expect(home).toContain('Math.abs(delta) >= 10');
     expect(home).toContain('${navFolded ? "is-folded" : ""}');
@@ -218,6 +220,8 @@ describe("isth editorial page integrity", () => {
     expect(styles).not.toContain(".editorial-home .intro-copy::before");
     expect(styles).toContain('.text-link[href^="mailto:"] { text-transform:lowercase; }');
     expect(styles).toContain(".contact-section .eyebrow::before { content:none; }");
+    expect(styles).toContain('font-family:"Gilroy-ExtraBold","Gilroy ExtraBold",Gilroy,var(--sans)');
+    expect(styles).toContain('font-size:120px');
     expect(styles).toContain("@media (min-width:621px) and (max-width:900px)");
     expect(styles).toContain(".site-nav .desktop-nav { display:flex; }");
     expect(styles).toContain(".site-nav .menu-toggle { display:none; }");

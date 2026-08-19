@@ -130,7 +130,11 @@ em { font-style:italic; }
 .story-copy>p:not(.eyebrow) { max-width:355px; margin:30px 0; }
 .text-link { display:inline-flex; gap:8px; align-items:center; color:var(--cherry); font:10px var(--mono); letter-spacing:.13em; text-transform:uppercase; }
 .text-link[href^="mailto:"] { text-transform:lowercase; }
-.contact-section { display:grid; grid-template-columns:1fr 1fr; gap:60px; padding:clamp(90px,12vw,160px) clamp(20px,9vw,140px); background:var(--ivory); }
+.contact-section { padding:clamp(104px,13vw,190px) clamp(20px,9vw,140px) clamp(94px,12vw,174px); background:var(--ivory); }
+.contact-lockup { display:flex; align-items:baseline; gap:clamp(18px,2.8vw,44px); min-height:120px; margin:0 0 clamp(80px,10vw,150px); }
+.contact-lockup img { width:auto; height:clamp(70px,7.4vw,104px); max-width:min(290px,28vw); object-fit:contain; filter:brightness(0); }
+.contact-lockup span { color:var(--cherry); font-family:"Gilroy-ExtraBold","Gilroy ExtraBold",Gilroy,var(--sans); font-size:120px; font-weight:800; line-height:.8; letter-spacing:-.075em; }
+.contact-content { display:grid; grid-template-columns:1fr 1fr; gap:60px; }
 .contact-section .eyebrow::before { content:none; }
 .contact-section h2 { font-size:clamp(54px,7vw,100px); }
 .contact-details { align-self:end; padding-bottom:12px; display:flex; flex-direction:column; align-items:start; gap:20px; }
@@ -657,6 +661,20 @@ em { font-style:italic; }
   .about-feature-mark p { font-size:8px; letter-spacing:.18em; }
   .about-narrative { padding-bottom:68px; }
   .about-cta { align-items:flex-start; flex-direction:column; gap:18px; }
+}
+
+@media (max-width:900px) {
+  .contact-lockup { gap:22px; min-height:86px; margin-bottom:78px; }
+  .contact-lockup img { height:66px; max-width:180px; }
+  .contact-lockup span { font-size:82px; }
+}
+
+@media (max-width:620px) {
+  .contact-section { padding-top:84px; padding-bottom:92px; }
+  .contact-lockup { align-items:center; gap:12px; min-height:0; margin-bottom:62px; }
+  .contact-lockup img { height:44px; max-width:116px; }
+  .contact-lockup span { font-size:clamp(48px,13vw,66px); line-height:.9; letter-spacing:-.07em; }
+  .contact-content { grid-template-columns:1fr; gap:38px; }
 }
 
 /* Clean About layout: essential structure only, with the image carrying the editorial weight. */

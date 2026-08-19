@@ -74,6 +74,8 @@
 - [x] Remove the remaining sub-pixel vertical navbar logo shift between white and black states, then verify identical placement at mobile, tablet, and desktop widths.
 - [x] Rebalance the Home hero copy and actions vertically across all screen sizes so the lower hero space is used intentionally.
 - [x] Confirm the generated mobile Home hero asset has completed as a real image and visually verify the full intended compact composition without unwanted crop.
+- [x] Add a responsive black isth logo and cherry-red Gilroy ExtraBold “Parfums” lock-up above the existing contact Queries content, using 120px sizing on large screens and proportionate compact sizing with breathing room.
+- [x] Add a responsive black isth logo and cherry-red “Parfums” lock-up in the white contact-section space above the existing Queries content, with generous breathing room.
 - [x] Raise the mobile quote text and Queries action toward the upper-left while retaining a deliberate small inset from the top and left edges.
 - [x] Set the browser tab to a white isth mark and the exact title “isth - Fragrances” on every device.
 - [x] Preserve the approved 1366×768 Kawaii curtain timing while adding a slower readable profile for all compact and smartphone viewports.
