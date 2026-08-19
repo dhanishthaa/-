@@ -84,6 +84,16 @@
 - [x] Explicitly left-align the About-page isth Parfums lock-up with an About-specific override while preserving its shared dimensional treatment.
 - [x] Give the About navbar a distinct Home-style color-and-glass treatment so it does not blend into the ivory page background.
 - [x] Raise the left-aligned About-page isth Parfums lock-up further within the masthead while retaining its lower breathing space.
+- [ ] Reduce the excess About masthead space above the left-aligned isth Parfums lock-up and between it and the main headline, responsively.
+- [ ] Remove inherited contact-only lock-up height from the About masthead and further tighten its headline separation.
+- [ ] Reduce remaining About masthead bottom padding so the headline and following feature sequence sit closer to the raised lock-up.
+- [ ] Convert the About masthead copy into a compact flex sequence with an explicit minimal lock-up-to-headline gap.
+- [ ] Use a contained positioned desktop/tablet headline layout so the About headline can sit directly below the lock-up without inherited grid spacing.
+- [x] Reposition the iOS and smartphone Home hero image so both models’ faces remain visible without changing tablet, laptop, or desktop framing.
+- [x] Match Kawaii Marshmallow’s small-screen curtain timing and pacing exactly to the approved laptop animation profile.
+- [x] Live-verify Kawaii Marshmallow curtain motion at smartphone and laptop widths, confirming identical timing, easing, travel, and final hold behavior.
+- [x] Audit and remove every compact-only Kawaii curtain timing, travel, and replay difference so smartphone/iOS matches the approved laptop choreography exactly.
+- [x] Add a small responsive breathing gap between the Home hero headline and its supporting “isth composes…” copy across all supported devices and browsers, verified at smartphone, tablet, and desktop widths with an iOS-oriented compact layout check.
 - [x] Raise the mobile quote text and Queries action toward the upper-left while retaining a deliberate small inset from the top and left edges.
 - [x] Set the browser tab to a white isth mark and the exact title “isth - Fragrances” on every device.
 - [x] Preserve the approved 1366×768 Kawaii curtain timing while adding a slower readable profile for all compact and smartphone viewports.

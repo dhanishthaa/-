@@ -10,7 +10,6 @@ const curtainImages = [
 
 const curtainPositions = ["11% center", "37% center", "63% center", "89% center"];
 const CURTAIN_TIMELINE_DURATION = 2.6;
-const COMPACT_TIMING_SCALE = 1.65;
 
 const cinematicPairs = [
   { left: 1, right: 2, start: 0, sweep: 1.25, settle: 0.12, ease: "power3.inOut" },
@@ -25,8 +24,7 @@ export default function KawaiiCinematicCurtain({ variant = "card" }: { variant?:
     if (!curtain) return;
     const panels = Array.from(curtain.querySelectorAll<HTMLElement>(".kawaii-curtain-panel"));
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const compactScreen = window.matchMedia("(max-width: 760px)").matches;
-    const motionScale = compactScreen ? COMPACT_TIMING_SCALE : 1;
+    const motionScale = 1;
 
     if (!panels.length) return;
 
@@ -34,7 +32,7 @@ export default function KawaiiCinematicCurtain({ variant = "card" }: { variant?:
       gsap.set(panels, { autoAlpha: 0, xPercent: 0, force3D: true });
 
       const replay = () => {
-        const exitDistance = compactScreen ? 112 : panels.length * 100 + 28;
+        const exitDistance = panels.length * 100 + 28;
         const productStage = curtain.parentElement?.querySelector<HTMLElement>(".bottle-stage-kawaii");
         const timeline = gsap.timeline();
 
@@ -67,7 +65,7 @@ export default function KawaiiCinematicCurtain({ variant = "card" }: { variant?:
         cinematicPairs.forEach(({ left, right, start, sweep, settle, ease }) => {
           const pair = [panels[left], panels[right]].filter(Boolean) as HTMLElement[];
           if (pair.length !== 2) return;
-          const pairEase = compactScreen ? "power2.inOut" : ease;
+          const pairEase = ease;
 
           timeline
             .to(pair, {

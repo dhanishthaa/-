@@ -55,6 +55,7 @@ describe("isth editorial page integrity", () => {
     expect(styles).toContain('isth-hero-editorial-mobile-v1_00d0cab2.jpg');
     expect(styles).toContain('background-size:contain');
     expect(styles).toContain('top:clamp(112px,17vh,178px)');
+    expect(styles).toContain('.editorial-home .hero-description { margin:clamp(32px,3.2vw,40px) 0 clamp(22px,2.6vw,34px); }');
     expect(styles).toContain('.signature-writing-mark { top:40%; width:min(390px,42vw); }');
   });
 
@@ -114,12 +115,10 @@ describe("isth editorial page integrity", () => {
     expect(curtain).toContain("isth-kawaii-curtain-contrast-v3_3611a666.jpg");
     expect(curtain).toContain("isth-kawaii-curtain-noir-v3_25aa8d0e.jpg");
     expect(curtain).toContain("const CURTAIN_TIMELINE_DURATION = 2.6");
-    expect(curtain).toContain("const COMPACT_TIMING_SCALE = 1.65");
-    expect(curtain).toContain('window.matchMedia("(max-width: 760px)")');
-    expect(curtain).toContain("const motionScale = compactScreen ? COMPACT_TIMING_SCALE : 1;");
-    expect(curtain).toContain('const pairEase = compactScreen ? "power2.inOut" : ease;');
+    expect(curtain).toContain("const motionScale = 1;");
+    expect(curtain).toContain("const pairEase = ease;");
     expect(curtain).toContain("const cinematicPairs = [");
-    expect(curtain).toContain("const exitDistance = compactScreen ? 112 : panels.length * 100 + 28;");
+    expect(curtain).toContain("const exitDistance = panels.length * 100 + 28;");
     expect(curtain).toContain('{ left: 1, right: 2, start: 0, sweep: 1.25, settle: 0.12, ease: "power3.inOut" }');
     expect(curtain).toContain('{ left: 0, right: 3, start: 0.38, sweep: 1.35, settle: 0.12, ease: "power3.out" }');
     expect(curtain).toContain("timeline.call(() => undefined, [], CURTAIN_TIMELINE_DURATION * motionScale);");
@@ -231,7 +230,12 @@ describe("isth editorial page integrity", () => {
     expect(styles).toContain('.about-editorial .about-lockup');
     expect(styles).toContain('.about-editorial .about-lockup { justify-content:flex-start;');
     expect(styles).toContain('background:linear-gradient(110deg,rgba(91,13,24,.13),rgba(245,241,235,.88) 34%,rgba(181,154,98,.10))');
-    expect(styles).toContain('margin:-clamp(26px,3.2vw,46px) 0 clamp(44px,5vw,70px)');
+    expect(styles).toContain('padding:clamp(64px,6vw,92px)');
+    expect(styles).toContain('padding:clamp(26px,3vw,42px) 0 clamp(28px,4vw,52px)');
+    expect(styles).toContain('.about-editorial .about-lockup { justify-content:flex-start; min-height:0;');
+    expect(styles).toContain('.about-masthead-copy { display:flex; flex-direction:column; align-items:flex-start; gap:clamp(22px,2vw,32px); }');
+    expect(styles).toContain('margin:-clamp(24px,2.6vw,34px) 0 0');
+    expect(styles).toContain('.about-editorial .about-masthead h1 { position:relative; z-index:1; margin:-clamp(90px,9vw,124px) 0 0 !important; transform:none; }');
     expect(styles).toContain("@media (min-width:621px) and (max-width:900px)");
     expect(styles).toContain(".site-nav .desktop-nav { display:flex; }");
     expect(styles).toContain(".site-nav .menu-toggle { display:none; }");
