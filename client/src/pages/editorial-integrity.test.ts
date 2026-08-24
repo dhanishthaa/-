@@ -50,16 +50,18 @@ describe("isth editorial page integrity", () => {
     const landing = readProjectFile("client/src/pages/Landing.tsx");
     const styles = readProjectFile("client/src/index.css");
 
-    expect(landing).toContain("const CURTAIN_HANDOFF_MS = 1520;");
-    expect(landing).toContain("const CURTAIN_SCROLL_THRESHOLD = 0.48;");
+    expect(landing).toContain("const CURTAIN_HANDOFF_MS = 960;");
+    expect(landing).toContain("const CURTAIN_SCROLL_TRIGGER_PX = 32;");
     expect(landing).toContain("const signatureCompleteRef = useRef(false);");
-    expect(landing).toContain("const next = signatureCompleteRef.current");
-    expect(landing).toContain("window.visualViewport?.height ?? window.innerHeight");
+    expect(landing).toContain("if (!signatureCompleteRef.current || handoff.current || window.scrollY <= CURTAIN_SCROLL_TRIGGER_PX) return;");
+    expect(landing).toContain("window.scrollTo({ top: 0, left: 0, behavior: \"auto\" });");
     expect(landing).toContain("handoffTimer.current = window.setTimeout(() => setLocation(\"/home\"), CURTAIN_HANDOFF_MS);");
     expect(styles).toContain(".ss1-landing .landing-stage { position:fixed; inset:0; z-index:40; width:100%; height:100svh; min-height:0; overflow:hidden; }");
-    expect(styles).toContain("transition:transform 1.52s cubic-bezier(.76,0,.18,1)");
-    expect(styles).toContain("filter:blur(52px); border-radius:0 0 64px 64px; opacity:0;");
+    expect(styles).toContain("transition:transform .92s cubic-bezier(.16,1,.3,1)");
+    expect(styles).toContain("transform:translate3d(0,calc(-100% - 10px),0) scaleY(.96); filter:blur(18px); border-radius:0 0 28px 28px; opacity:0;");
     expect(styles).toContain("overscroll-behavior-y:none");
+    expect(readProjectFile("client/public/isth-boot.css")).toContain("overflow: hidden;");
+    expect(readProjectFile("client/index.html")).toContain('<script src="/isth-route-bootstrap.js"></script>');
   });
 
   it("contains a dedicated short-desktop hero composition for 1366×768 browser windows", () => {

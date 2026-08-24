@@ -1,5 +1,5 @@
 // isth landing style: a botanical image-led opening, close-set editorial type, and a calm scroll handoff into the main collection.
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { useLocation } from "wouter";
 import { readLogoUrl } from "@/data/brand";
@@ -7,8 +7,8 @@ import { readLogoUrl } from "@/data/brand";
 const LANDING_CHERRY = "#5B0D18";
 const LANDING_EDGE = "#38050d";
 const SITE_IVORY = "#F5F1EB";
-const CURTAIN_HANDOFF_MS = 1520;
-const CURTAIN_SCROLL_THRESHOLD = 0.48;
+const CURTAIN_HANDOFF_MS = 960;
+const CURTAIN_SCROLL_TRIGGER_PX = 32;
 
 function setBrowserThemeColor(color: string) {
   document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')?.setAttribute("content", color);
@@ -26,11 +26,9 @@ export default function Landing() {
   const restoreSiteChrome = () => setLandingChrome(false); 
   const [ready, setReady] = useState(false);
   const [signatureComplete, setSignatureComplete] = useState(false);
-  const [progress, setProgress] = useState(0);
   const [exiting, setExiting] = useState(false);
   const handoff = useRef(false);
   const handoffTimer = useRef<number | undefined>(undefined);
-  const viewportHeight = useRef(1);
   const signatureCompleteRef = useRef(false);
 
   useEffect(() => {
@@ -47,40 +45,32 @@ export default function Landing() {
       setLandingChrome(true);
       handoff.current = false;
       signatureCompleteRef.current = false;
-      viewportHeight.current = Math.max(1, window.visualViewport?.height ?? window.innerHeight);
       setReady(false);
       setSignatureComplete(false);
-      setProgress(0);
       setExiting(false);
       window.scrollTo({ top: 0, left: 0, behavior: "auto" });
       intro = window.setTimeout(() => setReady(true), 280);
       signatureTimer = window.setTimeout(() => {
         signatureCompleteRef.current = true;
         setSignatureComplete(true);
+        // Ignore any accidental pre-completion swipe so the flower state is
+        // always visible before a deliberate curtain fold begins.
+        window.scrollTo({ top: 0, left: 0, behavior: "auto" });
         // Once the flower reveal begins, the temporary cherry first-paint layer
         // must no longer sit beneath it or persist into /home on mobile.
         restoreSiteChrome();
       }, 2420);
     };
     startSequence();
-    const refreshViewport = () => {
-      viewportHeight.current = Math.max(1, window.visualViewport?.height ?? window.innerHeight);
-    };
-    refreshViewport();
     let frame = 0;
     const onScroll = () => {
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
-        const next = signatureCompleteRef.current
-          ? Math.min(1, Math.max(0, window.scrollY / Math.max(1, viewportHeight.current * 0.72)))
-          : 0;
-        setProgress(next);
-        if (signatureCompleteRef.current && next > CURTAIN_SCROLL_THRESHOLD && !handoff.current) {
-          handoff.current = true;
-          setExiting(true);
-          restoreSiteChrome();
-          handoffTimer.current = window.setTimeout(() => setLocation("/home"), CURTAIN_HANDOFF_MS);
-        }
+        if (!signatureCompleteRef.current || handoff.current || window.scrollY <= CURTAIN_SCROLL_TRIGGER_PX) return;
+        handoff.current = true;
+        setExiting(true);
+        restoreSiteChrome();
+        handoffTimer.current = window.setTimeout(() => setLocation("/home"), CURTAIN_HANDOFF_MS);
       });
     };
     const onPageShow = (event: PageTransitionEvent) => {
@@ -88,9 +78,7 @@ export default function Landing() {
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("pageshow", onPageShow);
-    window.addEventListener("resize", refreshViewport, { passive: true });
-    window.visualViewport?.addEventListener("resize", refreshViewport, { passive: true });
-    return () => { clearSequence(); cancelAnimationFrame(frame); window.removeEventListener("scroll", onScroll); window.removeEventListener("pageshow", onPageShow); window.removeEventListener("resize", refreshViewport); window.visualViewport?.removeEventListener("resize", refreshViewport); restoreSiteChrome(); };
+    return () => { clearSequence(); cancelAnimationFrame(frame); window.removeEventListener("scroll", onScroll); window.removeEventListener("pageshow", onPageShow); restoreSiteChrome(); };
   }, [setLocation]);
 
   const goToCollection = () => {
@@ -105,14 +93,9 @@ export default function Landing() {
   return <main className={`landing-page ss1-landing ${ready ? "signature-writing" : ""} ${signatureComplete ? "signature-complete" : ""} ${exiting ? "is-exiting" : ""}`} style={ss1SurfaceStyle}>
     <div className="landing-stage" style={ss1SurfaceStyle}>
       <div className="landing-curtain-surface" style={{
-        "--fold-progress": progress,
-        "--fold-scale": exiting ? 0.025 : Math.max(0.16, 1 - progress * 0.92),
-        "--fold-lift": exiting ? "-4vh" : `${progress * -2.4}vh`,
-        "--fold-blur": exiting ? "24px" : `${progress * 1.6}px`,
-        "--fold-radius": exiting ? "44px" : `${progress * 18}px`,
         backgroundColor: signatureComplete ? undefined : "#5B0D18",
         background: signatureComplete ? undefined : ss1Gradient,
-      } as CSSProperties}>
+      }}>
         <div className="landing-flower-search" aria-hidden="true" />
         <div className="landing-flower-veil" aria-hidden="true" />
         <div className="landing-grain" aria-hidden="true" />
@@ -127,7 +110,6 @@ export default function Landing() {
           <p className="landing-quote"><span>Embrace the fragrance.</span><span>Become isth.</span></p>
           <button className="landing-enter" onClick={goToCollection}>Explore the Collection <ArrowRight size={15} /></button>
         </div>
-        <div className="landing-progress" aria-hidden="true"><span style={{ transform: `scaleX(${progress})` }} /></div>
       </div>
     </div>
   </main>;
