@@ -7,6 +7,8 @@ import { readLogoUrl } from "@/data/brand";
 const LANDING_CHERRY = "#5B0D18";
 const LANDING_EDGE = "#38050d";
 const SITE_IVORY = "#F5F1EB";
+const CURTAIN_HANDOFF_MS = 1520;
+const CURTAIN_SCROLL_THRESHOLD = 0.48;
 
 function setBrowserThemeColor(color: string) {
   document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')?.setAttribute("content", color);
@@ -27,6 +29,9 @@ export default function Landing() {
   const [progress, setProgress] = useState(0);
   const [exiting, setExiting] = useState(false);
   const handoff = useRef(false);
+  const handoffTimer = useRef<number | undefined>(undefined);
+  const viewportHeight = useRef(1);
+  const signatureCompleteRef = useRef(false);
 
   useEffect(() => {
     let intro: number | undefined;
@@ -34,18 +39,23 @@ export default function Landing() {
     const clearSequence = () => {
       if (intro) window.clearTimeout(intro);
       if (signatureTimer) window.clearTimeout(signatureTimer);
+      if (handoffTimer.current) window.clearTimeout(handoffTimer.current);
+      handoffTimer.current = undefined;
     };
     const startSequence = () => {
       clearSequence();
       setLandingChrome(true);
       handoff.current = false;
+      signatureCompleteRef.current = false;
+      viewportHeight.current = Math.max(1, window.visualViewport?.height ?? window.innerHeight);
       setReady(false);
       setSignatureComplete(false);
       setProgress(0);
       setExiting(false);
-      window.scrollTo(0, 0);
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
       intro = window.setTimeout(() => setReady(true), 280);
       signatureTimer = window.setTimeout(() => {
+        signatureCompleteRef.current = true;
         setSignatureComplete(true);
         // Once the flower reveal begins, the temporary cherry first-paint layer
         // must no longer sit beneath it or persist into /home on mobile.
@@ -53,17 +63,23 @@ export default function Landing() {
       }, 2420);
     };
     startSequence();
+    const refreshViewport = () => {
+      viewportHeight.current = Math.max(1, window.visualViewport?.height ?? window.innerHeight);
+    };
+    refreshViewport();
     let frame = 0;
-    let handoffTimer: number | undefined;
     const onScroll = () => {
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
-        const next = Math.min(1, Math.max(0, window.scrollY / Math.max(1, window.innerHeight * 0.72)));
+        const next = signatureCompleteRef.current
+          ? Math.min(1, Math.max(0, window.scrollY / Math.max(1, viewportHeight.current * 0.72)))
+          : 0;
         setProgress(next);
-        if (next > 0.84 && !handoff.current) {
+        if (signatureCompleteRef.current && next > CURTAIN_SCROLL_THRESHOLD && !handoff.current) {
           handoff.current = true;
           setExiting(true);
-          handoffTimer = window.setTimeout(() => setLocation("/home"), 1120);
+          restoreSiteChrome();
+          handoffTimer.current = window.setTimeout(() => setLocation("/home"), CURTAIN_HANDOFF_MS);
         }
       });
     };
@@ -72,7 +88,9 @@ export default function Landing() {
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("pageshow", onPageShow);
-    return () => { clearSequence(); if (handoffTimer) window.clearTimeout(handoffTimer); cancelAnimationFrame(frame); window.removeEventListener("scroll", onScroll); window.removeEventListener("pageshow", onPageShow); restoreSiteChrome(); };
+    window.addEventListener("resize", refreshViewport, { passive: true });
+    window.visualViewport?.addEventListener("resize", refreshViewport, { passive: true });
+    return () => { clearSequence(); cancelAnimationFrame(frame); window.removeEventListener("scroll", onScroll); window.removeEventListener("pageshow", onPageShow); window.removeEventListener("resize", refreshViewport); window.visualViewport?.removeEventListener("resize", refreshViewport); restoreSiteChrome(); };
   }, [setLocation]);
 
   const goToCollection = () => {
@@ -80,7 +98,7 @@ export default function Landing() {
     handoff.current = true;
     setExiting(true);
     restoreSiteChrome();
-    window.setTimeout(() => setLocation("/home"), 1120);
+    handoffTimer.current = window.setTimeout(() => setLocation("/home"), CURTAIN_HANDOFF_MS);
   };
   const ss1Gradient = "radial-gradient(ellipse 72% 88% at 13% 22%, rgba(181,70,88,.68) 0%, rgba(181,70,88,0) 58%), radial-gradient(ellipse 72% 82% at 88% 84%, rgba(35,3,10,.58) 0%, rgba(35,3,10,0) 63%), linear-gradient(128deg, #8b2435 0%, #6f1221 38%, #5B0D18 62%, #38050d 100%)";
   const ss1SurfaceStyle = signatureComplete ? undefined : { backgroundColor: "#5B0D18", background: ss1Gradient };

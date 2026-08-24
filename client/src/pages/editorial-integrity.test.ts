@@ -46,6 +46,22 @@ describe("isth editorial page integrity", () => {
     expect(styles).toContain("text-shadow:none;");
   });
 
+  it("keeps the landing handoff locked to a full-viewport curtain on touch devices", () => {
+    const landing = readProjectFile("client/src/pages/Landing.tsx");
+    const styles = readProjectFile("client/src/index.css");
+
+    expect(landing).toContain("const CURTAIN_HANDOFF_MS = 1520;");
+    expect(landing).toContain("const CURTAIN_SCROLL_THRESHOLD = 0.48;");
+    expect(landing).toContain("const signatureCompleteRef = useRef(false);");
+    expect(landing).toContain("const next = signatureCompleteRef.current");
+    expect(landing).toContain("window.visualViewport?.height ?? window.innerHeight");
+    expect(landing).toContain("handoffTimer.current = window.setTimeout(() => setLocation(\"/home\"), CURTAIN_HANDOFF_MS);");
+    expect(styles).toContain(".ss1-landing .landing-stage { position:fixed; inset:0; z-index:40; width:100%; height:100svh; min-height:0; overflow:hidden; }");
+    expect(styles).toContain("transition:transform 1.52s cubic-bezier(.76,0,.18,1)");
+    expect(styles).toContain("filter:blur(52px); border-radius:0 0 64px 64px; opacity:0;");
+    expect(styles).toContain("overscroll-behavior-y:none");
+  });
+
   it("contains a dedicated short-desktop hero composition for 1366×768 browser windows", () => {
     const styles = readProjectFile("client/src/index.css");
 
