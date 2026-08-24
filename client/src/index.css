@@ -511,9 +511,10 @@ em { font-style:italic; }
 .ss1-landing .landing-curtain-surface .landing-center { z-index:5; }
 .ss1-landing .landing-curtain-surface .landing-progress { z-index:6; opacity:0; }
 .ss1-landing.is-exiting .landing-stage { animation:none; }
-.ss1-landing.is-exiting .landing-curtain-surface { transform:translate3d(0,calc(-100% - 10px),0) scaleY(.96); filter:blur(18px); border-radius:0 0 28px 28px; opacity:0; pointer-events:none; transition-delay:80ms; }
+.ss1-landing.is-exiting .landing-curtain-surface { pointer-events:none; animation:landing-curtain-fold .92s cubic-bezier(.16,1,.3,1) 80ms both; }
+@keyframes landing-curtain-fold { to { transform:translate3d(0,calc(-100% - 10px),0) scaleY(.96); filter:blur(18px); border-radius:0 0 28px 28px; opacity:0; } }
 @media (max-width:620px) { .ss1-landing { min-height:165svh; } .ss1-landing .landing-stage { height:100svh; min-height:0; } }
-@media (prefers-reduced-motion:reduce) { .ss1-landing .landing-curtain-surface { transition:none; filter:none; transform:none; border-radius:0; } .ss1-landing.is-exiting .landing-curtain-surface { transform:none; opacity:0; } }
+@media (prefers-reduced-motion:reduce) { .ss1-landing .landing-curtain-surface { transition:none; filter:none; transform:none; border-radius:0; } .ss1-landing.is-exiting .landing-curtain-surface { animation:none; transform:none; opacity:0; } }
 
 /* Landing signature opener: blank ink field, original isth mark revealed i → s → t → h, then quote and CTA. */
 .ss1-landing:not(.signature-complete) .landing-stage::after { opacity:0; }

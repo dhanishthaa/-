@@ -58,7 +58,8 @@ describe("isth editorial page integrity", () => {
     expect(landing).toContain("handoffTimer.current = window.setTimeout(() => setLocation(\"/home\"), CURTAIN_HANDOFF_MS);");
     expect(styles).toContain(".ss1-landing .landing-stage { position:fixed; inset:0; z-index:40; width:100%; height:100svh; min-height:0; overflow:hidden; }");
     expect(styles).toContain("transition:transform .92s cubic-bezier(.16,1,.3,1)");
-    expect(styles).toContain("transform:translate3d(0,calc(-100% - 10px),0) scaleY(.96); filter:blur(18px); border-radius:0 0 28px 28px; opacity:0;");
+    expect(styles).toContain("animation:landing-curtain-fold .92s cubic-bezier(.16,1,.3,1) 80ms both;");
+    expect(styles).toContain("@keyframes landing-curtain-fold { to { transform:translate3d(0,calc(-100% - 10px),0) scaleY(.96); filter:blur(18px); border-radius:0 0 28px 28px; opacity:0; } }");
     expect(styles).toContain("overscroll-behavior-y:none");
     expect(readProjectFile("client/public/isth-boot.css")).toContain("overflow: hidden;");
     expect(readProjectFile("client/index.html")).toContain('<script src="/isth-route-bootstrap.js"></script>');
