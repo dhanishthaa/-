@@ -129,9 +129,9 @@ describe("isth editorial page integrity", () => {
     expect(styles).toContain("@keyframes dialog-wave-one");
     expect(styles).toContain("@keyframes dialog-frost-drift");
     expect(styles).toContain(".product-dialog--kawaii-marshmallow .product-dialog-title");
-    expect(styles).toContain("background:linear-gradient(120deg,rgba(245,241,235,.46)");
-    expect(styles).toContain("backdrop-filter:blur(28px) saturate(124%) contrast(102%)");
-    expect(styles).toContain("mix-blend-mode:soft-light");
+    expect(styles).toContain("background:linear-gradient(120deg,rgba(245,241,235,.38)");
+    expect(styles).toContain("backdrop-filter:blur(48px) saturate(140%) contrast(104%) brightness(.94)");
+    expect(styles).toContain(".product-dialog-overlay--kawaii-marshmallow::after,.product-dialog-overlay--eclat-courinne::after { opacity:.44; mix-blend-mode:soft-light; }");
   });
 
   it("keeps the shared isth Parfums lock-up and mobile quote refinement aligned across pages", () => {
