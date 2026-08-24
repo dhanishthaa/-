@@ -7,7 +7,7 @@ import { readLogoUrl } from "@/data/brand";
 const LANDING_CHERRY = "#5B0D18";
 const LANDING_EDGE = "#38050d";
 const SITE_IVORY = "#F5F1EB";
-const CURTAIN_HANDOFF_MS = 960;
+const CURTAIN_HANDOFF_MS = 1040;
 const CURTAIN_SCROLL_TRIGGER_PX = 32;
 
 function setBrowserThemeColor(color: string) {

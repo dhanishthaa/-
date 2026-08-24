@@ -50,7 +50,7 @@ describe("isth editorial page integrity", () => {
     const landing = readProjectFile("client/src/pages/Landing.tsx");
     const styles = readProjectFile("client/src/index.css");
 
-    expect(landing).toContain("const CURTAIN_HANDOFF_MS = 960;");
+    expect(landing).toContain("const CURTAIN_HANDOFF_MS = 1040;");
     expect(landing).toContain("const CURTAIN_SCROLL_TRIGGER_PX = 32;");
     expect(landing).toContain("const signatureCompleteRef = useRef(false);");
     expect(landing).toContain("if (!signatureCompleteRef.current || handoff.current || window.scrollY <= CURTAIN_SCROLL_TRIGGER_PX) return;");
