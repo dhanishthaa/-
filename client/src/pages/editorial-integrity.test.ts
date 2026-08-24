@@ -129,8 +129,8 @@ describe("isth editorial page integrity", () => {
     expect(styles).toContain("@keyframes dialog-wave-one");
     expect(styles).toContain("@keyframes dialog-frost-drift");
     expect(styles).toContain(".product-dialog--kawaii-marshmallow .product-dialog-title");
-    expect(styles).toContain("background:rgba(245,241,235,.18) !important;");
-    expect(styles).toContain("backdrop-filter:blur(64px) saturate(136%) contrast(104%) brightness(.94)");
+    expect(styles).toContain("background:rgba(245,241,235,.12) !important;");
+    expect(styles).toContain("backdrop-filter:blur(128px) saturate(150%) contrast(108%) brightness(.90)");
     expect(styles).toContain(".product-dialog-overlay--kawaii-marshmallow::after,.product-dialog-overlay--eclat-courinne::after { opacity:.44; mix-blend-mode:soft-light; }");
   });
 
