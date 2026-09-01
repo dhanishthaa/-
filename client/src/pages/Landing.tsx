@@ -7,8 +7,9 @@ import { readLogoUrl } from "@/data/brand";
 const LANDING_CHERRY = "#5B0D18";
 const LANDING_EDGE = "#38050d";
 const SITE_IVORY = "#F5F1EB";
-const CURTAIN_HANDOFF_MS = 1040;
-const CURTAIN_SCROLL_TRIGGER_PX = 32;
+const CURTAIN_HANDOFF_MS = 1120;
+const CURTAIN_SCROLL_TRIGGER_PX = 16;
+const CURTAIN_FOLD_DISTANCE_PX = 230;
 
 function setBrowserThemeColor(color: string) {
   document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')?.setAttribute("content", color);
@@ -21,6 +22,15 @@ function setLandingChrome(active: boolean) {
   setBrowserThemeColor(active ? LANDING_EDGE : SITE_IVORY);
 }
 
+function setLandingFoldProgress(curtain: HTMLElement | null, progress: number) {
+  if (!curtain) return;
+  const clamped = Math.min(1, Math.max(0, progress));
+  curtain.style.setProperty("--fold-translate", `${-(clamped * 100 + clamped * 12)}%`);
+  curtain.style.setProperty("--fold-scale", String(1 - clamped * 0.04));
+  curtain.style.setProperty("--fold-blur", `${clamped * 18}px`);
+  curtain.style.setProperty("--fold-opacity", String(1 - clamped));
+}
+
 export default function Landing() {
   const [, setLocation] = useLocation();
   const restoreSiteChrome = () => setLandingChrome(false); 
@@ -30,6 +40,7 @@ export default function Landing() {
   const handoff = useRef(false);
   const handoffTimer = useRef<number | undefined>(undefined);
   const signatureCompleteRef = useRef(false);
+  const curtainRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let intro: number | undefined;
@@ -48,6 +59,7 @@ export default function Landing() {
       setReady(false);
       setSignatureComplete(false);
       setExiting(false);
+      setLandingFoldProgress(curtainRef.current, 0);
       window.scrollTo({ top: 0, left: 0, behavior: "auto" });
       intro = window.setTimeout(() => setReady(true), 280);
       signatureTimer = window.setTimeout(() => {
@@ -66,7 +78,10 @@ export default function Landing() {
     const onScroll = () => {
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
-        if (!signatureCompleteRef.current || handoff.current || window.scrollY <= CURTAIN_SCROLL_TRIGGER_PX) return;
+        if (!signatureCompleteRef.current || handoff.current) return;
+        const progress = Math.min(1, Math.max(0, (window.scrollY - CURTAIN_SCROLL_TRIGGER_PX) / CURTAIN_FOLD_DISTANCE_PX));
+        setLandingFoldProgress(curtainRef.current, progress);
+        if (progress < 1) return;
         handoff.current = true;
         setExiting(true);
         restoreSiteChrome();
@@ -84,6 +99,7 @@ export default function Landing() {
   const goToCollection = () => {
     if (handoff.current) return;
     handoff.current = true;
+    setLandingFoldProgress(curtainRef.current, 1);
     setExiting(true);
     restoreSiteChrome();
     handoffTimer.current = window.setTimeout(() => setLocation("/home"), CURTAIN_HANDOFF_MS);
@@ -92,7 +108,7 @@ export default function Landing() {
   const ss1SurfaceStyle = signatureComplete ? undefined : { backgroundColor: "#5B0D18", background: ss1Gradient };
   return <main className={`landing-page ss1-landing ${ready ? "signature-writing" : ""} ${signatureComplete ? "signature-complete" : ""} ${exiting ? "is-exiting" : ""}`} style={ss1SurfaceStyle}>
     <div className="landing-stage" style={ss1SurfaceStyle}>
-      <div className="landing-curtain-surface" style={{
+      <div ref={curtainRef} className="landing-curtain-surface" style={{
         backgroundColor: signatureComplete ? undefined : "#5B0D18",
         background: signatureComplete ? undefined : ss1Gradient,
       }}>

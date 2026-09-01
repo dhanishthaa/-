@@ -50,16 +50,18 @@ describe("isth editorial page integrity", () => {
     const landing = readProjectFile("client/src/pages/Landing.tsx");
     const styles = readProjectFile("client/src/index.css");
 
-    expect(landing).toContain("const CURTAIN_HANDOFF_MS = 1040;");
-    expect(landing).toContain("const CURTAIN_SCROLL_TRIGGER_PX = 32;");
+    expect(landing).toContain("const CURTAIN_HANDOFF_MS = 1120;");
+    expect(landing).toContain("const CURTAIN_SCROLL_TRIGGER_PX = 16;");
+    expect(landing).toContain("const CURTAIN_FOLD_DISTANCE_PX = 230;");
     expect(landing).toContain("const signatureCompleteRef = useRef(false);");
-    expect(landing).toContain("if (!signatureCompleteRef.current || handoff.current || window.scrollY <= CURTAIN_SCROLL_TRIGGER_PX) return;");
+    expect(landing).toContain("const progress = Math.min(1, Math.max(0, (window.scrollY - CURTAIN_SCROLL_TRIGGER_PX) / CURTAIN_FOLD_DISTANCE_PX));");
+    expect(landing).toContain("setLandingFoldProgress(curtainRef.current, progress);");
     expect(landing).toContain("window.scrollTo({ top: 0, left: 0, behavior: \"auto\" });");
     expect(landing).toContain("handoffTimer.current = window.setTimeout(() => setLocation(\"/home\"), CURTAIN_HANDOFF_MS);");
     expect(styles).toContain(".ss1-landing .landing-stage { position:fixed; inset:0; z-index:40; width:100%; height:100svh; min-height:0; overflow:hidden; }");
-    expect(styles).toContain("transition:transform .92s cubic-bezier(.16,1,.3,1)");
-    expect(styles).toContain("animation:landing-curtain-fold .92s cubic-bezier(.16,1,.3,1) 80ms both;");
-    expect(styles).toContain("@keyframes landing-curtain-fold { to { transform:translate3d(0,calc(-100% - 10px),0) scaleY(.96); filter:blur(18px); border-radius:0 0 28px 28px; opacity:0; } }");
+    expect(styles).toContain("transition:transform .68s cubic-bezier(.16,1,.3,1)");
+    expect(styles).toContain("--fold-translate");
+    expect(styles).toContain("transition:transform .68s cubic-bezier(.16,1,.3,1)");
     expect(styles).toContain("overscroll-behavior-y:none");
     expect(readProjectFile("client/public/isth-boot.css")).toContain("overflow: hidden;");
     expect(readProjectFile("client/index.html")).toContain('<script src="/isth-route-bootstrap.js"></script>');
