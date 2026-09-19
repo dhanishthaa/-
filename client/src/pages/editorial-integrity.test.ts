@@ -77,6 +77,8 @@ describe("isth editorial page integrity", () => {
     expect(styles).not.toContain('isth-hero-editorial-mobile-v1_00d0cab2.jpg');
     expect(styles).toContain('.editorial-home .home-hero-content { position:absolute; }');
     expect(styles).toContain('.editorial-home .home-hero-content { top:auto; left:clamp(64px,9vw,122px);');
+    expect(styles).toContain('@media (min-width:901px) and (max-height:820px)');
+    expect(styles).toContain('.editorial-home .home-hero-content { top:auto; bottom:clamp(20px,4vh,34px); max-width:620px; }');
     expect(styles).toContain('top:clamp(112px,17vh,178px)');
     expect(styles).toContain('.editorial-home .hero-description { margin:clamp(32px,3.2vw,40px) 0 clamp(22px,2.6vw,34px); }');
     expect(styles).toContain('.signature-writing-mark { top:40%; width:min(390px,42vw); }');
