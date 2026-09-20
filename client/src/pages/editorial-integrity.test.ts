@@ -19,6 +19,15 @@ describe("isth editorial page integrity", () => {
     expect(home).toContain("Between the");
   });
 
+  it("recovers once from a stale cached dynamic-import chunk", () => {
+    const boundary = readProjectFile("client/src/components/ErrorBoundary.tsx");
+
+    expect(boundary).toContain("Failed to fetch dynamically imported module");
+    expect(boundary).toContain("isth:chunk-recovery-attempted");
+    expect(boundary).toContain("__isth_chunk_recovery");
+    expect(boundary).toContain("window.location.replace");
+  });
+
   it("keeps the hero community CTAs linked to the official social destinations", () => {
     const home = readProjectFile("client/src/pages/Home.tsx");
     const styles = readProjectFile("client/src/index.css");

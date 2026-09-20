@@ -21,6 +21,21 @@ class ErrorBoundary extends Component<Props, State> {
     return { hasError: true, error };
   }
 
+  componentDidCatch(error: Error) {
+    if (typeof window === "undefined") return;
+
+    const message = error?.message ?? "";
+    const isStaleChunk = /Failed to fetch dynamically imported module|Importing a module script failed|ChunkLoadError/i.test(message);
+    const recoveryKey = "isth:chunk-recovery-attempted";
+
+    if (isStaleChunk && window.sessionStorage.getItem(recoveryKey) !== "1") {
+      window.sessionStorage.setItem(recoveryKey, "1");
+      const freshUrl = new URL(window.location.href);
+      freshUrl.searchParams.set("__isth_chunk_recovery", String(Date.now()));
+      window.location.replace(freshUrl.toString());
+    }
+  }
+
   render() {
     if (this.state.hasError) {
       return (
