@@ -19,6 +19,21 @@ describe("isth editorial page integrity", () => {
     expect(home).toContain("Between the");
   });
 
+  it("keeps the hero community CTAs linked to the official social destinations", () => {
+    const home = readProjectFile("client/src/pages/Home.tsx");
+    const styles = readProjectFile("client/src/index.css");
+
+    expect(home).toContain("Follow Our Journey");
+    expect(home).toContain("Join Our Circle");
+    expect(home).toContain("https://www.instagram.com/isth.in?stkn=MXVsNm96cWZvcHdicA==");
+    expect(home).toContain("https://chat.whatsapp.com/GpVg3lY8eppEks5yo3C04e");
+    expect(home).toContain("/assets/instagram-icon.png");
+    expect(home).toContain("/assets/whatsapp-icon.png");
+    expect(home).toContain('className="hero-social-rows"');
+    expect(styles).toContain(".hero-social-button { display:inline-flex");
+    expect(styles).toContain("background:transparent");
+  });
+
   it("keeps the standalone About page routeable with its original editorial copy", () => {
     const about = readProjectFile("client/src/pages/About.tsx");
 
