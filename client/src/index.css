@@ -789,6 +789,17 @@ em { font-style:italic; }
   .editorial-home .hero-cta-row .cherry-button,.editorial-home .hero-cta-row .outline-button { min-height:46px; height:46px; padding:11px 15px; }
 }
 
+/* Wide laptops and desktop monitors need a broader, shorter composition after the community CTAs are added. */
+@media (min-width:1200px) and (min-height:821px) {
+  .editorial-home .home-hero-content { max-width:760px; }
+  .editorial-home .home-hero .hero-identity { width:200px; height:124px; margin-bottom:6px; }
+  .editorial-home .home-hero .hero-identity img { height:124px; max-width:200px; }
+  .editorial-home .home-hero h1 { max-width:720px; margin-top:4px; font-size:clamp(58px,5.15vw,86px); line-height:.9; }
+  .editorial-home .hero-description { max-width:430px; margin:18px 0; font-size:14px; line-height:1.4; }
+  .editorial-home .hero-social-rows { max-width:420px; margin-top:17px; gap:7px; }
+  .editorial-home .hero-social-row { font-size:10px; }
+  .editorial-home .hero-social-button { min-width:124px; height:36px; padding:7px 12px; }
+}
 /* Whole-site preview refinement: the scroll runway continues the landing atmosphere instead of ending in a white void. */
 .ss1-landing { min-height:165svh; background:#171214; }
 .ss1-landing.signature-complete { background:linear-gradient(180deg,rgba(17,17,17,.12),rgba(17,17,17,.58)),url('/assets/isth-floral-forest-atmosphere_855c0ca2.png') center/cover fixed; }
