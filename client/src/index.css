@@ -326,7 +326,7 @@ em { font-style:italic; }
 .site-brand,.brand-mark { min-width:94px; min-height:80px; justify-content:center; }
 .site-nav.is-scrolled .site-brand { background:transparent; box-shadow:none; padding-left:0; }
 .hero-cta-row { --hero-action-label-width:124px; --hero-action-gap:20px; --hero-action-offset:calc(var(--hero-action-label-width) + var(--hero-action-gap)); display:grid; grid-template-columns:1fr; align-items:center; width:360px; max-width:100%; }
-.hero-cta-row .hero-whatsapp { grid-column:1; }
+.hero-cta-row .hero-whatsapp { grid-column:1; justify-self:start; width:max-content; }
 .hero-cta-row .outline-button { grid-column:1; justify-self:start; margin-left:var(--hero-action-offset); }
 .hero-whatsapp { padding:16px 22px; font-size:10px; box-shadow:0 13px 30px rgba(91,13,24,.3); }
 .ingredient-marquee { overflow:hidden; border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:#eee9e2; color:rgba(91,13,24,.82); white-space:nowrap; }
