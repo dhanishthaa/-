@@ -1,0 +1,37 @@
+ISTH FRAGRANCES PRIVATE INVOICE APP
+
+APPLICATION
+- React + TypeScript + Vite source and app assets are contained in this Clients folder.
+- The PDF generator uses a sanitized copy of the supplied one-page A4 template as its background. It preserves the brand artwork and layout while inserting the current customer, date, items, values, total, amount in words and owner signature.
+- The original invoice and cleaned owner-signature image stay in the ignored private-assets folder. Neither is copied to public assets or committed to GitHub.
+- The public blank invoice background contains no old recipient, invoice values or signature. Poppins font files and their OFL license are included for accurate text rendering.
+- The supplied UPI ID and payee name are seeded in the connected Supabase business settings. The QR is created for the exact invoice total and is shared separately from the template-matching PDF.
+- The original template has ten item rows. The app blocks finalization of invoices with more than ten rows to prevent overflow.
+- The temporary preview uses only in-memory sample catalogue data and a generic customer name. It does not read or write Supabase, show a real payment QR, save invoices or permit downloads/finalization.
+
+SUPABASE STATUS AND OWNER SETUP
+- The invoice schema migration has been applied to the existing authorized Supabase project. Owner-only RLS is enabled for the invoice tables and private signature bucket.
+- The project currently has no Auth user in the owner allow-list. Before live invoice operations, create the owner's Auth identity in Supabase Auth, keep public sign-ups disabled, and add only that identity's UUID to public.owner_access.
+- Enable email/password login and set the production Site URL and recovery redirect allow-list to https://isth.in/biznessOwners/Calculatorrr/.
+- After the authorized owner can sign in, upload the supplied PNG signature from Business Settings. It will be stored in the private invoice bucket and loaded only for that owner.
+- Frontend code contains only the Supabase project URL and publishable browser key. These values are intended to be public; RLS is the access boundary. Never use or expose a service-role key in browser code.
+
+LOCAL RUN
+1. Use Node.js 20 or newer.
+2. Optional: copy .env.example to .env.local and override VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY for a different authorized project.
+3. Run npm install.
+4. Run npm run dev.
+5. Run npm run build.
+
+HOSTING
+- Vite's base is /biznessOwners/Calculatorrr/.
+- isth.in/biznessOwners/Calculatorrr is a path on the existing isth.in domain, not a separate subdomain.
+- The existing GitHub Pages workflow builds the main website as before, builds this Clients app, then adds its output under dist/public/biznessOwners/Calculatorrr before publishing the same Pages artifact. Website source and assets remain in Clients; only the deployment workflow lives at the repository's required .github/workflows location.
+- The production page is an authenticated owner workspace. Use the temporary preview URL separately to inspect the sample invoice without signing in.
+
+SECURITY AND SHARING
+- Invoice tables and private Storage use row-level security and the is_invoice_owner() check.
+- This app has no public registration UI. Keep Supabase public sign-ups disabled and add only the intended owner UUID to owner_access.
+- WhatsApp sharing uses the Web Share API for files when available; otherwise it downloads the PDF and QR PNG, then opens a chat for manual attachment and owner confirmation.
+- The UPI QR prefills the amount and payee. Payer apps control their own confirmation screens; the QR does not establish that a payment was made.
+- No Markdown (.md) files are included in Clients.

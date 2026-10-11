@@ -48,6 +48,13 @@ jobs:
         env:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+      - name: Build invoice workspace
+        run: |
+          cd Clients
+          npm ci
+          npm run build
+          mkdir -p ../dist/public/biznessOwners/Calculatorrr
+          cp -a dist/. ../dist/public/biznessOwners/Calculatorrr/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
