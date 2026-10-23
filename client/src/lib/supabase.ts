@@ -98,10 +98,12 @@ export function toSecureProductPayload(product: Product): SecureProductPayload |
   const color = normalizeText(product.color, 7);
   const size = normalizeText(product.size ?? "Edition", 32);
 
-  if (!isSafeProductId(id) || !name || !notes || !description || !collection || !size || !isSafeHexColor(color)) return null;
+  // Older catalogue rows may not have a description. Editing a name should
+  // not be blocked by that unrelated legacy field.
+  if (!isSafeProductId(id) || !name || !notes || !collection || !size || !isSafeHexColor(color)) return null;
   if (image && !isSafeMediaUrl(image)) return null;
 
-  return { id, name, notes, description, collection, image_url: image || null, color, size, featured: Boolean(product.featured) };
+  return { id, name, notes, description: description || "A considered composition from the isth scent library.", collection, image_url: image || null, color, size, featured: Boolean(product.featured) };
 }
 
 function fromRow(row: Record<string, unknown>): Product {
@@ -118,13 +120,13 @@ export async function fetchRemoteProducts() {
 
 export async function upsertRemoteProduct(product: Product) {
   const payload = toSecureProductPayload(product);
-  if (!supabase || !payload) return false;
+  if (!supabase || !payload) return { ok: false, error: "invalid product fields" };
   let result = await supabase.rpc("admin_upsert_product", payload);
   if (isAuthFailure(result.error)) {
     const refreshed = await supabase.auth.refreshSession();
     if (!refreshed.error) result = await supabase.rpc("admin_upsert_product", payload);
   }
-  return !result.error;
+  return { ok: !result.error, error: result.error?.message };
 }
 
 export async function deleteRemoteProduct(id: string) {

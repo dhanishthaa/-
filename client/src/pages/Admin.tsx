@@ -76,7 +76,10 @@ export default function Admin() {
   const signOut = async () => { if (supabase) await supabase.auth.signOut(); setUser(null); };
   const saveProduct = async (product: Product) => {
     const synced = await upsertRemoteProduct(product);
-    if (!synced) return setMessage("Unable to save this composition. Your secure session may have expired.");
+    if (!synced.ok) {
+      console.error("Admin product save failed", synced.error);
+      return setMessage(synced.error ? `Unable to save: ${synced.error}` : "Unable to save this composition. Your secure session may have expired.");
+    }
     const next = isNew ? [...products, product] : products.map((item) => item.id === product.id ? product : item);
     setProducts(next); setActive(null); setIsNew(false); setMessage("Saved to the isth product library.");
   };
