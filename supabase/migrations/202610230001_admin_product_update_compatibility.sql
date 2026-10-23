@@ -39,7 +39,7 @@ begin
 
   insert into public.products (id, name, notes, description, collection, image_url, color, size, featured)
   values (v_id, v_name, v_notes, normalized_description, collection, image_url, color, size, featured)
-  on conflict (public.products.id) do update set
+  on conflict on constraint products_pkey do update set
     name = excluded.name, notes = excluded.notes, description = excluded.description,
     collection = excluded.collection, image_url = excluded.image_url, color = excluded.color,
     size = excluded.size, featured = excluded.featured;
