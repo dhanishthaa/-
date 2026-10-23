@@ -20,12 +20,15 @@ security definer
 set search_path = public
 as $$
 declare
+  v_id text := id;
+  v_name text := name;
+  v_notes text := notes;
   normalized_description text := coalesce(nullif(btrim(description), ''), 'A considered composition from the isth scent library.');
 begin
   perform public.require_super_admin();
-  if id !~ '^[a-z0-9]+(-[a-z0-9]+)*$' or length(id) > 96
-     or length(name) not between 1 and 80
-     or length(notes) not between 1 and 160
+  if v_id !~ '^[a-z0-9]+(-[a-z0-9]+)*$' or length(v_id) > 96
+     or length(v_name) not between 1 and 80
+     or length(v_notes) not between 1 and 160
      or length(normalized_description) not between 1 and 500
      or length(collection) not between 1 and 40
      or length(size) not between 1 and 32
@@ -35,14 +38,14 @@ begin
   end if;
 
   insert into public.products (id, name, notes, description, collection, image_url, color, size, featured)
-  values (id, name, notes, normalized_description, collection, image_url, color, size, featured)
-  on conflict (id) do update set
+  values (v_id, v_name, v_notes, normalized_description, collection, image_url, color, size, featured)
+  on conflict (public.products.id) do update set
     name = excluded.name, notes = excluded.notes, description = excluded.description,
     collection = excluded.collection, image_url = excluded.image_url, color = excluded.color,
     size = excluded.size, featured = excluded.featured;
 
   insert into public.admin_activity_log (admin_user_id, action, entity_type, entity_id, old_value, new_value)
-  values (auth.uid(), 'PRODUCT_UPSERT', 'product', id, null, jsonb_build_object('id', id));
+  values (auth.uid(), 'PRODUCT_UPSERT', 'product', v_id, null, jsonb_build_object('id', v_id));
 end;
 $$;
 
