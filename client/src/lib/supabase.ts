@@ -96,7 +96,10 @@ export function toSecureProductPayload(product: Product): SecureProductPayload |
   const collection = normalizeText(product.collection, PRODUCT_LIMITS.collection);
   const image = product.image ? normalizeText(product.image, PRODUCT_LIMITS.imageUrl) : "";
   const color = normalizeText(product.color, 7);
-  const size = normalizeText(product.size ?? "Edition", 32);
+  // The original local catalogue used "Edition", while Supabase enforces
+  // the persisted values "10ml tower" and "30ml cosmos". Keep legacy rows
+  // editable instead of sending an invalid value to the RPC.
+  const size = product.size === "10ml tower" ? "10ml tower" : "30ml cosmos";
 
   // Older catalogue rows may not have a description. Editing a name should
   // not be blocked by that unrelated legacy field.
