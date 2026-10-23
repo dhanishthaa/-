@@ -77,7 +77,7 @@ describe("private Admin route", () => {
     expect(admin).not.toContain("writeLocalProducts");
     expect(admin).not.toContain("readLocalProducts");
     expect(admin).not.toContain("Saved locally");
-    expect(supabase).toContain('persistSession: false');
+    expect(supabase).toContain('persistSession: true');
     expect(supabase).toContain('supabase.rpc("admin_upsert_product", payload)');
     expect(supabase).toContain('supabase.rpc("admin_delete_product", { product_id: id })');
     expect(supabase).toContain('supabase.rpc("admin_set_site_setting"');

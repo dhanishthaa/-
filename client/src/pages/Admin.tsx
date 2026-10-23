@@ -45,8 +45,12 @@ export default function Admin() {
       setUser(null);
       setMessage("Invalid username or password.");
     };
-    client.auth.getSession().then(({ data }) => hydrate(data.session as typeof data.session & { user: { email?: string; email_confirmed_at?: string | null } }));
-    const { data: listener } = client.auth.onAuthStateChange((_event, session) => hydrate(session as typeof session & { user: { email?: string; email_confirmed_at?: string | null } }));
+    client.auth.getSession().then(({ data }) => { void hydrate(data.session as typeof data.session & { user: { email?: string; email_confirmed_at?: string | null } }); });
+    // Supabase holds an internal auth lock while notifying listeners. Defer
+    // the role RPC so it never runs nested inside onAuthStateChange.
+    const { data: listener } = client.auth.onAuthStateChange((_event, session) => {
+      window.setTimeout(() => { void hydrate(session as typeof session & { user: { email?: string; email_confirmed_at?: string | null } }); }, 0);
+    });
     return () => listener.subscription.unsubscribe();
   }, []);
 

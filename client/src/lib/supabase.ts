@@ -44,7 +44,12 @@ export const isSupabaseConfigured = isValidSupabaseConfig(url, anonKey);
 export const supabase = isSupabaseConfigured
   ? createClient(url!, anonKey!, {
       auth: {
-        persistSession: false,
+        // Keep the authenticated admin session for the current browser tab. A
+        // memory-only session is lost during a route refresh and makes every
+        // subsequent RPC look like an expired secure session.
+        persistSession: true,
+        storage: window.sessionStorage,
+        storageKey: "isth-admin-auth",
         autoRefreshToken: true,
         detectSessionInUrl: true,
       },
@@ -72,6 +77,11 @@ function isSafeProductId(value: string) {
 
 function isSafeHexColor(value: string) {
   return /^#[0-9a-f]{6}$/i.test(value);
+}
+
+function isAuthFailure(error: { code?: string; message?: string } | null) {
+  if (!error) return false;
+  return error.code === "PGRST301" || /jwt|token|session/i.test(error.message ?? "");
 }
 
 function normalizeText(value: unknown, maxLength: number) {
@@ -109,14 +119,22 @@ export async function fetchRemoteProducts() {
 export async function upsertRemoteProduct(product: Product) {
   const payload = toSecureProductPayload(product);
   if (!supabase || !payload) return false;
-  const { error } = await supabase.rpc("admin_upsert_product", payload);
-  return !error;
+  let result = await supabase.rpc("admin_upsert_product", payload);
+  if (isAuthFailure(result.error)) {
+    const refreshed = await supabase.auth.refreshSession();
+    if (!refreshed.error) result = await supabase.rpc("admin_upsert_product", payload);
+  }
+  return !result.error;
 }
 
 export async function deleteRemoteProduct(id: string) {
   if (!supabase || !isSafeProductId(id)) return false;
-  const { error } = await supabase.rpc("admin_delete_product", { product_id: id });
-  return !error;
+  let result = await supabase.rpc("admin_delete_product", { product_id: id });
+  if (isAuthFailure(result.error)) {
+    const refreshed = await supabase.auth.refreshSession();
+    if (!refreshed.error) result = await supabase.rpc("admin_delete_product", { product_id: id });
+  }
+  return !result.error;
 }
 
 export async function fetchAdminRole() {
