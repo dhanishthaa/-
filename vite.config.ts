@@ -247,6 +247,7 @@ export default defineConfig({
         landing: path.resolve(import.meta.dirname, "client", "index.html"),
         home: path.resolve(import.meta.dirname, "client", "home", "index.html"),
         about: path.resolve(import.meta.dirname, "client", "about", "index.html"),
+        admin: path.resolve(import.meta.dirname, "client", "isth", "frag", "minda", "index.html"),
       },
       output: {
         manualChunks(id) {
