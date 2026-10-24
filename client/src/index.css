@@ -1055,3 +1055,114 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
   .product-media-upload-actions { justify-content:flex-start; }
   .product-media-list { grid-template-columns:repeat(2,minmax(0,1fr)); }
 }
+
+
+/* Navbar-to-hero layout correction: the navigation participates in flow, so the hero never starts behind it. */
+.editorial-home .site-nav {
+  position:sticky;
+  top:0;
+  z-index:30;
+}
+.editorial-home .home-hero {
+  display:flex;
+  align-items:flex-end;
+  height:auto;
+  min-height:clamp(620px,calc(100svh - 56px),920px);
+}
+.editorial-home .home-hero-content {
+  position:relative;
+  inset:auto;
+  flex:0 0 auto;
+  width:min(760px,calc(100% - clamp(40px,18vw,280px)));
+  margin:0 0 clamp(72px,9vh,96px) clamp(20px,9vw,140px);
+  padding:0;
+}
+
+/* Compact phones without hiding any hero content or fixing a clipping height. */
+@media (max-width:620px) {
+  .editorial-home .home-hero {
+    min-height:clamp(620px,calc(100svh - 48px),760px);
+    align-items:flex-end;
+  }
+  .editorial-home .home-hero-content {
+    width:calc(100% - 40px);
+    max-width:none;
+    margin:0 20px 28px;
+  }
+  .editorial-home .home-hero .hero-identity {
+    width:116px;
+    height:82px;
+    margin:0 0 8px;
+    padding:4px 8px;
+  }
+  .editorial-home .home-hero .hero-identity img {
+    width:auto;
+    height:72px;
+    max-width:108px;
+  }
+  .editorial-home .home-hero h1 {
+    margin-top:0;
+    font-size:clamp(38px,10.5vw,56px);
+    line-height:.94;
+  }
+  .editorial-home .hero-description {
+    max-width:31ch;
+    margin:14px 0 16px;
+    font-size:13px;
+    line-height:1.4;
+  }
+  .editorial-home .hero-cta-row {
+    gap:9px;
+  }
+  .editorial-home .hero-cta-row .cherry-button,
+  .editorial-home .hero-cta-row .outline-button {
+    min-height:44px;
+    height:44px;
+    padding:10px 14px;
+    font-size:9px;
+  }
+  .editorial-home .hero-social-rows {
+    width:min(320px,100%);
+    margin-top:12px;
+    gap:6px;
+  }
+  .editorial-home .hero-social-row {
+    grid-template-columns:minmax(112px,1fr) auto;
+    gap:10px;
+    font-size:8px;
+    letter-spacing:.08em;
+  }
+  .editorial-home .hero-social-button {
+    min-width:104px;
+    height:33px;
+    padding:6px 9px;
+    font-size:8px;
+  }
+  .editorial-home .hero-social-button img {
+    width:14px;
+    height:14px;
+  }
+}
+
+/* Tablets keep the same navbar height while reserving a clean hero viewport below it. */
+@media (min-width:621px) and (max-width:900px) {
+  .editorial-home .home-hero {
+    min-height:clamp(620px,calc(100svh - 56px),820px);
+  }
+  .editorial-home .home-hero-content {
+    width:min(620px,calc(100% - 80px));
+    margin:0 0 clamp(54px,8vh,84px) 40px;
+  }
+  .editorial-home .home-hero .hero-identity {
+    width:160px;
+    height:112px;
+    margin-bottom:8px;
+  }
+  .editorial-home .home-hero .hero-identity img {
+    height:108px;
+    max-width:168px;
+  }
+  .editorial-home .home-hero h1 {
+    font-size:clamp(48px,7vw,70px);
+  }
+}
