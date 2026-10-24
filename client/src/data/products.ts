@@ -5,15 +5,41 @@ export type Product = {
   description: string;
   collection: string;
   image?: string;
+  media?: ProductMedia[];
   color: string;
   size?: string;
   featured?: boolean;
+};
+
+export type ProductMedia = {
+  id: string;
+  kind: "image" | "video";
+  url: string;
+  fit?: "contain" | "cover";
+  alt?: string;
 };
 
 export const KAWAII_MARSHMALLOW_DESKTOP_IMAGE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663886534315/FQmBYYXPrceKGEBf.jpg";
 export const KAWAII_MARSHMALLOW_MOBILE_IMAGE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663886534315/FQmBYYXPrceKGEBf.jpg";
 const LEGACY_KAWAII_MARSHMALLOW_IMAGE = "/assets/isth-bottle-10ml_630d74f3.png";
 const PASTED_KAWAII_REFERENCE_IMAGE = "/manus-storage/isth-kawaii-marshmallow-approved-bottle_7bdf1288.png";
+
+const LOCAL_PRODUCT_IMAGE_FALLBACKS: Record<string, string> = {
+  "cashmere-oud": "/assets/cashmereoud.png",
+  "fiery-soul": "/assets/fierysoul.png",
+  "first-love": "/assets/firstlove.png",
+  "enigme-imperial": "/assets/imperial.png",
+  "kawaii-marshmallow": KAWAII_MARSHMALLOW_DESKTOP_IMAGE,
+  "northern-star": "/assets/northernstar.png",
+  "orion": "/assets/orion.png",
+  "the-ocean": "/assets/theocean.png",
+  "velvet-night": "/assets/velvetnight.png",
+  "sweet-seduction": "/assets/isth-bottle-10ml_630d74f3.png",
+};
+
+export function getProductImageFallback(product: Pick<Product, "id" | "image">) {
+  return product.image && !product.image.startsWith("/manus-storage/") ? product.image : LOCAL_PRODUCT_IMAGE_FALLBACKS[product.id];
+}
 
 export const defaultProducts: Product[] = [
   { id: "kawaii-marshmallow", name: "Kawaii Marshmallow", notes: "marshmallow · vanilla chocolate · musk", description: "A soft gourmand with a musky finish — sweet without losing its composure.", collection: "Signature", image: KAWAII_MARSHMALLOW_DESKTOP_IMAGE, color: "#B98778", size: "Edition", featured: true },
@@ -29,8 +55,10 @@ export const defaultProducts: Product[] = [
 ];
 
 export function normalizeProductMedia(product: Product): Product {
+  const fallback = LOCAL_PRODUCT_IMAGE_FALLBACKS[product.id];
+  const normalizedMedia = Array.isArray(product.media) ? product.media.filter((item) => item && (item.kind === "image" || item.kind === "video") && typeof item.url === "string" && item.url.length > 0) : [];
   if (product.id === "kawaii-marshmallow" && (!product.image || product.image.startsWith("/manus-storage/") || product.image === LEGACY_KAWAII_MARSHMALLOW_IMAGE || product.image === PASTED_KAWAII_REFERENCE_IMAGE)) {
-    return { ...product, image: KAWAII_MARSHMALLOW_DESKTOP_IMAGE };
+    return { ...product, image: KAWAII_MARSHMALLOW_DESKTOP_IMAGE, media: normalizedMedia };
   }
-  return product;
+  return { ...product, image: product.image || fallback, media: normalizedMedia };
 }

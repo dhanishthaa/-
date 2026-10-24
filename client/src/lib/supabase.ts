@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { normalizeProductMedia, type Product } from "@/data/products";
+import { normalizeProductMedia, type Product, type ProductMedia } from "@/data/products";
 
 const url = import.meta.env.VITE_SUPABASE_URL as string | undefined;
 const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
@@ -12,6 +12,8 @@ const PRODUCT_LIMITS = {
   collection: 40,
   imageUrl: 2048,
 } as const;
+
+const PRODUCT_MEDIA_LIMIT = 12;
 
 type SecureProductPayload = {
   id: string;
@@ -87,6 +89,21 @@ export function isSafeMediaUrl(value: string) {
   }
 }
 
+function sanitizeProductMedia(value: unknown): ProductMedia[] {
+  if (!Array.isArray(value)) return [];
+  return value.filter((item): item is ProductMedia => {
+    if (!item || typeof item !== "object") return false;
+    const candidate = item as Partial<ProductMedia>;
+    return (candidate.kind === "image" || candidate.kind === "video") && typeof candidate.url === "string" && isSafeMediaUrl(candidate.url);
+  }).slice(0, PRODUCT_MEDIA_LIMIT).map((item, index) => ({
+    id: typeof item.id === "string" && item.id ? item.id.slice(0, 96) : `media-${index}`,
+    kind: item.kind,
+    url: item.url.slice(0, PRODUCT_LIMITS.imageUrl),
+    fit: item.fit === "cover" ? "cover" : "contain",
+    alt: typeof item.alt === "string" ? item.alt.slice(0, 160) : undefined,
+  }));
+}
+
 function isSafeProductId(value: string) {
   return /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value) && value.length <= PRODUCT_LIMITS.id;
 }
@@ -127,12 +144,12 @@ export function toSecureProductPayload(product: Product): SecureProductPayload |
 
 function fromRow(row: Record<string, unknown>): Product {
   const size = row.size === "10ml tower" ? "10ml tower" : "30ml cosmos";
-  return normalizeProductMedia({ id: String(row.id), name: String(row.name ?? ""), notes: String(row.notes ?? ""), description: String(row.description ?? ""), collection: String(row.collection ?? "Signature"), image: row.image_url ? String(row.image_url) : undefined, color: String(row.color ?? "#5B0D18"), size, featured: Boolean(row.featured) });
+  return normalizeProductMedia({ id: String(row.id), name: String(row.name ?? ""), notes: String(row.notes ?? ""), description: String(row.description ?? ""), collection: String(row.collection ?? "Signature"), image: row.image_url ? String(row.image_url) : undefined, media: sanitizeProductMedia(row.media), color: String(row.color ?? "#5B0D18"), size, featured: Boolean(row.featured) });
 }
 
 export async function fetchRemoteProducts() {
   if (!supabase) return null;
-  const { data, error } = await supabase.from("products").select("id,name,notes,description,collection,image_url,color,size,featured").order("created_at", { ascending: true });
+  const { data, error } = await supabase.from("products").select("id,name,notes,description,collection,image_url,media,color,size,featured").order("created_at", { ascending: true });
   if (error || !data) return null;
   return data.map((row) => fromRow(row as Record<string, unknown>));
 }
@@ -145,7 +162,9 @@ export async function upsertRemoteProduct(product: Product) {
     const refreshed = await supabase.auth.refreshSession();
     if (!refreshed.error) result = await supabase.rpc("admin_upsert_product", payload);
   }
-  return { ok: !result.error, error: result.error?.message };
+  if (result.error) return { ok: false, error: result.error.message };
+  const mediaResult = await supabase.rpc("admin_set_product_media", { product_id: payload.id, product_media: sanitizeProductMedia(product.media) });
+  return { ok: !mediaResult.error, error: mediaResult.error?.message };
 }
 
 export async function deleteRemoteProduct(id: string) {
@@ -195,11 +214,25 @@ export async function uploadPublicAsset(file: File, folder: "brand" | "motion" |
   return supabase.storage.from("site-media").getPublicUrl(path).data.publicUrl;
 }
 
+export async function uploadProductAsset(file: File, kind: "image" | "video") {
+  if (!supabase || !isSafeAssetFile(file)) return null;
+  const allowed = kind === "image" ? file.type.startsWith("image/") : file.type.startsWith("video/");
+  if (!allowed) return null;
+  const extension = file.name.split(".").pop()?.toLowerCase() || "bin";
+  const path = `product-${kind}s/${crypto.randomUUID()}.${extension}`;
+  const { error } = await supabase.storage.from("product-images").upload(path, file, { upsert: false, contentType: file.type, cacheControl: "31536000" });
+  if (error) return null;
+  return supabase.storage.from("product-images").getPublicUrl(path).data.publicUrl;
+}
+
 export async function deletePublicAsset(publicUrl: string) {
-  if (!supabase || !publicUrl.includes("/storage/v1/object/public/site-media/")) return false;
-  const path = publicUrl.split("/storage/v1/object/public/site-media/")[1]?.split("?")[0];
+  if (!supabase) return false;
+  const bucket = publicUrl.includes("/storage/v1/object/public/product-images/") ? "product-images" : publicUrl.includes("/storage/v1/object/public/site-media/") ? "site-media" : null;
+  if (!bucket) return false;
+  const marker = `/storage/v1/object/public/${bucket}/`;
+  const path = publicUrl.split(marker)[1]?.split("?")[0];
   if (!path) return false;
-  const { error } = await supabase.storage.from("site-media").remove([decodeURIComponent(path)]);
+  const { error } = await supabase.storage.from(bucket).remove([decodeURIComponent(path)]);
   return !error;
 }
 

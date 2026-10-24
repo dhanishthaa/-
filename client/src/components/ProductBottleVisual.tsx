@@ -1,20 +1,24 @@
 import { useEffect, useState, type CSSProperties } from "react";
-import { KAWAII_MARSHMALLOW_DESKTOP_IMAGE, type Product } from "@/data/products";
+import { getProductImageFallback, type Product } from "@/data/products";
 
 export default function ProductBottleVisual({ product, modal = false }: { product: Product; modal?: boolean }) {
-  const isKawaii = product.id === "kawaii-marshmallow";
-  const [imageSource, setImageSource] = useState(product.image);
+  const imageMedia = product.media?.find((item) => item.kind === "image");
+  const [imageSource, setImageSource] = useState(imageMedia?.url || product.image || getProductImageFallback(product));
+  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
-    setImageSource(product.image);
-  }, [product.image]);
+    setImageSource(imageMedia?.url || product.image || getProductImageFallback(product));
+    setFailed(false);
+  }, [imageMedia?.url, product.image, product.id]);
 
-  const fallbackToApprovedKawaiiCampaign = isKawaii && imageSource !== KAWAII_MARSHMALLOW_DESKTOP_IMAGE;
-  const visibleImage = imageSource || (isKawaii ? KAWAII_MARSHMALLOW_DESKTOP_IMAGE : undefined);
+  const fallback = getProductImageFallback(product);
+  const shouldUseFallback = Boolean(fallback && imageSource !== fallback);
+  const visibleImage = failed ? undefined : imageSource;
+  const imageFit = imageMedia?.fit ?? (imageSource?.includes("/assets/") && !imageSource.includes("bottle-") ? "cover" : "contain");
 
   return (
     <div
-      className={`bottle-stage ${isKawaii ? "bottle-stage-kawaii" : ""} ${modal ? "bottle-stage-modal" : ""}`}
+      className={`bottle-stage ${modal ? "bottle-stage-modal" : ""} ${visibleImage ? "has-image" : "is-placeholder"}`}
       style={{ "--product-tone": product.color } as CSSProperties}
       aria-label={visibleImage ? `${product.name} bottle` : `${product.name} bottle placeholder`}
     >
@@ -22,17 +26,16 @@ export default function ProductBottleVisual({ product, modal = false }: { produc
         <img
           src={visibleImage}
           alt={`${product.name} bottle`}
-          loading={modal ? "eager" : "lazy"}
+          loading={modal || product.featured ? "eager" : "lazy"}
           decoding="async"
-          onError={fallbackToApprovedKawaiiCampaign ? () => setImageSource(KAWAII_MARSHMALLOW_DESKTOP_IMAGE) : undefined}
+          fetchPriority={modal || product.featured ? "high" : "auto"}
+          style={{ objectFit: imageFit }}
+          onError={() => { if (shouldUseFallback) setImageSource(fallback); else setFailed(true); }}
         />
       ) : (
         <div className="bottle-placeholder" aria-hidden="true">
           <div className="bottle-cap" />
-          <div className="bottle-body">
-            <span>isth</span>
-            <small>EAU DE PARFUM</small>
-          </div>
+          <div className="bottle-body"><span>isth</span><small>EAU DE PARFUM</small></div>
         </div>
       )}
     </div>

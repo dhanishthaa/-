@@ -6,7 +6,7 @@ import { ArrowDown, ArrowRight, Menu, MessageCircle, MoveUpRight, X } from "luci
 import { Link } from "wouter";
 import Reveal from "@/components/Reveal";
 import ProductBottle from "@/components/ProductBottle";
-import ProductBottleVisual from "@/components/ProductBottleVisual";
+import ProductGallery from "@/components/ProductGallery";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { defaultProducts, type Product } from "@/data/products";
 import { DEFAULT_HERO_CAROUSEL, fetchPublicHeroCarousel, fetchRemoteProducts, type HeroCarouselSettings } from "@/lib/supabase";
@@ -190,7 +190,7 @@ export default function Home() {
         <DialogClose className="dialog-close" aria-label="Close product details"><X size={19} strokeWidth={1.4} /><span className="sr-only">Close product details</span></DialogClose>
           <div className="product-dialog-layout">
           <div className="dialog-product-media">
-            <ProductBottleVisual product={selectedProduct} modal />
+            <ProductGallery product={selectedProduct} />
           </div>
           <div className="product-dialog-copy">
             <DialogTitle className="product-dialog-title">{selectedProduct.name}</DialogTitle>

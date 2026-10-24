@@ -127,7 +127,7 @@ describe("isth editorial page integrity", () => {
     expect(home).not.toContain('isth / {selectedProduct.collection}');
     expect(home).not.toContain('window.addEventListener("keydown", onKeyDown)');
     expect(visual).not.toContain('Image placeholder · editable in admin');
-    expect(admin).toContain('label className="wide">Image URL<input');
+    expect(admin).toContain('label className="wide">Primary image URL<input');
     expect(styles).toContain("@keyframes product-dialog-in { from { opacity:0; scale:.975; }");
     expect(styles).toContain("@keyframes product-dialog-out");
     expect(styles).toContain(".bottle-placeholder { position:relative; width:100%; height:100%; display:grid; place-items:center; }");
@@ -144,9 +144,9 @@ describe("isth editorial page integrity", () => {
     expect(products).toContain('KAWAII_MARSHMALLOW_DESKTOP_IMAGE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663886534315/FQmBYYXPrceKGEBf.jpg"');
     expect(products).toContain('product.image.startsWith("/manus-storage/")');
     expect(products).toContain("export function normalizeProductMedia");
-    expect(visual).toContain('className={`bottle-stage ${isKawaii ? "bottle-stage-kawaii" : ""} ${modal ? "bottle-stage-modal" : ""}`}');
-    expect(visual).toContain("KAWAII_MARSHMALLOW_DESKTOP_IMAGE");
-    expect(visual).toContain("fallbackToApprovedKawaiiCampaign");
+    expect(visual).toContain('className={`bottle-stage ${modal ? "bottle-stage-modal" : ""} ${visibleImage ? "has-image" : "is-placeholder"}`}');
+    expect(visual).toContain("getProductImageFallback");
+    expect(visual).toContain("product.media?.find");
     expect(styles).not.toContain("@keyframes kawaii-reference-reveal");
     expect(styles).toContain(".bottle-stage-kawaii > img");
     expect(styles).toContain("object-fit:contain");
