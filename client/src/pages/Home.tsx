@@ -39,17 +39,17 @@ export default function Home() {
   }, []);
 
   const advanceHero = (direction: 1 | -1) => {
-    const slideCount = Math.max(heroCarousel.desktop.length, heroCarousel.mobile.length);
+    const slideCount = Math.max(heroCarousel.desktop.length, heroCarousel.mobile.length, 1);
     if (slideCount < 2) return;
     setHeroPreviousIndex(heroIndex);
     setHeroIndex((current) => (current + direction + slideCount) % slideCount);
   };
 
   useEffect(() => {
-    if (heroPaused || heroCarousel.desktop.length < 2 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (heroPaused || Math.max(heroCarousel.desktop.length, heroCarousel.mobile.length) < 2 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const timer = window.setInterval(() => advanceHero(1), heroCarousel.interval);
     return () => window.clearInterval(timer);
-  }, [heroCarousel.desktop.length, heroCarousel.interval, heroPaused, heroIndex]);
+  }, [heroCarousel.desktop.length, heroCarousel.mobile.length, heroCarousel.interval, heroPaused, heroIndex]);
 
   const desktopHeroSlides = heroCarousel.desktop.length ? heroCarousel.desktop : DEFAULT_HERO_CAROUSEL.desktop;
   const mobileHeroSlides = heroCarousel.mobile.length ? heroCarousel.mobile : desktopHeroSlides;
