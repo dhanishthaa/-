@@ -8,11 +8,11 @@ const manifest = JSON.parse(readFileSync(new URL("../../public/manifest.webmanif
 const fallbackDocument = readFileSync(new URL("../../public/404.html", import.meta.url), "utf8");
 
 describe("technical SEO", () => {
-  it("gives each indexable public page a unique production-domain title, description, canonical, and index directive", () => {
+  it("gives each indexable public page the shared browser title plus its own description, canonical, and index directive", () => {
     const titles = INDEXABLE_SEO_PAGES.map((page) => page.title);
     const descriptions = INDEXABLE_SEO_PAGES.map((page) => page.description);
 
-    expect(new Set(titles).size).toBe(INDEXABLE_SEO_PAGES.length);
+    expect(new Set(titles)).toEqual(new Set(["isth Fragrance"]));
     expect(new Set(descriptions).size).toBe(INDEXABLE_SEO_PAGES.length);
     INDEXABLE_SEO_PAGES.forEach((page) => {
       const head = renderStaticSeoHead(page);
@@ -55,7 +55,7 @@ describe("technical SEO", () => {
   });
 
   it("publishes a branded manifest and a desktop LCP preload for the Home hero without changing page content", () => {
-    expect(manifest.name).toBe("isth - Parfums");
+    expect(manifest.name).toBe("isth Fragrance");
     expect(manifest.start_url).toBe("/");
     expect(manifest.theme_color).toBe("#5B0D18");
     expect(renderStaticSeoHead(SEO_PAGES.home)).toContain('rel="preload" as="image"');

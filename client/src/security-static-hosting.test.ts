@@ -27,7 +27,6 @@ describe("static-host security policy", () => {
 
   it("uses the centralized build-time SEO title system", () => {
     expect(indexDocument).toContain("<!--isth-seo-head-->");
-    expect(renderStaticSeoHead(SEO_PAGES.landing)).toContain("<title>isth - Parfums</title>");
-    expect(renderStaticSeoHead(SEO_PAGES.landing)).not.toContain("<title>isth - Fragrances</title>");
+    expect(renderStaticSeoHead(SEO_PAGES.landing)).toContain("<title>isth Fragrance</title>");
   });
 });

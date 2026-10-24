@@ -23,7 +23,7 @@ export const SEO_PAGES: Record<SeoPageId, SeoPage> = {
   landing: {
     id: "landing",
     canonicalPath: "/",
-    title: "isth - Parfums",
+    title: "isth Fragrance",
     description: "isth composes modern fragrance signatures from notes that stay close, then open slowly.",
     robots: "index, follow",
     indexable: true,
@@ -32,7 +32,7 @@ export const SEO_PAGES: Record<SeoPageId, SeoPage> = {
   home: {
     id: "home",
     canonicalPath: "/home/",
-    title: "Signature Fragrances & Perfume Collection | isth",
+    title: "isth Fragrance",
     description: "Explore the isth fragrance collection: modern compositions shaped by intimate notes, quiet rituals, and personal presence.",
     robots: "index, follow",
     indexable: true,
@@ -41,7 +41,7 @@ export const SEO_PAGES: Record<SeoPageId, SeoPage> = {
   about: {
     id: "about",
     canonicalPath: "/about/",
-    title: "About isth | Modern Fragrance House in Gujarat, India",
+    title: "isth Fragrance",
     description: "Discover isth, a Gujarat fragrance house composing modern signatures around quiet moments, tactile memory, and evolving personal scent.",
     robots: "index, follow",
     indexable: true,
@@ -50,7 +50,7 @@ export const SEO_PAGES: Record<SeoPageId, SeoPage> = {
   admin: {
     id: "admin",
     canonicalPath: "/isth/frag/minda",
-    title: "Private Admin | isth",
+    title: "isth Fragrance",
     description: "Private isth administration.",
     robots: "noindex, nofollow",
     indexable: false,
@@ -59,7 +59,7 @@ export const SEO_PAGES: Record<SeoPageId, SeoPage> = {
   "not-found": {
     id: "not-found",
     canonicalPath: "/404",
-    title: "Page Not Found | isth",
+    title: "isth Fragrance",
     description: "The requested isth page could not be found.",
     robots: "noindex, nofollow",
     indexable: false,
