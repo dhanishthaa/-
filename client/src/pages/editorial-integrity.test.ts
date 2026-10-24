@@ -297,4 +297,16 @@ describe("isth editorial page integrity", () => {
     expect(styles).toContain(".editorial-home .home-hero-overlay { background:transparent !important;");
     expect(styles).toContain(".editorial-home .mobile-drawer { overflow-y:auto;");
   });
+
+  it("keeps the navbar and hero in normal flow without changing CTA geometry", () => {
+    const styles = readProjectFile("client/src/index.css");
+
+    expect(styles).toContain(".editorial-home .site-nav {\n  position:relative;\n  inset:auto;");
+    expect(styles).not.toContain(".editorial-home .site-nav {\n  position:sticky;");
+    expect(styles).toContain(".editorial-home .home-hero {\n  display:flex;");
+    expect(styles).toContain(".editorial-home .hero-cta-row { grid-template-columns:124px auto; width:min(520px,100%); }");
+    expect(styles).toContain(".editorial-home .hero-social-row { grid-template-columns:124px auto; gap:20px; }");
+    expect(styles).toContain("background:rgba(17,17,17,.34)");
+    expect(styles).not.toContain("background:rgba(17,17,17,.42)");
+  });
 });

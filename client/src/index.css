@@ -1057,10 +1057,10 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 }
 
 
-/* Navbar-to-hero layout correction: the navigation participates in flow, so the hero never starts behind it. */
+/* Navbar-to-hero layout correction: both sections remain in normal flow, so the hero begins at the navbar edge. */
 .editorial-home .site-nav {
-  position:sticky;
-  top:0;
+  position:relative;
+  inset:auto;
   z-index:30;
 }
 .editorial-home .home-hero {
@@ -1196,7 +1196,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 .editorial-home .hero-social-button { text-shadow:none; }
 @media (max-width:620px) {
   .editorial-home .site-nav,
-  .editorial-home .site-nav:not(.is-scrolled) { background:rgba(17,17,17,.42); }
+  .editorial-home .site-nav:not(.is-scrolled) { background:rgba(17,17,17,.34); }
   .editorial-home .mobile-drawer { overflow-y:auto; overscroll-behavior:contain; }
   .editorial-home .mobile-drawer nav { padding-bottom:24px; }
 }
