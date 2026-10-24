@@ -821,7 +821,8 @@ em { font-style:italic; }
   .hero-social-row { gap:20px; }
 }
 @media (max-width:620px) {
-  .editorial-home .home-hero-content { top:clamp(96px,16svh,154px); bottom:auto; }
+  .editorial-home .home-hero-content { top:clamp(78px,11svh,108px); bottom:auto; }
+  .editorial-home .intro-strip { padding-top:72px; padding-bottom:78px; }
   .editorial-home .hero-cta-row { grid-template-columns:1fr; row-gap:12px; }
   .editorial-home .hero-cta-row .hero-whatsapp,.editorial-home .hero-cta-row .outline-button { grid-column:1; justify-self:start; margin-left:0; }
   .hero-social-rows { margin-top:16px; gap:7px; }
@@ -901,6 +902,10 @@ em { font-style:italic; }
   .editorial-home .home-hero::after { opacity:.2; }
 }
 @media (max-width:620px) {
+  .editorial-home .home-hero { height:min(100svh,760px); min-height:620px; }
+  .editorial-home .home-hero-image { background-position:58% center; }
+  .editorial-home .home-hero-content { top:clamp(78px,11svh,108px); }
+  .editorial-home .home-hero h1 { font-size:clamp(45px,12vw,70px); }
   .editorial-home .intro-strip { padding-top:102px; padding-bottom:92px; }
   .editorial-home .collection-filter-bar { align-items:flex-start; flex-direction:column; gap:14px; margin:-20px 0 38px; }
   .editorial-home .collection-filters { justify-content:flex-start; width:100%; overflow-x:auto; flex-wrap:nowrap; padding-bottom:3px; scrollbar-width:none; }
