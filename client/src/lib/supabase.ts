@@ -201,7 +201,11 @@ export async function savePublicSetting(key: "logo_url" | "motion_video_url" | "
   if (!supabase) return false;
   if (key !== "hero_carousel" && value && !isSafeMediaUrl(value)) return false;
   if (key === "hero_carousel" && value.length > 200000) return false;
-  const { error } = await supabase.rpc("admin_set_site_setting", { setting_key: key, setting_value: value });
+  let { error } = await supabase.rpc("admin_set_site_setting", { setting_key: key, setting_value: value });
+  if (isAuthFailure(error)) {
+    const refreshed = await supabase.auth.refreshSession();
+    if (!refreshed.error) ({ error } = await supabase.rpc("admin_set_site_setting", { setting_key: key, setting_value: value }));
+  }
   return !error;
 }
 
