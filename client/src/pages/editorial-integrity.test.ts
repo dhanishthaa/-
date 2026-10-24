@@ -285,4 +285,16 @@ describe("isth editorial page integrity", () => {
     expect(styles).toContain(".site-nav .desktop-nav { display:flex; }");
     expect(styles).toContain(".site-nav .menu-toggle { display:none; }");
   });
+
+  it("keeps the Home initial viewport readable without dimming the hero image", () => {
+    const styles = readProjectFile("client/src/index.css");
+
+    expect(styles).toContain(".editorial-home .site-nav:not(.is-scrolled)");
+    expect(styles).toContain("background:rgba(17,17,17,.34)");
+    expect(styles).toContain("filter:invert(1) brightness(1.12) !important");
+    expect(styles).toContain(".editorial-home .home-hero-image,");
+    expect(styles).toContain("filter:none !important;");
+    expect(styles).toContain(".editorial-home .home-hero-overlay { background:transparent !important;");
+    expect(styles).toContain(".editorial-home .mobile-drawer { overflow-y:auto;");
+  });
 });
