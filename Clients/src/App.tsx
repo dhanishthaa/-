@@ -29,7 +29,7 @@ function todayLocal() { const d = new Date(); return `${d.getFullYear()}-${Strin
 function downloadBlob(blob: Blob, filename: string) { const url = URL.createObjectURL(blob); const anchor = document.createElement('a'); anchor.href = url; anchor.download = filename; anchor.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); }
 
 export default function App() {
-  const [session, setSession] = useState<Session | null>(null); const [booting, setBooting] = useState(true);
+  const [session, setSession] = useState<Session | null>(null); const [booting, setBooting] = useState(true); const [authorized, setAuthorized] = useState<boolean | null>(null);
   const [page, setPage] = useState<'invoice' | 'products' | 'settings' | 'history'>('invoice');
   const [products, setProducts] = useState<Product[]>([]); const [settings, setSettings] = useState<AppSettings>(previewMode ? previewSettings : defaultSettings); const [history, setHistory] = useState<SavedInvoice[]>([]);
   const [draft, setDraft] = useState<InvoiceDraft>(() => ({ customerType: 'B2B', customerName: previewMode ? 'Preview Customer' : '', phone: '', date: todayLocal(), lines: previewMode ? previewProducts.map((product, index) => ({ productId: product.id, name: product.name, mrpPaise: product.mrp_paise, pricePaise: product.b2b_price_paise ?? 0, quantity: index === 9 ? 1 : 5 })) : [] })); const [priceDrafts, setPriceDrafts] = useState<Record<number, string>>({});
@@ -38,24 +38,35 @@ export default function App() {
   const [authMode, setAuthMode] = useState<'login' | 'forgot'>('login'); const [email, setEmail] = useState(''); const [password, setPassword] = useState(''); const [showPassword, setShowPassword] = useState(false); const [recoveryRequired, setRecoveryRequired] = useState(false); const [newPassword, setNewPassword] = useState('');
   useEffect(() => {
     if (previewMode || !supabase) { setBooting(false); return; }
-    supabase.auth.getSession().then(({ data }) => { setSession(data.session); setBooting(false); });
-    const { data } = supabase.auth.onAuthStateChange((event, next) => { if (event === 'PASSWORD_RECOVERY') setRecoveryRequired(true); setSession(next); setBooting(false); });
-    return () => data.subscription.unsubscribe();
+    let live = true;
+    const { data } = supabase.auth.onAuthStateChange((event, next) => {
+      if (!live) return;
+      if (event === 'PASSWORD_RECOVERY') setRecoveryRequired(true);
+      setSession(next);
+    });
+    supabase.auth.getSession().then(({ data: current, error: sessionError }) => {
+      if (!live) return;
+      if (sessionError) setError('Could not restore the secure session. Please sign in again.');
+      setSession(current.session);
+      setBooting(false);
+    }).catch(() => { if (live) { setError('Could not restore the secure session. Please sign in again.'); setBooting(false); } });
+    return () => { live = false; data.subscription.unsubscribe(); };
   }, []);
   useEffect(() => {
-    if (previewMode) { setProducts(previewProducts); setHistory([]); setSettings(previewSettings); setSettingsForm(previewSettings); return; }
-    if (!session || !supabase) return; let live = true;
+    if (previewMode) { setAuthorized(true); setProducts(previewProducts); setHistory([]); setSettings(previewSettings); setSettingsForm(previewSettings); return; }
+    if (!session || !supabase) { setAuthorized(false); setBusy(false); return; } let live = true;
     (async () => {
-      setBusy(true); setError('');
+      setAuthorized(null); setBusy(true); setError('');
       const { data: owner, error: ownerError } = await supabase!.rpc('is_invoice_owner');
-      if (ownerError || owner !== true) { setBusy(false); setError('This account is not authorized for the owner workspace.'); await supabase!.auth.signOut(); return; }
+      if (!live) return;
+      if (ownerError || owner !== true) { setAuthorized(false); setBusy(false); setError(ownerError ? 'Owner authorization could not be verified. Please try again.' : 'This account is not authorized for the owner workspace.'); await supabase!.auth.signOut(); return; }
       const [p, s, h] = await Promise.all([supabase!.from('products').select('*').eq('active', true).order('name'), supabase!.from('business_settings').select('upi_id,payee_name,business_name').limit(1).maybeSingle(), supabase!.from('invoices').select('id,invoice_date,customer_name,grand_total_paise,created_at').order('created_at', { ascending: false }).limit(12)]);
       if (!live) return;
       if (p.error) setError(p.error.message); else setProducts((p.data ?? []) as Product[]);
       if (s.data) setSettings(s.data as AppSettings); if (h.data) setHistory(h.data as SavedInvoice[]);
       const { data: ownerSignature } = await supabase!.storage.from('invoice-private-assets').download('owner-signature.png');
       if (ownerSignature) setSignatureData(await new Promise<string>((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve(String(reader.result)); reader.onerror = () => reject(reader.error); reader.readAsDataURL(ownerSignature); }));
-      setSettingsForm((s.data as AppSettings | null) ?? defaultSettings); setBusy(false);
+      setSettingsForm((s.data as AppSettings | null) ?? defaultSettings); setAuthorized(true); setBusy(false);
     })(); return () => { live = false; };
   }, [session]);
   const totalPaise = useMemo(() => draft.lines.reduce((n, line) => n + line.pricePaise * line.quantity, 0), [draft.lines]);
@@ -157,7 +168,7 @@ export default function App() {
     if (result.error) setError(result.error.message); else { setSettings(settingsForm); setNotice('Business settings saved.'); } setBusy(false);
   }
 
-  if (booting) return <main className="center-screen"><div className="spinner"/><p>Opening private workspace…</p></main>;
+  if (booting || (session && authorized === null)) return <main className="center-screen"><div className="spinner"/><p>{booting ? 'Opening private workspace…' : 'Verifying owner access…'}</p></main>;
   if (!supabaseConfigured && !previewMode) return <main className="setup-screen"><img className="brand-mark-image login-mark" src={`${import.meta.env.BASE_URL}assets/isth-logo.png`} alt="Isth" /><div className="login-panel"><span className="eyebrow">PRIVATE BUSINESS TOOL</span><h1>Invoice studio</h1><p className="muted">This workspace is ready for its Supabase project settings.</p><div className="callout">Add <code>VITE_SUPABASE_URL</code> and <code>VITE_SUPABASE_ANON_KEY</code> from the Supabase project to the local environment. The service-role key must never be used here. Owner access and the database schema are enforced in Supabase.</div></div><span className="fine-print">ISTH FRAGRANCES · OWNER ACCESS ONLY</span></main>;
   if (recoveryRequired && session) return <main className="setup-screen"><img className="brand-mark-image login-mark" src={`${import.meta.env.BASE_URL}assets/isth-logo.png`} alt="Isth"/><form className="login-panel" onSubmit={async e => { e.preventDefault(); if (!supabase || newPassword.length < 8) { setError('Use a password of at least 8 characters.'); return; } setBusy(true); const { error: updateError } = await supabase.auth.updateUser({ password: newPassword }); setBusy(false); if (updateError) setError('Password could not be changed. The recovery session may have expired. Request a new reset link.'); else { setRecoveryRequired(false); setNewPassword(''); setError(''); setNotice('Password updated successfully.'); } }}><span className="eyebrow">SECURE ACCOUNT RECOVERY</span><h1>Choose a new password</h1><p className="muted">Your verified recovery session allows you to set a new password.</p><label>New password<input type="password" autoComplete="new-password" minLength={8} required value={newPassword} onChange={e => setNewPassword(e.target.value)}/></label>{error && <div className="error-box">{error}</div>}{authMode === 'forgot' && notice && <div className="success-box">{notice}</div>}<button className="button primary full" disabled={busy}>{busy ? 'Updating…' : 'Update password'}</button></form><span className="fine-print">ISTH FRAGRANCES · OWNER ACCESS ONLY</span></main>;
   if (!session && !previewMode) return <main className="setup-screen"><img className="brand-mark-image login-mark" src={`${import.meta.env.BASE_URL}assets/isth-logo.png`} alt="Isth" /><form className="login-panel" onSubmit={authSubmit}><span className="eyebrow">PRIVATE BUSINESS TOOL</span><h1>{authMode === 'login' ? 'Invoice studio' : 'Reset password'}</h1><p className="muted">{authMode === 'login' ? 'Sign in with the authorized owner account.' : 'Request secure recovery instructions for the owner account.'}</p><label>Email address<input type="email" autoComplete="username" value={email} required onChange={e => setEmail(e.target.value)}/></label>{authMode === 'login' && <label>Password<div className="password-wrap"><input type={showPassword ? 'text' : 'password'} autoComplete="current-password" value={password} required onChange={e => setPassword(e.target.value)}/><button type="button" aria-label={showPassword ? 'Hide password' : 'Show password'} onClick={() => setShowPassword(v => !v)}>{showPassword ? <EyeOff size={16}/> : <Eye size={16}/>}</button></div></label>}{error && <div className="error-box">{error}</div>}{authMode === 'forgot' && notice && <div className="success-box">{notice}</div>}<button className="button primary full" disabled={busy}>{busy ? 'Please wait…' : authMode === 'login' ? 'Sign in' : 'Send recovery instructions'}</button>{authMode === 'login' ? <button type="button" className="text-button" onClick={() => { setAuthMode('forgot'); setError(''); }}>Forgot password?</button> : <button type="button" className="text-button" onClick={() => { setAuthMode('login'); setError(''); }}>Back to sign in</button>}</form><span className="fine-print">ISTH FRAGRANCES · OWNER ACCESS ONLY</span></main>;
