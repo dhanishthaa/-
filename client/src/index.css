@@ -1006,3 +1006,12 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 }
 .editorial-home .hero-social-button { grid-column:2; }
 @media (max-width:620px) { .editorial-home .hero-social-button { grid-column:2; } }
+
+/* Final screenshot alignment: shared two-column hero grid for 768px and up. */
+@media (min-width:768px) {
+  .editorial-home .hero-cta-row { grid-template-columns:124px auto; width:min(520px,100%); }
+  .editorial-home .hero-social-row { grid-template-columns:124px auto; gap:20px; }
+  .editorial-home .hero-social-button { justify-self:start; }
+}
+.editorial-home .hero-identity { margin-top:14px; }
+@media (max-width:620px) { .editorial-home .hero-identity { margin-top:10px; } }

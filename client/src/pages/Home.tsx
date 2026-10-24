@@ -2,7 +2,7 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowDown, ArrowLeft, ArrowRight, Menu, MessageCircle, MoveUpRight, X } from "lucide-react";
+import { ArrowDown, ArrowRight, Menu, MessageCircle, MoveUpRight, X } from "lucide-react";
 import { Link } from "wouter";
 import Reveal from "@/components/Reveal";
 import ProductBottle from "@/components/ProductBottle";
@@ -27,7 +27,6 @@ export default function Home() {
   const [heroPreviousIndex, setHeroPreviousIndex] = useState(0);
   const [heroPaused, setHeroPaused] = useState(false);
   const heroTouchStart = useRef<number | null>(null);
-  const [selectedCollection, setSelectedCollection] = useState("All compositions");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [productDialogOpen, setProductDialogOpen] = useState(false);
   const closeTimerRef = useRef<number | null>(null);
@@ -133,8 +132,7 @@ export default function Home() {
     return () => context.revert();
   }, []);
 
-  const collections = useMemo(() => ["All compositions", ...Array.from(new Set(products.map((product) => product.collection)))], [products]);
-  const visibleProducts = useMemo(() => selectedCollection === "All compositions" ? products : products.filter((product) => product.collection === selectedCollection), [products, selectedCollection]);
+  const visibleProducts = products;
   const featured = useMemo(() => visibleProducts.filter((product) => product.featured).slice(0, 2), [visibleProducts]);
   const more = useMemo(() => visibleProducts.filter((product) => !product.featured), [visibleProducts]);
 
@@ -166,12 +164,11 @@ export default function Home() {
       <section className="home-hero" onMouseEnter={() => setHeroPaused(true)} onMouseLeave={() => setHeroPaused(false)} onTouchStart={(event) => { heroTouchStart.current = event.touches[0]?.clientX ?? null; }} onTouchEnd={(event) => { const start = heroTouchStart.current; heroTouchStart.current = null; const end = event.changedTouches[0]?.clientX ?? start; if (start !== null && end !== null && Math.abs(end - start) > 42) advanceHero(end < start ? 1 : -1); }}>
         <div className="home-hero-image-stack" aria-hidden="true"><picture className="home-hero-image-layer home-hero-image-layer--previous"><source media="(max-width: 620px)" srcSet={previousMobileHero.url} /><img src={previousDesktopHero.url} alt="" loading="lazy" style={{ objectPosition: `${previousDesktopHero.focalX}% ${previousDesktopHero.focalY}%` }} /></picture><picture className="home-hero-image-layer home-hero-image-layer--current"><source media="(max-width: 620px)" srcSet={currentMobileHero.url} /><img src={currentDesktopHero.url} alt="" fetchPriority="high" style={{ objectPosition: `${currentDesktopHero.focalX}% ${currentDesktopHero.focalY}%` }} /></picture></div><div className="home-hero-flower" aria-hidden="true" /><div className="home-hero-overlay" aria-hidden="true" />
         <div className="home-hero-content"><div className="hero-identity"><img src={readLogoUrl()} alt="isth" /></div><h1>A scent can<br /><em>change the air.</em></h1><p className="hero-description">isth composes modern signatures from notes that stay close, then open slowly.</p><div className="hero-cta-row"><a className="cherry-button hero-whatsapp" href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`} target="_blank" rel="noreferrer"><MessageCircle size={17} /> Queries</a><a className="outline-button" href="#collection">Explore the Collection <ArrowDown size={14} /></a></div><div className="hero-social-rows" aria-label="Follow isth online"><div className="hero-social-row"><span>Follow Our Journey</span><a className="hero-social-button" href="https://www.instagram.com/isth.in?stkn=MXVsNm96cWZvcHdicA==" target="_blank" rel="noreferrer" aria-label="Explore isth on Instagram"><img src="/assets/instagram-icon.png" alt="" aria-hidden="true" /> <span>Explore</span></a></div><div className="hero-social-row"><span>Join Our Circle</span><a className="hero-social-button" href="https://chat.whatsapp.com/GpVg3lY8eppEks5yo3C04e" target="_blank" rel="noreferrer" aria-label="Enter the isth WhatsApp community"><img src="/assets/whatsapp-icon.png" alt="" aria-hidden="true" /> <span>Enter</span></a></div></div></div>
-        <div className="hero-carousel-controls" aria-label="Hero image controls"><button type="button" onClick={() => advanceHero(-1)} aria-label="Previous hero image"><ArrowLeft size={15} /></button><span>{String((heroIndex % Math.max(desktopHeroSlides.length, 1)) + 1).padStart(2, "0")} / {String(Math.max(desktopHeroSlides.length, 1)).padStart(2, "0")}</span><button type="button" onClick={() => advanceHero(1)} aria-label="Next hero image"><ArrowRight size={15} /></button></div><div className="hero-caption" aria-hidden="true" />
+        <div className="hero-caption" aria-hidden="true" />
       </section>
 
       <section className="intro-strip"><Reveal><h2>For the moment<br /><em>that stays.</em></h2></Reveal><Reveal delay={100}><p className="intro-copy">A considered collection of ten fragrances for the rituals, rooms, and people that make a day feel like your own.</p></Reveal></section>
       <section id="collection" className="collection-section editorial-motion-panel"><div className="section-heading"><Reveal><h2>Find your<br /><em>signature.</em></h2></Reveal><Reveal delay={80}><p>Each isth composition is made to be worn close. Browse by feeling, not by family.</p></Reveal></div>
-        <div className="collection-filter-bar" aria-label="Browse the collection by category"><span className="filter-label">Browse the house</span><div className="collection-filters" role="group" aria-label="Composition categories">{collections.map((collection) => <button key={collection} type="button" className={selectedCollection === collection ? "is-active" : ""} aria-pressed={selectedCollection === collection} onClick={() => setSelectedCollection(collection)}>{collection}</button>)}</div></div>
         <Reveal className="collection-editorial-photo" delay={100}><div aria-hidden="true" /></Reveal>
         <div className="featured-grid">{featured.map((product, index) => <Reveal key={product.id} delay={index * 80}><ProductBottle product={product} onOpen={openProduct} /></Reveal>)}<Reveal delay={150} className="collection-note"><div className="note-card"><h3>Not a perfume<br /><em>for everyone.</em></h3><p>It is a signature for the person who found it.</p><a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`} target="_blank">Ask the house <MoveUpRight size={14} /></a></div></Reveal></div>
         <div className="catalog-heading"><div><p className="eyebrow catalog-label">More compositions</p></div></div>
