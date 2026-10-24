@@ -25,6 +25,22 @@ type SecureProductPayload = {
   featured: boolean;
 };
 
+export type HeroSlide = { id: string; url: string; focalX: number; focalY: number };
+export type HeroCarouselSettings = { desktop: HeroSlide[]; mobile: HeroSlide[]; interval: number };
+
+export const DEFAULT_HERO_CAROUSEL: HeroCarouselSettings = {
+  desktop: [
+    { id: "hero-editorial", url: "/assets/isth-hero-editorial_ed190768.png", focalX: 50, focalY: 50 },
+    { id: "hero-about", url: "/assets/isth-editorial-about.webp", focalX: 50, focalY: 50 },
+    { id: "hero-nakshatra", url: "/assets/isth-editorial-nakshatra.webp", focalX: 50, focalY: 50 },
+  ],
+  mobile: [
+    { id: "hero-editorial-mobile", url: "/assets/isth-hero-editorial_ed190768.png", focalX: 58, focalY: 50 },
+    { id: "hero-floral-mobile", url: "/assets/isth-floral-blush-atmosphere_7def68ba.png", focalX: 50, focalY: 50 },
+  ],
+  interval: 2000,
+};
+
 export function isValidSupabaseConfig(candidateUrl: unknown, candidateAnonKey: unknown): candidateUrl is string {
   if (typeof candidateUrl !== "string" || typeof candidateAnonKey !== "string") return false;
   if (!candidateUrl.trim() || !candidateAnonKey.trim()) return false;
@@ -149,19 +165,42 @@ export async function fetchAdminRole() {
   return data;
 }
 
-export async function savePublicSetting(key: "logo_url" | "motion_video_url", value: string) {
-  if (!supabase || (value && !isSafeMediaUrl(value))) return false;
+export async function fetchPublicHeroCarousel() {
+  if (!supabase) return null;
+  const { data, error } = await supabase.from("site_settings").select("value").eq("key", "hero_carousel").maybeSingle();
+  if (error || !data?.value) return null;
+  try {
+    const storedValue = typeof data.value === "object" && data.value !== null && "value" in data.value ? (data.value as { value?: unknown }).value : data.value;
+    const raw = typeof storedValue === "string" ? JSON.parse(storedValue) : storedValue;
+    if (!raw || !Array.isArray(raw.desktop) || !Array.isArray(raw.mobile)) return null;
+    const sanitize = (slides: unknown[]) => slides.filter((slide): slide is HeroSlide => Boolean(slide && typeof slide === "object" && typeof (slide as HeroSlide).url === "string" && isSafeMediaUrl((slide as HeroSlide).url))).map((slide, index) => ({ id: String(slide.id || `slide-${index}`), url: slide.url, focalX: Math.min(100, Math.max(0, Number(slide.focalX) || 50)), focalY: Math.min(100, Math.max(0, Number(slide.focalY) || 50)) }));
+    return { desktop: sanitize(raw.desktop), mobile: sanitize(raw.mobile), interval: Math.min(5000, Math.max(1000, Number(raw.interval) || 2000)) } satisfies HeroCarouselSettings;
+  } catch { return null; }
+}
+
+export async function savePublicSetting(key: "logo_url" | "motion_video_url" | "hero_carousel", value: string) {
+  if (!supabase) return false;
+  if (key !== "hero_carousel" && value && !isSafeMediaUrl(value)) return false;
+  if (key === "hero_carousel" && value.length > 200000) return false;
   const { error } = await supabase.rpc("admin_set_site_setting", { setting_key: key, setting_value: value });
   return !error;
 }
 
-export async function uploadPublicAsset(file: File, folder: "brand" | "motion") {
+export async function uploadPublicAsset(file: File, folder: "brand" | "motion" | "hero-desktop" | "hero-mobile") {
   if (!supabase || !isSafeAssetFile(file)) return null;
   const extension = file.name.split(".").pop()?.toLowerCase() || "bin";
   const path = `${folder}/${crypto.randomUUID()}.${extension}`;
   const { error } = await supabase.storage.from("site-media").upload(path, file, { upsert: false, contentType: file.type, cacheControl: "3600" });
   if (error) return null;
   return supabase.storage.from("site-media").getPublicUrl(path).data.publicUrl;
+}
+
+export async function deletePublicAsset(publicUrl: string) {
+  if (!supabase || !publicUrl.includes("/storage/v1/object/public/site-media/")) return false;
+  const path = publicUrl.split("/storage/v1/object/public/site-media/")[1]?.split("?")[0];
+  if (!path) return false;
+  const { error } = await supabase.storage.from("site-media").remove([decodeURIComponent(path)]);
+  return !error;
 }
 
 export function isSafeAssetFile(file: File) {
