@@ -63,6 +63,13 @@ em { font-style:italic; }
 .section-heading { display:grid; grid-template-columns:1.25fr .75fr; gap:60px; align-items:end; margin-bottom:76px; }
 .section-heading h2 { font-size:clamp(54px,7vw,96px); }
 .section-heading>div+div p { margin:0 0 6px; }
+.collection-filter-bar { display:flex; align-items:center; justify-content:space-between; gap:24px; margin:-28px 0 54px; padding:16px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.filter-label { color:var(--gold); font:10px var(--mono); letter-spacing:.14em; text-transform:uppercase; white-space:nowrap; }
+.collection-filters { display:flex; flex-wrap:wrap; justify-content:flex-end; gap:8px; }
+.collection-filters button { border:1px solid rgba(17,17,17,.18); padding:9px 13px; background:transparent; color:var(--ink); font:10px var(--mono); letter-spacing:.08em; text-transform:uppercase; transition:background .25s var(--ease),color .25s var(--ease),border-color .25s var(--ease),transform .25s var(--ease); }
+.collection-filters button:hover,.collection-filters button:focus-visible { border-color:var(--cherry); color:var(--cherry); transform:translateY(-1px); }
+.collection-filters button.is-active { border-color:var(--cherry); background:var(--cherry); color:var(--ivory); }
+.collection-filters button:focus-visible { outline:2px solid var(--cherry); outline-offset:3px; }
 .featured-grid { display:grid; grid-template-columns:repeat(12,1fr); gap:24px; align-items:start; }
 .featured-grid>.reveal:nth-child(1) { grid-column:span 5; }
 .featured-grid>.reveal:nth-child(2) { grid-column:span 4; margin-top:90px; }
@@ -895,6 +902,10 @@ em { font-style:italic; }
 }
 @media (max-width:620px) {
   .editorial-home .intro-strip { padding-top:102px; padding-bottom:92px; }
+  .editorial-home .collection-filter-bar { align-items:flex-start; flex-direction:column; gap:14px; margin:-20px 0 38px; }
+  .editorial-home .collection-filters { justify-content:flex-start; width:100%; overflow-x:auto; flex-wrap:nowrap; padding-bottom:3px; scrollbar-width:none; }
+  .editorial-home .collection-filters::-webkit-scrollbar { display:none; }
+  .editorial-home .collection-filters button { flex:none; min-height:42px; }
   .editorial-home .product-card-copy { padding-top:14px; }
   .editorial-home .product-open { width:32px; height:32px; }
   .editorial-home .quote-video-copy { padding-left:0; }

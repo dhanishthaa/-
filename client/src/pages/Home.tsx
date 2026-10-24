@@ -22,6 +22,7 @@ export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [navFolded, setNavFolded] = useState(false);
   const [products, setProducts] = useState<Product[]>(defaultProducts);
+  const [selectedCollection, setSelectedCollection] = useState("All compositions");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [productDialogOpen, setProductDialogOpen] = useState(false);
   const closeTimerRef = useRef<number | null>(null);
@@ -106,8 +107,10 @@ export default function Home() {
     return () => context.revert();
   }, []);
 
-  const featured = useMemo(() => products.filter((product) => product.featured).slice(0, 2), [products]);
-  const more = useMemo(() => products.filter((product) => !product.featured), [products]);
+  const collections = useMemo(() => ["All compositions", ...Array.from(new Set(products.map((product) => product.collection)))], [products]);
+  const visibleProducts = useMemo(() => selectedCollection === "All compositions" ? products : products.filter((product) => product.collection === selectedCollection), [products, selectedCollection]);
+  const featured = useMemo(() => visibleProducts.filter((product) => product.featured).slice(0, 2), [visibleProducts]);
+  const more = useMemo(() => visibleProducts.filter((product) => !product.featured), [visibleProducts]);
 
   const openProduct = (product: Product) => {
     if (closeTimerRef.current) window.clearTimeout(closeTimerRef.current);
@@ -141,7 +144,9 @@ export default function Home() {
       </section>
 
       <section className="intro-strip"><Reveal><h2>For the moment<br /><em>that stays.</em></h2></Reveal><Reveal delay={100}><p className="intro-copy">A considered collection of ten fragrances for the rituals, rooms, and people that make a day feel like your own.</p></Reveal></section>
-      <section id="collection" className="collection-section editorial-motion-panel"><div className="section-heading"><Reveal><h2>Find your<br /><em>signature.</em></h2></Reveal><Reveal delay={80}><p>Each isth composition is made to be worn close. Browse by feeling, not by family.</p></Reveal></div><Reveal className="collection-editorial-photo" delay={100}><div aria-hidden="true" /></Reveal>
+      <section id="collection" className="collection-section editorial-motion-panel"><div className="section-heading"><Reveal><h2>Find your<br /><em>signature.</em></h2></Reveal><Reveal delay={80}><p>Each isth composition is made to be worn close. Browse by feeling, not by family.</p></Reveal></div>
+        <div className="collection-filter-bar" aria-label="Browse the collection by category"><span className="filter-label">Browse the house</span><div className="collection-filters" role="group" aria-label="Composition categories">{collections.map((collection) => <button key={collection} type="button" className={selectedCollection === collection ? "is-active" : ""} aria-pressed={selectedCollection === collection} onClick={() => setSelectedCollection(collection)}>{collection}</button>)}</div></div>
+        <Reveal className="collection-editorial-photo" delay={100}><div aria-hidden="true" /></Reveal>
         <div className="featured-grid">{featured.map((product, index) => <Reveal key={product.id} delay={index * 80}><ProductBottle product={product} onOpen={openProduct} /></Reveal>)}<Reveal delay={150} className="collection-note"><div className="note-card"><h3>Not a perfume<br /><em>for everyone.</em></h3><p>It is a signature for the person who found it.</p><a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`} target="_blank">Ask the house <MoveUpRight size={14} /></a></div></Reveal></div>
         <div className="catalog-heading"><div><p className="eyebrow catalog-label">More compositions</p></div></div>
         <div className="catalog-grid">{more.map((product, index) => <Reveal key={product.id} delay={(index % 3) * 60}><ProductBottle product={product} compact onOpen={openProduct} /></Reveal>)}</div>
