@@ -1219,3 +1219,11 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 .editorial-home .site-nav .menu-toggle,
 .about-editorial .site-nav .desktop-nav a,
 .about-editorial .site-nav .menu-toggle { color:var(--ivory); text-shadow:0 1px 10px rgba(17,17,17,.45); }
+
+/* Navbar logo: exactly 3x the existing 28px desktop / 26px mobile mark. */
+.editorial-home .site-nav .site-brand .brand-logo,
+.about-editorial .site-nav .site-brand .brand-logo { height:84px; max-width:300px; }
+@media (max-width:620px) {
+  .editorial-home .site-nav .site-brand .brand-logo,
+  .about-editorial .site-nav .site-brand .brand-logo { height:78px; max-width:276px; }
+}
