@@ -1171,7 +1171,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 .editorial-home .site-nav,
 .editorial-home .site-nav:not(.is-scrolled) {
   color:var(--ivory);
-  background:rgba(17,17,17,.34);
+  background:#000;
   border-bottom:1px solid rgba(245,241,235,.18);
   backdrop-filter:blur(10px) saturate(105%);
   -webkit-backdrop-filter:blur(10px) saturate(105%);
@@ -1196,7 +1196,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 .editorial-home .hero-social-button { text-shadow:none; }
 @media (max-width:620px) {
   .editorial-home .site-nav,
-  .editorial-home .site-nav:not(.is-scrolled) { background:rgba(0,0,0,.34); }
+  .editorial-home .site-nav:not(.is-scrolled) { background:#000; }
   .editorial-home .mobile-drawer { overflow-y:auto; overscroll-behavior:contain; }
   .editorial-home .mobile-drawer nav { padding-bottom:24px; }
 }
@@ -1207,7 +1207,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 .about-editorial .site-nav,
 .about-editorial .site-nav.is-scrolled {
   color:var(--ivory);
-  background:rgba(0,0,0,.34);
+  background:#000;
   border-bottom:1px solid rgba(245,241,235,.18);
   backdrop-filter:blur(10px) saturate(105%);
   -webkit-backdrop-filter:blur(10px) saturate(105%);
