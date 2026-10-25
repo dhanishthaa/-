@@ -1224,8 +1224,9 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 .contact-social-rows { display:flex; flex-direction:column; gap:10px; width:min(360px,100%); margin:clamp(56px,7vw,96px) 0 0; }
 .contact-social-row { display:grid; grid-template-columns:124px auto; align-items:center; gap:20px; color:var(--ink); font:10px var(--mono); letter-spacing:.13em; text-transform:uppercase; }
 .contact-social-button { display:inline-flex; align-items:center; justify-content:center; justify-self:start; gap:9px; min-width:124px; height:38px; padding:8px 13px; border:1px solid var(--ink); background:transparent; color:var(--ink); font:10px var(--mono); letter-spacing:.14em; text-transform:uppercase; transition:background .25s var(--ease),color .25s var(--ease),transform .25s var(--ease),border-color .25s var(--ease); }
-.contact-social-button img { width:17px; height:17px; object-fit:contain; flex:none; }
+.contact-social-button img { width:17px; height:17px; object-fit:contain; flex:none; filter:brightness(0); }
 .contact-social-button:hover { background:var(--ink); color:var(--ivory); border-color:var(--ink); transform:translateY(-2px); }
+.contact-social-button:hover img { filter:brightness(0) invert(1); }
 .contact-social-button:focus-visible { outline:2px solid var(--cherry); outline-offset:4px; }
 @media (max-width:620px) {
   .contact-social-rows { gap:8px; margin-top:52px; }
