@@ -34,7 +34,6 @@ const LOCAL_PRODUCT_IMAGE_FALLBACKS: Record<string, string> = {
   "orion": "/assets/orion.png",
   "the-ocean": "/assets/theocean.png",
   "velvet-night": "/assets/velvetnight.png",
-  "sweet-seduction": "/assets/isth-bottle-10ml_630d74f3.png",
 };
 
 export function getProductImageFallback(product: Pick<Product, "id" | "image">) {
@@ -43,7 +42,7 @@ export function getProductImageFallback(product: Pick<Product, "id" | "image">) 
 
 export const defaultProducts: Product[] = [
   { id: "kawaii-marshmallow", name: "Kawaii Marshmallow", notes: "marshmallow · vanilla chocolate · musk", description: "A soft gourmand with a musky finish — sweet without losing its composure.", collection: "Signature", image: KAWAII_MARSHMALLOW_DESKTOP_IMAGE, color: "#B98778", size: "Edition", featured: true },
-  { id: "eclat-courinne", name: "Éclat Courinné", notes: "aqua · lavender · citrus", description: "Bright aqua notes and cool lavender, lifted by a clean citrus opening.", collection: "Signature", image: "/assets/isth-bottle-30ml_79079c93.png", color: "#AAB9B0", size: "Edition", featured: true },
+  { id: "eclat-courinne", name: "Éclat Courinné", notes: "aqua · lavender · citrus", description: "Bright aqua notes and cool lavender, lifted by a clean citrus opening.", collection: "Signature", color: "#AAB9B0", size: "Edition", featured: true },
   { id: "lesprit-epice", name: "L'Esprit Épicé", notes: "geranium · rose · leather · oud", description: "A rose shadowed by leather and oud, with a spice that lingers close to the skin.", collection: "Signature", color: "#79575C", size: "Edition" },
   { id: "17k-pirate", name: "17K Pirate", notes: "pineapple · birch · oakmoss", description: "Pineapple brightens a smoky birch accord grounded in green oakmoss.", collection: "Signature", color: "#C89F65", size: "Edition" },
   { id: "sacree-marine", name: "Sacrée Marine", notes: "honey · lotus · fresh", description: "The clean air of a shoreline warmed by honeyed light.", collection: "Signature", color: "#8DA8A7", size: "Edition" },

@@ -1,13 +1,14 @@
-import { INSTAGRAM_URL } from "../data/brand";
-import { defaultProducts } from "../data/products";
+import { DEFAULT_WHATSAPP_NUMBER, DEFAULT_WHATSAPP_TEXT, INSTAGRAM_URL } from "../data/brand";
+import { defaultProducts, getProductImageFallback, type Product } from "../data/products";
 
 export const SEO_ORIGIN = "https://isth.in";
 export const SEO_SITE_NAME = "ISTH";
 export const SEO_LOCALE = "en_IN";
 export const SEO_LOGO_PATH = "/assets/isth-logo-111_06bb811c.svg";
 export const SEO_SOCIAL_IMAGE_PATH = "/assets/isth-editorial-about.webp";
+export const GUIDE_CANONICAL_PATH = "/guides/choosing-a-fragrance/";
 
-export type SeoPageId = "landing" | "home" | "about" | "admin" | "not-found";
+export type SeoPageId = "landing" | "home" | "about" | "guide" | "product" | "admin" | "not-found";
 
 export type SeoPage = {
   id: SeoPageId;
@@ -17,14 +18,19 @@ export type SeoPage = {
   robots: "index, follow" | "noindex, nofollow";
   indexable: boolean;
   socialImagePath: string;
+  socialImageAlt?: string;
+  productId?: string;
+  productName?: string;
+  productDescription?: string;
+  productImagePath?: string;
 };
 
-export const SEO_PAGES: Record<SeoPageId, SeoPage> = {
+export const SEO_PAGES: Record<Exclude<SeoPageId, "product">, SeoPage> = {
   landing: {
     id: "landing",
     canonicalPath: "/",
-    title: "ISTH Fragrance",
-    description: "Discover ISTH fragrances. Explore our signature perfume collection.",
+    title: "ISTH Perfumes & Fragrances",
+    description: "Discover ISTH perfumes and fragrances. Embrace the fragrance. Become isth.",
     robots: "index, follow",
     indexable: true,
     socialImagePath: SEO_SOCIAL_IMAGE_PATH,
@@ -47,11 +53,20 @@ export const SEO_PAGES: Record<SeoPageId, SeoPage> = {
     indexable: true,
     socialImagePath: "/assets/isth-editorial-about.webp",
   },
+  guide: {
+    id: "guide",
+    canonicalPath: GUIDE_CANONICAL_PATH,
+    title: "How to Choose a Perfume | ISTH Fragrance Guide",
+    description: "Compare the listed notes and descriptions in the ISTH perfume collection, then ask about a fragrance through the existing WhatsApp ordering flow.",
+    robots: "index, follow",
+    indexable: true,
+    socialImagePath: SEO_SOCIAL_IMAGE_PATH,
+  },
   admin: {
     id: "admin",
     canonicalPath: "/isth/frag/minda",
-    title: "isth Fragrance",
-    description: "Private isth administration.",
+    title: "ISTH Fragrance Administration",
+    description: "Private ISTH administration.",
     robots: "noindex, nofollow",
     indexable: false,
     socialImagePath: SEO_SOCIAL_IMAGE_PATH,
@@ -59,13 +74,46 @@ export const SEO_PAGES: Record<SeoPageId, SeoPage> = {
   "not-found": {
     id: "not-found",
     canonicalPath: "/404",
-    title: "isth Fragrance",
-    description: "The requested isth page could not be found.",
+    title: "ISTH Fragrance",
+    description: "The requested ISTH page could not be found.",
     robots: "noindex, nofollow",
     indexable: false,
     socialImagePath: SEO_SOCIAL_IMAGE_PATH,
   },
 };
+
+export function getProductPagePath(productOrId: Pick<Product, "id"> | string) {
+  const id = typeof productOrId === "string" ? productOrId : productOrId.id;
+  return `/products/${id}/`;
+}
+
+function truncateDescription(value: string, maxLength: number) {
+  const normalized = value.replace(/\s+/g, " ").trim();
+  if (normalized.length <= maxLength) return normalized;
+  const shortened = normalized.slice(0, maxLength - 1);
+  const finalWordBoundary = shortened.lastIndexOf(" ");
+  return `${shortened.slice(0, finalWordBoundary > 0 ? finalWordBoundary : maxLength - 1).trimEnd()}…`;
+}
+
+export function getProductSeoPage(product: Product): SeoPage {
+  const productImagePath = getProductImageFallback(product);
+  const title = `${product.name} Perfume | ISTH Fragrances`;
+  const description = truncateDescription(`Discover ${product.name} perfume by ISTH. ${product.description} Ask about ordering on WhatsApp.`, 160);
+  return {
+    id: "product",
+    productId: product.id,
+    productName: product.name,
+    productDescription: product.description,
+    productImagePath,
+    canonicalPath: getProductPagePath(product),
+    title,
+    description,
+    robots: "index, follow",
+    indexable: true,
+    socialImagePath: productImagePath ?? SEO_SOCIAL_IMAGE_PATH,
+    socialImageAlt: productImagePath ? `${product.name} perfume bottle by ISTH` : "ISTH fragrance collection image",
+  };
+}
 
 function normalizePathname(pathname: string) {
   const path = pathname.split("?")[0]?.split("#")[0] || "/";
@@ -78,7 +126,13 @@ export function getSeoPage(pathname: string): SeoPage {
   if (normalized === "/") return SEO_PAGES.landing;
   if (normalized === "/home") return SEO_PAGES.home;
   if (normalized === "/about") return SEO_PAGES.about;
+  if (normalized === "/guides/choosing-a-fragrance") return SEO_PAGES.guide;
   if (normalized === "/isth/frag/minda") return SEO_PAGES.admin;
+  const productMatch = normalized.match(/^\/products\/([a-z0-9]+(?:-[a-z0-9]+)*)$/);
+  if (productMatch) {
+    const product = defaultProducts.find((candidate) => candidate.id === productMatch[1]);
+    if (product) return getProductSeoPage(product);
+  }
   return SEO_PAGES["not-found"];
 }
 
@@ -88,7 +142,7 @@ export function toAbsoluteUrl(pathOrUrl: string) {
 }
 
 export function escapeHtml(value: string) {
-  return value.replace(/[&<>"]/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[character] || character);
+  return value.replace(/[&<>\"]/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '\"': "&quot;" })[character] || character);
 }
 
 function collectionItemSchema() {
@@ -97,6 +151,20 @@ function collectionItemSchema() {
     name: product.name,
     description: product.description,
   }));
+}
+
+function getBreadcrumbSchema(page: SeoPage) {
+  const crumbs = [
+    { name: "ISTH", url: toAbsoluteUrl("/") },
+    { name: "Perfume collection", url: toAbsoluteUrl(SEO_PAGES.home.canonicalPath) },
+  ];
+  if (page.id === "guide") crumbs.push({ name: "Choosing a fragrance", url: toAbsoluteUrl(page.canonicalPath) });
+  else if (page.id === "product") crumbs.push({ name: page.productName ?? "Fragrance", url: toAbsoluteUrl(page.canonicalPath) });
+  return {
+    "@type": "BreadcrumbList",
+    "@id": `${toAbsoluteUrl(page.canonicalPath)}#breadcrumbs`,
+    itemListElement: crumbs.map((crumb, index) => ({ "@type": "ListItem", position: index + 1, name: crumb.name, item: crumb.url })),
+  };
 }
 
 export function getStructuredData(page: SeoPage) {
@@ -125,7 +193,7 @@ export function getStructuredData(page: SeoPage) {
     publisher: { "@id": `${SEO_ORIGIN}/#organization` },
   };
 
-  const pageNode = {
+  const pageNode: Record<string, unknown> = {
     "@type": page.id === "about" ? "AboutPage" : "WebPage",
     "@id": `${pageUrl}#webpage`,
     url: pageUrl,
@@ -133,7 +201,9 @@ export function getStructuredData(page: SeoPage) {
     description: page.description,
     inLanguage: "en-IN",
     isPartOf: { "@id": `${SEO_ORIGIN}/#website` },
-    about: { "@id": `${SEO_ORIGIN}/#organization` },
+    about: page.id === "product"
+      ? { "@type": "Thing", name: page.productName, description: page.productDescription }
+      : { "@id": `${SEO_ORIGIN}/#organization` },
     primaryImageOfPage: toAbsoluteUrl(page.socialImagePath),
   };
 
@@ -143,8 +213,8 @@ export function getStructuredData(page: SeoPage) {
       "@type": "CollectionPage",
       "@id": `${pageUrl}#collection`,
       url: pageUrl,
-      name: "isth fragrance collection",
-      description: "A considered collection of modern isth fragrance compositions.",
+      name: "ISTH perfume collection",
+      description: "A considered collection of modern ISTH fragrance compositions.",
       isPartOf: { "@id": `${pageUrl}#webpage` },
       mainEntity: {
         "@type": "ItemList",
@@ -157,7 +227,7 @@ export function getStructuredData(page: SeoPage) {
       },
     });
   }
-
+  if (page.id === "product" || page.id === "guide") graph.push(getBreadcrumbSchema(page));
   return { "@context": "https://schema.org", "@graph": graph };
 }
 
@@ -170,6 +240,7 @@ export function renderStaticSeoHead(page: SeoPage) {
   const imageUrl = toAbsoluteUrl(page.socialImagePath);
   const title = escapeHtml(page.title);
   const description = escapeHtml(page.description);
+  const imageAlt = escapeHtml(page.socialImageAlt ?? `${SEO_SITE_NAME} fragrance editorial image`);
 
   return [
     `<title>${title}</title>`,
@@ -184,7 +255,7 @@ export function renderStaticSeoHead(page: SeoPage) {
     `<meta property="og:description" content="${description}" />`,
     `<meta property="og:url" content="${canonicalUrl}" />`,
     `<meta property="og:image" content="${imageUrl}" />`,
-    `<meta property="og:image:alt" content="${escapeHtml(`${SEO_SITE_NAME} fragrance editorial image`)}" />`,
+    `<meta property="og:image:alt" content="${imageAlt}" />`,
     `<meta name="twitter:card" content="summary_large_image" />`,
     `<meta name="twitter:title" content="${title}" />`,
     `<meta name="twitter:description" content="${description}" />`,
@@ -193,20 +264,38 @@ export function renderStaticSeoHead(page: SeoPage) {
   ].join("\n    ");
 }
 
-export function renderStaticNoscript(page: SeoPage) {
-  const aboutCopy = "isth is a lifestyle fragrance house built upon quiet moments, tactile memories, and the tension between what you recognise and what you cannot quite name.";
-  const collection = defaultProducts.map((product) => `<li><article><h2>${escapeHtml(product.name)}</h2><p>${escapeHtml(product.description)}</p><p>${escapeHtml(product.notes)}</p></article></li>`).join("");
-
-  if (page.id === "home") {
-    return `<main><h1>isth fragrance collection</h1><p>Explore modern fragrance signatures from isth.</p><ul>${collection}</ul><p><a href="/about/">About isth</a></p></main>`;
-  }
-  if (page.id === "about") {
-    return `<main><h1>About isth</h1><p>${escapeHtml(aboutCopy)}</p><p><a href="/home/">Explore the isth fragrance collection</a></p></main>`;
-  }
-  if (page.id === "landing") {
-    return `<main><h1>isth Parfums</h1><p>Embrace the fragrance. Become isth.</p><p><a href="/home/">Explore the isth fragrance collection</a></p></main>`;
-  }
-  return `<main><h1>${escapeHtml(page.title)}</h1><p>${escapeHtml(page.description)}</p><p><a href="/">Return to isth</a></p></main>`;
+function renderProductStaticNoscript(page: SeoPage) {
+  const product = defaultProducts.find((candidate) => candidate.id === page.productId);
+  if (!product) return `<main><h1>${escapeHtml(page.title)}</h1><p>${escapeHtml(page.description)}</p></main>`;
+  const imageMarkup = page.productImagePath
+    ? `<img src="${escapeHtml(toAbsoluteUrl(page.productImagePath))}" alt="${escapeHtml(`${product.name} perfume bottle by ISTH`)}" />`
+    : `<p role="img" aria-label="No product photograph is published for ${escapeHtml(product.name)}">Product photograph not available.</p>`;
+  const whatsappUrl = `https://wa.me/${DEFAULT_WHATSAPP_NUMBER}?text=${encodeURIComponent(`${DEFAULT_WHATSAPP_TEXT} ${product.name}.`)}`;
+  return `<main><nav aria-label="Breadcrumb"><a href="/">ISTH</a> / <a href="${SEO_PAGES.home.canonicalPath}">Perfume collection</a> / <span>${escapeHtml(product.name)}</span></nav><article><p>ISTH ${escapeHtml(product.collection)} fragrance</p><h1>${escapeHtml(product.name)}</h1>${imageMarkup}<p>${escapeHtml(product.description)}</p><h2>Listed fragrance notes</h2><p>${escapeHtml(product.notes)}</p><p>Ask ISTH on WhatsApp for current ordering details.</p><p><a href="${whatsappUrl}">Ask about ${escapeHtml(product.name)} on WhatsApp</a></p><p><a href="${SEO_PAGES.home.canonicalPath}">Return to the ISTH perfume collection</a></p></article></main>`;
 }
 
-export const INDEXABLE_SEO_PAGES = [SEO_PAGES.landing, SEO_PAGES.home, SEO_PAGES.about] as const;
+function renderGuideStaticNoscript() {
+  const rows = defaultProducts.map((product) => `<tr><th scope="row"><a href="${getProductPagePath(product)}">${escapeHtml(product.name)}</a></th><td>${escapeHtml(product.notes)}</td><td>${escapeHtml(product.description)}</td></tr>`).join("");
+  return `<main><nav aria-label="Breadcrumb"><a href="/">ISTH</a> / <a href="${SEO_PAGES.home.canonicalPath}">Perfume collection</a> / <span>Choosing a fragrance</span></nav><article><h1>How to choose a perfume: a guide to ISTH fragrance notes</h1><p>This guide compares only the names, notes, and descriptions currently published in the ISTH collection. It is not a ranking, and it makes no claims about ratings, wear time, or which fragrance is best for everyone.</p><h2>Start with the notes you recognize</h2><p>Choose a few listed notes that appeal to you, then compare the full combinations. For example, Kawaii Marshmallow lists marshmallow, vanilla chocolate, and musk; Éclat Courinné lists aqua, lavender, and citrus; Fiery Soul lists rum, kesar, and oud. These are the published note descriptions, not a top/middle/base breakdown.</p><h2>Read the composition description</h2><p>Use each product description to understand the character ISTH gives that composition. Compare the wording and the complete note list rather than assuming that one shared ingredient makes two fragrances the same.</p><h2>Compare the current collection</h2><table><thead><tr><th>ISTH fragrance</th><th>Listed notes</th><th>Published description</th></tr></thead><tbody>${rows}</tbody></table><h2>Ask before ordering</h2><p>Prices, sizes, and availability are not published in this catalog. Contact ISTH through the existing WhatsApp ordering link to ask for current details before placing an order.</p><p><a href="${SEO_PAGES.home.canonicalPath}">Browse the ISTH perfume collection</a></p></article></main>`;
+}
+
+export function renderStaticNoscript(page: SeoPage) {
+  const aboutCopy = "ISTH is a lifestyle fragrance house built upon quiet moments, tactile memories, and the tension between what you recognise and what you cannot quite name.";
+  const collection = defaultProducts.map((product) => `<li><article><h2><a href="${getProductPagePath(product)}">${escapeHtml(product.name)}</a></h2><p>${escapeHtml(product.description)}</p><p>${escapeHtml(product.notes)}</p></article></li>`).join("");
+
+  if (page.id === "home") {
+    return `<main><h1>ISTH perfume collection</h1><p>Explore modern fragrance signatures from ISTH and view each fragrance by its published notes.</p><ul>${collection}</ul><p><a href="${GUIDE_CANONICAL_PATH}">How to choose a perfume</a></p><p><a href="/about/">About ISTH</a></p></main>`;
+  }
+  if (page.id === "about") {
+    return `<main><h1>About ISTH</h1><p>${escapeHtml(aboutCopy)}</p><p><a href="/home/">Explore the ISTH perfume collection</a></p></main>`;
+  }
+  if (page.id === "landing") {
+    return `<main><h1>ISTH perfumes and fragrances</h1><p>Embrace the fragrance. Become isth.</p><p><a href="/home/">Explore the ISTH perfume collection</a></p></main>`;
+  }
+  if (page.id === "product") return renderProductStaticNoscript(page);
+  if (page.id === "guide") return renderGuideStaticNoscript();
+  return `<main><h1>${escapeHtml(page.title)}</h1><p>${escapeHtml(page.description)}</p><p><a href="/">Return to ISTH</a></p></main>`;
+}
+
+export const PRODUCT_SEO_PAGES = defaultProducts.map(getProductSeoPage);
+export const INDEXABLE_SEO_PAGES = [SEO_PAGES.landing, SEO_PAGES.home, SEO_PAGES.about, SEO_PAGES.guide, ...PRODUCT_SEO_PAGES] as const;

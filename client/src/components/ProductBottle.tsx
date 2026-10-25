@@ -1,5 +1,6 @@
 import { type CSSProperties } from "react";
 import { ArrowUpRight, MessageCircle } from "lucide-react";
+import { Link } from "wouter";
 import type { Product } from "@/data/products";
 import ProductBottleVisual from "@/components/ProductBottleVisual";
 
@@ -16,7 +17,7 @@ export default function ProductBottle({ product, compact = false, onOpen }: { pr
         <span className="product-open"><ArrowUpRight size={16} strokeWidth={1.4} /></span>
       </button>
       <div className="product-card-copy">
-        <div><h3>{product.name}</h3></div>
+        <div><h3><Link className="product-title-link" href={`/products/${product.id}/`}>{product.name}</Link></h3></div>
         <button className="product-buy" onClick={() => window.open(whatsappUrl, "_blank", "noopener,noreferrer")}><MessageCircle size={13} /> Buy now</button>
       </div>
       <p className="product-notes">{product.notes}</p>

@@ -12,6 +12,8 @@ import SeoHead from "./components/SeoHead";
 
 const Home = lazy(() => import("./pages/Home"));
 const About = lazy(() => import("./pages/About"));
+const ProductDetail = lazy(() => import("./pages/ProductDetail"));
+const ChoosingAFragrance = lazy(() => import("./pages/ChoosingAFragrance"));
 const Admin = lazy(() => import("./pages/Admin"));
 
 function Router() {
@@ -19,6 +21,8 @@ function Router() {
     <Route path="/" component={Landing} />
     <Route path="/home" component={Home} />
     <Route path="/about" component={About} />
+    <Route path="/products/:productId" component={ProductDetail} />
+    <Route path="/guides/choosing-a-fragrance" component={ChoosingAFragrance} />
     <Route path="/isth/frag/minda" component={Admin} />
     <Route path="/404" component={NotFound} />
     <Route component={NotFound} />

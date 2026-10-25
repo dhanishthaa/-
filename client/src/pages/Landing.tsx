@@ -123,7 +123,7 @@ export default function Landing() {
           <span className="signature-letter signature-h"><img src={readLogoUrl()} alt="" /></span>
         </div>
         <div className={`landing-center ${signatureComplete ? "is-ready" : ""}`}>
-          <p className="landing-quote"><span>Embrace the fragrance.</span><span>Become isth.</span></p>
+          <h1 className="landing-quote"><span>Embrace the fragrance.</span><span>Become isth.</span></h1>
           <button className="landing-enter" onClick={goToCollection}>Explore the Collection <ArrowRight size={15} /></button>
         </div>
       </div>

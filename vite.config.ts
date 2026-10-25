@@ -5,7 +5,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { defineConfig, type Plugin, type ViteDevServer } from "vite";
 import { vitePluginManusRuntime } from "vite-plugin-manus-runtime";
-import { SEO_PAGES, renderStaticNoscript, renderStaticSeoHead, type SeoPageId } from "./client/src/seo/site";
+import { INDEXABLE_SEO_PAGES, SEO_PAGES, renderStaticNoscript, renderStaticSeoHead, type SeoPageId } from "./client/src/seo/site";
 
 // =============================================================================
 // Manus Debug Collector - Vite Plugin
@@ -207,7 +207,7 @@ function vitePluginStorageProxy(): Plugin {
 const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector(), vitePluginStorageProxy()];
 
 function vitePluginStaticSeoDocuments(): Plugin {
-  const pageIdForDocument = (pathOrFilename: string): SeoPageId => {
+  const pageIdForDocument = (pathOrFilename: string): Exclude<SeoPageId, "product"> => {
     const normalized = pathOrFilename.replace(/\\/g, "/");
     if (normalized.includes("/about/")) return "about";
     if (normalized.includes("/home/")) return "home";
@@ -219,8 +219,30 @@ function vitePluginStaticSeoDocuments(): Plugin {
     transformIndexHtml(html, context) {
       const page = SEO_PAGES[pageIdForDocument(context.path)];
       return html
-        .replace("<!--isth-seo-head-->", renderStaticSeoHead(page))
-        .replace("<!--isth-seo-noscript-->", renderStaticNoscript(page));
+        .replace("<!--isth-seo-head-->", `<!--isth-seo-head-start-->${renderStaticSeoHead(page)}<!--isth-seo-head-end-->`)
+        .replace("<!--isth-seo-noscript-->", `<!--isth-seo-noscript-start-->${renderStaticNoscript(page)}<!--isth-seo-noscript-end-->`);
+    },
+    closeBundle() {
+      if (process.env.NODE_ENV !== "production") return;
+      const outputDirectory = path.resolve(import.meta.dirname, "dist", "public");
+      const templatePath = path.join(outputDirectory, "home", "index.html");
+      if (!fs.existsSync(templatePath)) return;
+      const templateHtml = fs.readFileSync(templatePath, "utf8");
+      const replaceBlock = (html: string, start: string, end: string, content: string) => {
+        const from = html.indexOf(start);
+        const to = html.indexOf(end, from + start.length);
+        if (from < 0 || to < 0) return html;
+        return `${html.slice(0, from)}${start}${content}${html.slice(to)}`;
+      };
+      INDEXABLE_SEO_PAGES.filter((page) => page.id === "product" || page.id === "guide").forEach((page) => {
+        let html = replaceBlock(templateHtml, "<!--isth-seo-head-start-->", "<!--isth-seo-head-end-->", renderStaticSeoHead(page));
+        html = replaceBlock(html, "<!--isth-seo-noscript-start-->", "<!--isth-seo-noscript-end-->", renderStaticNoscript(page));
+        html = html.replace(/<link rel="preload" as="image"[^>]*\/>\s*/g, "");
+        const fileName = page.id === "product" ? `products/${page.productId}/index.html` : "guides/choosing-a-fragrance/index.html";
+        const filePath = path.join(outputDirectory, fileName);
+        fs.mkdirSync(path.dirname(filePath), { recursive: true });
+        fs.writeFileSync(filePath, html, "utf8");
+      });
     },
   };
 }
