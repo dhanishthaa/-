@@ -1228,6 +1228,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 .contact-social-button:hover { background:var(--ink); color:var(--ivory); border-color:var(--ink); transform:translateY(-2px); }
 .contact-social-button:hover img { filter:brightness(0) invert(1); }
 .contact-social-button:focus-visible { outline:2px solid var(--cherry); outline-offset:4px; }
+.hero-tagline-line { display:inline-block; white-space:nowrap; }
 @media (max-width:620px) {
   .contact-social-rows { gap:8px; margin-top:52px; }
   .contact-social-row { grid-template-columns:minmax(124px,1fr) minmax(112px,auto); gap:12px; font-size:9px; }
