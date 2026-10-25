@@ -91,14 +91,11 @@ export function escapeHtml(value: string) {
   return value.replace(/[&<>"]/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[character] || character);
 }
 
-function productSchema() {
+function collectionItemSchema() {
   return defaultProducts.map((product) => ({
-    "@type": "Product",
+    "@type": "Thing",
     name: product.name,
     description: product.description,
-    category: `${product.collection} fragrance`,
-    brand: { "@type": "Brand", name: SEO_SITE_NAME },
-    ...(product.image ? { image: [toAbsoluteUrl(product.image)] } : {}),
   }));
 }
 
@@ -152,7 +149,7 @@ export function getStructuredData(page: SeoPage) {
       mainEntity: {
         "@type": "ItemList",
         numberOfItems: defaultProducts.length,
-        itemListElement: productSchema().map((item, index) => ({
+        itemListElement: collectionItemSchema().map((item, index) => ({
           "@type": "ListItem",
           position: index + 1,
           item,

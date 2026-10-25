@@ -51,6 +51,7 @@ describe("technical SEO", () => {
     const serializedCollection = JSON.stringify(collection);
     expect(serializedCollection).toContain('"CollectionPage"');
     expect(serializedCollection).toContain('"ItemList"');
+    expect(serializedCollection).not.toContain('"Product"');
     expect(serializedCollection).not.toMatch(/"price"|"ratingValue"|"availability"|"review"/i);
   });
 
