@@ -17,7 +17,8 @@ describe("isth editorial page integrity", () => {
     expect(home).toContain("Not a perfume");
     expect(home).toContain("Coming soon");
     expect(home).toContain("Between the");
-    expect(home).toContain('<span className="hero-tagline-line">Embrace the fragrance.</span><br /><em>Become isth.</em>');
+    expect(home).toContain('<span className="hero-tagline-line">Embrace the fragrance.</span><br /><span>Become isth.</span>');
+    expect(home).not.toContain("<em>Become isth.</em>");
     expect(home).not.toContain("A scent can");
     expect(home).not.toContain("change the air.");
     expect(home).not.toContain("isth composes modern signatures from notes that stay close, then open slowly.");
