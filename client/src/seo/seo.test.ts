@@ -8,17 +8,19 @@ const manifest = JSON.parse(readFileSync(new URL("../../public/manifest.webmanif
 const fallbackDocument = readFileSync(new URL("../../public/404.html", import.meta.url), "utf8");
 
 describe("technical SEO", () => {
-  it("gives each indexable public page the shared browser title plus its own description, canonical, and index directive", () => {
+  it("gives each indexable public page a unique descriptive title, description, canonical, and index directive", () => {
     const titles = INDEXABLE_SEO_PAGES.map((page) => page.title);
     const descriptions = INDEXABLE_SEO_PAGES.map((page) => page.description);
 
-    expect(new Set(titles)).toEqual(new Set(["isth Fragrance"]));
+    expect(titles).toEqual(["ISTH Fragrance", "ISTH Perfume Collection | ISTH Fragrance", "About ISTH | Fragrance House"]);
     expect(new Set(descriptions).size).toBe(INDEXABLE_SEO_PAGES.length);
     INDEXABLE_SEO_PAGES.forEach((page) => {
       const head = renderStaticSeoHead(page);
       expect(head).toContain(`<link rel="canonical" href="${SEO_ORIGIN}${page.canonicalPath}" />`);
       expect(head).toContain('<meta name="robots" content="index, follow" />');
       expect(head).toContain(`<meta property="og:url" content="${SEO_ORIGIN}${page.canonicalPath}" />`);
+      expect(head).toContain('<meta property="og:site_name" content="ISTH" />');
+      expect(head).toContain('<meta property="og:image" content="https://isth.in/assets/isth-editorial-about.webp" />');
       expect(head).toContain('<meta name="twitter:card" content="summary_large_image" />');
     });
   });
@@ -40,11 +42,19 @@ describe("technical SEO", () => {
 
   it("emits valid, content-supported JSON-LD without commerce claims that are not present on the site", () => {
     INDEXABLE_SEO_PAGES.forEach((page) => {
-      const document = JSON.parse(stringifyStructuredData(page)) as { "@graph": Array<{ "@type": string }> };
+      const document = JSON.parse(stringifyStructuredData(page)) as { "@graph": Array<{ "@type": string; name?: string; url?: string; logo?: string; sameAs?: string[] }> };
       const types = document["@graph"].map((node) => node["@type"]);
       expect(types).toContain("Organization");
       expect(types).toContain("WebSite");
       expect(types.some((type) => type === "WebPage" || type === "AboutPage")).toBe(true);
+      const organizations = document["@graph"].filter((node) => node["@type"] === "Organization");
+      expect(organizations).toHaveLength(1);
+      expect(organizations[0]).toMatchObject({
+        name: "ISTH",
+        url: "https://isth.in/",
+        logo: "https://isth.in/assets/isth-logo-111_06bb811c.svg",
+        sameAs: ["https://www.instagram.com/isth.in/"],
+      });
     });
 
     const collection = getStructuredData(SEO_PAGES.home);

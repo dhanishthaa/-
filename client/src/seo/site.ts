@@ -2,10 +2,10 @@ import { INSTAGRAM_URL } from "../data/brand";
 import { defaultProducts } from "../data/products";
 
 export const SEO_ORIGIN = "https://isth.in";
-export const SEO_SITE_NAME = "isth";
+export const SEO_SITE_NAME = "ISTH";
 export const SEO_LOCALE = "en_IN";
 export const SEO_LOGO_PATH = "/assets/isth-logo-111_06bb811c.svg";
-export const SEO_SOCIAL_IMAGE_PATH = "/assets/isth-hero-editorial_ed190768.png";
+export const SEO_SOCIAL_IMAGE_PATH = "/assets/isth-editorial-about.webp";
 
 export type SeoPageId = "landing" | "home" | "about" | "admin" | "not-found";
 
@@ -23,8 +23,8 @@ export const SEO_PAGES: Record<SeoPageId, SeoPage> = {
   landing: {
     id: "landing",
     canonicalPath: "/",
-    title: "isth Fragrance",
-    description: "isth composes modern fragrance signatures from notes that stay close, then open slowly.",
+    title: "ISTH Fragrance",
+    description: "Discover ISTH fragrances. Explore our signature perfume collection.",
     robots: "index, follow",
     indexable: true,
     socialImagePath: SEO_SOCIAL_IMAGE_PATH,
@@ -32,8 +32,8 @@ export const SEO_PAGES: Record<SeoPageId, SeoPage> = {
   home: {
     id: "home",
     canonicalPath: "/home/",
-    title: "isth Fragrance",
-    description: "Explore the isth fragrance collection: modern compositions shaped by intimate notes, quiet rituals, and personal presence.",
+    title: "ISTH Perfume Collection | ISTH Fragrance",
+    description: "Explore the ISTH perfume collection: modern fragrance compositions shaped by intimate notes, quiet rituals, and personal presence.",
     robots: "index, follow",
     indexable: true,
     socialImagePath: SEO_SOCIAL_IMAGE_PATH,
@@ -41,8 +41,8 @@ export const SEO_PAGES: Record<SeoPageId, SeoPage> = {
   about: {
     id: "about",
     canonicalPath: "/about/",
-    title: "isth Fragrance",
-    description: "Discover isth, a Gujarat fragrance house composing modern signatures around quiet moments, tactile memory, and evolving personal scent.",
+    title: "About ISTH | Fragrance House",
+    description: "Discover ISTH, a Gujarat fragrance house composing modern signatures around quiet moments, tactile memory, and evolving personal scent.",
     robots: "index, follow",
     indexable: true,
     socialImagePath: "/assets/isth-editorial-about.webp",
@@ -105,7 +105,7 @@ export function getStructuredData(page: SeoPage) {
     "@type": "Organization",
     "@id": `${SEO_ORIGIN}/#organization`,
     name: SEO_SITE_NAME,
-    url: SEO_ORIGIN,
+    url: `${SEO_ORIGIN}/`,
     logo: toAbsoluteUrl(SEO_LOGO_PATH),
     email: "isth.support@gmail.com",
     sameAs: [INSTAGRAM_URL],
@@ -120,7 +120,7 @@ export function getStructuredData(page: SeoPage) {
     "@type": "WebSite",
     "@id": `${SEO_ORIGIN}/#website`,
     name: SEO_SITE_NAME,
-    url: SEO_ORIGIN,
+    url: `${SEO_ORIGIN}/`,
     inLanguage: "en-IN",
     publisher: { "@id": `${SEO_ORIGIN}/#organization` },
   };
@@ -184,7 +184,7 @@ export function renderStaticSeoHead(page: SeoPage) {
     `<meta property="og:description" content="${description}" />`,
     `<meta property="og:url" content="${canonicalUrl}" />`,
     `<meta property="og:image" content="${imageUrl}" />`,
-    `<meta property="og:image:alt" content="${escapeHtml(`${SEO_SITE_NAME} Parfums editorial image`)}" />`,
+    `<meta property="og:image:alt" content="${escapeHtml(`${SEO_SITE_NAME} fragrance editorial image`)}" />`,
     `<meta name="twitter:card" content="summary_large_image" />`,
     `<meta name="twitter:title" content="${title}" />`,
     `<meta name="twitter:description" content="${description}" />`,

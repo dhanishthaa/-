@@ -2,7 +2,7 @@ export const DEFAULT_LOGO_URL = "/assets/isth-logo-111_06bb811c.svg";
 export const DEFAULT_WHATSAPP_NUMBER = "917859898490";
 export const DEFAULT_WHATSAPP_TEXT = "Hello isth, I am interested in purchasing.";
 export const BRAND_QUOTE = "Embrace the fragrance. Become isth.";
-export const INSTAGRAM_URL = "https://www.instagram.com/isth.in?utm_source=qr&igsh=MXVsNm96cWZvcHdicA==";
+export const INSTAGRAM_URL = "https://www.instagram.com/isth.in/";
 
 const LOGO_KEY = "isth-logo-cache";
 const VIDEO_KEY = "isth-video-cache";

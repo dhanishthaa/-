@@ -36,10 +36,14 @@ describe("isth editorial page integrity", () => {
   it("keeps the community CTAs below the contact section and linked to official social destinations", () => {
     const home = readProjectFile("client/src/pages/Home.tsx");
     const styles = readProjectFile("client/src/index.css");
+    const brand = readProjectFile("client/src/data/brand.ts");
 
     expect(home).toContain("Follow Our Journey");
     expect(home).toContain("Join Our Circle");
-    expect(home).toContain("https://www.instagram.com/isth.in?stkn=MXVsNm96cWZvcHdicA==");
+    expect(brand).toContain('export const INSTAGRAM_URL = "https://www.instagram.com/isth.in/";');
+    expect(home).toContain("href={INSTAGRAM_URL}");
+    expect(home).toContain('aria-label="Follow ISTH on Instagram"');
+    expect(home).toContain('className="footer-instagram"');
     expect(home).toContain("https://chat.whatsapp.com/GpVg3lY8eppEks5yo3C04e");
     expect(home).toContain("/assets/instagram-icon.png");
     expect(home).toContain("/assets/whatsapp-icon.png");

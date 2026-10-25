@@ -3,6 +3,10 @@ import { describe, expect, it } from "vitest";
 import { SEO_PAGES, renderStaticSeoHead } from "./seo/site";
 
 const indexDocument = readFileSync(new URL("../index.html", import.meta.url), "utf8");
+const routeDocuments = [
+  readFileSync(new URL("../home/index.html", import.meta.url), "utf8"),
+  readFileSync(new URL("../about/index.html", import.meta.url), "utf8"),
+];
 const routeBootstrap = readFileSync(new URL("../public/isth-route-bootstrap.js", import.meta.url), "utf8");
 
 describe("static-host security policy", () => {
@@ -27,6 +31,8 @@ describe("static-host security policy", () => {
 
   it("uses the centralized build-time SEO title system", () => {
     expect(indexDocument).toContain("<!--isth-seo-head-->");
-    expect(renderStaticSeoHead(SEO_PAGES.landing)).toContain("<title>isth Fragrance</title>");
+    expect(indexDocument).not.toContain("<title>");
+    routeDocuments.forEach((document) => expect(document).not.toContain("<title>"));
+    expect(renderStaticSeoHead(SEO_PAGES.landing)).toContain("<title>ISTH Fragrance</title>");
   });
 });
