@@ -28,7 +28,7 @@ describe("isth editorial page integrity", () => {
     expect(boundary).toContain("window.location.replace");
   });
 
-  it("keeps the hero community CTAs linked to the official social destinations", () => {
+  it("keeps the community CTAs below the contact section and linked to official social destinations", () => {
     const home = readProjectFile("client/src/pages/Home.tsx");
     const styles = readProjectFile("client/src/index.css");
 
@@ -38,8 +38,10 @@ describe("isth editorial page integrity", () => {
     expect(home).toContain("https://chat.whatsapp.com/GpVg3lY8eppEks5yo3C04e");
     expect(home).toContain("/assets/instagram-icon.png");
     expect(home).toContain("/assets/whatsapp-icon.png");
-    expect(home).toContain('className="hero-social-rows"');
-    expect(styles).toContain(".hero-social-button { display:inline-flex");
+    expect(home).not.toContain('className="hero-social-rows"');
+    expect(home).toContain('className="contact-social-rows"');
+    expect(home).toContain('className="contact-social-button"');
+    expect(styles).toContain(".contact-social-button { display:inline-flex");
     expect(styles).toContain("background:transparent");
   });
 
