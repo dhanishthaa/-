@@ -246,13 +246,17 @@ describe("isth editorial page integrity", () => {
     expect(home).toContain('<span>Parfums</span>');
     expect(home).not.toContain('<p className="eyebrow">Queries</p>');
     expect(home).toContain('const [navFolded, setNavFolded] = useState(false);');
-    expect(home).toContain('Math.abs(delta) >= 10');
+    expect(home).toContain('const directionThreshold = 12;');
+    expect(home).toContain('directionDistance += delta;');
+    expect(home).toContain('Math.abs(directionDistance) >= directionThreshold');
     expect(home).toContain('${navFolded ? "is-folded" : ""}');
     expect(home).toContain('className={`mobile-drawer ${menuOpen ? "is-open" : ""}`}');
     expect(product).not.toContain('className="product-film"');
     expect(product).not.toContain('className="product-spotlight"');
     expect(about).toContain('className="site-shell about-editorial');
     expect(about).toContain('const [navFolded, setNavFolded] = useState(false);');
+    expect(about).toContain('const directionThreshold = 12;');
+    expect(about).toContain('Math.abs(directionDistance) >= directionThreshold');
     expect(about).toContain('${navFolded ? "is-folded" : ""}');
     expect(landing).toContain('className={`landing-page ss1-landing');
     expect(styles).toContain(".editorial-home .desktop-nav a::after");

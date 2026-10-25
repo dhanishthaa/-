@@ -15,14 +15,31 @@ export default function About() {
   }, []);
 
   useEffect(() => {
+    const directionThreshold = 12;
     let lastScrollY = window.scrollY;
+    let direction = 0;
+    let directionDistance = 0;
     let frame = 0;
     const updateNavigation = () => {
       const nextScrollY = window.scrollY;
       const delta = nextScrollY - lastScrollY;
       setScrolled(nextScrollY > 40);
-      if (nextScrollY <= 24) setNavFolded(false);
-      else if (Math.abs(delta) >= 10) setNavFolded(delta > 0);
+      if (nextScrollY <= 24) {
+        direction = 0;
+        directionDistance = 0;
+        setNavFolded(false);
+      } else if (delta !== 0) {
+        const nextDirection = delta > 0 ? 1 : -1;
+        if (nextDirection !== direction) {
+          direction = nextDirection;
+          directionDistance = 0;
+        }
+        directionDistance += delta;
+        if (Math.abs(directionDistance) >= directionThreshold) {
+          setNavFolded(nextDirection > 0);
+          directionDistance = 0;
+        }
+      }
       lastScrollY = nextScrollY;
       frame = 0;
     };
