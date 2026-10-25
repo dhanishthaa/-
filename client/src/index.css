@@ -1057,9 +1057,10 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 }
 
 
-/* Navbar-to-hero layout correction: both sections remain in normal flow, so the hero begins at the navbar edge. */
+/* Navbar-to-hero layout correction: sticky flow preserves the navbar space while allowing scroll folding. */
 .editorial-home .site-nav {
-  position:relative;
+  position:sticky;
+  top:0;
   inset:auto;
   z-index:30;
 }
