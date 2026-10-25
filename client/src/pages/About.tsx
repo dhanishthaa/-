@@ -158,7 +158,7 @@ export default function About() {
               <span>Direct</span>
               <a href="mailto:isth.support@gmail.com">Email</a>
               <a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noreferrer">WhatsApp</a>
-              <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">Instagram</a>
+              <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">ISTH on Instagram</a>
             </div>
           </div>
         </div>

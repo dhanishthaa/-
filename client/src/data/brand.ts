@@ -3,6 +3,12 @@ export const DEFAULT_WHATSAPP_NUMBER = "917859898490";
 export const DEFAULT_WHATSAPP_TEXT = "Hello isth, I am interested in purchasing.";
 export const BRAND_QUOTE = "Embrace the fragrance. Become isth.";
 export const INSTAGRAM_URL = "https://www.instagram.com/isth.in/";
+export const PRODUCT_WHATSAPP_PREFIX = "Hi, can I please get more details on your product?";
+
+export function getProductWhatsAppUrl(productName: string) {
+  const message = `${PRODUCT_WHATSAPP_PREFIX} I’m interested in ${productName}.`;
+  return `https://wa.me/${DEFAULT_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+}
 
 const LOGO_KEY = "isth-logo-cache";
 const VIDEO_KEY = "isth-video-cache";

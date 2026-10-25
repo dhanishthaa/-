@@ -1,5 +1,5 @@
-import { DEFAULT_WHATSAPP_NUMBER, DEFAULT_WHATSAPP_TEXT, INSTAGRAM_URL } from "../data/brand";
-import { defaultProducts, getProductImageFallback, type Product } from "../data/products";
+import { getProductWhatsAppUrl, INSTAGRAM_URL } from "../data/brand";
+import { defaultProducts, findProductByRouteSlug, getProductImageFallback, getProductRouteSlug, type Product } from "../data/products";
 
 export const SEO_ORIGIN = "https://isth.in";
 export const SEO_SITE_NAME = "ISTH";
@@ -15,11 +15,12 @@ export type SeoPage = {
   canonicalPath: string;
   title: string;
   description: string;
-  robots: "index, follow" | "noindex, nofollow";
+  robots: "index, follow" | "noindex, follow" | "noindex, nofollow";
   indexable: boolean;
   socialImagePath: string;
   socialImageAlt?: string;
   productId?: string;
+  productSlug?: string;
   productName?: string;
   productDescription?: string;
   productImagePath?: string;
@@ -29,7 +30,7 @@ export const SEO_PAGES: Record<Exclude<SeoPageId, "product">, SeoPage> = {
   landing: {
     id: "landing",
     canonicalPath: "/",
-    title: "ISTH Perfumes & Fragrances",
+    title: "ISTH Perfumes & Fragrances | Official Website",
     description: "Discover ISTH perfumes and fragrances. Embrace the fragrance. Become isth.",
     robots: "index, follow",
     indexable: true,
@@ -82,9 +83,9 @@ export const SEO_PAGES: Record<Exclude<SeoPageId, "product">, SeoPage> = {
   },
 };
 
-export function getProductPagePath(productOrId: Pick<Product, "id"> | string) {
-  const id = typeof productOrId === "string" ? productOrId : productOrId.id;
-  return `/products/${id}/`;
+export function getProductPagePath(productOrId: Pick<Product, "id" | "name"> | string) {
+  const product = typeof productOrId === "string" ? { id: productOrId, name: productOrId } : productOrId;
+  return `/products/${getProductRouteSlug(product)}/`;
 }
 
 function truncateDescription(value: string, maxLength: number) {
@@ -97,11 +98,13 @@ function truncateDescription(value: string, maxLength: number) {
 
 export function getProductSeoPage(product: Product): SeoPage {
   const productImagePath = getProductImageFallback(product);
+  const productSlug = getProductRouteSlug(product);
   const title = `${product.name} Perfume | ISTH Fragrances`;
   const description = truncateDescription(`Discover ${product.name} perfume by ISTH. ${product.description} Ask about ordering on WhatsApp.`, 160);
   return {
     id: "product",
     productId: product.id,
+    productSlug,
     productName: product.name,
     productDescription: product.description,
     productImagePath,
@@ -130,8 +133,11 @@ export function getSeoPage(pathname: string): SeoPage {
   if (normalized === "/isth/frag/minda") return SEO_PAGES.admin;
   const productMatch = normalized.match(/^\/products\/([a-z0-9]+(?:-[a-z0-9]+)*)$/);
   if (productMatch) {
-    const product = defaultProducts.find((candidate) => candidate.id === productMatch[1]);
-    if (product) return getProductSeoPage(product);
+    const product = findProductByRouteSlug(productMatch[1]);
+    if (product) {
+      const page = getProductSeoPage(product);
+      return productMatch[1] === page.productSlug ? page : { ...page, robots: "noindex, follow", indexable: false };
+    }
   }
   return SEO_PAGES["not-found"];
 }
@@ -235,6 +241,17 @@ export function stringifyStructuredData(page: SeoPage) {
   return JSON.stringify(getStructuredData(page)).replace(/</g, "\\u003c");
 }
 
+export const PRODUCT_ROUTE_ALIASES = defaultProducts
+  .map((product) => ({ aliasSlug: product.id, canonicalPath: getProductPagePath(product), productName: product.name }))
+  .filter((alias) => alias.aliasSlug !== alias.canonicalPath.split("/").filter(Boolean).pop());
+
+export function renderStaticProductRedirect(targetPath: string, productName: string) {
+  const canonical = escapeHtml(toAbsoluteUrl(targetPath));
+  const safeTargetPath = escapeHtml(targetPath);
+  const title = escapeHtml(`${productName} Perfume | ISTH Fragrances`);
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8" /><meta name="robots" content="noindex, follow" /><link rel="canonical" href="${canonical}" /><meta http-equiv="refresh" content="0; url=${safeTargetPath}" /><title>${title}</title><script>window.location.replace(${JSON.stringify(targetPath)});</script></head><body><p>This ISTH fragrance page has moved. <a href="${safeTargetPath}">Open ${escapeHtml(productName)}</a>.</p></body></html>`;
+}
+
 export function renderStaticSeoHead(page: SeoPage) {
   const canonicalUrl = toAbsoluteUrl(page.canonicalPath);
   const imageUrl = toAbsoluteUrl(page.socialImagePath);
@@ -270,13 +287,13 @@ function renderProductStaticNoscript(page: SeoPage) {
   const imageMarkup = page.productImagePath
     ? `<img src="${escapeHtml(toAbsoluteUrl(page.productImagePath))}" alt="${escapeHtml(`${product.name} perfume bottle by ISTH`)}" />`
     : `<p role="img" aria-label="No product photograph is published for ${escapeHtml(product.name)}">Product photograph not available.</p>`;
-  const whatsappUrl = `https://wa.me/${DEFAULT_WHATSAPP_NUMBER}?text=${encodeURIComponent(`${DEFAULT_WHATSAPP_TEXT} ${product.name}.`)}`;
+  const whatsappUrl = getProductWhatsAppUrl(product.name);
   return `<main><nav aria-label="Breadcrumb"><a href="/">ISTH</a> / <a href="${SEO_PAGES.home.canonicalPath}">Perfume collection</a> / <span>${escapeHtml(product.name)}</span></nav><article><p>ISTH ${escapeHtml(product.collection)} fragrance</p><h1>${escapeHtml(product.name)}</h1>${imageMarkup}<p>${escapeHtml(product.description)}</p><h2>Listed fragrance notes</h2><p>${escapeHtml(product.notes)}</p><p>Ask ISTH on WhatsApp for current ordering details.</p><p><a href="${whatsappUrl}">Ask about ${escapeHtml(product.name)} on WhatsApp</a></p><p><a href="${SEO_PAGES.home.canonicalPath}">Return to the ISTH perfume collection</a></p></article></main>`;
 }
 
 function renderGuideStaticNoscript() {
   const rows = defaultProducts.map((product) => `<tr><th scope="row"><a href="${getProductPagePath(product)}">${escapeHtml(product.name)}</a></th><td>${escapeHtml(product.notes)}</td><td>${escapeHtml(product.description)}</td></tr>`).join("");
-  return `<main><nav aria-label="Breadcrumb"><a href="/">ISTH</a> / <a href="${SEO_PAGES.home.canonicalPath}">Perfume collection</a> / <span>Choosing a fragrance</span></nav><article><h1>How to choose a perfume: a guide to ISTH fragrance notes</h1><p>This guide compares only the names, notes, and descriptions currently published in the ISTH collection. It is not a ranking, and it makes no claims about ratings, wear time, or which fragrance is best for everyone.</p><h2>Start with the notes you recognize</h2><p>Choose a few listed notes that appeal to you, then compare the full combinations. For example, Kawaii Marshmallow lists marshmallow, vanilla chocolate, and musk; Éclat Courinné lists aqua, lavender, and citrus; Fiery Soul lists rum, kesar, and oud. These are the published note descriptions, not a top/middle/base breakdown.</p><h2>Read the composition description</h2><p>Use each product description to understand the character ISTH gives that composition. Compare the wording and the complete note list rather than assuming that one shared ingredient makes two fragrances the same.</p><h2>Compare the current collection</h2><table><thead><tr><th>ISTH fragrance</th><th>Listed notes</th><th>Published description</th></tr></thead><tbody>${rows}</tbody></table><h2>Ask before ordering</h2><p>Prices, sizes, and availability are not published in this catalog. Contact ISTH through the existing WhatsApp ordering link to ask for current details before placing an order.</p><p><a href="${SEO_PAGES.home.canonicalPath}">Browse the ISTH perfume collection</a></p></article></main>`;
+  return `<main><nav aria-label="Breadcrumb"><a href="/">ISTH</a> / <a href="${SEO_PAGES.home.canonicalPath}">Perfume collection</a> / <span>Choosing a fragrance</span></nav><article><h1>How to choose a perfume: a guide to ISTH fragrance notes</h1><p>This guide compares only the names, notes, and descriptions currently published in the ISTH collection. It is not a ranking, and it makes no claims about ratings, wear time, or which fragrance is best for everyone.</p><h2>Start with the notes you recognize</h2><p>Choose a few listed notes that appeal to you, then compare the full combinations. For example, Kawaii Marshmallow lists marshmallow, vanilla chocolate, and musk; First Love lists aqua, lavender, and citrus; Fiery Soul lists rum, kesar, and oud. These are the published note descriptions, not a top/middle/base breakdown.</p><h2>Read the composition description</h2><p>Use each product description to understand the character ISTH gives that composition. Compare the wording and the complete note list rather than assuming that one shared ingredient makes two fragrances the same.</p><h2>Compare the current collection</h2><table><thead><tr><th>ISTH fragrance</th><th>Listed notes</th><th>Published description</th></tr></thead><tbody>${rows}</tbody></table><h2>Ask before ordering</h2><p>Prices, sizes, and availability are not published in this catalog. Contact ISTH through the existing WhatsApp ordering link to ask for current details before placing an order.</p><p><a href="${SEO_PAGES.home.canonicalPath}">Browse the ISTH perfume collection</a></p></article></main>`;
 }
 
 export function renderStaticNoscript(page: SeoPage) {

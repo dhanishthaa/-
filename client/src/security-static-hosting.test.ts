@@ -33,6 +33,6 @@ describe("static-host security policy", () => {
     expect(indexDocument).toContain("<!--isth-seo-head-->");
     expect(indexDocument).not.toContain("<title>");
     routeDocuments.forEach((document) => expect(document).not.toContain("<title>"));
-    expect(renderStaticSeoHead(SEO_PAGES.landing)).toContain("<title>ISTH Perfumes &amp; Fragrances</title>");
+    expect(renderStaticSeoHead(SEO_PAGES.landing)).toContain("<title>ISTH Perfumes &amp; Fragrances | Official Website</title>");
   });
 });

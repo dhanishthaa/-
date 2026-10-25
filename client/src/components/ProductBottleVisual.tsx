@@ -3,11 +3,11 @@ import { getProductImageFallback, type Product } from "@/data/products";
 
 export default function ProductBottleVisual({ product, modal = false }: { product: Product; modal?: boolean }) {
   const imageMedia = product.media?.find((item) => item.kind === "image");
-  const [imageSource, setImageSource] = useState(imageMedia?.url || product.image || getProductImageFallback(product));
+  const [imageSource, setImageSource] = useState(imageMedia?.url || getProductImageFallback(product));
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
-    setImageSource(imageMedia?.url || product.image || getProductImageFallback(product));
+    setImageSource(imageMedia?.url || getProductImageFallback(product));
     setFailed(false);
   }, [imageMedia?.url, product.image, product.id]);
 

@@ -1,19 +1,35 @@
+import { useEffect, useState } from "react";
 import { ArrowLeft, MessageCircle } from "lucide-react";
 import { Link, useRoute } from "wouter";
 import ProductGallery from "@/components/ProductGallery";
-import { DEFAULT_WHATSAPP_NUMBER, INSTAGRAM_URL, readLogoUrl } from "@/data/brand";
-import { defaultProducts } from "@/data/products";
+import { DEFAULT_WHATSAPP_NUMBER, getProductWhatsAppUrl, INSTAGRAM_URL, readLogoUrl } from "@/data/brand";
+import { defaultProducts, findProductByRouteSlug, getProductRouteSlug, type Product } from "@/data/products";
+import { fetchRemoteProducts } from "@/lib/supabase";
+import { getProductPagePath } from "@/seo/site";
 
 export default function ProductDetail() {
   const [matched, params] = useRoute("/products/:productId");
-  const product = matched ? defaultProducts.find((candidate) => candidate.id === params?.productId) : undefined;
+  const [products, setProducts] = useState<Product[]>(defaultProducts);
+
+  useEffect(() => {
+    let active = true;
+    fetchRemoteProducts().then((remote) => { if (active && remote?.length) setProducts(remote); });
+    return () => { active = false; };
+  }, []);
+
+  const product = matched ? findProductByRouteSlug(params?.productId ?? "", products) : undefined;
+
+  useEffect(() => {
+    if (product && params?.productId && params.productId !== getProductRouteSlug(product)) {
+      window.location.replace(getProductPagePath(product));
+    }
+  }, [product, params?.productId]);
 
   if (!product) {
     return <main className="product-detail-not-found"><h1>Fragrance not found</h1><p>This fragrance is not part of the current ISTH collection.</p><Link href="/home/">Browse the collection</Link></main>;
   }
 
-  const whatsappText = `Hello isth, I am interested in purchasing ${product.name}.`;
-  const whatsappUrl = `https://wa.me/${DEFAULT_WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappText)}`;
+  const whatsappUrl = getProductWhatsAppUrl(product.name);
 
   return (
     <div className="site-shell about-editorial product-detail-page">
@@ -66,7 +82,7 @@ export default function ProductDetail() {
           <div><Link href="/home/" className="footer-brand"><img className="brand-logo brand-logo-dark" src={readLogoUrl()} alt="ISTH" /></Link><p>estd. 2021</p></div>
           <div className="footer-links">
             <div><span>Explore</span><Link href="/home/#collection">The collection</Link><Link href="/about/">About ISTH</Link><Link href="/guides/choosing-a-fragrance/">Choosing a fragrance</Link></div>
-            <div><span>Direct</span><a href="mailto:isth.support@gmail.com">Email</a><a href={`https://wa.me/${DEFAULT_WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer">WhatsApp</a><a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">Instagram</a></div>
+            <div><span>Direct</span><a href="mailto:isth.support@gmail.com">Email</a><a href={`https://wa.me/${DEFAULT_WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer">WhatsApp</a><a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">ISTH on Instagram</a></div>
           </div>
         </div>
         <div className="footer-bottom"><span>© 2026 isth Fragrance House</span><span>Gujarat, India / Mon–Sat, 10am–7pm IST</span></div>

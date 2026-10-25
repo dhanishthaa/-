@@ -152,7 +152,7 @@ describe("isth editorial page integrity", () => {
     const visual = readProjectFile("client/src/components/ProductBottleVisual.tsx");
     const styles = readProjectFile("client/src/index.css");
 
-    expect(products).toContain('KAWAII_MARSHMALLOW_DESKTOP_IMAGE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663886534315/FQmBYYXPrceKGEBf.jpg"');
+    expect(products).toContain('"kawaii-marshmallow": "/assets/kawaiimarshmallow.png"');
     expect(products).toContain('product.image.startsWith("/manus-storage/")');
     expect(products).toContain("export function normalizeProductMedia");
     expect(visual).toContain('className={`bottle-stage ${modal ? "bottle-stage-modal" : ""} ${visibleImage ? "has-image" : "is-placeholder"}`}');

@@ -5,7 +5,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { defineConfig, type Plugin, type ViteDevServer } from "vite";
 import { vitePluginManusRuntime } from "vite-plugin-manus-runtime";
-import { INDEXABLE_SEO_PAGES, SEO_PAGES, renderStaticNoscript, renderStaticSeoHead, type SeoPageId } from "./client/src/seo/site";
+import { INDEXABLE_SEO_PAGES, PRODUCT_ROUTE_ALIASES, SEO_PAGES, renderStaticNoscript, renderStaticProductRedirect, renderStaticSeoHead, type SeoPageId } from "./client/src/seo/site";
 
 // =============================================================================
 // Manus Debug Collector - Vite Plugin
@@ -238,10 +238,15 @@ function vitePluginStaticSeoDocuments(): Plugin {
         let html = replaceBlock(templateHtml, "<!--isth-seo-head-start-->", "<!--isth-seo-head-end-->", renderStaticSeoHead(page));
         html = replaceBlock(html, "<!--isth-seo-noscript-start-->", "<!--isth-seo-noscript-end-->", renderStaticNoscript(page));
         html = html.replace(/<link rel="preload" as="image"[^>]*\/>\s*/g, "");
-        const fileName = page.id === "product" ? `products/${page.productId}/index.html` : "guides/choosing-a-fragrance/index.html";
+        const fileName = page.id === "product" ? `products/${page.productSlug}/index.html` : "guides/choosing-a-fragrance/index.html";
         const filePath = path.join(outputDirectory, fileName);
         fs.mkdirSync(path.dirname(filePath), { recursive: true });
         fs.writeFileSync(filePath, html, "utf8");
+      });
+      PRODUCT_ROUTE_ALIASES.forEach((alias) => {
+        const aliasPath = path.join(outputDirectory, "products", alias.aliasSlug, "index.html");
+        fs.mkdirSync(path.dirname(aliasPath), { recursive: true });
+        fs.writeFileSync(aliasPath, renderStaticProductRedirect(alias.canonicalPath, alias.productName), "utf8");
       });
     },
   };

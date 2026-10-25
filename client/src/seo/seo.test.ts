@@ -14,7 +14,7 @@ describe("technical SEO", () => {
     const descriptions = INDEXABLE_SEO_PAGES.map((page) => page.description);
 
     expect(titles.slice(0, 4)).toEqual([
-      "ISTH Perfumes & Fragrances",
+      "ISTH Perfumes & Fragrances | Official Website",
       "ISTH Perfume Collection | ISTH Fragrance",
       "About ISTH | Fragrance House",
       "How to Choose a Perfume | ISTH Fragrance Guide",
@@ -32,7 +32,7 @@ describe("technical SEO", () => {
       expect(head).toContain(`<meta property="og:image" content="${toAbsoluteUrl(page.socialImagePath)}" />`);
       expect(head).toContain('<meta name="twitter:card" content="summary_large_image" />');
     });
-    expect(renderStaticSeoHead(SEO_PAGES.landing)).toContain("<title>ISTH Perfumes &amp; Fragrances</title>");
+    expect(renderStaticSeoHead(SEO_PAGES.landing)).toContain("<title>ISTH Perfumes &amp; Fragrances | Official Website</title>");
     expect(SEO_PAGES.landing.description).toBe("Discover ISTH perfumes and fragrances. Embrace the fragrance. Become isth.");
   });
 
@@ -47,8 +47,10 @@ describe("technical SEO", () => {
       expect(page.title).toContain(product.name);
       expect(page.description).toContain(product.name);
     });
-    expect(getSeoPage("/products/first-love/").indexable).toBe(false);
-    expect(getSeoPage("/products/imperial/").indexable).toBe(false);
+    expect(getSeoPage("/products/first-love/").indexable).toBe(true);
+    expect(getSeoPage("/products/imperial/").indexable).toBe(true);
+    expect(getSeoPage("/products/eclat-courinne/").indexable).toBe(false);
+    expect(getSeoPage("/products/not-a-fragrance/").indexable).toBe(false);
   });
 
   it("keeps administration and fallback documents out of search indexes", () => {
@@ -102,6 +104,9 @@ describe("technical SEO", () => {
     expect(body).toContain(product.notes);
     expect(body).toContain("https://wa.me/917859898490");
     expect(body).not.toMatch(/₹|rating|review|price|in stock/i);
+    const guide = renderStaticNoscript(SEO_PAGES.guide);
+    expect(guide).toContain("First Love lists aqua, lavender, and citrus");
+    expect(guide).not.toContain("Éclat Courinné");
     expect(body).toContain('href="/home/"');
   });
 

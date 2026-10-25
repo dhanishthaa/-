@@ -1,14 +1,13 @@
 import { type CSSProperties } from "react";
 import { ArrowUpRight, MessageCircle } from "lucide-react";
 import { Link } from "wouter";
+import { getProductWhatsAppUrl } from "@/data/brand";
 import type { Product } from "@/data/products";
 import ProductBottleVisual from "@/components/ProductBottleVisual";
-
-const whatsappNumber = "917859898490";
-const whatsappText = "Hi, can I please get more details on your product?";
+import { getProductPagePath } from "@/seo/site";
 
 export default function ProductBottle({ product, compact = false, onOpen }: { product: Product; compact?: boolean; onOpen?: (product: Product) => void }) {
-  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`${whatsappText} I’m interested in ${product.name}.`)}`;
+  const whatsappUrl = getProductWhatsAppUrl(product.name);
 
   return (
     <article className={`product-card ${product.id === "kawaii-marshmallow" ? "is-kawaii" : ""} ${product.featured ? "is-featured" : ""} ${compact ? "is-compact" : ""}`} style={{ "--product-tone": product.color } as CSSProperties}>
@@ -17,7 +16,7 @@ export default function ProductBottle({ product, compact = false, onOpen }: { pr
         <span className="product-open"><ArrowUpRight size={16} strokeWidth={1.4} /></span>
       </button>
       <div className="product-card-copy">
-        <div><h3><Link className="product-title-link" href={`/products/${product.id}/`}>{product.name}</Link></h3></div>
+        <div><h3><Link className="product-title-link" href={getProductPagePath(product)}>{product.name}</Link></h3></div>
         <button className="product-buy" onClick={() => window.open(whatsappUrl, "_blank", "noopener,noreferrer")}><MessageCircle size={13} /> Buy now</button>
       </div>
       <p className="product-notes">{product.notes}</p>
