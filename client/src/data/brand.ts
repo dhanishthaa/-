@@ -1,4 +1,4 @@
-export const DEFAULT_LOGO_URL = "/assets/isth-logo-111_06bb811c.svg";
+export const DEFAULT_LOGO_URL = "/assets/isth-logo-20261026.svg";
 export const DEFAULT_WHATSAPP_NUMBER = "917859898490";
 export const DEFAULT_WHATSAPP_TEXT = "Hello isth, I am interested in purchasing.";
 export const BRAND_QUOTE = "Embrace the fragrance. Become isth.";
@@ -10,7 +10,7 @@ export function getProductWhatsAppUrl(productName: string) {
   return `https://wa.me/${DEFAULT_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 }
 
-const LOGO_KEY = "isth-logo-cache";
+const LOGO_KEY = "isth-logo-cache-v2";
 const VIDEO_KEY = "isth-video-cache";
 
 function readCachedAsset(key: string, fallback: string) {

@@ -83,7 +83,7 @@ describe("technical SEO", () => {
       expect(organizations[0]).toMatchObject({
         name: "ISTH",
         url: "https://isth.in/",
-        logo: "https://isth.in/assets/isth-logo-111_06bb811c.svg",
+        logo: "https://isth.in/assets/isth-logo-20261026.svg",
         sameAs: ["https://www.instagram.com/isth.in/"],
       });
     });

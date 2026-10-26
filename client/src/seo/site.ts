@@ -4,7 +4,7 @@ import { defaultProducts, findProductByRouteSlug, getProductImageFallback, getPr
 export const SEO_ORIGIN = "https://isth.in";
 export const SEO_SITE_NAME = "ISTH";
 export const SEO_LOCALE = "en_IN";
-export const SEO_LOGO_PATH = "/assets/isth-logo-111_06bb811c.svg";
+export const SEO_LOGO_PATH = "/assets/isth-logo-20261026.svg";
 export const SEO_SOCIAL_IMAGE_PATH = "/assets/isth-editorial-about.webp";
 export const GUIDE_CANONICAL_PATH = "/guides/choosing-a-fragrance/";
 
