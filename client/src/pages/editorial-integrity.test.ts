@@ -4,12 +4,18 @@ import { describe, expect, it } from "vitest";
 const readProjectFile = (path: string) => readFileSync(path, "utf8");
 
 describe("isth editorial page integrity", () => {
-  it("keeps the Home page editorial scope and protected product section copy", () => {
+  it("keeps the Home page editorial scope while removing the intro strip and top gap", () => {
     const home = readProjectFile("client/src/pages/Home.tsx");
+    const styles = readProjectFile("client/src/index.css");
 
     expect(home).toContain('className="site-shell editorial-home"');
     expect(home).toContain('ref={editorialRootRef}');
-    expect(home).toContain('className="collection-section editorial-motion-panel"');
+    expect(home).toContain('className="collection-section"');
+    expect(home).not.toContain('className="collection-section editorial-motion-panel"');
+    expect(home).not.toContain('className="intro-strip"');
+    expect(home).not.toContain("For the moment");
+    expect(home).not.toContain("A considered collection of ten fragrances for the rituals, rooms, and people that make a day feel like your own.");
+    expect(styles).toContain('.editorial-home .collection-section { position:relative; padding-top:0; background:#fff; }');
     expect(home).toContain('className="quote-video-section editorial-motion-panel"');
     expect(home).toContain("Find your");
     expect(home).toContain('className="eyebrow catalog-label">More compositions');
