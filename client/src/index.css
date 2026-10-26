@@ -1340,9 +1340,9 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
   .editorial-home .home-hero h1 { top:-32px; }
 }
 
-/* Phone-only hamburger drawer: narrower again, with half-size menu labels and full-height right anchoring. */
+/* Phone-only hamburger drawer: compact spacing and same-tone translucent glass, with full-height right anchoring. */
 @media (max-width:620px) {
-  .mobile-drawer { width:min(68vw,260px); max-width:100vw; padding-inline:clamp(22px,6vw,28px); }
-  .mobile-drawer nav { font-size:16px; }
+  .mobile-drawer { width:min(68vw,260px); max-width:100vw; padding-inline:clamp(22px,6vw,28px); background:rgba(17,17,17,.76); backdrop-filter:blur(16px) saturate(120%); -webkit-backdrop-filter:blur(16px) saturate(120%); }
+  .mobile-drawer nav { font-size:16px; gap:12px; }
   .mobile-drawer nav a { display:flex; align-items:center; min-height:44px; }
 }
