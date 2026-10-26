@@ -244,6 +244,9 @@ describe("isth editorial page integrity", () => {
     const about = readProjectFile("client/src/pages/About.tsx");
     const landing = readProjectFile("client/src/pages/Landing.tsx");
     const product = readProjectFile("client/src/components/ProductBottle.tsx");
+    const productDetail = readProjectFile("client/src/pages/ProductDetail.tsx");
+    const fragranceGuide = readProjectFile("client/src/pages/ChoosingAFragrance.tsx");
+    const navbarHook = readProjectFile("client/src/hooks/useAutoHideNavbar.ts");
     const styles = readProjectFile("client/src/index.css");
 
     expect(home).toContain('import gsap from "gsap";');
@@ -256,19 +259,21 @@ describe("isth editorial page integrity", () => {
     expect(home).toContain('className="contact-lockup" aria-label="isth Parfums"');
     expect(home).toContain('<span>Parfums</span>');
     expect(home).not.toContain('<p className="eyebrow">Queries</p>');
-    expect(home).toContain('const [navFolded, setNavFolded] = useState(false);');
-    expect(home).toContain('const directionThreshold = 12;');
-    expect(home).toContain('directionDistance += delta;');
-    expect(home).toContain('Math.abs(directionDistance) >= directionThreshold');
+    expect(home).toContain('useAutoHideNavbar(menuOpen, 20)');
     expect(home).toContain('${navFolded ? "is-folded" : ""}');
     expect(home).toContain('className={`mobile-drawer ${menuOpen ? "is-open" : ""}`}');
     expect(product).not.toContain('className="product-film"');
     expect(product).not.toContain('className="product-spotlight"');
     expect(about).toContain('className="site-shell about-editorial');
-    expect(about).toContain('const [navFolded, setNavFolded] = useState(false);');
-    expect(about).toContain('const directionThreshold = 12;');
-    expect(about).toContain('Math.abs(directionDistance) >= directionThreshold');
+    expect(about).toContain('useAutoHideNavbar(menuOpen, 40)');
     expect(about).toContain('${navFolded ? "is-folded" : ""}');
+    expect(productDetail).toContain('useAutoHideNavbar()');
+    expect(productDetail).toContain('${navFolded ? "is-folded" : ""}');
+    expect(fragranceGuide).toContain('useAutoHideNavbar()');
+    expect(fragranceGuide).toContain('${navFolded ? "is-folded" : ""}');
+    expect(navbarHook).toContain('const DIRECTION_THRESHOLD = 12;');
+    expect(navbarHook).toContain('setNavFolded(nextDirection > 0);');
+    expect(navbarHook).toContain('prefers-reduced-motion: reduce');
     expect(landing).toContain('className={`landing-page ss1-landing');
     expect(styles).toContain(".editorial-home .desktop-nav a::after");
     expect(styles).not.toContain(".editorial-home .collection-editorial-photo::after");

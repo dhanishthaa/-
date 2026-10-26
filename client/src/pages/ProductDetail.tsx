@@ -3,11 +3,13 @@ import { ArrowLeft, MessageCircle } from "lucide-react";
 import { Link, useRoute } from "wouter";
 import ProductGallery from "@/components/ProductGallery";
 import { DEFAULT_WHATSAPP_NUMBER, getProductWhatsAppUrl, INSTAGRAM_URL, readLogoUrl } from "@/data/brand";
+import { useAutoHideNavbar } from "@/hooks/useAutoHideNavbar";
 import { defaultProducts, findProductByRouteSlug, getProductRouteSlug, type Product } from "@/data/products";
 import { fetchRemoteProducts } from "@/lib/supabase";
 import { getProductPagePath } from "@/seo/site";
 
 export default function ProductDetail() {
+  const { navFolded } = useAutoHideNavbar();
   const [matched, params] = useRoute("/products/:productId");
   const [products, setProducts] = useState<Product[]>(defaultProducts);
 
@@ -33,7 +35,7 @@ export default function ProductDetail() {
 
   return (
     <div className="site-shell about-editorial product-detail-page">
-      <header className="site-nav is-scrolled">
+      <header className={`site-nav is-scrolled ${navFolded ? "is-folded" : ""}`}>
         <Link href="/home/" className="site-brand" aria-label="ISTH perfume collection">
           <img className="brand-logo brand-logo-dark" src={readLogoUrl()} alt="ISTH" />
         </Link>

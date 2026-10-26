@@ -2,62 +2,17 @@ import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { Menu, MessageCircle, X } from "lucide-react";
 import { DEFAULT_WHATSAPP_NUMBER, DEFAULT_WHATSAPP_TEXT, INSTAGRAM_URL, readLogoUrl } from "@/data/brand";
+import { useAutoHideNavbar } from "@/hooks/useAutoHideNavbar";
 
 export default function About() {
-  const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [navFolded, setNavFolded] = useState(false);
+  const { scrolled, navFolded } = useAutoHideNavbar(menuOpen, 40);
   const whatsappNumber = DEFAULT_WHATSAPP_NUMBER;
   const whatsappText = DEFAULT_WHATSAPP_TEXT;
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
   }, []);
-
-  useEffect(() => {
-    const directionThreshold = 12;
-    let lastScrollY = window.scrollY;
-    let direction = 0;
-    let directionDistance = 0;
-    let frame = 0;
-    const updateNavigation = () => {
-      const nextScrollY = window.scrollY;
-      const delta = nextScrollY - lastScrollY;
-      setScrolled(nextScrollY > 40);
-      if (nextScrollY <= 24) {
-        direction = 0;
-        directionDistance = 0;
-        setNavFolded(false);
-      } else if (delta !== 0) {
-        const nextDirection = delta > 0 ? 1 : -1;
-        if (nextDirection !== direction) {
-          direction = nextDirection;
-          directionDistance = 0;
-        }
-        directionDistance += delta;
-        if (Math.abs(directionDistance) >= directionThreshold) {
-          setNavFolded(nextDirection > 0);
-          directionDistance = 0;
-        }
-      }
-      lastScrollY = nextScrollY;
-      frame = 0;
-    };
-    const onScroll = () => {
-      if (!frame) frame = window.requestAnimationFrame(updateNavigation);
-    };
-
-    if (menuOpen) {
-      setNavFolded(false);
-      return;
-    }
-    updateNavigation();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      if (frame) window.cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", onScroll);
-    };
-  }, [menuOpen]);
 
   return (
     <div className="site-shell about-editorial bg-[#F5F1EB] text-[#111111] font-sans selection:bg-[#5B0D18] selection:text-[#F5F1EB]">

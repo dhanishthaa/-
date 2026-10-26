@@ -11,6 +11,7 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } fr
 import { defaultProducts, type Product } from "@/data/products";
 import { DEFAULT_HERO_CAROUSEL, fetchPublicHeroCarousel, fetchRemoteProducts, type HeroCarouselSettings } from "@/lib/supabase";
 import { DEFAULT_WHATSAPP_NUMBER, DEFAULT_WHATSAPP_TEXT, INSTAGRAM_URL, readLogoUrl } from "@/data/brand";
+import { useAutoHideNavbar } from "@/hooks/useAutoHideNavbar";
 
 const whatsappNumber = DEFAULT_WHATSAPP_NUMBER;
 const whatsappText = DEFAULT_WHATSAPP_TEXT;
@@ -19,8 +20,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [navFolded, setNavFolded] = useState(false);
+  const { scrolled, navFolded } = useAutoHideNavbar(menuOpen, 20);
   const [products, setProducts] = useState<Product[]>(defaultProducts);
   const [heroCarousel, setHeroCarousel] = useState<HeroCarouselSettings>(DEFAULT_HERO_CAROUSEL);
   const [heroIndex, setHeroIndex] = useState(0);
@@ -59,51 +59,6 @@ export default function Home() {
   const previousMobileHero = mobileHeroSlides[heroPreviousIndex % mobileHeroSlides.length] ?? currentMobileHero;
   const pauseHeroForPointer = () => { if (window.matchMedia("(pointer:fine)").matches) setHeroPaused(true); };
   const resumeHeroForPointer = () => { if (window.matchMedia("(pointer:fine)").matches) setHeroPaused(false); };
-
-  useEffect(() => {
-    const directionThreshold = 12;
-    let lastScrollY = window.scrollY;
-    let direction = 0;
-    let directionDistance = 0;
-    let frame = 0;
-    const updateNavigation = () => {
-      const nextScrollY = window.scrollY;
-      const delta = nextScrollY - lastScrollY;
-      setScrolled(nextScrollY > 20);
-      if (nextScrollY <= 24) {
-        direction = 0;
-        directionDistance = 0;
-        setNavFolded(false);
-      } else if (delta !== 0) {
-        const nextDirection = delta > 0 ? 1 : -1;
-        if (nextDirection !== direction) {
-          direction = nextDirection;
-          directionDistance = 0;
-        }
-        directionDistance += delta;
-        if (Math.abs(directionDistance) >= directionThreshold) {
-          setNavFolded(nextDirection > 0);
-          directionDistance = 0;
-        }
-      }
-      lastScrollY = nextScrollY;
-      frame = 0;
-    };
-    const onScroll = () => {
-      if (!frame) frame = window.requestAnimationFrame(updateNavigation);
-    };
-
-    if (menuOpen) {
-      setNavFolded(false);
-      return;
-    }
-    updateNavigation();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      if (frame) window.cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", onScroll);
-    };
-  }, [menuOpen]);
 
   useLayoutEffect(() => {
     const root = editorialRootRef.current;

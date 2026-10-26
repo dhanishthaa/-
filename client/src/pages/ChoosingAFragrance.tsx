@@ -1,13 +1,15 @@
 import { ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 import { DEFAULT_WHATSAPP_NUMBER, INSTAGRAM_URL, readLogoUrl } from "@/data/brand";
+import { useAutoHideNavbar } from "@/hooks/useAutoHideNavbar";
 import { defaultProducts } from "@/data/products";
 import { getProductPagePath } from "@/seo/site";
 
 export default function ChoosingAFragrance() {
+  const { navFolded } = useAutoHideNavbar();
   return (
     <div className="site-shell about-editorial fragrance-guide-page">
-      <header className="site-nav is-scrolled">
+      <header className={`site-nav is-scrolled ${navFolded ? "is-folded" : ""}`}>
         <Link href="/home/" className="site-brand" aria-label="ISTH perfume collection"><img className="brand-logo brand-logo-dark" src={readLogoUrl()} alt="ISTH" /></Link>
         <nav className="desktop-nav" aria-label="Main navigation"><Link href="/home/">Perfume collection</Link><Link href="/about/">About ISTH</Link></nav>
         <div className="site-actions"><Link href="/home/#collection" className="action-link">All fragrances</Link></div>
