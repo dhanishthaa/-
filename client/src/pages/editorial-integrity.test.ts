@@ -18,7 +18,7 @@ describe("isth editorial page integrity", () => {
     expect(styles).toContain('.editorial-home .collection-section { position:relative; padding-top:clamp(48px,6vw,88px); background:#fff; }');
     expect(home).toContain('className="quote-video-section editorial-motion-panel"');
     expect(home).toContain("Find your");
-    expect(home).toContain('className="eyebrow catalog-label">More compositions');
+    expect(home).toContain('className="eyebrow catalog-label">THE COLLECTION');
     expect(home).not.toContain("The rest of the library opens in its own time.");
     expect(home).toContain("Not a perfume");
     expect(home).toContain("Coming soon");
