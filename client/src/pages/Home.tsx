@@ -113,7 +113,6 @@ export default function Home() {
     if (reduceMotion || coarsePointer) return;
 
     const context = gsap.context(() => {
-      const intro = root.querySelector(".intro-strip");
       const heroTimeline = gsap.timeline({ defaults: { ease: "power2.out" } });
       heroTimeline
         .from(".home-hero .hero-identity", { autoAlpha: 0, y: 22, duration: 0.72 })
@@ -129,14 +128,6 @@ export default function Home() {
         });
       }
 
-      if (intro) {
-        gsap.from(intro, {
-          y: 34,
-          duration: 0.9,
-          ease: "power2.out",
-          scrollTrigger: { trigger: intro, start: "top 82%", once: true },
-        });
-      }
 
       gsap.utils.toArray<HTMLElement>(".editorial-motion-panel").forEach((panel) => {
         gsap.from(panel, {
@@ -186,7 +177,6 @@ export default function Home() {
         <div className="hero-caption" aria-hidden="true" />
       </section>
 
-      <section className="intro-strip"><Reveal><h2>For the moment<br /><em>that stays.</em></h2></Reveal><Reveal delay={100}><p className="intro-copy">A considered collection of ten fragrances for the rituals, rooms, and people that make a day feel like your own.</p></Reveal></section>
       <section id="collection" className="collection-section editorial-motion-panel"><div className="section-heading"><Reveal><h2>Find your<br /><em>signature.</em></h2></Reveal><Reveal delay={80}><p>Each isth composition is made to be worn close. Browse by feeling, not by family.</p></Reveal></div>
         <Reveal className="collection-editorial-photo" delay={100}><div aria-hidden="true" /></Reveal>
         <div className="featured-grid">{featured.map((product, index) => <Reveal key={product.id} delay={index * 80}><ProductBottle product={product} onOpen={openProduct} /></Reveal>)}<Reveal delay={150} className="collection-note"><div className="note-card"><h3>Not a perfume<br /><em>for everyone.</em></h3><p>It is a signature for the person who found it.</p><a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`} target="_blank">Ask the house <MoveUpRight size={14} /></a></div></Reveal></div>
