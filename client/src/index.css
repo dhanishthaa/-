@@ -345,7 +345,7 @@ em { font-style:italic; }
 .quote-video-section { min-height:720px; position:relative; overflow:hidden; display:flex; align-items:flex-end; padding:clamp(80px,12vw,150px) clamp(20px,9vw,140px); background:#161214; color:var(--ivory); isolation:isolate; }
 .quote-video-backdrop { position:absolute; inset:0; z-index:-2; pointer-events:none; background:linear-gradient(90deg,rgba(17,17,17,.9),rgba(17,17,17,.3)),url('/assets/isth-floral-forest-atmosphere_855c0ca2.png') center/cover; }
 .quote-video-backdrop::after { content:""; position:absolute; inset:0; background:radial-gradient(circle at 70% 46%,rgba(181,154,98,.18),transparent 20%),linear-gradient(180deg,transparent,rgba(17,17,17,.55)); mix-blend-mode:screen; }
-.quote-video-copy { position:absolute; left:clamp(20px,9vw,140px); right:clamp(20px,9vw,140px); bottom:clamp(56px,8vw,110px); z-index:2; max-width:760px; }
+.quote-video-copy { position:absolute; left:clamp(20px,9vw,140px); right:clamp(20px,9vw,140px); bottom:clamp(36px,6vw,86px); z-index:2; max-width:760px; }
 .quote-video-copy h2 { display:flex; flex-direction:column; gap:.16em; margin:24px 0 38px; font:400 clamp(24px,3vw,39px)/1.08 'Raleway',var(--sans); letter-spacing:-.04em; }
 .quote-video-copy h2 span { white-space:nowrap; }
 .quote-video-meta { position:absolute; inset:auto clamp(20px,4vw,56px) 24px; display:flex; justify-content:space-between; color:rgba(245,241,235,.55); font:9px var(--mono); letter-spacing:.14em; text-transform:uppercase; }
@@ -494,7 +494,7 @@ em { font-style:italic; }
 
 @media (max-width:620px) {
   .editorial-home .quote-video-section { align-items:flex-end; min-height:clamp(520px,130vw,620px); padding:clamp(66px,12svh,92px) 20px 72px; }
-  .editorial-home .quote-video-copy { left:20px; right:20px; bottom:72px; width:auto; margin:0; padding:0; }
+  .editorial-home .quote-video-copy { left:20px; right:20px; bottom:48px; width:auto; margin:0; padding:0; }
   .editorial-home .quote-video-copy h2 { margin:0 0 32px; }
   .editorial-home .quote-video-copy .cherry-button { margin-bottom:0; }
   .editorial-home .coming-soon { margin-top:48px; margin-bottom:48px; }
