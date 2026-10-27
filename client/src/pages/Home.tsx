@@ -139,7 +139,7 @@ export default function Home() {
         <div className="catalog-grid">{more.map((product, index) => <Reveal key={product.id} delay={(index % 3) * 60}><ProductBottle product={product} compact onOpen={openProduct} /></Reveal>)}</div>
       </section>
 
-      <section className="quote-video-section editorial-motion-panel"><div className="quote-video-backdrop" aria-hidden="true" /><div className="quote-video-copy"><h2><span>Embrace the fragrance.</span><span>Become isth.</span></h2><a className="cherry-button" href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`} target="_blank" rel="noreferrer"><MessageCircle size={17} /> Queries</a></div></section>
+      <section className="quote-video-section editorial-motion-panel"><div className="quote-video-backdrop" aria-hidden="true" /><div className="quote-video-copy"><h2><span>Live is not just about living and surviving.</span><span>It's about feeling it, enjoying it, and making memories.</span></h2><a className="cherry-button" href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`} target="_blank" rel="noreferrer"><MessageCircle size={17} /> Queries</a></div></section>
 
       <section id="nakshatra" className="nakshatra-section editorial-motion-panel"><div className="nakshatra-texture" aria-hidden="true" /><div className="nakshatra-inner"><h2>NAKSHATRA<br /><em>collection.</em></h2><p>A new premium segment is taking shape. Ten new compositions, arriving when the night is right.</p><span className="coming-soon">Coming soon <span>—</span> isth</span></div></section>
 
