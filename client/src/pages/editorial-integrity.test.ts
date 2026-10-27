@@ -21,10 +21,10 @@ describe("isth editorial page integrity", () => {
     expect(home).toContain('className="eyebrow catalog-label">THE COLLECTION');
     expect(home).not.toContain("The rest of the library opens in its own time.");
     expect(home).toContain("Not a perfume");
-    expect(home).toContain("Coming soon");
+    expect(home).toContain("<Atelier />");
     expect(home).toContain("Between the");
-    expect(home).toContain('<span className="hero-tagline-line">Embrace the fragrance.</span><br /><span>Become isth.</span>');
-    expect(home).toContain('<span className="nakshatra-title-main">NAKSHATRA</span><span className="nakshatra-title-script">Collection.</span>');
+    expect(home).toContain('content("home-hero-tagline"');
+    expect(home).not.toContain('className="nakshatra-section editorial-motion-panel"');
     expect(home).not.toContain("<em>Become isth.</em>");
     expect(home).not.toContain("A scent can");
     expect(home).not.toContain("change the air.");
@@ -254,7 +254,8 @@ describe("isth editorial page integrity", () => {
     expect(home).toContain('gsap.registerPlugin(ScrollTrigger);');
     expect(home).toContain('window.matchMedia("(prefers-reduced-motion: reduce)")');
     expect(home).toContain('window.matchMedia("(pointer: coarse)")');
-    expect(home).toContain('className="nakshatra-section editorial-motion-panel"');
+    expect(home).toContain('import Atelier from "@/components/Atelier";');
+    expect(home).toContain('<Atelier />');
     expect(home).toContain('className="story-section editorial-motion-panel"');
     expect(home).toContain('className="contact-section editorial-motion-panel"');
     expect(home).toContain('className="contact-lockup" aria-label="isth Parfums"');

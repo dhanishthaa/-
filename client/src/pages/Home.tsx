@@ -7,9 +7,10 @@ import { Link } from "wouter";
 import Reveal from "@/components/Reveal";
 import ProductBottle from "@/components/ProductBottle";
 import ProductGallery from "@/components/ProductGallery";
+import Atelier from "@/components/Atelier";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { defaultProducts, type Product } from "@/data/products";
-import { DEFAULT_HERO_CAROUSEL, fetchPublicHeroCarousel, fetchRemoteProducts, type HeroCarouselSettings } from "@/lib/supabase";
+import { DEFAULT_HERO_CAROUSEL, fetchPublicHeroCarousel, fetchRemoteProducts, fetchWebsiteContent, sanitizeRichText, type HeroCarouselSettings, type WebsiteContentItem } from "@/lib/supabase";
 import { DEFAULT_WHATSAPP_NUMBER, DEFAULT_WHATSAPP_TEXT, INSTAGRAM_URL, readLogoUrl } from "@/data/brand";
 import { useAutoHideNavbar } from "@/hooks/useAutoHideNavbar";
 
@@ -26,6 +27,7 @@ export default function Home() {
   const [heroIndex, setHeroIndex] = useState(0);
   const [heroPreviousIndex, setHeroPreviousIndex] = useState(0);
   const [heroPaused, setHeroPaused] = useState(false);
+  const [websiteContent, setWebsiteContent] = useState<WebsiteContentItem[]>([]);
   const heroTouchStart = useRef<number | null>(null);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [productDialogOpen, setProductDialogOpen] = useState(false);
@@ -36,6 +38,7 @@ export default function Home() {
     window.scrollTo(0, 0);
     fetchRemoteProducts().then((remote) => { if (remote?.length) setProducts(remote); });
     fetchPublicHeroCarousel().then((remote) => { if (remote) { setHeroCarousel(remote); setHeroIndex(0); setHeroPreviousIndex(0); } });
+    fetchWebsiteContent().then((remote) => { if (remote) setWebsiteContent(remote); });
   }, []);
 
   const advanceHero = (direction: 1 | -1) => {
@@ -59,6 +62,7 @@ export default function Home() {
   const previousMobileHero = mobileHeroSlides[heroPreviousIndex % mobileHeroSlides.length] ?? currentMobileHero;
   const pauseHeroForPointer = () => { if (window.matchMedia("(pointer:fine)").matches) setHeroPaused(true); };
   const resumeHeroForPointer = () => { if (window.matchMedia("(pointer:fine)").matches) setHeroPaused(false); };
+  const content = (id: string, fallback: string) => sanitizeRichText(websiteContent.find((item) => item.id === id)?.html || fallback);
 
   useLayoutEffect(() => {
     const root = editorialRootRef.current;
@@ -128,20 +132,20 @@ export default function Home() {
     <main>
       <section className="home-hero" onMouseEnter={pauseHeroForPointer} onMouseLeave={resumeHeroForPointer} onTouchStart={(event) => { heroTouchStart.current = event.touches[0]?.clientX ?? null; }} onTouchEnd={(event) => { const start = heroTouchStart.current; heroTouchStart.current = null; const end = event.changedTouches[0]?.clientX ?? start; if (start !== null && end !== null && Math.abs(end - start) > 42) advanceHero(end < start ? 1 : -1); }}>
         <div className="home-hero-image-stack" aria-hidden="true"><picture key={`previous-${previousDesktopHero.id}-${heroPreviousIndex}`} className="home-hero-image-layer home-hero-image-layer--previous"><source media="(max-width: 900px)" srcSet={previousMobileHero.url} /><img src={previousDesktopHero.url} alt="" loading="lazy" style={{ objectPosition: `${previousDesktopHero.focalX}% ${previousDesktopHero.focalY}%` }} /></picture><picture key={`current-${currentDesktopHero.id}-${heroIndex}`} className="home-hero-image-layer home-hero-image-layer--current"><source media="(max-width: 900px)" srcSet={currentMobileHero.url} /><img src={currentDesktopHero.url} alt="" fetchPriority="high" style={{ objectPosition: `${currentDesktopHero.focalX}% ${currentDesktopHero.focalY}%` }} /></picture></div><div className="home-hero-flower" aria-hidden="true" /><div className="home-hero-overlay" aria-hidden="true" />
-        <div className="home-hero-content"><div className="hero-identity"><img src={readLogoUrl()} alt="isth" /></div><h1 className="hero-tagline"><span className="hero-tagline-line">Embrace the fragrance.</span><br /><span>Become isth.</span></h1><div className="hero-cta-row"><a className="cherry-button hero-whatsapp" href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`} target="_blank" rel="noreferrer"><MessageCircle size={17} /> Queries</a><a className="outline-button" href="#collection">Explore the Collection <ArrowDown size={14} /></a></div></div>
+        <div className="home-hero-content"><div className="hero-identity"><img src={readLogoUrl()} alt="isth" /></div><h1 className="hero-tagline" dangerouslySetInnerHTML={{ __html: content("home-hero-tagline", "Embrace the fragrance.<br>Become isth.") }} /><div className="hero-cta-row"><a className="cherry-button hero-whatsapp" href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`} target="_blank" rel="noreferrer"><MessageCircle size={17} /> Queries</a><a className="outline-button" href="#collection">Explore the Collection <ArrowDown size={14} /></a></div></div>
         <div className="hero-caption" aria-hidden="true" />
       </section>
 
-      <section id="collection" className="collection-section"><div className="section-heading"><Reveal><h2>Find your<br /><em>signature.</em></h2></Reveal><Reveal delay={80}><p>Each isth composition is made to be worn close. Browse by feeling, not by family.</p></Reveal></div>
+      <section id="collection" className="collection-section"><div className="section-heading"><Reveal><h2 dangerouslySetInnerHTML={{ __html: content("home-collection-heading", "Find your<br><em>signature.</em>") }} /></Reveal><Reveal delay={80}><p dangerouslySetInnerHTML={{ __html: content("home-collection-copy", "Each isth composition is made to be worn close. Browse by feeling, not by family.") }} /></Reveal></div>
         <Reveal className="collection-editorial-photo" delay={100}><div aria-hidden="true" /></Reveal>
         <div className="featured-grid">{featured.map((product, index) => <Reveal key={product.id} delay={index * 80}><ProductBottle product={product} onOpen={openProduct} /></Reveal>)}<Reveal delay={150} className="collection-note"><div className="note-card"><h3>Not a perfume<br /><em>for everyone.</em></h3><p>It is a signature for the person who found it.</p><a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`} target="_blank">Ask the house <MoveUpRight size={14} /></a></div></Reveal></div>
         <div className="catalog-heading"><div><p className="eyebrow catalog-label">THE COLLECTION</p></div></div>
         <div className="catalog-grid">{more.map((product, index) => <Reveal key={product.id} delay={(index % 3) * 60}><ProductBottle product={product} compact onOpen={openProduct} /></Reveal>)}</div>
       </section>
 
-      <section className="quote-video-section editorial-motion-panel"><div className="quote-video-backdrop" aria-hidden="true" /><div className="quote-video-copy"><h2><span>Life is not just about,</span><span>living &amp; surviving.</span><span>It's about feeling it,</span><span>enjoying it, &amp; making memories.</span></h2><a className="cherry-button" href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`} target="_blank" rel="noreferrer"><MessageCircle size={17} /> Queries</a></div></section>
+      <section className="quote-video-section editorial-motion-panel"><div className="quote-video-backdrop" aria-hidden="true" /><div className="quote-video-copy"><h2 className="master-content-quote" dangerouslySetInnerHTML={{ __html: content("home-quote", "Life is not just about,<br>living &amp; surviving.<br>It's about feeling it,<br>enjoying it, &amp; making memories.") }} /><a className="cherry-button" href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`} target="_blank" rel="noreferrer"><MessageCircle size={17} /> Queries</a></div></section>
 
-      <section id="nakshatra" className="nakshatra-section editorial-motion-panel"><div className="nakshatra-texture" aria-hidden="true" /><div className="nakshatra-inner"><h2><span className="nakshatra-title-main">NAKSHATRA</span><span className="nakshatra-title-script">Collection.</span></h2><span className="coming-soon">Coming soon <span>—</span> isth</span></div></section>
+      <Atelier />
 
       <section id="about" className="story-section editorial-motion-panel"><div className="story-image" aria-hidden="true" style={{ backgroundImage: "url('/assets/isth-editorial-about.webp')", backgroundSize: "cover", backgroundPosition: "center" }} /><div className="story-flower" aria-hidden="true" /><Reveal className="story-copy"><h2>Between the<br /><em>familiar &amp; unknown.</em></h2><p>isth is a lifestyle fragrance house built around the tension between what you recognise and what you cannot quite name. Familiar ingredients, given room to become something else.</p><div className="story-note-grid" aria-label="Perfume ingredient imagery"><div className="story-note-photo note-rose"><span>Rose</span></div><div className="story-note-photo note-amber"><span>Amber</span></div><div className="story-note-photo note-musk"><span>White musk</span></div></div><a className="text-link" href="mailto:isth.support@gmail.com">Write to the house <ArrowRight size={14} /></a></Reveal></section>
 
@@ -165,6 +169,6 @@ export default function Home() {
         </div>
       </DialogContent>}
     </Dialog>
-    <footer className="site-footer"><div className="footer-top"><div><a href="/home" className="footer-brand"><img className="brand-logo brand-logo-dark" src={readLogoUrl()} alt="isth" /></a><p>estd. 2021</p></div><div className="footer-links"><div><span>Explore</span><Link href="/about">About</Link><a href="#collection">The Collection</a><Link href="/guides/choosing-a-fragrance/">Choosing a fragrance</Link><a href="#nakshatra">Nakshatra Collection</a></div><div><span>Direct</span><a href="mailto:isth.support@gmail.com">Email</a><a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noreferrer">WhatsApp</a><a className="footer-instagram" href={INSTAGRAM_URL} target="_blank" rel="noreferrer" aria-label="Follow ISTH on Instagram"><img src="/assets/instagram-icon.png" alt="" aria-hidden="true" width={16} height={16} />ISTH on Instagram</a></div></div></div><div className="footer-bottom"><span>© 2026 isth Fragrance House</span><span>Gujarat, India / Mon–Sat, 10am–7pm IST</span><span>Privacy · Terms</span></div></footer>
+    <footer className="site-footer"><div className="footer-top"><div><a href="/home" className="footer-brand"><img className="brand-logo brand-logo-dark" src={readLogoUrl()} alt="isth" /></a><p>estd. 2021</p></div><div className="footer-links"><div><span>Explore</span><Link href="/about">About</Link><a href="#collection">The Collection</a><Link href="/guides/choosing-a-fragrance/">Choosing a fragrance</Link><a href="#atelier">Atelier</a></div><div><span>Direct</span><a href="mailto:isth.support@gmail.com">Email</a><a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noreferrer">WhatsApp</a><a className="footer-instagram" href={INSTAGRAM_URL} target="_blank" rel="noreferrer" aria-label="Follow ISTH on Instagram"><img src="/assets/instagram-icon.png" alt="" aria-hidden="true" width={16} height={16} />ISTH on Instagram</a></div></div></div><div className="footer-bottom"><span>© 2026 isth Fragrance House</span><span>Gujarat, India / Mon–Sat, 10am–7pm IST</span><span>Privacy · Terms</span></div></footer>
   </div>;
 }

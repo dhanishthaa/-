@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { Menu, MessageCircle, X } from "lucide-react";
 import { DEFAULT_WHATSAPP_NUMBER, DEFAULT_WHATSAPP_TEXT, INSTAGRAM_URL, readLogoUrl } from "@/data/brand";
+import { fetchWebsiteContent, sanitizeRichText, type WebsiteContentItem } from "@/lib/supabase";
 import { useAutoHideNavbar } from "@/hooks/useAutoHideNavbar";
 
 export default function About() {
@@ -9,10 +10,13 @@ export default function About() {
   const { scrolled, navFolded } = useAutoHideNavbar(menuOpen, 40);
   const whatsappNumber = DEFAULT_WHATSAPP_NUMBER;
   const whatsappText = DEFAULT_WHATSAPP_TEXT;
+  const [websiteContent, setWebsiteContent] = useState<WebsiteContentItem[]>([]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    fetchWebsiteContent().then((remote) => { if (remote) setWebsiteContent(remote); });
   }, []);
+  const content = (id: string, fallback: string) => sanitizeRichText(websiteContent.find((item) => item.id === id)?.html || fallback);
 
   return (
     <div className="site-shell about-editorial bg-[#F5F1EB] text-[#111111] font-sans selection:bg-[#5B0D18] selection:text-[#F5F1EB]">
@@ -47,11 +51,9 @@ export default function About() {
         <section className="about-masthead">
           <div className="about-masthead-copy">
             <div className="contact-lockup about-lockup" aria-label="isth Parfums"><img src={readLogoUrl()} alt="isth" /><span>Parfums</span></div>
-            <h1>Between the familiar<br /><em>&amp; the unknown.</em></h1>
+            <h1 dangerouslySetInnerHTML={{ __html: content("about-heading", "Between the familiar<br><em>&amp; the unknown.</em>") }} />
           </div>
-          <p className="about-lede">
-            isth is a lifestyle fragrance house built upon quiet moments, tactile memories, and the precise tension between what you recognise and what you cannot quite name.
-          </p>
+          <p className="about-lede" dangerouslySetInnerHTML={{ __html: content("about-lede", "isth is a lifestyle fragrance house built upon quiet moments, tactile memories, and the precise tension between what you recognise and what you cannot quite name.") }} />
         </section>
 
         <section className="about-feature" aria-label="isth editorial feature">
@@ -64,7 +66,7 @@ export default function About() {
 
         <section className="about-narrative">
           <article className="about-column about-column-primary">
-            <h2>Philosophy of the Scent</h2>
+            <h2 dangerouslySetInnerHTML={{ __html: content("about-philosophy", "Philosophy of the Scent") }} />
             <p>
               We believe a fragrance should not announce your arrival from across a room; it should reward the person sitting beside you. Every isth formulation begins with an atmosphere—rain on dry earth, linen left in morning sun, or the quiet stillness of dusk.
             </p>
@@ -73,7 +75,7 @@ export default function About() {
             </p>
           </article>
           <article className="about-column about-column-secondary">
-            <h2>Craft &amp; Composition</h2>
+            <h2 dangerouslySetInnerHTML={{ __html: content("about-craft", "Craft &amp; Composition") }} />
             <p>
               Composed quietly in small batches, our notes eschew synthetic loudness in favour of botanical clarity and lingering warmth. Notes of white musk, amber, rose, and cedarwood blend seamlessly with body warmth to create an evolving personal signature.
             </p>
@@ -107,7 +109,7 @@ export default function About() {
               <span>Explore</span>
               <Link href="/about">About</Link>
               <Link href="/home#collection">The Collection</Link>
-              <Link href="/home#nakshatra">Nakshatra Collection</Link>
+              <Link href="/home#atelier">Atelier</Link>
             </div>
             <div>
               <span>Direct</span>

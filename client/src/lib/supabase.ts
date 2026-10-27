@@ -29,6 +29,21 @@ type SecureProductPayload = {
 
 export type HeroSlide = { id: string; url: string; focalX: number; focalY: number };
 export type HeroCarouselSettings = { desktop: HeroSlide[]; mobile: HeroSlide[]; interval: number };
+export type AtelierMedia = { id: string; kind: "image" | "video"; largeUrl: string; smallUrl: string; description: string; originalDescription?: string };
+export type WebsiteContentItem = { id: string; page: "Home" | "About" | "Guides" | "Shared"; section: string; label: string; html: string; originalHtml: string; deleted?: boolean };
+
+export const DEFAULT_ATELIER: AtelierMedia[] = [{ id: "nakshatra", kind: "image", largeUrl: "/assets/isth-editorial-nakshatra-galaxy-v2.png", smallUrl: "/assets/isth-editorial-nakshatra-galaxy-v2.png", description: "<span class=\"atelier-nakshatra-script\">NAKSHATRA Collection</span><strong>Coming Soon</strong>" }];
+
+export const DEFAULT_WEBSITE_CONTENT: WebsiteContentItem[] = [
+  { id: "home-hero-tagline", page: "Home", section: "Hero", label: "Hero heading", html: "Embrace the fragrance.<br>Become isth.", originalHtml: "Embrace the fragrance.<br>Become isth." },
+  { id: "home-collection-heading", page: "Home", section: "Collection", label: "Collection heading", html: "Find your<br><em>signature.</em>", originalHtml: "Find your<br><em>signature.</em>" },
+  { id: "home-collection-copy", page: "Home", section: "Collection", label: "Collection description", html: "Each isth composition is made to be worn close. Browse by feeling, not by family.", originalHtml: "Each isth composition is made to be worn close. Browse by feeling, not by family." },
+  { id: "home-quote", page: "Home", section: "Quote", label: "Quote", html: "Life is not just about,<br>living &amp; surviving.<br>It's about feeling it,<br>enjoying it, &amp; making memories.", originalHtml: "Life is not just about,<br>living &amp; surviving.<br>It's about feeling it,<br>enjoying it, &amp; making memories." },
+  { id: "about-heading", page: "About", section: "Masthead", label: "About heading", html: "Between the familiar<br><em>&amp; the unknown.</em>", originalHtml: "Between the familiar<br><em>&amp; the unknown.</em>" },
+  { id: "about-lede", page: "About", section: "Masthead", label: "About introduction", html: "isth is a lifestyle fragrance house built upon quiet moments, tactile memories, and the precise tension between what you recognise and what you cannot quite name.", originalHtml: "isth is a lifestyle fragrance house built upon quiet moments, tactile memories, and the precise tension between what you recognise and what you cannot quite name." },
+  { id: "about-philosophy", page: "About", section: "Narrative", label: "Philosophy", html: "Philosophy of the Scent", originalHtml: "Philosophy of the Scent" },
+  { id: "about-craft", page: "About", section: "Narrative", label: "Craft", html: "Craft &amp; Composition", originalHtml: "Craft &amp; Composition" },
+];
 
 export const DEFAULT_HERO_CAROUSEL: HeroCarouselSettings = {
   desktop: [
@@ -197,10 +212,10 @@ export async function fetchPublicHeroCarousel() {
   } catch { return null; }
 }
 
-export async function savePublicSetting(key: "logo_url" | "motion_video_url" | "hero_carousel", value: string) {
+export async function savePublicSetting(key: "logo_url" | "motion_video_url" | "hero_carousel" | "atelier" | "website_content", value: string) {
   if (!supabase) return false;
   if (key !== "hero_carousel" && value && !isSafeMediaUrl(value)) return false;
-  if (key === "hero_carousel" && value.length > 200000) return false;
+  if ((key === "hero_carousel" || key === "atelier" || key === "website_content") && value.length > 300000) return false;
   let { error } = await supabase.rpc("admin_set_site_setting", { setting_key: key, setting_value: value });
   if (isAuthFailure(error)) {
     const refreshed = await supabase.auth.refreshSession();
@@ -209,7 +224,7 @@ export async function savePublicSetting(key: "logo_url" | "motion_video_url" | "
   return !error;
 }
 
-export async function uploadPublicAsset(file: File, folder: "brand" | "motion" | "hero-desktop" | "hero-mobile") {
+export async function uploadPublicAsset(file: File, folder: "brand" | "motion" | "hero-desktop" | "hero-mobile" | "atelier-large" | "atelier-small") {
   if (!supabase || !isSafeAssetFile(file)) return null;
   const extension = file.name.split(".").pop()?.toLowerCase() || "bin";
   const path = `${folder}/${crypto.randomUUID()}.${extension}`;
@@ -243,4 +258,47 @@ export async function deletePublicAsset(publicUrl: string) {
 export function isSafeAssetFile(file: File) {
   const allowed = ["image/jpeg", "image/png", "image/webp", "image/avif", "video/mp4", "video/webm"];
   return allowed.includes(file.type) && file.size > 0 && file.size <= 10 * 1024 * 1024;
+}
+
+function parseSettingValue(value: unknown) {
+  const stored = typeof value === "object" && value !== null && "value" in value ? (value as { value?: unknown }).value : value;
+  try { return typeof stored === "string" ? JSON.parse(stored) : stored; } catch { return null; }
+}
+
+function isSafeAtelierItem(item: unknown): item is AtelierMedia {
+  if (!item || typeof item !== "object") return false;
+  const value = item as Partial<AtelierMedia>;
+  return typeof value.id === "string" && typeof value.largeUrl === "string" && typeof value.smallUrl === "string" && isSafeMediaUrl(value.largeUrl) && isSafeMediaUrl(value.smallUrl) && (value.kind === "image" || value.kind === "video") && typeof value.description === "string";
+}
+
+export async function fetchPublicAtelier() {
+  if (!supabase) return null;
+  const { data, error } = await supabase.from("site_settings").select("value").eq("key", "atelier").maybeSingle();
+  if (error || !data) return null;
+  const parsed = parseSettingValue(data.value);
+  return Array.isArray(parsed) ? parsed.filter(isSafeAtelierItem).slice(0, 24) : null;
+}
+
+export async function fetchWebsiteContent() {
+  if (!supabase) return null;
+  const { data, error } = await supabase.from("site_settings").select("value").eq("key", "website_content").maybeSingle();
+  if (error || !data) return null;
+  const parsed = parseSettingValue(data.value);
+  return Array.isArray(parsed) ? parsed.filter((item): item is WebsiteContentItem => Boolean(item && typeof item === "object" && typeof (item as WebsiteContentItem).id === "string" && typeof (item as WebsiteContentItem).html === "string")) : null;
+}
+
+export async function saveAtelier(items: AtelierMedia[]) {
+  return savePublicSetting("atelier", JSON.stringify(items));
+}
+
+export async function saveWebsiteContent(items: WebsiteContentItem[]) {
+  return savePublicSetting("website_content", JSON.stringify(items));
+}
+
+export function sanitizeRichText(input: string) {
+  if (typeof document === "undefined") return input.replace(/<script[\s\S]*?<\/script>/gi, "");
+  const template = document.createElement("template"); template.innerHTML = input;
+  const allowed = new Set(["BR", "EM", "STRONG", "U", "SPAN"]);
+  const walk = (node: Node) => { Array.from(node.childNodes).forEach((child) => { if (child.nodeType === Node.ELEMENT_NODE) { const element = child as HTMLElement; if (!allowed.has(element.tagName)) { child.replaceWith(...Array.from(child.childNodes)); return; } Array.from(element.attributes).forEach((attribute) => { if (!["style"].includes(attribute.name)) element.removeAttribute(attribute.name); }); walk(element); } }); };
+  walk(template.content); return template.innerHTML.slice(0, 12000);
 }

@@ -3,6 +3,7 @@
 @font-face { font-family:'Raleway'; font-style:normal; font-weight:400; font-display:swap; src:url('/fonts/raleway-400.ttf') format('truetype'); }
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "./atelier-editor.css";
 
 /* Quiet Atelier: ivory paper, ink structure, restrained ISTH cherry, serif atmosphere. */
 :root { --ivory:#F5F1EB; --ink:#111111; --cherry:#5B0D18; --cherry-hover:#7A1725; --white:#FFFFFF; --stone:#D8D2C9; --ink-soft:#1B1B1F; --gold:#B59A62; --sans:'DM Sans',sans-serif; --serif:'Playfair Display',Georgia,serif; --mono:'IBM Plex Mono',monospace; --ease:cubic-bezier(.22,1,.36,1); --line:rgba(17,17,17,.14); }
