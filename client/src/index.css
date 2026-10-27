@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Poppins:wght@800;900&display=swap');
-@import url('https://fonts.cdnfonts.com/css/amsterdam-one');
+@font-face { font-family:'Amsterdam One'; font-style:normal; font-weight:400; font-display:swap; src:url('/fonts/amsterdam-one.ttf') format('truetype'); }
 @font-face { font-family:'Raleway'; font-style:normal; font-weight:400; font-display:swap; src:url('/fonts/raleway-400.ttf') format('truetype'); }
 @import "tailwindcss";
 @import "tw-animate-css";
