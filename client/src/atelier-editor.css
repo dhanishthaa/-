@@ -1,18 +1,7 @@
 
-/* Public Atelier placement: directly follows the familiar/unknown story with a 50/50 half-screen composition. */
-.editorial-home .atelier-section { padding:clamp(72px,8vw,116px) clamp(20px,7vw,110px) clamp(72px,8vw,116px); }
-.editorial-home .atelier-heading { margin-bottom:28px; }
-.editorial-home .atelier-heading h2 { margin:12px 0 0; font-size:clamp(52px,7vw,104px); }
-.editorial-home .atelier-intro { display:none; }
-.editorial-home .atelier-layout { grid-template-columns:minmax(0,1fr) minmax(0,1fr); min-height:50svh; gap:0; align-items:stretch; }
-.editorial-home .atelier-media-stage { display:flex; min-width:0; flex-direction:column; }
-.editorial-home .atelier-media-frame { flex:1; min-height:50svh; }
-.editorial-home .atelier-copy { display:flex; max-width:none; min-width:0; flex-direction:column; justify-content:center; padding:clamp(28px,5vw,76px); background:#f5f1eb; color:var(--ink); }
-.editorial-home .atelier-copy .eyebrow { color:#81786f; }
-.editorial-home .atelier-description { color:var(--ink); font-size:clamp(30px,3.6vw,62px); }
-.editorial-home .atelier-description strong { color:var(--cherry); }
-@media (max-width:900px) {
-  .editorial-home .atelier-layout { grid-template-columns:1fr; min-height:0; }
-  .editorial-home .atelier-media-frame { min-height:50svh; }
-  .editorial-home .atelier-copy { min-height:50svh; padding:36px 24px; }
+/* Keep the public desktop/tablet composition explicitly side-by-side. */
+.editorial-home .atelier-layout { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)) !important; min-height:50svh; }
+.editorial-home .atelier-media-stage,.editorial-home .atelier-copy { width:100%; min-width:0; }
+@media (max-width:620px) {
+  .editorial-home .atelier-layout { grid-template-columns:1fr !important; }
 }
