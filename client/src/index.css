@@ -125,7 +125,7 @@ em { font-style:italic; }
 .coming-soon span { opacity:.5; }
 .nakshatra-inner h2 { position:relative; min-height:clamp(142px,14vw,218px); margin-top:28px; color:var(--ivory); font:900 clamp(52px,8.7vw,136px)/.9 'Poppins',var(--sans); letter-spacing:-.075em; }
 .nakshatra-title-main { position:relative; z-index:1; display:block; white-space:nowrap; letter-spacing:.055em; }
-.nakshatra-title-script { position:absolute; left:8%; top:39%; z-index:2; color:var(--cherry); font:400 clamp(54px,7.8vw,126px)/.82 'Amsterdam One',cursive; letter-spacing:-.045em; white-space:nowrap; }
+.nakshatra-title-script { position:absolute; left:calc(8% + 18px); top:calc(39% - 28px); z-index:2; color:#810100; font:400 clamp(64px,9vw,150px)/.82 'Amsterdam One',cursive; letter-spacing:-.045em; white-space:nowrap; }
 .nakshatra-inner p { max-width:310px; margin:34px 0; color:rgba(245,241,235,.7); font-size:15px; }
 .coming-soon { display:flex; gap:13px; align-items:center; color:var(--gold); font:10px var(--mono); letter-spacing:.15em; text-transform:uppercase; }
 .coming-soon span { color:var(--ivory); opacity:.5; }
@@ -498,7 +498,7 @@ em { font-style:italic; }
 @media (max-width:620px) {
   .editorial-home .quote-video-section { align-items:flex-end; min-height:clamp(520px,130vw,620px); padding:clamp(66px,12svh,92px) 20px 72px; }
   .nakshatra-inner h2 { min-height:clamp(92px,25vw,150px); font-size:clamp(46px,12.8vw,78px); letter-spacing:-.07em; }
-  .nakshatra-title-script { left:4%; top:40%; font-size:clamp(42px,11vw,72px); }
+  .nakshatra-title-script { left:calc(4% + 18px); top:calc(40% - 28px); font-size:clamp(50px,13vw,84px); }
   .editorial-home .quote-video-copy { left:20px; right:20px; bottom:48px; width:auto; margin:0; padding:0; }
   .editorial-home .quote-video-copy h2 { margin:0 0 32px; }
   .editorial-home .quote-video-copy .cherry-button { margin-bottom:0; }
