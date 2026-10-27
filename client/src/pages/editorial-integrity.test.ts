@@ -24,6 +24,7 @@ describe("isth editorial page integrity", () => {
     expect(home).toContain("Coming soon");
     expect(home).toContain("Between the");
     expect(home).toContain('<span className="hero-tagline-line">Embrace the fragrance.</span><br /><span>Become isth.</span>');
+    expect(home).toContain('<span className="nakshatra-title-main">NAKSHATRA</span><span className="nakshatra-title-script">Collection.</span>');
     expect(home).not.toContain("<em>Become isth.</em>");
     expect(home).not.toContain("A scent can");
     expect(home).not.toContain("change the air.");
