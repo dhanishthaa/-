@@ -342,7 +342,7 @@ em { font-style:italic; }
 .ingredient-marquee { overflow:hidden; border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:#eee9e2; color:rgba(91,13,24,.82); white-space:nowrap; }
 .ingredient-marquee div { display:inline-block; min-width:max-content; padding:20px 0 22px; font:clamp(34px,5vw,72px)/1 var(--serif); letter-spacing:-.04em; animation:marquee-drift 32s linear infinite; }
 @keyframes marquee-drift { from { transform:translateX(0); } to { transform:translateX(-50%); } }
-.quote-video-section { min-height:720px; position:relative; overflow:hidden; display:flex; align-items:center; padding:clamp(80px,12vw,150px) clamp(20px,9vw,140px); background:#161214; color:var(--ivory); isolation:isolate; }
+.quote-video-section { min-height:720px; position:relative; overflow:hidden; display:flex; align-items:flex-end; padding:clamp(80px,12vw,150px) clamp(20px,9vw,140px); background:#161214; color:var(--ivory); isolation:isolate; }
 .quote-video-backdrop { position:absolute; inset:0; z-index:-2; pointer-events:none; background:linear-gradient(90deg,rgba(17,17,17,.9),rgba(17,17,17,.3)),url('/assets/isth-floral-forest-atmosphere_855c0ca2.png') center/cover; }
 .quote-video-backdrop::after { content:""; position:absolute; inset:0; background:radial-gradient(circle at 70% 46%,rgba(181,154,98,.18),transparent 20%),linear-gradient(180deg,transparent,rgba(17,17,17,.55)); mix-blend-mode:screen; }
 .quote-video-copy { position:relative; z-index:2; max-width:760px; }
@@ -493,7 +493,7 @@ em { font-style:italic; }
 @media (max-width:620px) { .ss1-landing { min-height:146svh; } .ss1-landing .hello-word { top:11vh; font-size:clamp(46px,14vw,72px); } .ss1-landing .landing-center { top:60%; width:calc(100% - 28px); } .landing-logo-plate { width:154px; height:124px; } .landing-logo-plate img { height:128px; max-width:170px; } .landing-quote { font-size:24px; } .landing-meta { inset-inline:20px; font-size:8px; } .story-image-placeholder { padding:24px; } .story-notes { gap:6px; } .story-notes span { font-size:8px; } .site-nav { padding-block:6px; } .site-brand img { height:32px; } .home-hero .hero-identity { width:84px; height:52px; margin-bottom:14px; } .home-hero .hero-identity img { height:38px; max-width:66px; } }
 
 @media (max-width:620px) {
-  .editorial-home .quote-video-section { align-items:flex-start; min-height:clamp(520px,130vw,620px); padding:clamp(66px,12svh,92px) 20px 72px; }
+  .editorial-home .quote-video-section { align-items:flex-end; min-height:clamp(520px,130vw,620px); padding:clamp(66px,12svh,92px) 20px 72px; }
   .editorial-home .quote-video-copy { width:100%; margin:0; padding:0; }
   .editorial-home .quote-video-copy h2 { margin:0 0 32px; }
   .editorial-home .quote-video-copy .cherry-button { margin-bottom:40px; }
