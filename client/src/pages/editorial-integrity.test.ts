@@ -231,7 +231,7 @@ describe("isth editorial page integrity", () => {
     expect(home).not.toContain("quote-reveal-prompt");
     expect(styles).toContain(".quote-video-backdrop { position:absolute; inset:0; z-index:-2;");
     expect(styles).toContain(".quote-video-copy h2 span { white-space:nowrap; }");
-    expect(styles).toContain(".quote-video-copy h2 { font:400 clamp(14px,4.4vw,21px)/.9 'Raleway',var(--sans); }");
+    expect(styles).toContain(".quote-video-copy h2 { font:400 clamp(28px,8.8vw,42px)/.9 'Raleway',var(--sans); }");
     expect(styles).not.toContain("--quote-floral-mask");
     expect(styles).not.toContain(".quote-video-section.is-revealing");
     expect(styles).toContain(".quote-video-copy { position:relative; z-index:2;");
