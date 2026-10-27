@@ -628,7 +628,7 @@ em { font-style:italic; }
 .editorial-home .quote-video-copy { max-width:720px; padding:0; }
 
 .editorial-home .nakshatra-section { min-height:clamp(640px,70vw,820px); }
-.editorial-home .nakshatra-texture { background:linear-gradient(90deg,rgba(17,17,17,.6),rgba(17,17,17,.12)),url('/assets/isth-editorial-nakshatra.webp') center/cover; }
+.editorial-home .nakshatra-texture { background:linear-gradient(90deg,rgba(17,17,17,.6),rgba(17,17,17,.12)),url('/assets/isth-editorial-nakshatra-galaxy.png') center/cover; }
 .editorial-home .nakshatra-inner { max-width:620px; padding:0; }
 .editorial-home .coming-soon { border:0; background:rgba(245,241,235,.14); backdrop-filter:blur(12px); }
 
