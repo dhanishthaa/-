@@ -34,7 +34,7 @@ export const DEFAULT_HERO_CAROUSEL: HeroCarouselSettings = {
   desktop: [
     { id: "hero-editorial", url: "/assets/isth-hero-editorial_ed190768.png", focalX: 50, focalY: 50 },
     { id: "hero-about", url: "/assets/isth-editorial-about.webp", focalX: 50, focalY: 50 },
-    { id: "hero-nakshatra", url: "/assets/isth-editorial-nakshatra-galaxy.png", focalX: 50, focalY: 50 },
+    { id: "hero-nakshatra", url: "/assets/isth-editorial-nakshatra-galaxy-v2.png", focalX: 50, focalY: 50 },
   ],
   mobile: [
     { id: "hero-editorial-mobile", url: "/assets/isth-hero-editorial_ed190768.png", focalX: 58, focalY: 50 },
