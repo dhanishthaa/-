@@ -1,17 +1,15 @@
 
-/* Scale correction: the split stays 50/50, but the Atelier itself returns to a large editorial moment. */
-.editorial-home .atelier-section { padding-left:0; padding-right:0; }
-.editorial-home .atelier-heading { padding-left:clamp(20px,7vw,110px); padding-right:clamp(20px,7vw,110px); margin-bottom:38px; }
-.editorial-home .atelier-heading h2 { font-size:clamp(72px,10vw,152px); }
-.editorial-home .atelier-layout { width:100%; min-height:72svh; }
-.editorial-home .atelier-media-frame { min-height:72svh; }
-.editorial-home .atelier-copy { min-height:72svh; padding:clamp(42px,7vw,116px); }
-.editorial-home .atelier-description { font-size:clamp(42px,5.2vw,88px); line-height:.96; }
-.editorial-home .atelier-description strong { margin-top:30px; font-size:14px; }
+/* Explicit horizontal split: no auto grid sizing on desktop/tablet. */
+.editorial-home .atelier-layout { display:flex !important; flex-direction:row !important; width:100%; min-height:72svh; gap:0; }
+.editorial-home .atelier-media-stage,
+.editorial-home .atelier-copy { flex:0 0 50% !important; width:50% !important; max-width:none; min-width:0; }
+.editorial-home .atelier-media-stage { display:flex; flex-direction:column; }
+.editorial-home .atelier-media-frame { width:100%; min-height:72svh; }
+.editorial-home .atelier-copy { min-height:72svh; }
 @media (max-width:620px) {
-  .editorial-home .atelier-heading { padding-left:20px; padding-right:20px; }
-  .editorial-home .atelier-layout { min-height:0; }
+  .editorial-home .atelier-layout { flex-direction:column !important; min-height:0; }
+  .editorial-home .atelier-media-stage,
+  .editorial-home .atelier-copy { flex:0 0 auto !important; width:100% !important; }
   .editorial-home .atelier-media-frame { min-height:58svh; }
-  .editorial-home .atelier-copy { min-height:58svh; padding:42px 24px; }
-  .editorial-home .atelier-description { font-size:clamp(38px,10vw,58px); }
+  .editorial-home .atelier-copy { min-height:58svh; }
 }
