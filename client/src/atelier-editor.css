@@ -1,22 +1,22 @@
 
-/* Supplied reference treatment: simple heading, image left, title/status right. */
-.editorial-home .atelier-section { padding:clamp(34px,5vw,72px) clamp(20px,4.5vw,64px) clamp(56px,8vw,110px); background:#f5f1eb; }
-.editorial-home .atelier-heading { margin:0 0 clamp(22px,3vw,38px); padding:0; }
-.editorial-home .atelier-heading h2 { margin:0; color:#111; font:800 clamp(44px,6vw,82px)/.95 var(--sans); letter-spacing:-.055em; }
-.editorial-home .atelier-layout { display:flex !important; flex-direction:row !important; align-items:center; width:100%; min-height:0; gap:clamp(20px,4vw,64px); }
-.editorial-home .atelier-media-stage { flex:0 0 calc(50% - clamp(10px,2vw,32px)) !important; width:calc(50% - clamp(10px,2vw,32px)) !important; min-width:0; }
-.editorial-home .atelier-media-frame { width:100%; min-height:0; aspect-ratio:1.82 / 1; overflow:hidden; background:#101118; }
+/* Final editorial Atelier composition: full-bleed left image and centered right copy. */
+.editorial-home .atelier-section { padding:0; background:#f5f1eb; }
+.editorial-home .atelier-layout { display:flex !important; flex-direction:row !important; align-items:stretch; width:100%; min-height:78svh; gap:0; }
+.editorial-home .atelier-media-stage { flex:0 0 50% !important; width:50% !important; min-width:0; display:flex; }
+.editorial-home .atelier-media-frame { width:100%; min-height:78svh; aspect-ratio:auto; overflow:hidden; background:#101118; }
 .editorial-home .atelier-media-frame picture,.editorial-home .atelier-media-frame img,.editorial-home .atelier-media-frame video { display:block; width:100%; height:100%; object-fit:cover; }
-.editorial-home .atelier-copy { display:flex; flex:0 0 calc(50% - clamp(10px,2vw,32px)) !important; width:calc(50% - clamp(10px,2vw,32px)) !important; min-height:0; padding:0; align-items:flex-start; justify-content:center; background:transparent; }
-.editorial-home .atelier-description { color:#111; font:800 clamp(34px,4.2vw,70px)/.95 var(--sans); letter-spacing:-.055em; }
+.editorial-home .atelier-copy { flex:0 0 50% !important; width:50% !important; min-height:78svh; padding:clamp(28px,6vw,100px); display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; background:#f5f1eb; }
+.editorial-home .atelier-title { margin:0 0 clamp(38px,5vw,76px); color:#111; font:800 clamp(54px,7vw,112px)/.9 var(--sans); letter-spacing:-.065em; }
+.editorial-home .atelier-description { max-width:100%; color:#111; font:800 clamp(36px,4.3vw,76px)/.94 var(--sans); letter-spacing:-.06em; }
 .editorial-home .atelier-description .atelier-nakshatra-script { display:block; white-space:nowrap; }
-.editorial-home .atelier-description strong { display:inline-block; margin-top:clamp(24px,3vw,42px); padding:clamp(9px,1vw,15px) clamp(16px,2vw,28px); border:2px solid #111; color:#111; font:400 clamp(24px,2.8vw,48px)/1 var(--sans); letter-spacing:-.035em; }
+.editorial-home .atelier-description strong { display:inline-block; margin-top:clamp(28px,4vw,58px); padding:clamp(10px,1.2vw,18px) clamp(18px,2.6vw,38px); border:2px solid #111; color:#111; font:400 clamp(24px,2.8vw,50px)/1 var(--sans); letter-spacing:-.04em; }
 @media (max-width:620px) {
-  .editorial-home .atelier-section { padding:34px 20px 64px; }
-  .editorial-home .atelier-layout { flex-direction:column !important; align-items:stretch; gap:28px; }
+  .editorial-home .atelier-layout { flex-direction:column !important; min-height:0; }
   .editorial-home .atelier-media-stage,.editorial-home .atelier-copy { flex:0 0 auto !important; width:100% !important; }
-  .editorial-home .atelier-media-frame { aspect-ratio:1.55 / 1; }
-  .editorial-home .atelier-copy { padding:0 4px; }
-  .editorial-home .atelier-description { font-size:clamp(34px,10vw,56px); }
+  .editorial-home .atelier-media-frame { min-height:58svh; aspect-ratio:1.35 / 1; }
+  .editorial-home .atelier-copy { min-height:58svh; padding:54px 24px; }
+  .editorial-home .atelier-title { margin-bottom:34px; font-size:clamp(52px,16vw,82px); }
+  .editorial-home .atelier-description { font-size:clamp(34px,10vw,58px); }
+  .editorial-home .atelier-description .atelier-nakshatra-script { white-space:normal; }
   .editorial-home .atelier-description strong { font-size:clamp(24px,7vw,38px); }
 }
