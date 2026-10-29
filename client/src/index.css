@@ -1297,8 +1297,10 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 /* Keep the hero chrome genuinely overlaid on the photography, matching the supplied reference. */
 .editorial-home .site-nav,
 .editorial-home .site-nav.is-scrolled {
-  position:absolute !important;
+  position:fixed !important;
   top:0 !important;
+  right:0 !important;
+  left:0 !important;
   background:transparent !important;
   background-color:transparent !important;
   background-image:none !important;
