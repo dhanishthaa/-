@@ -62,7 +62,7 @@ export default function Home() {
   const previousMobileHero = mobileHeroSlides[heroPreviousIndex % mobileHeroSlides.length] ?? currentMobileHero;
   const pauseHeroForPointer = () => { if (window.matchMedia("(pointer:fine)").matches) setHeroPaused(true); };
   const resumeHeroForPointer = () => { if (window.matchMedia("(pointer:fine)").matches) setHeroPaused(false); };
-  const content = (id: string, fallback: string) => sanitizeRichText(websiteContent.find((item) => item.id === id)?.html || fallback);
+  const content = (id: string, fallback: string) => id === "home-hero-tagline" ? "Become<br>isth." : sanitizeRichText(websiteContent.find((item) => item.id === id)?.html || fallback);
 
   useLayoutEffect(() => {
     const root = editorialRootRef.current;
@@ -131,7 +131,7 @@ export default function Home() {
     <main>
       <section className="home-hero" onMouseEnter={pauseHeroForPointer} onMouseLeave={resumeHeroForPointer} onTouchStart={(event) => { heroTouchStart.current = event.touches[0]?.clientX ?? null; }} onTouchEnd={(event) => { const start = heroTouchStart.current; heroTouchStart.current = null; const end = event.changedTouches[0]?.clientX ?? start; if (start !== null && end !== null && Math.abs(end - start) > 42) advanceHero(end < start ? 1 : -1); }}>
         <div className="home-hero-image-stack" aria-hidden="true"><picture key={`previous-${previousDesktopHero.id}-${heroPreviousIndex}`} className="home-hero-image-layer home-hero-image-layer--previous"><source media="(max-width: 900px)" srcSet={previousMobileHero.url} /><img src={previousDesktopHero.url} alt="" loading="lazy" style={{ objectPosition: `${previousDesktopHero.focalX}% ${previousDesktopHero.focalY}%` }} /></picture><picture key={`current-${currentDesktopHero.id}-${heroIndex}`} className="home-hero-image-layer home-hero-image-layer--current"><source media="(max-width: 900px)" srcSet={currentMobileHero.url} /><img src={currentDesktopHero.url} alt="" fetchPriority="high" style={{ objectPosition: `${currentDesktopHero.focalX}% ${currentDesktopHero.focalY}%` }} /></picture></div><div className="home-hero-flower" aria-hidden="true" /><div className="home-hero-overlay" aria-hidden="true" />
-        <div className="home-hero-content"><h1 className="hero-tagline">Become<br />isth.</h1><div className="hero-cta-row"><a className="cherry-button hero-whatsapp" href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`} target="_blank" rel="noreferrer"><MessageCircle size={17} /> Queries</a><a className="outline-button" href="#collection">Explore the Collection <ArrowDown size={14} /></a></div></div>
+        <div className="home-hero-content"><h1 className="hero-tagline" dangerouslySetInnerHTML={{ __html: content("home-hero-tagline", "Become<br>isth.") }} /><div className="hero-cta-row"><a className="cherry-button hero-whatsapp" href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`} target="_blank" rel="noreferrer"><MessageCircle size={17} /> Queries</a><a className="outline-button" href="#collection">Explore the Collection <ArrowDown size={14} /></a></div></div>
         <div className="hero-caption" aria-hidden="true" />
       </section>
 
