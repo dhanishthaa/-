@@ -1300,13 +1300,15 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
   top:0 !important;
   background:transparent !important;
   background-color:transparent !important;
+  background-image:none !important;
   box-shadow:none !important;
-  backdrop-filter:none;
-  -webkit-backdrop-filter:none;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+  filter:none !important;
 }
 .editorial-home .site-nav::after { display:none !important; }
-.editorial-home .home-hero-reference-content { top:clamp(190px,25vh,230px) !important; left:clamp(64px,4.7vw,90px) !important; }
-.editorial-home .home-hero-reference-content .hero-tagline { font-family:var(--serif) !important; font-size:clamp(128px,8.7vw,166px) !important; font-weight:400 !important; line-height:.79 !important; letter-spacing:-.085em !important; }
+.editorial-home .home-hero-reference-content { top:clamp(190px,25vh,230px) !important; left:clamp(64px,4.7vw,90px) !important; transform:translateY(100px); }
+.editorial-home .home-hero-reference-content .hero-tagline { font-family:'Poppins',var(--sans) !important; font-size:clamp(128px,8.7vw,166px) !important; font-weight:400 !important; line-height:.79 !important; letter-spacing:-.085em !important; }
 .editorial-home .hero-reference-word--indent { margin-left:clamp(180px,13.2vw,252px) !important; }
 @media (max-width:900px) {
   .hero-reference-footer { left:clamp(28px,6vw,72px); right:clamp(28px,6vw,72px); }
