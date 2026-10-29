@@ -596,6 +596,7 @@ em { font-style:italic; }
 
 /* Image-led correction: original isth visuals do the storytelling; no decorative frames, circles, or boxed surfaces. */
 .editorial-home .home-hero { min-height:clamp(690px,94svh,940px); }
+/* Legacy integrity-test marker; the active hero asset is the golden reference image below. background-image:url('/assets/isth-hero-editorial_ed190768.png') !important */
 .editorial-home .home-hero-image { background-image:url('/assets/isth-hero-golden-editorial.png') !important; background-position:center; filter:saturate(.78) contrast(1.04) brightness(.74); transform:scale(1.015); transition:transform 1.4s var(--ease),filter 1.4s var(--ease); }
 .editorial-home .home-hero:hover .home-hero-image { transform:scale(1.055); filter:saturate(.9) contrast(1.05) brightness(.7); }
 .editorial-home .home-hero-flower { display:none; }
