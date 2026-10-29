@@ -34,7 +34,7 @@ img { display:block; max-width:100%; }
 .mobile-drawer nav { display:flex; flex-direction:column; gap:24px; font:italic 32px var(--serif); }
 .mobile-drawer > span { color:var(--gold); font:10px var(--mono); letter-spacing:.16em; }
 .home-hero { height:min(100svh,920px); min-height:680px; position:relative; overflow:hidden; background:var(--ink); color:var(--ivory); isolation:isolate; }
-.home-hero-image { position:absolute; inset:0; background:url('/assets/isth-hero-editorial_ed190768.png') center/cover; filter:saturate(.78) contrast(1.03); z-index:-2; }
+.home-hero-image { position:absolute; inset:0; background:url('/assets/isth-hero-golden-editorial.png') center/cover; filter:saturate(.78) contrast(1.03); z-index:-2; }
 .home-hero-overlay { position:absolute; inset:0; z-index:-1; background:linear-gradient(90deg,rgba(17,17,17,.72),rgba(17,17,17,.19) 56%,rgba(17,17,17,.32)),linear-gradient(0deg,rgba(17,17,17,.78),transparent 40%); }
 .home-hero-content { position:absolute; left:clamp(20px,9vw,140px); bottom:clamp(90px,13vh,160px); max-width:580px; }
 .eyebrow { display:flex; gap:10px; align-items:center; color:var(--cherry); font:10px var(--mono); letter-spacing:.17em; text-transform:uppercase; }
@@ -241,7 +241,7 @@ em { font-style:italic; }
 @keyframes product-dialog-in { from { opacity:0; scale:.975; } to { opacity:1; scale:1; } }
 @keyframes product-dialog-out { from { opacity:1; scale:1; } to { opacity:0; scale:.985; } }
 .landing-page { position:relative; min-height:100svh; overflow:hidden; isolation:isolate; background:var(--ink); color:var(--ivory); }
-.landing-image { position:absolute; inset:0; z-index:-2; background:url('/assets/isth-hero-editorial_ed190768.png') center/cover; filter:saturate(.72) brightness(.86); transform:scale(1.02); animation:landing-breathe 12s ease-in-out infinite alternate; }
+.landing-image { position:absolute; inset:0; z-index:-2; background:url('/assets/isth-hero-golden-editorial.png') center/cover; filter:saturate(.72) brightness(.86); transform:scale(1.02); animation:landing-breathe 12s ease-in-out infinite alternate; }
 .landing-scrim { position:absolute; inset:0; z-index:-1; background:linear-gradient(90deg,rgba(17,17,17,.83),rgba(17,17,17,.17) 66%,rgba(17,17,17,.52)),linear-gradient(0deg,rgba(17,17,17,.75),transparent 55%); }
 .landing-nav { position:absolute; inset:0 0 auto; display:flex; justify-content:space-between; align-items:center; padding:26px clamp(20px,4vw,56px); color:var(--ivory); }
 .brand-mark { font-size:22px; }
@@ -1260,6 +1260,48 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 .contact-social-button:focus-visible { outline:2px solid var(--cherry); outline-offset:4px; }
 .hero-tagline { font-family:'Poppins',var(--sans) !important; font-weight:800; font-style:normal; letter-spacing:-.08em; }
 .hero-tagline-line { display:inline-block; white-space:nowrap; }
+
+/* Reference-matched hero composition: image-first, transparent chrome, editorial copy, rules, and collection prompt. */
+.editorial-home .site-nav {
+  position:absolute;
+  top:0;
+  inset-inline:0;
+  background:rgba(17,17,17,.08);
+  border-bottom:1px solid rgba(245,241,235,.36);
+  box-shadow:none;
+  backdrop-filter:blur(4px) saturate(108%);
+  -webkit-backdrop-filter:blur(4px) saturate(108%);
+}
+.editorial-home .site-nav.is-scrolled { position:absolute; color:var(--ivory); background:rgba(17,17,17,.08); border-bottom-color:rgba(245,241,235,.36); }
+.editorial-home .site-nav .site-brand .brand-logo { height:36px; max-width:128px; }
+.editorial-home .home-hero { min-height:100svh; height:100svh; }
+.editorial-home .home-hero-image-layer img { filter:saturate(1.08) contrast(1.06) brightness(.88); transform:none; }
+.editorial-home .home-hero-overlay { background:linear-gradient(90deg,rgba(17,17,17,.34),rgba(17,17,17,.04) 56%,rgba(17,17,17,.18)),linear-gradient(0deg,rgba(17,17,17,.38),transparent 42%) !important; }
+.home-hero-reference-content { position:absolute; z-index:2; top:clamp(128px,23vh,200px); left:clamp(28px,4vw,72px); color:var(--ivory); }
+.hero-reference-eyebrow { display:flex; align-items:center; gap:10px; margin:0 0 clamp(24px,4vh,42px); color:rgba(245,241,235,.82); font:10px var(--mono); letter-spacing:.16em; text-transform:uppercase; }
+.hero-reference-eyebrow span { color:var(--gold); }
+.home-hero-reference-content .hero-tagline { margin:0; color:var(--ivory); font:800 clamp(64px,9.6vw,154px)/.82 'Poppins',var(--sans); letter-spacing:-.105em; text-shadow:0 3px 24px rgba(17,17,17,.22); }
+.hero-reference-footer { position:absolute; z-index:2; right:clamp(28px,4vw,72px); bottom:clamp(74px,10vh,104px); left:clamp(42%,46vw,54%); display:flex; align-items:flex-start; justify-content:space-between; gap:30px; padding-top:15px; border-top:1px solid rgba(245,241,235,.58); color:var(--ivory); }
+.hero-reference-footer p { margin:0; max-width:300px; color:rgba(245,241,235,.84); font:12px/1.35 var(--serif); }
+.hero-reference-footer a { display:inline-flex; align-items:center; gap:13px; padding-top:2px; color:var(--ivory); font:10px var(--mono); letter-spacing:.12em; text-transform:uppercase; white-space:nowrap; }
+.hero-reference-footer a svg { transition:transform .25s var(--ease); }
+.hero-reference-footer a:hover svg { transform:translateX(5px); }
+.hero-reference-counter { position:absolute; z-index:2; bottom:clamp(25px,4vh,42px); left:clamp(28px,4vw,72px); color:rgba(245,241,235,.78); font:10px var(--mono); letter-spacing:.14em; }
+.hero-reference-counter span { margin:0 7px; color:var(--gold); }
+@media (max-width:900px) {
+  .hero-reference-footer { left:clamp(28px,6vw,72px); right:clamp(28px,6vw,72px); }
+}
+@media (max-width:620px) {
+  .editorial-home .site-nav .site-brand .brand-logo { height:31px; max-width:108px; }
+  .home-hero-reference-content { top:132px; left:20px; right:20px; }
+  .hero-reference-eyebrow { margin-bottom:28px; font-size:8px; letter-spacing:.12em; }
+  .home-hero-reference-content .hero-tagline { font-size:clamp(58px,17vw,92px); }
+  .hero-reference-footer { right:20px; bottom:74px; left:20px; display:block; padding-top:12px; }
+  .hero-reference-footer p { font-size:11px; }
+  .hero-reference-footer a { margin-top:18px; font-size:9px; }
+  .hero-reference-counter { bottom:24px; left:20px; }
+  .hero-reference-break { display:none; }
+}
 @media (max-width:620px) {
   .contact-social-rows { gap:8px; margin-top:52px; }
   .contact-social-row { grid-template-columns:minmax(124px,1fr) minmax(112px,auto); gap:12px; font-size:9px; }

@@ -48,12 +48,9 @@ export const DEFAULT_WEBSITE_CONTENT: WebsiteContentItem[] = [
 export const DEFAULT_HERO_CAROUSEL: HeroCarouselSettings = {
   desktop: [
     { id: "hero-golden-editorial", url: "/assets/isth-hero-golden-editorial.png", focalX: 50, focalY: 50 },
-    { id: "hero-about", url: "/assets/isth-editorial-about.webp", focalX: 50, focalY: 50 },
-    { id: "hero-nakshatra", url: "/assets/isth-editorial-nakshatra-galaxy-v2.png", focalX: 50, focalY: 50 },
   ],
   mobile: [
     { id: "hero-golden-editorial-mobile", url: "/assets/isth-hero-golden-editorial.png", focalX: 58, focalY: 50 },
-    { id: "hero-floral-mobile", url: "/assets/isth-floral-blush-atmosphere_7def68ba.png", focalX: 50, focalY: 50 },
   ],
   interval: 3000,
 };
