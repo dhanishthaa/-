@@ -1304,6 +1304,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
   background:transparent !important;
   background-color:transparent !important;
   background-image:none !important;
+  border-bottom:1px solid rgba(245,241,235,.42) !important;
   box-shadow:none !important;
   backdrop-filter:none !important;
   -webkit-backdrop-filter:none !important;
@@ -1312,7 +1313,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 .editorial-home .site-nav::after { display:none !important; }
 .editorial-home .site-nav:not(.is-folded) { transform:translate3d(0,0,0) scaleY(1) !important; pointer-events:auto; }
 .editorial-home .site-nav.is-folded { transform:translate3d(0,calc(-100% - 12px),0) scaleY(.96) !important; pointer-events:none; }
-.editorial-home .home-hero-reference-content { top:clamp(190px,25vh,230px) !important; left:clamp(64px,4.7vw,90px) !important; transform:translateY(100px); }
+.editorial-home .home-hero-reference-content { top:clamp(290px,calc(25vh + 100px),330px) !important; left:clamp(64px,4.7vw,90px) !important; transform:none !important; }
 .editorial-home .home-hero-reference-content .hero-tagline { font-family:'Poppins',var(--sans) !important; font-size:clamp(128px,8.7vw,166px) !important; font-weight:400 !important; line-height:.79 !important; letter-spacing:-.085em !important; }
 .editorial-home .hero-reference-word--indent { margin-left:clamp(180px,13.2vw,252px) !important; }
 @media (max-width:900px) {
