@@ -74,7 +74,6 @@ export default function Home() {
     const context = gsap.context(() => {
       const heroTimeline = gsap.timeline({ defaults: { ease: "power2.out" } });
       heroTimeline
-        .from(".home-hero .hero-identity", { autoAlpha: 0, y: 22, duration: 0.72 })
         .from(".home-hero h1", { autoAlpha: 0, y: 26, duration: 0.82 }, "-=0.46")
         .from(".home-hero .hero-description, .home-hero .hero-cta-row", { autoAlpha: 0, y: 14, duration: 0.64, stagger: 0.1 }, "-=0.42");
 
@@ -124,15 +123,15 @@ export default function Home() {
   return <div ref={editorialRootRef} className="site-shell editorial-home">
     <header className={`site-nav ${scrolled ? "is-scrolled" : ""} ${navFolded ? "is-folded" : ""}`}>
       <Link href="/home" className="site-brand"><img className="brand-logo brand-logo-dark" src={readLogoUrl()} alt="isth" /></Link>
-      <nav className="desktop-nav" aria-label="Main navigation"><Link href="/about">About</Link><a href="#collection">Collection</a><a href="#contact">Contact</a></nav>
+      <nav className="desktop-nav" aria-label="Main navigation"><Link href="/about">Our Story</Link><a href="#collection">Fragrances</a><a href="#atelier">Atelier</a><a href="#contact">Contact</a></nav>
       <div className="site-actions"><button className="menu-toggle" onClick={() => setMenuOpen((open) => !open)} aria-label={menuOpen ? "Close navigation" : "Open navigation"}>{menuOpen ? <X size={19} /> : <Menu size={19} />}</button></div>
     </header>
-    <div className={`mobile-drawer ${menuOpen ? "is-open" : ""}`}><nav><Link href="/about" onClick={() => setMenuOpen(false)}>About</Link><a href="#collection" onClick={() => setMenuOpen(false)}>Collection</a><a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a></nav></div>
+    <div className={`mobile-drawer ${menuOpen ? "is-open" : ""}`}><nav><Link href="/about" onClick={() => setMenuOpen(false)}>Our Story</Link><a href="#collection" onClick={() => setMenuOpen(false)}>Fragrances</a><a href="#atelier" onClick={() => setMenuOpen(false)}>Atelier</a><a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a></nav></div>
 
     <main>
       <section className="home-hero" onMouseEnter={pauseHeroForPointer} onMouseLeave={resumeHeroForPointer} onTouchStart={(event) => { heroTouchStart.current = event.touches[0]?.clientX ?? null; }} onTouchEnd={(event) => { const start = heroTouchStart.current; heroTouchStart.current = null; const end = event.changedTouches[0]?.clientX ?? start; if (start !== null && end !== null && Math.abs(end - start) > 42) advanceHero(end < start ? 1 : -1); }}>
         <div className="home-hero-image-stack" aria-hidden="true"><picture key={`previous-${previousDesktopHero.id}-${heroPreviousIndex}`} className="home-hero-image-layer home-hero-image-layer--previous"><source media="(max-width: 900px)" srcSet={previousMobileHero.url} /><img src={previousDesktopHero.url} alt="" loading="lazy" style={{ objectPosition: `${previousDesktopHero.focalX}% ${previousDesktopHero.focalY}%` }} /></picture><picture key={`current-${currentDesktopHero.id}-${heroIndex}`} className="home-hero-image-layer home-hero-image-layer--current"><source media="(max-width: 900px)" srcSet={currentMobileHero.url} /><img src={currentDesktopHero.url} alt="" fetchPriority="high" style={{ objectPosition: `${currentDesktopHero.focalX}% ${currentDesktopHero.focalY}%` }} /></picture></div><div className="home-hero-flower" aria-hidden="true" /><div className="home-hero-overlay" aria-hidden="true" />
-        <div className="home-hero-content"><div className="hero-identity"><img src={readLogoUrl()} alt="isth" /></div><h1 className="hero-tagline" dangerouslySetInnerHTML={{ __html: content("home-hero-tagline", "Embrace the fragrance.<br>Become isth.") }} /><div className="hero-cta-row"><a className="cherry-button hero-whatsapp" href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`} target="_blank" rel="noreferrer"><MessageCircle size={17} /> Queries</a><a className="outline-button" href="#collection">Explore the Collection <ArrowDown size={14} /></a></div></div>
+        <div className="home-hero-content"><h1 className="hero-tagline">Become<br />isth.</h1><div className="hero-cta-row"><a className="cherry-button hero-whatsapp" href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`} target="_blank" rel="noreferrer"><MessageCircle size={17} /> Queries</a><a className="outline-button" href="#collection">Explore the Collection <ArrowDown size={14} /></a></div></div>
         <div className="hero-caption" aria-hidden="true" />
       </section>
 

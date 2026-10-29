@@ -35,7 +35,7 @@ export type WebsiteContentItem = { id: string; page: "Home" | "About" | "Guides"
 export const DEFAULT_ATELIER: AtelierMedia[] = [{ id: "nakshatra", kind: "image", largeUrl: "/assets/isth-editorial-nakshatra-galaxy-v2.png", smallUrl: "/assets/isth-editorial-nakshatra-galaxy-v2.png", description: "<span class=\"atelier-nakshatra-script\">NAKSHATRA Collection</span><strong>Coming Soon</strong>" }];
 
 export const DEFAULT_WEBSITE_CONTENT: WebsiteContentItem[] = [
-  { id: "home-hero-tagline", page: "Home", section: "Hero", label: "Hero heading", html: "Embrace the fragrance.<br>Become isth.", originalHtml: "Embrace the fragrance.<br>Become isth." },
+  { id: "home-hero-tagline", page: "Home", section: "Hero", label: "Hero heading", html: "Become<br>isth.", originalHtml: "Become<br>isth." },
   { id: "home-collection-heading", page: "Home", section: "Collection", label: "Collection heading", html: "Find your<br><em>signature.</em>", originalHtml: "Find your<br><em>signature.</em>" },
   { id: "home-collection-copy", page: "Home", section: "Collection", label: "Collection description", html: "Each isth composition is made to be worn close. Browse by feeling, not by family.", originalHtml: "Each isth composition is made to be worn close. Browse by feeling, not by family." },
   { id: "home-quote", page: "Home", section: "Quote", label: "Quote", html: "Life is not just about,<br>living &amp; surviving.<br>It's about feeling it,<br>enjoying it, &amp; making memories.", originalHtml: "Life is not just about,<br>living &amp; surviving.<br>It's about feeling it,<br>enjoying it, &amp; making memories." },
@@ -47,12 +47,12 @@ export const DEFAULT_WEBSITE_CONTENT: WebsiteContentItem[] = [
 
 export const DEFAULT_HERO_CAROUSEL: HeroCarouselSettings = {
   desktop: [
-    { id: "hero-editorial", url: "/assets/isth-hero-editorial_ed190768.png", focalX: 50, focalY: 50 },
+    { id: "hero-golden-editorial", url: "/assets/isth-hero-golden-editorial.png", focalX: 50, focalY: 50 },
     { id: "hero-about", url: "/assets/isth-editorial-about.webp", focalX: 50, focalY: 50 },
     { id: "hero-nakshatra", url: "/assets/isth-editorial-nakshatra-galaxy-v2.png", focalX: 50, focalY: 50 },
   ],
   mobile: [
-    { id: "hero-editorial-mobile", url: "/assets/isth-hero-editorial_ed190768.png", focalX: 58, focalY: 50 },
+    { id: "hero-golden-editorial-mobile", url: "/assets/isth-hero-golden-editorial.png", focalX: 58, focalY: 50 },
     { id: "hero-floral-mobile", url: "/assets/isth-floral-blush-atmosphere_7def68ba.png", focalX: 50, focalY: 50 },
   ],
   interval: 3000,

@@ -25,8 +25,9 @@ export default function About() {
           <img className="brand-logo brand-logo-dark" src={readLogoUrl()} alt="isth" />
         </Link>
         <nav className="desktop-nav" aria-label="Main navigation">
-          <Link href="/about" style={{ color: "var(--cherry)", fontWeight: 600 }}>About</Link>
-          <Link href="/home#collection">Collection</Link>
+          <Link href="/about" style={{ color: "var(--cherry)", fontWeight: 600 }}>Our Story</Link>
+          <Link href="/home#collection">Fragrances</Link>
+          <Link href="/home#atelier">Atelier</Link>
           <Link href="/home#contact">Contact</Link>
         </nav>
         <div className="site-actions">
@@ -39,8 +40,9 @@ export default function About() {
 
       <div className={`mobile-drawer ${menuOpen ? "is-open" : ""}`}>
         <nav>
-          <Link href="/about" onClick={() => setMenuOpen(false)}>About</Link>
-          <Link href="/home#collection" onClick={() => setMenuOpen(false)}>Collection</Link>
+          <Link href="/about" onClick={() => setMenuOpen(false)}>Our Story</Link>
+          <Link href="/home#collection" onClick={() => setMenuOpen(false)}>Fragrances</Link>
+          <Link href="/home#atelier" onClick={() => setMenuOpen(false)}>Atelier</Link>
           <Link href="/home#contact" onClick={() => setMenuOpen(false)}>Contact</Link>
           <Link href="/home" onClick={() => setMenuOpen(false)}>Back to Home</Link>
         </nav>

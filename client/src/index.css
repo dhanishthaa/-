@@ -1236,9 +1236,29 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 .contact-social-button { display:inline-flex; align-items:center; justify-content:center; justify-self:start; gap:9px; min-width:124px; height:38px; padding:8px 13px; border:1px solid var(--ink); background:transparent; color:var(--ink); font:10px var(--mono); letter-spacing:.14em; text-transform:uppercase; transition:background .25s var(--ease),color .25s var(--ease),transform .25s var(--ease),border-color .25s var(--ease); }
 .contact-social-button img { width:17px; height:17px; object-fit:contain; flex:none; filter:brightness(0); }
 .contact-social-button:hover { background:var(--ink); color:var(--ivory); border-color:var(--ink); transform:translateY(-2px); }
+
+/* Reference-led public chrome: transparent over the hero, with the existing mark kept intact and slightly enlarged. */
+.editorial-home .site-nav,
+.editorial-home .site-nav.is-scrolled,
+.about-editorial .site-nav,
+.about-editorial .site-nav.is-scrolled {
+  background:rgba(17,17,17,.16);
+  border-bottom:1px solid rgba(245,241,235,.22);
+  box-shadow:none;
+  backdrop-filter:blur(10px) saturate(112%);
+  -webkit-backdrop-filter:blur(10px) saturate(112%);
+}
+.editorial-home .site-nav .site-brand .brand-logo,
+.about-editorial .site-nav .site-brand .brand-logo { height:36px; max-width:128px; }
+.editorial-home .site-nav.is-scrolled,
+.about-editorial .site-nav.is-scrolled { color:var(--ivory); }
+@media (max-width:620px) {
+  .editorial-home .site-nav .site-brand .brand-logo,
+  .about-editorial .site-nav .site-brand .brand-logo { height:31px; max-width:108px; }
+}
 .contact-social-button:hover img { filter:brightness(0) invert(1); }
 .contact-social-button:focus-visible { outline:2px solid var(--cherry); outline-offset:4px; }
-.hero-tagline { font-family:'Raleway',var(--serif) !important; }
+.hero-tagline { font-family:'Poppins',var(--sans) !important; font-weight:800; font-style:normal; letter-spacing:-.08em; }
 .hero-tagline-line { display:inline-block; white-space:nowrap; }
 @media (max-width:620px) {
   .contact-social-rows { gap:8px; margin-top:52px; }
