@@ -1288,7 +1288,8 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 .hero-reference-queries:hover { background:var(--ivory); color:var(--ink); border-color:var(--ivory); }
 .hero-reference-footer { position:absolute; z-index:2; right:clamp(28px,4vw,72px); bottom:clamp(74px,10vh,104px); left:clamp(42%,46vw,54%); display:flex; align-items:flex-start; justify-content:space-between; gap:30px; padding-top:15px; border-top:1px solid rgba(245,241,235,.58); color:var(--ivory); }
 .hero-reference-footer p { margin:0; max-width:300px; color:rgba(245,241,235,.84); font:12px/1.35 var(--serif); }
-.hero-reference-footer a { display:inline-flex; align-items:center; gap:13px; padding-top:2px; color:var(--ivory); font:10px var(--mono); letter-spacing:.12em; text-transform:uppercase; white-space:nowrap; }
+.hero-reference-footer a { display:inline-flex; align-items:center; gap:13px; padding:12px 16px 12px 18px; border:1px solid rgba(245,241,235,.72); border-radius:999px; color:var(--ivory); font:10px var(--mono); letter-spacing:.12em; text-transform:uppercase; white-space:nowrap; transition:background .25s var(--ease),color .25s var(--ease),border-color .25s var(--ease); }
+.hero-reference-footer a:hover { background:var(--ivory); border-color:var(--ivory); color:var(--ink); }
 .hero-reference-footer a svg { transition:transform .25s var(--ease); }
 .hero-reference-footer a:hover svg { transform:translateX(5px); }
 .hero-reference-counter { position:absolute; z-index:2; bottom:clamp(25px,4vh,42px); left:clamp(28px,4vw,72px); color:rgba(245,241,235,.78); font:10px var(--mono); letter-spacing:.14em; }
@@ -1322,7 +1323,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
   .hero-reference-queries { margin-top:22px; }
   .hero-reference-footer { right:20px; bottom:74px; left:20px; display:block; padding-top:12px; }
   .hero-reference-footer p { font-size:11px; }
-  .hero-reference-footer a { margin-top:18px; font-size:9px; }
+  .hero-reference-footer a { margin-top:18px; padding:10px 13px 10px 15px; font-size:9px; }
   .hero-reference-counter { bottom:24px; left:20px; }
   .hero-reference-break { display:none; }
 }
