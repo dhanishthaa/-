@@ -1,12 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400&family=DM+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Poppins:wght@400;500;600;800;900&display=swap');
-@font-face { font-family:'Amsterdam One'; font-style:normal; font-weight:400; font-display:swap; src:url('/fonts/amsterdam-one.ttf') format('truetype'); }
-@font-face { font-family:'Raleway'; font-style:normal; font-weight:400; font-display:swap; src:url('/fonts/raleway-400.ttf') format('truetype'); }
+@import url('https://fonts.googleapis.com/css2?family=Italiana&family=Manrope:wght@300;400;500;600&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "./atelier-editor.css";
 
 /* Quiet Atelier: ivory paper, ink structure, restrained ISTH cherry, serif atmosphere. */
-:root { --ivory:#F5F1EB; --ink:#111111; --cherry:#5B0D18; --cherry-hover:#7A1725; --white:#FFFFFF; --stone:#D8D2C9; --ink-soft:#1B1B1F; --gold:#B59A62; --sans:'DM Sans',sans-serif; --serif:'Playfair Display',Georgia,serif; --mono:'IBM Plex Mono',monospace; --ease:cubic-bezier(.22,1,.36,1); --line:rgba(17,17,17,.14); }
+:root { --ivory:#F5F1EB; --ink:#111111; --cherry:#5B0D18; --cherry-hover:#7A1725; --white:#FFFFFF; --stone:#D8D2C9; --ink-soft:#1B1B1F; --gold:#B59A62; --sans:'Manrope',sans-serif; --serif:'Italiana',serif; --mono:'Manrope',sans-serif; --ease:cubic-bezier(.22,1,.36,1); --line:rgba(17,17,17,.14); }
 * { box-sizing:border-box; }
 html { scroll-behavior:smooth; }
 body { margin:0; background:var(--ivory); color:var(--ink); font-family:var(--sans); font-size:15px; line-height:1.55; -webkit-font-smoothing:antialiased; }
@@ -37,7 +35,7 @@ img { display:block; max-width:100%; }
 .after-hero-reference { width:100%; overflow:hidden; background:#b4a681; line-height:0; }
 .after-hero-reference img { display:block; width:100%; height:auto; max-width:none; }
 .alter-ego-strip { width:100%; overflow:hidden; background:#f6f0e7; color:#171511; line-height:.82; }
-.alter-ego-strip p { width:max-content; min-width:100%; margin:0; padding:clamp(24px,3.1vw,48px) 24px clamp(18px,2.7vw,40px); font:400 clamp(72px,12.2vw,174px)/.82 'Bodoni Moda',Didot,'Times New Roman',serif; letter-spacing:-.105em; white-space:nowrap; }
+.alter-ego-strip p { width:max-content; min-width:100%; margin:0; padding:clamp(24px,3.1vw,48px) 24px clamp(18px,2.7vw,40px); font:400 clamp(72px,12.2vw,174px)/.82 var(--serif); letter-spacing:-.105em; white-space:nowrap; }
 .alter-ego-strip em { color:#817b6d; font-style:normal; }
 .imperial-editorial { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(320px,.65fr); gap:clamp(44px,7vw,112px); align-items:center; padding:clamp(76px,10vw,150px) clamp(20px,7vw,110px); background:#55281e; color:var(--ivory); }
 .imperial-editorial-media { display:grid; grid-template-columns:1.16fr .84fr; grid-template-areas:"bottles portrait" "linen linen"; gap:clamp(14px,2vw,28px); min-width:0; }
@@ -162,9 +160,9 @@ em { font-style:italic; }
 .coming-soon span { opacity:.5; }
 .coming-soon { display:inline-flex; align-items:center; gap:12px; margin-top:30px; padding:15px 20px; border:1px solid rgba(245,241,235,.24); border-radius:999px; color:var(--ivory); background:rgba(245,241,235,.1); box-shadow:0 14px 40px rgba(0,0,0,.2); backdrop-filter:blur(16px) saturate(120%); font:13px var(--mono); letter-spacing:.1em; text-transform:uppercase; }
 .coming-soon span { opacity:.5; }
-.nakshatra-inner h2 { position:relative; min-height:clamp(142px,14vw,218px); margin-top:28px; color:var(--ivory); font:900 clamp(52px,8.7vw,136px)/.9 'Poppins',var(--sans); letter-spacing:-.075em; }
+.nakshatra-inner h2 { position:relative; min-height:clamp(142px,14vw,218px); margin-top:28px; color:var(--ivory); font:400 clamp(52px,8.7vw,136px)/.9 var(--serif); letter-spacing:-.075em; }
 .nakshatra-title-main { position:relative; z-index:1; display:block; white-space:nowrap; letter-spacing:.055em; }
-.nakshatra-title-script { position:absolute; left:calc(8% + 30px); top:calc(39% - 16px); z-index:2; color:#810100; font:400 clamp(70px,9.6vw,160px)/.82 'Amsterdam One',cursive; letter-spacing:-.045em; white-space:nowrap; }
+.nakshatra-title-script { position:absolute; left:calc(8% + 30px); top:calc(39% - 16px); z-index:2; color:#810100; font:400 clamp(70px,9.6vw,160px)/.82 var(--serif); letter-spacing:-.045em; white-space:nowrap; }
 .nakshatra-inner p { max-width:310px; margin:34px 0; color:rgba(245,241,235,.7); font-size:15px; }
 .coming-soon { display:flex; gap:13px; align-items:center; color:var(--gold); font:10px var(--mono); letter-spacing:.15em; text-transform:uppercase; }
 .coming-soon span { color:var(--ivory); opacity:.5; }
@@ -190,7 +188,7 @@ em { font-style:italic; }
 .contact-lockup { --parfums-tracking:clamp(.03em,.35vw,.065em); position:relative; isolation:isolate; display:flex; align-items:baseline; justify-content:center; gap:clamp(22px,3vw,48px); min-height:128px; margin:0 0 clamp(86px,10vw,156px); perspective:900px; transform:translateZ(0); transform-style:preserve-3d; animation:contact-lockup-float 8s ease-in-out infinite; }
 .contact-lockup img,.contact-lockup span { position:relative; z-index:1; }
 .contact-lockup img { width:auto; height:clamp(76px,7.8vw,110px); max-width:min(304px,29vw); object-fit:contain; filter:brightness(0) drop-shadow(0 2px 0 rgba(255,255,255,.64)) drop-shadow(0 7px 8px rgba(17,17,17,.12)) drop-shadow(0 16px 20px rgba(17,17,17,.11)); transform:translateZ(6px); }
-.contact-lockup span { color:var(--cherry); font-family:"Gilroy-ExtraBold","Gilroy ExtraBold",Gilroy,var(--sans); font-size:128px; font-weight:800; line-height:.8; letter-spacing:var(--parfums-tracking); text-shadow:0 1px 0 rgba(255,255,255,.82),0 3px 0 rgba(91,13,24,.08),0 10px 14px rgba(91,13,24,.16),0 22px 28px rgba(91,13,24,.10); transform:translateZ(10px); }
+.contact-lockup span { color:var(--cherry); font-family:var(--serif); font-size:128px; font-weight:400; line-height:.8; letter-spacing:var(--parfums-tracking); text-shadow:0 1px 0 rgba(255,255,255,.82),0 3px 0 rgba(91,13,24,.08),0 10px 14px rgba(91,13,24,.16),0 22px 28px rgba(91,13,24,.10); transform:translateZ(10px); }
 .contact-lockup::after { content:""; position:absolute; z-index:0; width:min(64%,520px); height:20px; bottom:-26px; border-radius:50%; background:radial-gradient(ellipse,rgba(17,17,17,.19),rgba(17,17,17,0) 70%); filter:blur(9px); opacity:.62; transform:scaleX(.9); pointer-events:none; }
 @keyframes contact-lockup-float { 0%,100% { transform:translate3d(0,0,0) rotateX(0); } 50% { transform:translate3d(0,-6px,0) rotateX(1deg); } }
 .contact-content { display:grid; grid-template-columns:1fr 1fr; gap:60px; }
@@ -388,7 +386,7 @@ em { font-style:italic; }
 .quote-video-backdrop { position:absolute; inset:0; z-index:-2; pointer-events:none; background:linear-gradient(90deg,rgba(17,17,17,.9),rgba(17,17,17,.3)),url('/assets/isth-single-flower-butterfly-quote-v2.png') center/cover; }
 .quote-video-backdrop::after { content:""; position:absolute; inset:0; background:radial-gradient(circle at 70% 46%,rgba(181,154,98,.18),transparent 20%),linear-gradient(180deg,transparent,rgba(17,17,17,.55)); mix-blend-mode:screen; }
 .quote-video-copy { position:absolute; left:clamp(20px,9vw,140px); right:clamp(20px,9vw,140px); bottom:clamp(36px,6vw,86px); z-index:2; max-width:760px; }
-.quote-video-copy h2 { display:flex; flex-direction:column; gap:.16em; margin:24px 0 38px; font:400 clamp(24px,3vw,39px)/1.08 'Raleway',var(--sans); letter-spacing:-.04em; }
+.quote-video-copy h2 { display:flex; flex-direction:column; gap:.16em; margin:24px 0 38px; font:400 clamp(24px,3vw,39px)/1.08 var(--serif); letter-spacing:-.04em; }
 .quote-video-copy h2 span { white-space:nowrap; }
 .quote-video-meta { position:absolute; inset:auto clamp(20px,4vw,56px) 24px; display:flex; justify-content:space-between; color:rgba(245,241,235,.55); font:9px var(--mono); letter-spacing:.14em; text-transform:uppercase; }
 .nakshatra-section { min-height:700px; }
@@ -434,7 +432,7 @@ em { font-style:italic; }
 .product-dialog .dialog-notes { line-height:1.7; }
 @media (max-width:900px) { .quote-video-section { min-height:620px; } .nakshatra-bottles { right:-6vw; width:52vw; opacity:.8; } .media-form { grid-template-columns:1fr; } }
 @media (max-width:620px) { .quote-video-backdrop { -webkit-mask-size:92vw; mask-size:92vw; -webkit-mask-position:calc(var(--quote-reveal-x) - 46vw) calc(var(--quote-reveal-y) - 46vw); mask-position:calc(var(--quote-reveal-x) - 46vw) calc(var(--quote-reveal-y) - 46vw); } }
-@media (max-width:620px) { .product-dialog { width:calc(100% - 24px); max-height:calc(100svh - 24px); } .product-dialog-layout { grid-template-columns:1fr; min-height:0; } .dialog-product-media { min-height:clamp(220px,47svh,390px); } .dialog-product-media .bottle-stage { min-height:clamp(220px,47svh,390px); } .product-dialog-copy { padding:30px 24px 28px; } .product-dialog-title { margin:18px 0 26px; font-size:clamp(38px,12vw,58px); } .dialog-specs { gap:18px; } .dialog-specs > div { grid-template-columns:92px minmax(0,1fr); column-gap:12px; align-items:baseline; } .product-dialog .cherry-button { width:100%; justify-content:center; } .site-brand,.brand-mark { padding:6px 9px; min-width:68px; min-height:62px; } .site-brand .brand-logo,.brand-mark .brand-logo { height:52px; max-width:88px; } .footer-brand .brand-logo,.admin-brand .brand-logo { height:44px; max-width:78px; } .brand-logo { height:22px; } .hero-cta-row { align-items:stretch; flex-direction:column; width:max-content; max-width:100%; } .hero-cta-row .cherry-button,.hero-cta-row .outline-button { width:100%; } .hero-social-rows { gap:8px; margin-top:18px; max-width:100%; } .hero-social-row { gap:12px; font-size:9px; letter-spacing:.1em; } .hero-social-button { min-width:112px; height:36px; padding:7px 10px; font-size:9px; } .hero-social-button img { width:16px; height:16px; } .ingredient-marquee div { padding:15px 0 17px; } .quote-video-copy h2 { font:400 clamp(20px,5.6vw,26px)/1.12 'Raleway',var(--sans); } .quote-video-meta { flex-direction:column; gap:7px; } .nakshatra-bottles { top:66%; right:-24vw; width:82vw; } .nakshatra-bottle.tower { height:230px; } .nakshatra-bottle.cosmos { height:280px; } .hello-word { top:150px; font-size:clamp(120px,38vw,180px); } .landing-page .landing-copy { bottom:126px; } .landing-page .landing-copy h1 { font-size:clamp(52px,15vw,72px); } .admin-login-mark .brand-logo { height:54px; max-width:100px; } }
+@media (max-width:620px) { .product-dialog { width:calc(100% - 24px); max-height:calc(100svh - 24px); } .product-dialog-layout { grid-template-columns:1fr; min-height:0; } .dialog-product-media { min-height:clamp(220px,47svh,390px); } .dialog-product-media .bottle-stage { min-height:clamp(220px,47svh,390px); } .product-dialog-copy { padding:30px 24px 28px; } .product-dialog-title { margin:18px 0 26px; font-size:clamp(38px,12vw,58px); } .dialog-specs { gap:18px; } .dialog-specs > div { grid-template-columns:92px minmax(0,1fr); column-gap:12px; align-items:baseline; } .product-dialog .cherry-button { width:100%; justify-content:center; } .site-brand,.brand-mark { padding:6px 9px; min-width:68px; min-height:62px; } .site-brand .brand-logo,.brand-mark .brand-logo { height:52px; max-width:88px; } .footer-brand .brand-logo,.admin-brand .brand-logo { height:44px; max-width:78px; } .brand-logo { height:22px; } .hero-cta-row { align-items:stretch; flex-direction:column; width:max-content; max-width:100%; } .hero-cta-row .cherry-button,.hero-cta-row .outline-button { width:100%; } .hero-social-rows { gap:8px; margin-top:18px; max-width:100%; } .hero-social-row { gap:12px; font-size:9px; letter-spacing:.1em; } .hero-social-button { min-width:112px; height:36px; padding:7px 10px; font-size:9px; } .hero-social-button img { width:16px; height:16px; } .ingredient-marquee div { padding:15px 0 17px; } .quote-video-copy h2 { font:400 clamp(20px,5.6vw,26px)/1.12 var(--serif); } .quote-video-meta { flex-direction:column; gap:7px; } .nakshatra-bottles { top:66%; right:-24vw; width:82vw; } .nakshatra-bottle.tower { height:230px; } .nakshatra-bottle.cosmos { height:280px; } .hello-word { top:150px; font-size:clamp(120px,38vw,180px); } .landing-page .landing-copy { bottom:126px; } .landing-page .landing-copy h1 { font-size:clamp(52px,15vw,72px); } .admin-login-mark .brand-logo { height:54px; max-width:100px; } }
 
 @media (max-width:760px) {
   .product-dialog { width:calc(100% - 24px); max-width:calc(100% - 24px) !important; max-height:calc(100dvh - 24px); }
@@ -1297,7 +1295,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 }
 .contact-social-button:hover img { filter:brightness(0) invert(1); }
 .contact-social-button:focus-visible { outline:2px solid var(--cherry); outline-offset:4px; }
-.hero-tagline { font-family:'Poppins',var(--sans) !important; font-weight:800; font-style:normal; letter-spacing:-.08em; }
+.hero-tagline { font-family:var(--serif) !important; font-weight:400; font-style:normal; letter-spacing:-.08em; }
 .hero-tagline-line { display:inline-block; white-space:nowrap; }
 
 /* Reference-matched hero composition: image-first, transparent chrome, editorial copy, rules, and collection prompt. */
@@ -1352,7 +1350,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 .editorial-home .site-nav:not(.is-folded) { transform:translate3d(0,0,0) scaleY(1) !important; pointer-events:auto; }
 .editorial-home .site-nav.is-folded { transform:translate3d(0,calc(-100% - 12px),0) scaleY(.96) !important; pointer-events:none; }
 .editorial-home .home-hero-reference-content { top:clamp(290px,calc(25vh + 100px),330px) !important; left:clamp(64px,4.7vw,90px) !important; transform:none !important; }
-.editorial-home .home-hero-reference-content .hero-tagline { font-family:'Poppins',var(--sans) !important; font-size:clamp(128px,8.7vw,166px) !important; font-weight:400 !important; line-height:.79 !important; letter-spacing:-.085em !important; }
+.editorial-home .home-hero-reference-content .hero-tagline { font-family:var(--serif) !important; font-size:clamp(128px,8.7vw,166px) !important; font-weight:400 !important; line-height:.79 !important; letter-spacing:-.085em !important; }
 .editorial-home .hero-reference-word--indent { margin-left:clamp(180px,13.2vw,252px) !important; }
 @media (max-width:900px) {
   .hero-reference-footer { left:clamp(28px,6vw,72px); right:clamp(28px,6vw,72px); }

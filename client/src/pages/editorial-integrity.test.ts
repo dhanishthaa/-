@@ -232,7 +232,7 @@ describe("isth editorial page integrity", () => {
     expect(home).not.toContain("quote-reveal-prompt");
     expect(styles).toContain(".quote-video-backdrop { position:absolute; inset:0; z-index:-2;");
     expect(styles).toContain(".quote-video-copy h2 span { white-space:nowrap; }");
-    expect(styles).toContain(".quote-video-copy h2 { font:400 clamp(20px,5.6vw,26px)/1.12 'Raleway',var(--sans); }");
+    expect(styles).toContain(".quote-video-copy h2 { font:400 clamp(20px,5.6vw,26px)/1.12 var(--serif); }");
     expect(styles).not.toContain("--quote-floral-mask");
     expect(styles).not.toContain(".quote-video-section.is-revealing");
     expect(styles).toContain(".quote-video-copy { position:absolute; left:clamp(20px,9vw,140px); right:clamp(20px,9vw,140px); bottom:clamp(36px,6vw,86px); z-index:2;");
@@ -297,7 +297,7 @@ describe("isth editorial page integrity", () => {
     expect(styles).not.toContain(".editorial-home .intro-copy::before");
     expect(styles).toContain('.text-link[href^="mailto:"] { text-transform:lowercase; }');
     expect(styles).toContain(".contact-section .eyebrow::before { content:none; }");
-    expect(styles).toContain('font-family:"Gilroy-ExtraBold","Gilroy ExtraBold",Gilroy,var(--sans)');
+    expect(styles).toContain('font-family:var(--serif)');
     expect(styles).toContain('font-size:128px');
     expect(styles).toContain('@keyframes contact-lockup-float');
     expect(styles).toContain('.contact-lockup { animation:none; }');
