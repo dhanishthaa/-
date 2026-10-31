@@ -232,7 +232,10 @@ describe("isth editorial page integrity", () => {
     expect(styles).not.toContain(".product-card.is-kawaii .product-visual::after");
     expect(styles).not.toContain("border:clamp(16px,2vw,28px) solid #e1c8aa");
     expect(styles).toContain(".product-card.is-kawaii .product-visual { background:transparent;");
-    expect(styles).toContain(".editorial-home .product-visual { aspect-ratio:5/6; overflow:hidden; background:transparent !important; border:0 !important;");
+    expect(styles).toContain(".editorial-home .product-visual { overflow:hidden; background:transparent !important; border:0 !important;");
+    expect(styles).toContain(".product-visual { position:relative; overflow:hidden; aspect-ratio:4/5;");
+    expect(styles).toContain(".catalog-grid .product-visual { aspect-ratio:1/1.2;");
+    expect(styles).not.toContain(".editorial-home .product-visual { aspect-ratio:5/6;");
     expect(styles).toContain(".editorial-home .product-visual .bottle-stage.is-empty { background:transparent !important;");
     expect(styles).toContain(".product-card.is-kawaii .bottle-stage-kawaii { background:transparent;");
     expect(styles).toContain(".product-card.is-kawaii .bottle-stage-kawaii > img { padding:0; object-fit:contain;");

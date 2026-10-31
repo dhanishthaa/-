@@ -1077,9 +1077,9 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 .editorial-home .hero-identity { margin-top:14px; }
 @media (max-width:620px) { .editorial-home .hero-identity { margin-top:10px; } }
 
-/* Product media: transparent 5:6 frames; uploaded bottle images stay uncropped. */
-.editorial-home .product-visual { aspect-ratio:5/6; overflow:hidden; background:transparent !important; border:0 !important; box-shadow:none !important; }
-.editorial-home .product-visual .bottle-stage { aspect-ratio:5/6; min-height:0; background:transparent !important; }
+/* Preserve the original 4:5 featured and 1:1.2 catalog frame ratios. */
+.editorial-home .product-visual { overflow:hidden; background:transparent !important; border:0 !important; box-shadow:none !important; }
+.editorial-home .product-visual .bottle-stage { background:transparent !important; }
 .editorial-home .product-visual .bottle-stage > img { width:100%; height:100%; display:block; object-fit:contain; object-position:center; }
 .editorial-home .product-visual .bottle-stage.is-empty { background:transparent !important; }
 .editorial-home .product-visual .bottle-placeholder { transform:scale(.72); }
