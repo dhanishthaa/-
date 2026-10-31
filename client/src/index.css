@@ -36,6 +36,10 @@ img { display:block; max-width:100%; }
 .home-hero { height:min(100svh,920px); min-height:680px; position:relative; overflow:hidden; background:var(--ink); color:var(--ivory); isolation:isolate; }
 .after-hero-reference { width:100%; overflow:hidden; background:#b4a681; line-height:0; }
 .after-hero-reference img { display:block; width:100%; height:auto; max-width:none; }
+.alter-ego-strip { width:100%; overflow:hidden; background:#f6f0e7; color:#171511; line-height:.82; }
+.alter-ego-strip p { width:max-content; min-width:100%; margin:0; padding:clamp(24px,3.1vw,48px) 24px clamp(18px,2.7vw,40px); font:400 clamp(72px,12.2vw,174px)/.82 var(--serif); letter-spacing:-.085em; white-space:nowrap; }
+.alter-ego-strip em { color:#817b6d; font-style:normal; }
+.product-card,.product-visual,.collection-editorial-photo,.collection-editorial-photo > div,.story-image,.story-note-photo,.nakshatra-image-card,.atelier-media-stage,.atelier-media-frame,.atelier-admin-preview { border:0 !important; box-shadow:none !important; }
 .home-hero-image { position:absolute; inset:0; background:url('/assets/isth-hero-golden-editorial.png') center/cover; filter:saturate(.78) contrast(1.03); z-index:-2; }
 .home-hero-overlay { position:absolute; inset:0; z-index:-1; background:linear-gradient(90deg,rgba(17,17,17,.72),rgba(17,17,17,.19) 56%,rgba(17,17,17,.32)),linear-gradient(0deg,rgba(17,17,17,.78),transparent 40%); }
 .home-hero-content { position:absolute; left:clamp(20px,9vw,140px); bottom:clamp(90px,13vh,160px); max-width:580px; }
