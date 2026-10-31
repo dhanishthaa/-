@@ -4,24 +4,23 @@ import { useLocation } from "wouter";
 
 export default function Landing() {
   const [, setLocation] = useLocation();
-  const signatureRef = useRef<HTMLDivElement>(null);
+  const gatewayRef = useRef<HTMLDivElement>(null);
+  const openCollection = () => setLocation("/home");
 
   useEffect(() => {
-    if (!signatureRef.current) return;
+    if (!gatewayRef.current) return;
 
     const animation = lottie.loadAnimation({
-      container: signatureRef.current,
+      container: gatewayRef.current,
       renderer: "svg",
       loop: false,
       autoplay: true,
-      path: "/assets/isth-signature-original.json",
-      name: "isth original Figma signature",
+      path: "/assets/Landinggateway-signature.json",
+      name: "isth original Figma signature animation",
     });
 
     return () => animation.destroy();
   }, []);
-
-  const openCollection = () => setLocation("/home");
 
   return (
     <main data-layer="isth — The invitation" data-node-id="39-2" className="figma-landing">
@@ -36,16 +35,9 @@ export default function Landing() {
       <div data-layer="Atmospheric vignette" data-node-id="10-70" className="figma-landing__vignette" aria-hidden="true" />
 
       <div data-layer="Landing gateway" data-node-id="14-4" className="figma-landing__gateway">
+        <div ref={gatewayRef} className="figma-lottie-gateway" aria-hidden="true" />
         <div data-layer="Immersive invitation" data-node-id="14-10" className="figma-landing__invitation">
-          <div
-            data-layer="isth signature"
-            data-node-id="17-13"
-            ref={signatureRef}
-            className="figma-wordmark figma-wordmark--lottie"
-            role="img"
-            aria-label="isth"
-          />
-
+          <div className="figma-wordmark figma-wordmark--placeholder" aria-hidden="true" />
           <div data-layer="Editorial statement" data-node-id="14-11" className="figma-landing__statement">
             <h1 data-layer="Emotional statement" data-node-id="10-86">
               Embrace the fragrance.<br />
@@ -56,12 +48,12 @@ export default function Landing() {
               Discover fragrances that become a part of you.
             </p>
           </div>
-
           <button
             data-layer="Explore the collection"
             data-node-id="14-12"
             className="figma-landing__cta"
             type="button"
+            aria-label="Explore the collection"
             onClick={openCollection}
           >
             <span data-layer="Call to action" data-node-id="10-90">Explore the collection</span>
