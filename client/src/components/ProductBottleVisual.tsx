@@ -1,26 +1,24 @@
 import { useEffect, useState, type CSSProperties } from "react";
-import { getProductImageFallback, type Product } from "@/data/products";
+import type { Product } from "@/data/products";
 
 export default function ProductBottleVisual({ product, modal = false }: { product: Product; modal?: boolean }) {
   const imageMedia = product.media?.find((item) => item.kind === "image");
-  const [imageSource, setImageSource] = useState(imageMedia?.url || getProductImageFallback(product));
+  const productImage = [imageMedia?.url, product.image].find((url) => Boolean(url && !url.startsWith("/assets/")));
+  const [imageSource, setImageSource] = useState(productImage);
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
-    setImageSource(imageMedia?.url || getProductImageFallback(product));
+    setImageSource(productImage);
     setFailed(false);
-  }, [imageMedia?.url, product.image, product.id]);
+  }, [productImage, product.id]);
 
-  const fallback = getProductImageFallback(product);
-  const shouldUseFallback = Boolean(fallback && imageSource !== fallback);
   const visibleImage = failed ? undefined : imageSource;
-  const imageFit = imageMedia?.fit ?? (imageSource?.includes("/assets/") && !imageSource.includes("bottle-") ? "cover" : "contain");
 
   return (
     <div
-      className={`bottle-stage ${modal ? "bottle-stage-modal" : ""} ${visibleImage ? "has-image" : "is-placeholder"}`}
+      className={`bottle-stage ${modal ? "bottle-stage-modal" : ""} ${visibleImage ? "has-image" : "is-empty"}`}
       style={{ "--product-tone": product.color } as CSSProperties}
-      aria-label={visibleImage ? `${product.name} bottle` : `${product.name} bottle placeholder`}
+      aria-label={visibleImage ? `${product.name} bottle` : `${product.name} image frame`}
     >
       {visibleImage ? (
         <img
@@ -29,15 +27,10 @@ export default function ProductBottleVisual({ product, modal = false }: { produc
           loading={modal || product.featured ? "eager" : "lazy"}
           decoding="async"
           fetchPriority={modal || product.featured ? "high" : "auto"}
-          style={{ objectFit: imageFit }}
-          onError={() => { if (shouldUseFallback) setImageSource(fallback); else setFailed(true); }}
+          style={{ objectFit: "contain" }}
+          onError={() => setFailed(true)}
         />
-      ) : (
-        <div className="bottle-placeholder" aria-hidden="true">
-          <div className="bottle-cap" />
-          <div className="bottle-body"><span>isth</span><small>EAU DE PARFUM</small></div>
-        </div>
-      )}
+      ) : null}
     </div>
   );
 }

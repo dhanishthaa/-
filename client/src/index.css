@@ -144,7 +144,7 @@ em { font-style:italic; }
 .bottle-stage > picture > img { width:100%; height:100%; display:block; object-fit:cover; object-position:center; }
 .bottle-stage-kawaii { background:#ead7c1; }
 .bottle-stage-kawaii > img { width:100%; height:100%; display:block; padding:clamp(8px,2vw,20px); object-fit:contain; object-position:center; }
-.product-card.is-kawaii .product-visual { background:#eee9e2; }
+.product-card.is-kawaii .product-visual { background:transparent; }
 .product-card.is-kawaii .bottle-stage-kawaii { background:transparent; }
 .product-card.is-kawaii .bottle-stage-kawaii > img { padding:0; object-fit:contain; }
 .dialog-product-media .bottle-stage-kawaii > img { padding:clamp(16px,3vw,34px); object-fit:contain; object-position:center; }
@@ -1077,11 +1077,11 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 .editorial-home .hero-identity { margin-top:14px; }
 @media (max-width:620px) { .editorial-home .hero-identity { margin-top:10px; } }
 
-/* Product media: stable 5:6 portrait frames, lightweight loading fallbacks, and touch galleries. */
-.editorial-home .product-visual { aspect-ratio:5/6; overflow:hidden; background:#eee9e2; }
-.editorial-home .product-visual .bottle-stage { aspect-ratio:5/6; min-height:0; background:linear-gradient(145deg,#f1eee8,#e2ddd4); }
-.editorial-home .product-visual .bottle-stage > img { width:100%; height:100%; display:block; object-position:center; }
-.editorial-home .product-visual .bottle-stage.is-placeholder { background:linear-gradient(145deg,#f1eee8,#dcd5cc); }
+/* Product media: transparent 5:6 frames; uploaded bottle images stay uncropped. */
+.editorial-home .product-visual { aspect-ratio:5/6; overflow:hidden; background:transparent !important; border:0 !important; box-shadow:none !important; }
+.editorial-home .product-visual .bottle-stage { aspect-ratio:5/6; min-height:0; background:transparent !important; }
+.editorial-home .product-visual .bottle-stage > img { width:100%; height:100%; display:block; object-fit:contain; object-position:center; }
+.editorial-home .product-visual .bottle-stage.is-empty { background:transparent !important; }
 .editorial-home .product-visual .bottle-placeholder { transform:scale(.72); }
 .product-gallery { width:100%; outline:none; }
 .product-gallery:focus-visible { outline:2px solid var(--cherry); outline-offset:4px; }
