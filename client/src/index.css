@@ -1592,8 +1592,8 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 }
 
 
-/* Figma opening — isth / The invitation. The retired red curtain is gone;
-   the supplied signature glyphs still reveal themselves like handwriting. */
+/* Figma opening — isth / The invitation. The signature motion is the original
+   Lottie precomposition supplied with the Figma export. */
 .figma-landing {
   position: relative;
   isolation: isolate;
@@ -1659,103 +1659,11 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
   overflow: hidden;
 }
 
-.figma-wordmark__stroke {
-  position: absolute;
-  overflow: hidden;
-}
-
-.figma-wordmark__stroke--i { left: -7.5%; top: -.28%; width: 28.23%; height: 93.96%; }
-.figma-wordmark__stroke--s { left: 9.6%; top: 21.24%; width: 42.65%; height: 91.07%; }
-.figma-wordmark__stroke--t { left: 37.43%; top: 5.22%; width: 40.93%; height: 94.42%; }
-.figma-wordmark__stroke--h { left: 56.3%; top: -12.31%; width: 51.2%; height: 111.92%; }
-
-.figma-wordmark__writing-stroke {
-  box-sizing: border-box;
-  position: absolute;
+.figma-wordmark--lottie > svg {
   display: block;
-  border-color: #fff;
-  border-style: solid;
-  opacity: 0;
-  pointer-events: none;
-  animation: figma-stroke-write .62s cubic-bezier(.2, .9, .18, 1) both;
-}
-
-.figma-wordmark__writing-stroke--i-1 { left: 29.88%; top: 14.73%; width: 29.89%; height: 17.47%; border-width: clamp(6px, 4vw, 19px); }
-.figma-wordmark__writing-stroke--i-2 { left: 64.20%; top: 42.57%; width: 0; height: 43.11%; border-width: clamp(7px, 4.8vw, 23px); }
-.figma-wordmark__writing-stroke--s-1 { left: 19.05%; top: 16.89%; width: 59.35%; height: 0; border-width: clamp(6px, 3.6vw, 17px); }
-.figma-wordmark__writing-stroke--s-2 { left: 21.17%; top: 18.58%; width: 55.03%; height: 65.89%; border-width: clamp(7px, 5vw, 24px); }
-.figma-wordmark__writing-stroke--t-1 { left: 36.65%; top: 15.21%; width: 30.54%; height: 70.25%; border-width: clamp(7px, 5vw, 24px); }
-.figma-wordmark__writing-stroke--t-2 { left: 19.09%; top: 33.13%; width: 61.84%; height: 0; border-width: clamp(6px, 3.6vw, 17px); }
-.figma-wordmark__writing-stroke--h-1 { left: 17.09%; top: 11.91%; width: 18.96%; height: 76.05%; border-width: clamp(7px, 5vw, 24px); }
-.figma-wordmark__writing-stroke--h-2 { left: 36.01%; top: 53.91%; width: 43.62%; height: 33.15%; border-width: clamp(7px, 5.2vw, 25px); }
-
-.figma-wordmark__writing-stroke--i-1 { animation-delay: .08s; }
-.figma-wordmark__writing-stroke--i-2 { animation-delay: .20s; }
-.figma-wordmark__writing-stroke--s-1 { animation-delay: .47s; }
-.figma-wordmark__writing-stroke--s-2 { animation-delay: .58s; }
-.figma-wordmark__writing-stroke--t-1 { animation-delay: .95s; }
-.figma-wordmark__writing-stroke--t-2 { animation-delay: 1.08s; }
-.figma-wordmark__writing-stroke--h-1 { animation-delay: 1.42s; }
-.figma-wordmark__writing-stroke--h-2 { animation-delay: 1.56s; }
-
-.figma-wordmark__glyph {
-  position: absolute;
-  display: block;
-  max-width: none;
-  height: auto;
-  opacity: 0;
-  clip-path: inset(0 100% 0 0);
-}
-
-.figma-wordmark__stroke--i .figma-wordmark__glyph { left: 26.56%; top: 13.1%; width: 46.86%; }
-.figma-wordmark__stroke--s .figma-wordmark__glyph { left: 17.59%; top: 13.51%; width: 64.83%; }
-.figma-wordmark__stroke--t .figma-wordmark__glyph { left: 18.32%; top: 13.03%; width: 63.35%; }
-.figma-wordmark__stroke--h .figma-wordmark__glyph { left: 14.66%; top: 11%; width: 70.75%; }
-
-.figma-wordmark--writing .figma-wordmark__glyph {
-  animation: figma-glyph-write .62s cubic-bezier(.2, .9, .18, 1) both;
-}
-
-.figma-wordmark--writing .figma-wordmark__stroke--i .figma-wordmark__glyph { animation-delay: .57s; }
-.figma-wordmark--writing .figma-wordmark__stroke--s .figma-wordmark__glyph { animation-delay: .98s; }
-.figma-wordmark--writing .figma-wordmark__stroke--t .figma-wordmark__glyph { animation-delay: 1.42s; }
-.figma-wordmark--writing .figma-wordmark__stroke--h .figma-wordmark__glyph { animation-delay: 1.86s; }
-
-@keyframes figma-stroke-write {
-  0% { opacity: 0; clip-path: inset(0 100% 0 0); }
-  25% { opacity: 1; }
-  78% { opacity: 1; clip-path: inset(0 0 0 0); }
-  100% { opacity: 0; clip-path: inset(0 0 0 0); }
-}
-
-@keyframes figma-glyph-write {
-  0% { opacity: 0; clip-path: inset(0 100% 0 0); transform: translate3d(0, 8px, 0); }
-  35% { opacity: 1; }
-  100% { opacity: 1; clip-path: inset(0 0 0 0); transform: translate3d(0, 0, 0); }
-}
-
-.figma-wordmark__glyph--i {
-  top: 12.03%;
-  left: 0;
-  width: 13.23%;
-}
-
-.figma-wordmark__glyph--s {
-  top: 33.55%;
-  left: 17.1%;
-  width: 27.65%;
-}
-
-.figma-wordmark__glyph--t {
-  top: 17.53%;
-  left: 44.93%;
-  width: 25.93%;
-}
-
-.figma-wordmark__glyph--h {
-  top: 0;
-  left: 63.8%;
-  width: 36.2%;
+  width: 100% !important;
+  height: 100% !important;
+  overflow: visible;
 }
 
 .figma-landing__statement {
@@ -1870,18 +1778,6 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .figma-wordmark--writing .figma-wordmark__glyph {
-    animation: none;
-    opacity: 1;
-    clip-path: none;
-    transform: none;
-  }
-
-  .figma-wordmark__writing-stroke {
-    animation: none;
-    opacity: 0;
-  }
-
   .figma-landing__cta,
   .figma-landing__cta img {
     transition: none;

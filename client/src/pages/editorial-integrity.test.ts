@@ -129,18 +129,19 @@ describe("isth editorial page integrity", () => {
     expect(about).toContain('window.scrollTo({ top: 0, left: 0, behavior: "auto" })');
   });
 
-  it("uses the static Figma invitation hero without the retired red intro sequence", () => {
+  it("uses the Figma invitation hero with the supplied original signature animation", () => {
     const landing = readProjectFile("client/src/pages/Landing.tsx");
     const styles = readProjectFile("client/src/index.css");
 
     expect(landing).toContain('className="figma-landing"');
     expect(landing).toContain('src="/assets/10-68.webp"');
     expect(landing).toContain('data-layer="isth — The invitation"');
-    expect(landing).toContain("figma-wordmark--writing");
+    expect(landing).toContain("figma-wordmark--lottie");
+    expect(landing).toContain("/assets/isth-signature-original.json");
     expect(landing).not.toContain("signatureTimer");
     expect(landing).not.toContain("landing-flower-search");
     expect(styles).toContain(".figma-landing {");
-    expect(styles).toContain("@keyframes figma-glyph-write");
+    expect(styles).toContain(".figma-wordmark--lottie > svg");
     expect(styles).toContain(".about-feature-mark p { margin:0; color:#5B0D18;");
     expect(styles).toContain("text-shadow:none;");
   });
