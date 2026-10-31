@@ -1,0 +1,93 @@
+{
+  "name": "isth handwritten signature motion",
+  "version": 4,
+  "units": "seconds",
+  "technique": "exact-glyph-outline-trace-then-fill",
+  "description": "Each exact supplied glyph contour is drawn with normalized SVG stroke-dashoffset, then the untouched filled glyph settles in. No approximate masks are used, preventing disconnected fragments.",
+  "viewBox": [
+    0,
+    0,
+    82.38,
+    50.28
+  ],
+  "stroke": {
+    "width": 0.82,
+    "linecap": "round",
+    "linejoin": "round",
+    "easing": "linear"
+  },
+  "letters": [
+    {
+      "id": "i",
+      "drawDelay": 0.38,
+      "drawDuration": 0.42,
+      "fillDelay": 0.72,
+      "fillDuration": 0.2
+    },
+    {
+      "id": "s",
+      "drawDelay": 0.7,
+      "drawDuration": 0.82,
+      "fillDelay": 1.42,
+      "fillDuration": 0.2
+    },
+    {
+      "id": "t",
+      "drawDelay": 1.38,
+      "drawDuration": 0.6,
+      "fillDelay": 1.9,
+      "fillDuration": 0.2
+    },
+    {
+      "id": "h",
+      "drawDelay": 1.86,
+      "drawDuration": 0.84,
+      "fillDelay": 2.6,
+      "fillDuration": 0.2
+    }
+  ],
+  "dock": {
+    "delay": 2.95,
+    "duration": 1.35,
+    "easing": "cubic-bezier(0.65, 0, 0.15, 1)"
+  },
+  "copyReveal": {
+    "delay": 4.1,
+    "duration": 1.15
+  },
+  "metadataReveal": {
+    "delay": 4.55,
+    "duration": 1.0
+  },
+  "scroll": {
+    "progressVariable": "--lift",
+    "background": {
+      "blurPx": [
+        0,
+        18
+      ],
+      "opacity": [
+        1,
+        0
+      ],
+      "scale": [
+        1,
+        1.06
+      ]
+    },
+    "foreground": {
+      "translateYVh": [
+        0,
+        -62
+      ],
+      "opacity": [
+        1,
+        0
+      ],
+      "blurPx": [
+        0,
+        3
+      ]
+    }
+  }
+}

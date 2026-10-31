@@ -129,33 +129,31 @@ describe("isth editorial page integrity", () => {
     expect(about).toContain('window.scrollTo({ top: 0, left: 0, behavior: "auto" })');
   });
 
-  it("uses the Figma invitation hero with the supplied original signature animation", () => {
-    const landing = readProjectFile("client/src/pages/Landing.tsx");
-    const styles = readProjectFile("client/src/index.css");
+  it("uses the supplied complete landing page with the original SVG handwriting animation", () => {
+    const landing = readProjectFile("client/src/pages/ZipLanding.tsx");
+    const styles = readProjectFile("client/src/zip-landing.css");
 
-    expect(landing).toContain('className="figma-landing"');
-    expect(landing).toContain('src="/assets/10-68.webp"');
-    expect(landing).toContain('data-layer="isth — The invitation"');
-    expect(landing).toContain("figma-lottie-gateway");
-    expect(landing).toContain("/assets/Landinggateway-signature.json");
-    expect(landing).not.toContain("signatureTimer");
-    expect(landing).not.toContain("landing-flower-search");
-    expect(styles).toContain(".figma-landing {");
-    expect(styles).toContain(".figma-lottie-gateway > svg");
-    expect(styles).toContain(".about-feature-mark p { margin:0; color:#5B0D18;");
-    expect(styles).toContain("text-shadow:none;");
+    expect(landing).toContain('className="zip-landing"');
+    expect(landing).toContain('className="hero-photo-image"');
+    expect(landing).toContain("IsthSignature");
+    expect(landing).toContain("signature-outline");
+    expect(landing).toContain("href=\"/home\"");
+    expect(landing).not.toContain("lottie");
+    expect(styles).toContain(".zip-landing .hero");
+    expect(styles).toContain("zip-trace-signature");
+    expect(styles).toContain("zip-mark-dock");
+    expect(styles).toContain("background-image: url('/assets/hibiscus.jpg')");
   });
 
   it("keeps the Figma collection CTA semantic, local, and routeable", () => {
-    const landing = readProjectFile("client/src/pages/Landing.tsx");
-    const styles = readProjectFile("client/src/index.css");
+    const landing = readProjectFile("client/src/pages/ZipLanding.tsx");
+    const styles = readProjectFile("client/src/zip-landing.css");
 
-    expect(landing).toContain('type="button"');
-    expect(landing).toContain('aria-label="Explore the collection"');
-    expect(landing).toContain('onClick={openCollection}');
-    expect(landing).toContain('setLocation("/home")');
+    expect(landing).toContain('className="primary-cta"');
+    expect(landing).toContain('href="/home"');
+    expect(landing).toContain("Explore the collection");
     expect(landing).not.toContain("placehold.com");
-    expect(styles).toContain(".figma-landing__cta {");
+    expect(styles).toContain(".zip-landing .primary-cta {");
     expect(readProjectFile("client/public/isth-boot.css")).toContain("background: #080808;");
     expect(readProjectFile("client/index.html")).toContain('<script src="/isth-route-bootstrap.js"></script>');
   });
@@ -294,7 +292,7 @@ describe("isth editorial page integrity", () => {
   it("keeps the preview-only whole-site editorial enhancements across public routes and mobile navigation", () => {
     const home = readProjectFile("client/src/pages/Home.tsx");
     const about = readProjectFile("client/src/pages/About.tsx");
-    const landing = readProjectFile("client/src/pages/Landing.tsx");
+    const landing = readProjectFile("client/src/pages/ZipLanding.tsx");
     const product = readProjectFile("client/src/components/ProductBottle.tsx");
     const productDetail = readProjectFile("client/src/pages/ProductDetail.tsx");
     const fragranceGuide = readProjectFile("client/src/pages/ChoosingAFragrance.tsx");
@@ -327,7 +325,7 @@ describe("isth editorial page integrity", () => {
     expect(navbarHook).toContain('const DIRECTION_THRESHOLD = 12;');
     expect(navbarHook).toContain('setNavFolded(nextDirection > 0);');
     expect(navbarHook).toContain('prefers-reduced-motion: reduce');
-    expect(landing).toContain('className="figma-landing"');
+    expect(landing).toContain('className="zip-landing"');
     expect(styles).toContain(".editorial-home .desktop-nav a::after");
     expect(styles).not.toContain(".editorial-home .collection-editorial-photo::after");
     expect(styles).not.toContain(".editorial-home .quote-video-section::before");
@@ -339,7 +337,7 @@ describe("isth editorial page integrity", () => {
     expect(styles).not.toContain(".editorial-home .story-copy::after");
     expect(styles).not.toContain(".editorial-home .contact-section::before");
     expect(styles).not.toContain(".about-editorial .about-quote-card::before");
-    expect(styles).toContain(".figma-landing__statement h1");
+    expect(readProjectFile("client/src/zip-landing.css")).toContain(".zip-landing .hero-copy h1");
     expect(styles).toContain(".site-nav.is-folded { transform:translate3d(0,calc(-100% - 10px),0) scaleY(.96);");
     expect(styles).toContain("transform .92s cubic-bezier(.16,1,.3,1)");
     expect(styles).toContain(".site-nav .site-brand,.site-nav.is-scrolled .site-brand { padding-inline:0; }");

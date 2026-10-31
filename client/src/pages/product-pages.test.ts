@@ -78,8 +78,8 @@ describe("indexable product pages", () => {
   });
 
   it("keeps the landing tagline unchanged while making it the visible semantic H1", () => {
-    const landing = readProjectFile("client/src/pages/Landing.tsx");
-    expect(landing).toContain('data-layer="Emotional statement"');
+    const landing = readProjectFile("client/src/pages/ZipLanding.tsx");
+    expect(landing).toContain("className=\"hero-copy\"");
     expect(landing).toContain("Embrace the fragrance.");
     expect(landing).toContain("Become isth.");
   });
