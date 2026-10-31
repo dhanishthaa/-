@@ -22,7 +22,7 @@ gsap.registerPlugin(ScrollTrigger);
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { scrolled, navFolded } = useAutoHideNavbar(menuOpen, 20);
-  const [heroNavDark, setHeroNavDark] = useState(true);
+  const [navLight, setNavLight] = useState(true);
   const [products, setProducts] = useState<Product[]>(defaultProducts);
   const [heroCarousel, setHeroCarousel] = useState<HeroCarouselSettings>(DEFAULT_HERO_CAROUSEL);
   const [heroIndex, setHeroIndex] = useState(0);
@@ -42,13 +42,28 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    const hero = document.querySelector<HTMLElement>(".home-hero");
-    if (!hero) return;
-    const observer = new IntersectionObserver(([entry]) => {
-      setHeroNavDark(entry.isIntersecting && entry.intersectionRatio > 0.3);
-    }, { threshold: [0, 0.3, 0.6, 1] });
-    observer.observe(hero);
-    return () => observer.disconnect();
+    let frame = 0;
+    const updateNavbarTone = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const nav = document.querySelector<HTMLElement>(".site-nav");
+        const navHeight = nav?.getBoundingClientRect().height ?? 64;
+        const probeY = Math.min(window.innerHeight - 1, navHeight + 8);
+        const currentSection = Array.from(document.querySelectorAll<HTMLElement>("main > section, .site-footer")).find((section) => {
+          const rect = section.getBoundingClientRect();
+          return rect.top <= probeY && rect.bottom > probeY;
+        });
+        setNavLight(Boolean(currentSection?.classList.contains("home-hero") || currentSection?.classList.contains("site-footer")));
+      });
+    };
+    updateNavbarTone();
+    window.addEventListener("scroll", updateNavbarTone, { passive: true });
+    window.addEventListener("resize", updateNavbarTone);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", updateNavbarTone);
+      window.removeEventListener("resize", updateNavbarTone);
+    };
   }, []);
 
   const advanceHero = (direction: 1 | -1) => {
@@ -131,7 +146,7 @@ export default function Home() {
   };
 
   return <div ref={editorialRootRef} className="site-shell editorial-home">
-    <header className={`site-nav ${scrolled ? "is-scrolled" : ""} ${heroNavDark ? "is-hero-dark" : "is-section-nav"} ${navFolded ? "is-folded" : ""}`}>
+    <header className={`site-nav ${scrolled ? "is-scrolled" : ""} ${navLight ? "is-light-nav" : "is-dark-nav"} ${navFolded ? "is-folded" : ""}`}>
       <Link href="/home" className="site-brand"><img className="brand-logo brand-logo-dark" src={readLogoUrl()} alt="isth" /></Link>
       <nav className="desktop-nav" aria-label="Main navigation"><Link href="/about">Our Story</Link><a href="#collection">Fragrances</a><a href="#atelier">Atelier</a><a href="#contact">Contact</a></nav>
       <div className="site-actions"><button className="menu-toggle" onClick={() => setMenuOpen((open) => !open)} aria-label={menuOpen ? "Close navigation" : "Open navigation"}>{menuOpen ? <X size={19} /> : <Menu size={19} />}</button></div>

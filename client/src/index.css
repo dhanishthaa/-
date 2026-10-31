@@ -1513,3 +1513,29 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 .editorial-home .site-nav.is-section-nav .site-brand img {
   filter:none !important;
 }
+
+/* Final section-aware tones: hero and footer are white; every middle section is black. */
+.editorial-home .site-nav.is-light-nav {
+  color:var(--ivory) !important;
+  background:transparent !important;
+  background-color:transparent !important;
+  border-bottom-color:rgba(245,241,235,.36) !important;
+  box-shadow:none !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+}
+.editorial-home .site-nav.is-light-nav .site-brand img {
+  filter:invert(1) brightness(1.12) !important;
+}
+.editorial-home .site-nav.is-dark-nav {
+  color:var(--ink) !important;
+  background:transparent !important;
+  background-color:transparent !important;
+  border-bottom-color:rgba(17,17,17,.18) !important;
+  box-shadow:none !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+}
+.editorial-home .site-nav.is-dark-nav .site-brand img {
+  filter:none !important;
+}
