@@ -129,38 +129,31 @@ describe("isth editorial page integrity", () => {
     expect(about).toContain('window.scrollTo({ top: 0, left: 0, behavior: "auto" })');
   });
 
-  it("keeps the mobile landing sequence on the desktop timing and clears its boot chrome", () => {
+  it("uses the static Figma invitation hero without the retired red intro sequence", () => {
     const landing = readProjectFile("client/src/pages/Landing.tsx");
     const styles = readProjectFile("client/src/index.css");
 
-    expect(landing).toContain("signatureTimer = window.setTimeout");
-    expect(landing).toContain("}, 2420);");
-    expect(landing).not.toContain("isPhone ? 4600 : 2420");
-    expect(landing).toContain('setLandingChrome(false)');
-    expect(landing).toContain('setBrowserThemeColor(active ? LANDING_EDGE : SITE_IVORY)');
-    expect(styles).toContain(".ss1-landing.signature-complete .landing-curtain-surface { background:transparent; }");
+    expect(landing).toContain('className="figma-landing"');
+    expect(landing).toContain('src="/assets/10-68.webp"');
+    expect(landing).toContain('data-layer="isth — The invitation"');
+    expect(landing).not.toContain("signatureTimer");
+    expect(landing).not.toContain("landing-flower-search");
+    expect(styles).toContain(".figma-landing {");
     expect(styles).toContain(".about-feature-mark p { margin:0; color:#5B0D18;");
     expect(styles).toContain("text-shadow:none;");
   });
 
-  it("keeps the landing handoff locked to a full-viewport curtain on touch devices", () => {
+  it("keeps the Figma collection CTA semantic, local, and routeable", () => {
     const landing = readProjectFile("client/src/pages/Landing.tsx");
     const styles = readProjectFile("client/src/index.css");
 
-    expect(landing).toContain("const CURTAIN_HANDOFF_MS = 1120;");
-    expect(landing).toContain("const CURTAIN_SCROLL_TRIGGER_PX = 16;");
-    expect(landing).toContain("const CURTAIN_FOLD_DISTANCE_PX = 230;");
-    expect(landing).toContain("const signatureCompleteRef = useRef(false);");
-    expect(landing).toContain("const progress = Math.min(1, Math.max(0, (window.scrollY - CURTAIN_SCROLL_TRIGGER_PX) / CURTAIN_FOLD_DISTANCE_PX));");
-    expect(landing).toContain("setLandingFoldProgress(curtainRef.current, progress);");
-    expect(landing).toContain("window.scrollTo({ top: 0, left: 0, behavior: \"auto\" });");
-    expect(landing).toContain("handoffTimer.current = window.setTimeout(() => setLocation(\"/home\"), CURTAIN_HANDOFF_MS);");
-    expect(styles).toContain(".ss1-landing .landing-stage { position:fixed; inset:0; z-index:40; width:100%; height:100svh; min-height:0; overflow:hidden; }");
-    expect(styles).toContain("transition:transform .68s cubic-bezier(.16,1,.3,1)");
-    expect(styles).toContain("--fold-translate");
-    expect(styles).toContain("transition:transform .68s cubic-bezier(.16,1,.3,1)");
-    expect(styles).toContain("overscroll-behavior-y:none");
-    expect(readProjectFile("client/public/isth-boot.css")).toContain("overflow: hidden;");
+    expect(landing).toContain('type="button"');
+    expect(landing).toContain('onClick={openCollection}');
+    expect(landing).toContain('setLocation("/home")');
+    expect(landing).toContain('src="/assets/10-91.svg"');
+    expect(landing).not.toContain("placehold.com");
+    expect(styles).toContain(".figma-landing__cta {");
+    expect(readProjectFile("client/public/isth-boot.css")).toContain("background: #080808;");
     expect(readProjectFile("client/index.html")).toContain('<script src="/isth-route-bootstrap.js"></script>');
   });
 
@@ -331,7 +324,7 @@ describe("isth editorial page integrity", () => {
     expect(navbarHook).toContain('const DIRECTION_THRESHOLD = 12;');
     expect(navbarHook).toContain('setNavFolded(nextDirection > 0);');
     expect(navbarHook).toContain('prefers-reduced-motion: reduce');
-    expect(landing).toContain('className={`landing-page ss1-landing');
+    expect(landing).toContain('className="figma-landing"');
     expect(styles).toContain(".editorial-home .desktop-nav a::after");
     expect(styles).not.toContain(".editorial-home .collection-editorial-photo::after");
     expect(styles).not.toContain(".editorial-home .quote-video-section::before");
@@ -343,7 +336,7 @@ describe("isth editorial page integrity", () => {
     expect(styles).not.toContain(".editorial-home .story-copy::after");
     expect(styles).not.toContain(".editorial-home .contact-section::before");
     expect(styles).not.toContain(".about-editorial .about-quote-card::before");
-    expect(styles).toContain(".ss1-landing.signature-complete { background:linear-gradient");
+    expect(styles).toContain(".figma-landing__statement h1");
     expect(styles).toContain(".site-nav.is-folded { transform:translate3d(0,calc(-100% - 10px),0) scaleY(.96);");
     expect(styles).toContain("transform .92s cubic-bezier(.16,1,.3,1)");
     expect(styles).toContain(".site-nav .site-brand,.site-nav.is-scrolled .site-brand { padding-inline:0; }");

@@ -27,7 +27,8 @@ describe("static-host security policy", () => {
     expect(indexDocument).toContain('src="/isth-route-bootstrap.js"');
     expect(indexDocument).not.toMatch(/<script>\s*\(function/);
     expect(routeBootstrap).toContain("window.history.replaceState");
-    expect(routeBootstrap).toContain("isth-landing-boot");
+    expect(routeBootstrap).not.toContain("isth-landing-boot");
+    expect(indexDocument).toContain('<meta name="theme-color" content="#080808" />');
   });
 
   it("uses the centralized build-time SEO title system", () => {
