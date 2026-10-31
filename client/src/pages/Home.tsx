@@ -166,6 +166,9 @@ export default function Home() {
 
       <section id="collection" className="collection-section"><div className="section-heading"><Reveal><h2 dangerouslySetInnerHTML={{ __html: content("home-collection-heading", "Find your<br><em>signature.</em>") }} /></Reveal><Reveal delay={80}><p dangerouslySetInnerHTML={{ __html: content("home-collection-copy", "Each isth composition is made to be worn close. Browse by feeling, not by family.") }} /></Reveal></div>
         <Reveal className="collection-editorial-photo" delay={100}><div aria-hidden="true" /></Reveal>
+        <section className="alter-ego-strip" aria-label="Find your alter ego">
+          <p><span>Find your</span> <em>alter ego.</em></p>
+        </section>
         <div className="featured-grid">{featured.map((product, index) => <Reveal key={product.id} delay={index * 80}><ProductBottle product={product} onOpen={openProduct} /></Reveal>)}<Reveal delay={150} className="collection-note"><div className="note-card"><h3>Not a perfume<br /><em>for everyone.</em></h3><p>It is a signature for the person who found it.</p><a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`} target="_blank">Ask the house <MoveUpRight size={14} /></a></div></Reveal></div>
         <div className="catalog-heading"><div><p className="eyebrow catalog-label">THE COLLECTION</p></div></div>
         <div className="catalog-grid">{more.map((product, index) => <Reveal key={product.id} delay={(index % 3) * 60}><ProductBottle product={product} compact onOpen={openProduct} /></Reveal>)}</div>
@@ -203,10 +206,6 @@ export default function Home() {
             <h3>The intimacy of a signature scent</h3>
           </article>
         </div>
-      </section>
-
-      <section className="alter-ego-strip" aria-label="Find your alter ego">
-        <p><span>Find your</span> <em>alter ego.</em></p>
       </section>
 
       <section className="quote-video-section editorial-motion-panel"><div className="quote-video-backdrop" aria-hidden="true" /><div className="quote-video-copy"><h2 className="master-content-quote" dangerouslySetInnerHTML={{ __html: content("home-quote", "Life is not just about,<br>living &amp; surviving.<br>It's about feeling it,<br>enjoying it, &amp; making memories.") }} /><a className="cherry-button" href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`} target="_blank" rel="noreferrer"><MessageCircle size={17} /> Queries</a></div></section>
