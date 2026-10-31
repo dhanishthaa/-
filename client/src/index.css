@@ -34,6 +34,8 @@ img { display:block; max-width:100%; }
 .mobile-drawer nav { display:flex; flex-direction:column; gap:24px; font:italic 32px var(--serif); }
 .mobile-drawer > span { color:var(--gold); font:10px var(--mono); letter-spacing:.16em; }
 .home-hero { height:min(100svh,920px); min-height:680px; position:relative; overflow:hidden; background:var(--ink); color:var(--ivory); isolation:isolate; }
+.after-hero-reference { width:100%; overflow:hidden; background:#b4a681; line-height:0; }
+.after-hero-reference img { display:block; width:100%; height:auto; max-width:none; }
 .home-hero-image { position:absolute; inset:0; background:url('/assets/isth-hero-golden-editorial.png') center/cover; filter:saturate(.78) contrast(1.03); z-index:-2; }
 .home-hero-overlay { position:absolute; inset:0; z-index:-1; background:linear-gradient(90deg,rgba(17,17,17,.72),rgba(17,17,17,.19) 56%,rgba(17,17,17,.32)),linear-gradient(0deg,rgba(17,17,17,.78),transparent 40%); }
 .home-hero-content { position:absolute; left:clamp(20px,9vw,140px); bottom:clamp(90px,13vh,160px); max-width:580px; }

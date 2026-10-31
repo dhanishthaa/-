@@ -160,6 +160,10 @@ export default function Home() {
         <div className="hero-reference-footer"><p>Fragrance is the quiet space between<br className="hero-reference-break" /> who you are and who you become.</p><a href="#collection">Discover the collection <ArrowRight size={18} /></a></div>
       </section>
 
+      <section className="after-hero-reference" aria-label="Made for the stories on skin">
+        <img src="/assets/isth-after-hero-story.png" alt="Made for the stories on skin. Fragrance is a private language." loading="eager" />
+      </section>
+
       <section id="collection" className="collection-section"><div className="section-heading"><Reveal><h2 dangerouslySetInnerHTML={{ __html: content("home-collection-heading", "Find your<br><em>signature.</em>") }} /></Reveal><Reveal delay={80}><p dangerouslySetInnerHTML={{ __html: content("home-collection-copy", "Each isth composition is made to be worn close. Browse by feeling, not by family.") }} /></Reveal></div>
         <Reveal className="collection-editorial-photo" delay={100}><div aria-hidden="true" /></Reveal>
         <div className="featured-grid">{featured.map((product, index) => <Reveal key={product.id} delay={index * 80}><ProductBottle product={product} onOpen={openProduct} /></Reveal>)}<Reveal delay={150} className="collection-note"><div className="note-card"><h3>Not a perfume<br /><em>for everyone.</em></h3><p>It is a signature for the person who found it.</p><a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`} target="_blank">Ask the house <MoveUpRight size={14} /></a></div></Reveal></div>
