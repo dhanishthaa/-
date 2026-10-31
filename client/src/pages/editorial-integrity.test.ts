@@ -111,7 +111,7 @@ describe("isth editorial page integrity", () => {
       expect(page).toContain('className="footer-instagram"');
       expect(page).toContain('aria-label="Instagram"');
       expect(page).toContain('/assets/instagram-icon.png');
-      expect(page).toContain("<span>Instagram</span></a>");
+      expect(page).toContain("Instagram</a>");
       expect(page).not.toContain("ISTH on Instagram</a>");
     }
   });

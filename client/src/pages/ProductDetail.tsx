@@ -84,7 +84,7 @@ export default function ProductDetail() {
           <div><Link href="/home/" className="footer-brand"><img className="brand-logo brand-logo-dark" src={readLogoUrl()} alt="ISTH" /></Link><p>estd. 2021</p></div>
           <div className="footer-links">
             <div><span>Explore</span><Link href="/home/#collection">The collection</Link><Link href="/about/">About ISTH</Link><Link href="/guides/choosing-a-fragrance/">Choosing a fragrance</Link></div>
-            <div><span>Direct</span><a href="mailto:isth.support@gmail.com">Email</a><a href={`https://wa.me/${DEFAULT_WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer">WhatsApp</a><a className="footer-instagram" href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" aria-label="Instagram"><img src="/assets/instagram-icon.png" alt="" aria-hidden="true" width={16} height={16} /><span>Instagram</span></a></div>
+            <div><span>Direct</span><a href="mailto:isth.support@gmail.com">Email</a><a href={`https://wa.me/${DEFAULT_WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer">WhatsApp</a><a className="footer-instagram" href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" aria-label="Instagram"><img src="/assets/instagram-icon.png" alt="" aria-hidden="true" width={16} height={16} />Instagram</a></div>
           </div>
         </div>
         <div className="footer-bottom"><span>© 2026 isth Fragrance House</span><span>Gujarat, India / Mon–Sat, 10am–7pm IST</span></div>

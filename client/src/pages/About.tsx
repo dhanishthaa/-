@@ -117,7 +117,7 @@ export default function About() {
               <span>Direct</span>
               <a href="mailto:isth.support@gmail.com">Email</a>
               <a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noreferrer">WhatsApp</a>
-              <a className="footer-instagram" href={INSTAGRAM_URL} target="_blank" rel="noreferrer" aria-label="Instagram"><img src="/assets/instagram-icon.png" alt="" aria-hidden="true" width={16} height={16} /><span>Instagram</span></a>
+              <a className="footer-instagram" href={INSTAGRAM_URL} target="_blank" rel="noreferrer" aria-label="Instagram"><img src="/assets/instagram-icon.png" alt="" aria-hidden="true" width={16} height={16} />Instagram</a>
             </div>
           </div>
         </div>
