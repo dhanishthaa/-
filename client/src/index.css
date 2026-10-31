@@ -1445,3 +1445,17 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
   .mobile-drawer nav { font-size:16px; gap:12px; }
   .mobile-drawer nav a { display:flex; align-items:center; min-height:44px; }
 }
+
+/* Final requested hero alignment and public navbar color pass. */
+.editorial-home .home-hero-reference-content { top:clamp(390px,calc(25vh + 200px),430px) !important; }
+.editorial-home .home-hero-reference-content .hero-tagline { letter-spacing:-.06em !important; }
+.editorial-home .hero-reference-queries { position:absolute; z-index:2; left:clamp(64px,4.7vw,90px); bottom:clamp(74px,10vh,104px); margin-top:0; }
+.editorial-home .site-nav,
+.editorial-home .site-nav.is-scrolled { color:var(--ink) !important; }
+.editorial-home .site-nav .site-brand img,
+.editorial-home .site-nav .desktop-nav a,
+.editorial-home .site-nav .menu-toggle { color:var(--ink) !important; filter:none !important; text-shadow:none !important; }
+@media (max-width:620px) {
+  .editorial-home .home-hero-reference-content { top:232px !important; }
+  .editorial-home .hero-reference-queries { left:20px; bottom:74px; }
+}
