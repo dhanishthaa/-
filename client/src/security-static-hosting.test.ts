@@ -17,7 +17,8 @@ describe("static-host security policy", () => {
     expect(indexDocument).toContain("object-src 'none'");
     expect(indexDocument).toContain("base-uri 'self'");
     expect(indexDocument).toContain("connect-src 'self' https://nhdjqitrvyblhmbpgkax.supabase.co");
-    expect(indexDocument).toContain("style-src 'self' 'unsafe-inline' https://fonts.cdnfonts.com");
+    expect(indexDocument).toContain("style-src 'self' 'unsafe-inline' https://fonts.googleapis.com");
+    expect(indexDocument).toContain("font-src 'self' data: https://fonts.gstatic.com");
     expect(indexDocument).not.toContain("script-src 'self' 'unsafe-inline'");
   });
 
