@@ -1,5 +1,4 @@
 import { useEffect, useState, type FocusEvent } from "react";
-import { ArrowLeft, ArrowRight } from "lucide-react";
 import { DEFAULT_ATELIER, fetchPublicAtelier, sanitizeRichText, type AtelierMedia } from "@/lib/supabase";
 
 const ATELIER_AUTOPLAY_INTERVAL_MS = 5000;
@@ -33,17 +32,10 @@ export default function Atelier() {
     return () => window.clearInterval(timer);
   }, [activeIndex, items.length, paused]);
 
-  const showSlide = (direction: -1 | 1) => {
-    setActiveIndex((current) => (current + direction + items.length) % items.length);
-  };
-
   const resumeAfterFocusLeaves = (event: FocusEvent<HTMLElement>) => {
     const nextTarget = event.relatedTarget;
     if (!(nextTarget instanceof Node) || !event.currentTarget.contains(nextTarget)) setPaused(false);
   };
-
-  const count = String(items.length).padStart(2, "0");
-  const currentNumber = String(activeIndex + 1).padStart(2, "0");
 
   return (
     <section
@@ -85,21 +77,7 @@ export default function Atelier() {
         </div>
         <div className="PhotographCaption">
           <span className="CraftDetail">{activeItem.caption?.trim() || "ATELIER COMPOSITION"}</span>
-          <span className="PhotographIndex">{currentNumber} / {count}</span>
         </div>
-        {items.length > 1 && (
-          <div className="AtelierSlideNavigation" role="group" aria-label="Atelier image navigation">
-            <span className="AtelierSlideCount">{currentNumber}<span aria-hidden="true"> / </span>{count}</span>
-            <div className="AtelierSlideButtons">
-              <button type="button" onClick={() => showSlide(-1)} aria-label="Previous Atelier image">
-                <ArrowLeft size={17} strokeWidth={1.4} aria-hidden="true" />
-              </button>
-              <button type="button" onClick={() => showSlide(1)} aria-label="Next Atelier image">
-                <ArrowRight size={17} strokeWidth={1.4} aria-hidden="true" />
-              </button>
-            </div>
-          </div>
-        )}
       </div>
       <div data-layer="Atelier editorial" data-node-id="3-9" className="AtelierEditorial">
         <div data-layer="Section label" data-node-id="3-10" className="SectionLabel">

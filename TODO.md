@@ -11,4 +11,4 @@
 - [x] Ensure the Atelier image frame has no border.
 - [x] Automatically change Atelier images every few seconds; each image must have its own specific description, and the description beside it must change in sync with the image.
 - [x] Keep the Atelier admin editor able to manage each paired image, caption and description. Reuse the existing Supabase `atelier` setting/RPC and schema support; make no redundant database migration.
-- [x] Keep carousel interaction responsive and usable: include accessible previous/next controls, use the item's responsive image URLs, pause autoplay while a user focuses the Atelier controls, and respect reduced-motion preferences.
+- [x] Keep carousel interaction responsive and usable: remove the slide-number indicators and previous/next arrows, use the item's responsive image URLs, pause autoplay while a user focuses the Atelier section, and respect reduced-motion preferences.
