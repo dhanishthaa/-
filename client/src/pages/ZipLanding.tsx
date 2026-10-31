@@ -10,19 +10,22 @@ const GLYPHS = {
 
 function IsthSignature() {
   return (
-    <svg className="signature-svg" viewBox="0 0 82.38 50.28" aria-label="isth" role="img">
-      <g className="signature-animated">
-        {Object.entries(GLYPHS).map(([name, path]) => (
-          <g className={`signature-letter signature-${name}`} key={name}>
-            <path className="signature-outline" d={path} pathLength="1" />
-            <path className="signature-fill" d={path} />
-          </g>
-        ))}
-      </g>
-      <g className="signature-static" fill="white">
-        {Object.values(GLYPHS).map((path) => <path d={path} key={path} />)}
-      </g>
-    </svg>
+    <>
+      <img className="signature-logo-fallback" src="/assets/zip-landing/isth-logo.svg" alt="isth" />
+      <svg className="signature-svg" viewBox="0 0 82.38 50.28" aria-label="isth" role="img">
+        <g className="signature-animated">
+          {Object.entries(GLYPHS).map(([name, path]) => (
+            <g className={`signature-letter signature-${name}`} key={name}>
+              <path className="signature-outline" d={path} pathLength="1" />
+              <path className="signature-fill" d={path} />
+            </g>
+          ))}
+        </g>
+        <g className="signature-static" fill="white">
+          {Object.values(GLYPHS).map((path) => <path d={path} key={path} />)}
+        </g>
+      </svg>
+    </>
   );
 }
 

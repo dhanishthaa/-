@@ -130,6 +130,19 @@
   background: transparent;
 }
 
+.zip-landing .signature-logo-fallback {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: contain;
+  filter: invert(1);
+  opacity: 0;
+  animation: zip-logo-fallback 0.01ms 3.15s forwards;
+}
+
 .zip-landing .signature-static {
   opacity: 0;
 }
@@ -156,6 +169,11 @@
   fill: #fff;
   opacity: 0;
   animation: zip-fill-signature 0.2s var(--fill-delay) ease-out forwards;
+}
+
+/* Keep the completed supplied wordmark visible after the handwriting pass. */
+.zip-landing .signature-animated {
+  opacity: 1;
 }
 
 .zip-landing .signature-i {
@@ -350,6 +368,10 @@ to {
 to {
     opacity: 1;
   }
+}
+
+@keyframes zip-logo-fallback {
+  to { opacity: 1; }
 }
 
 @media (max-width: 640px) {
