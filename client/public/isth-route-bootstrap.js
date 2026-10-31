@@ -1,4 +1,9 @@
 (function () {
+  // Older deployments added this class for the retired red intro. Remove it
+  // before the current app paints, including when a browser restores cached DOM.
+  document.documentElement.classList.remove("isth-landing-boot");
+  if (document.body) document.body.classList.remove("isth-landing-boot");
+
   var route = new URLSearchParams(window.location.search).get("p");
   var segments = window.location.pathname.split("/").filter(Boolean);
   var appRoutes = ["home", "about", "admin"];
