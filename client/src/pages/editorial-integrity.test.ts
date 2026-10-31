@@ -136,9 +136,11 @@ describe("isth editorial page integrity", () => {
     expect(landing).toContain('className="figma-landing"');
     expect(landing).toContain('src="/assets/10-68.webp"');
     expect(landing).toContain('data-layer="isth — The invitation"');
+    expect(landing).toContain("figma-wordmark--writing");
     expect(landing).not.toContain("signatureTimer");
     expect(landing).not.toContain("landing-flower-search");
     expect(styles).toContain(".figma-landing {");
+    expect(styles).toContain("@keyframes figma-glyph-write");
     expect(styles).toContain(".about-feature-mark p { margin:0; color:#5B0D18;");
     expect(styles).toContain("text-shadow:none;");
   });

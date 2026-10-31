@@ -1592,8 +1592,8 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 }
 
 
-/* Figma opening — isth / The invitation. The former red curtain, handwriting animation,
-   and flower-blur landing are intentionally not mounted on the opening route. */
+/* Figma opening — isth / The invitation. The retired red curtain is gone;
+   the supplied signature glyphs still reveal themselves like handwriting. */
 .figma-landing {
   position: relative;
   isolation: isolate;
@@ -1664,6 +1664,23 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
   display: block;
   max-width: none;
   height: auto;
+  opacity: 0;
+  clip-path: inset(0 100% 0 0);
+}
+
+.figma-wordmark--writing .figma-wordmark__glyph {
+  animation: figma-glyph-write .62s cubic-bezier(.2, .9, .18, 1) both;
+}
+
+.figma-wordmark--writing .figma-wordmark__glyph--i { animation-delay: .08s; }
+.figma-wordmark--writing .figma-wordmark__glyph--s { animation-delay: .46s; }
+.figma-wordmark--writing .figma-wordmark__glyph--t { animation-delay: .94s; }
+.figma-wordmark--writing .figma-wordmark__glyph--h { animation-delay: 1.38s; }
+
+@keyframes figma-glyph-write {
+  0% { opacity: 0; clip-path: inset(0 100% 0 0); transform: translate3d(0, 8px, 0); }
+  35% { opacity: 1; }
+  100% { opacity: 1; clip-path: inset(0 0 0 0); transform: translate3d(0, 0, 0); }
 }
 
 .figma-wordmark__glyph--i {
@@ -1802,6 +1819,13 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .figma-wordmark--writing .figma-wordmark__glyph {
+    animation: none;
+    opacity: 1;
+    clip-path: none;
+    transform: none;
+  }
+
   .figma-landing__cta,
   .figma-landing__cta img {
     transition: none;

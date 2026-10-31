@@ -19,7 +19,7 @@ export default function Landing() {
 
       <div data-layer="Landing gateway" data-node-id="14-4" className="figma-landing__gateway">
         <div data-layer="Immersive invitation" data-node-id="14-10" className="figma-landing__invitation">
-          <div data-layer="isth signature" data-node-id="17-13" className="figma-wordmark" role="img" aria-label="isth">
+          <div data-layer="isth signature" data-node-id="17-13" className="figma-wordmark figma-wordmark--writing" role="img" aria-label="isth">
             <img data-layer="Signature glyph — i" data-node-id="17-16" className="figma-wordmark__glyph figma-wordmark__glyph--i" src="/assets/17-16.svg" alt="" />
             <img data-layer="Signature glyph — s" data-node-id="17-17" className="figma-wordmark__glyph figma-wordmark__glyph--s" src="/assets/17-17.svg" alt="" />
             <img data-layer="Signature glyph — t" data-node-id="17-14" className="figma-wordmark__glyph figma-wordmark__glyph--t" src="/assets/17-14.svg" alt="" />
