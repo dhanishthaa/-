@@ -1,19 +1,48 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { DEFAULT_ATELIER, fetchPublicAtelier, type AtelierMedia } from "@/lib/supabase";
-
-function RichText({ html }: { html: string }) { return <div className="atelier-description" dangerouslySetInnerHTML={{ __html: html }} />; }
-
 export default function Atelier() {
-  const [items, setItems] = useState<AtelierMedia[]>(DEFAULT_ATELIER);
-  const [index, setIndex] = useState(0);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  useEffect(() => { fetchPublicAtelier().then((remote) => { if (remote?.length) setItems(remote); }); }, []);
-  useEffect(() => { if (items.length < 2) return; const timer = window.setInterval(() => setIndex((current) => (current + 1) % items.length), 2500); return () => window.clearInterval(timer); }, [items.length]);
-  const current = items[index % items.length] ?? DEFAULT_ATELIER[0];
-  const upcoming = useMemo(() => [items[(index + 1) % items.length], items[(index + 2) % items.length]].filter(Boolean), [items, index]);
-  useEffect(() => { upcoming.forEach((item) => { const url = window.matchMedia("(max-width: 620px)").matches ? item.smallUrl : item.largeUrl; if (item.kind === "image") { const image = new Image(); image.src = url; } }); }, [upcoming]);
-  useEffect(() => { const video = videoRef.current; if (!video) return; video.pause(); video.currentTime = 0; void video.play().catch(() => undefined); return () => { video.pause(); }; }, [current.id]);
-  return <section id="atelier" className="atelier-section editorial-motion-panel" aria-label="Atelier">
-    <div className="atelier-layout"><div className="atelier-media-stage"><div className="atelier-media-frame">{current.kind === "video" ? <video ref={videoRef} key={current.id} muted playsInline autoPlay loop preload="auto" aria-label="Atelier moving image"><source media="(max-width: 620px)" src={current.smallUrl} /><source src={current.largeUrl} /></video> : <picture key={current.id}><source media="(max-width: 620px)" srcSet={current.smallUrl} /><img src={current.largeUrl} alt="Atelier feature" loading={index === 0 ? "eager" : "lazy"} /></picture>}</div></div><div className="atelier-copy"><h2 className="atelier-title">Atelier</h2><RichText html={current.description} /></div></div>
-  </section>;
+  return (
+    <section
+      id="atelier"
+      data-layer="L’Atelier — The art of perfume"
+      data-node-id="1-2"
+      className="LAtelierTheArtOfPerfume"
+      aria-labelledby="atelier-title"
+    >
+      <div data-layer="Atelier portrait" data-node-id="3-4" className="AtelierPortrait">
+        <img
+          data-layer="The perfumer’s gesture"
+          data-node-id="3-5"
+          className="ThePerfumerSGesture"
+          src="/assets/3-5.webp"
+          alt="A perfumer’s hand composing a fragrance"
+          loading="eager"
+        />
+        <div data-layer="Photograph caption" data-node-id="3-6" className="PhotographCaption">
+          <span data-layer="Craft detail" data-node-id="3-7" className="CraftDetail">A STUDY IN SENSATION</span>
+          <span data-layer="Photograph index" data-node-id="3-8" className="PhotographIndex">GRASSE, FRANCE — 01</span>
+        </div>
+      </div>
+      <div data-layer="Atelier editorial" data-node-id="3-9" className="AtelierEditorial">
+        <div data-layer="Section label" data-node-id="3-10" className="SectionLabel">
+          <div data-layer="Chapter" data-node-id="3-11" className="Chapter">
+            <span data-layer="Chapter rule" data-node-id="3-12" className="ChapterRule" aria-hidden="true" />
+            <span data-layer="Chapter label" data-node-id="3-13" className="ChapterLabel">THE ART OF PERFUME</span>
+          </div>
+          <span data-layer="Chapter number" data-node-id="3-14" className="ChapterNumber">[ 01 ]</span>
+        </div>
+        <h2 id="atelier-title" data-layer="Atelier title" data-node-id="3-15" className="AtelierTitle">L’Atelier</h2>
+        <div data-layer="Editorial story" data-node-id="3-16" className="EditorialStory">
+          <p data-layer="Editorial statement" data-node-id="3-17" className="EditorialStatement">An intimate art.<br />An invisible signature.</p>
+          <p data-layer="Atelier description" data-node-id="3-18" className="AtelierDescription">Before a fragrance touches skin, it begins with a gesture. A rare essence. An unexpected accord. The quiet pursuit of something that has never existed before.</p>
+          <p data-layer="Craft philosophy" data-node-id="3-19" className="CraftPhilosophy">In our atelier, we compose slowly. By hand, by instinct, and always with emotion.</p>
+        </div>
+        <a data-layer="Atelier invitation" data-node-id="3-20" className="AtelierInvitation" href="#contact" aria-label="Enter the atelier">
+          <span data-layer="Discover the atelier" data-node-id="3-21" className="DiscoverTheAtelier">
+            <span data-layer="Invitation label" data-node-id="3-22" className="InvitationLabel">ENTER THE ATELIER</span>
+            <img data-layer="Invitation arrow" data-node-id="3-23" className="InvitationArrow" src="/assets/3-23.svg" alt="" aria-hidden="true" />
+          </span>
+          <span data-layer="Invitation underline" data-node-id="3-24" className="InvitationUnderline" aria-hidden="true" />
+        </a>
+      </div>
+    </section>
+  )
 }

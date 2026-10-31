@@ -32,7 +32,7 @@ export type HeroCarouselSettings = { desktop: HeroSlide[]; mobile: HeroSlide[]; 
 export type AtelierMedia = { id: string; kind: "image" | "video"; largeUrl: string; smallUrl: string; description: string; originalDescription?: string };
 export type WebsiteContentItem = { id: string; page: "Home" | "About" | "Guides" | "Shared"; section: string; label: string; html: string; originalHtml: string; deleted?: boolean };
 
-export const DEFAULT_ATELIER: AtelierMedia[] = [{ id: "nakshatra", kind: "image", largeUrl: "/assets/isth-editorial-nakshatra-galaxy-v2.png", smallUrl: "/assets/isth-editorial-nakshatra-galaxy-v2.png", description: "<span class=\"atelier-nakshatra-script\">NAKSHATRA Collection</span><strong>Coming Soon</strong>" }];
+export const DEFAULT_ATELIER: AtelierMedia[] = [{ id: "figma-atelier", kind: "image", largeUrl: "/assets/3-5.webp", smallUrl: "/assets/3-5.webp", description: "A STUDY IN SENSATION" }];
 
 export const DEFAULT_WEBSITE_CONTENT: WebsiteContentItem[] = [
   { id: "home-hero-tagline", page: "Home", section: "Hero", label: "Hero heading", html: "Become<br>isth.", originalHtml: "Become<br>isth." },

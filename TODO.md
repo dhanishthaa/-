@@ -1,9 +1,9 @@
 # Implementation outcomes
 
-- [x] Public Nakshatra block is replaced by a responsive Atelier section with equal desktop columns, mobile-safe layout, existing Nakshatra first item, and Coming Soon label.
-- [x] Authenticated admins can upload, preview, replace, reorder, and delete Atelier large-screen/small-screen media and videos with clear status/error feedback.
-- [x] Atelier media, responsive versions, descriptions, order, and deletion state persist through Supabase and remain synchronized on the public site.
-- [x] Atelier autoplay loops every 2–3 seconds, preloads nearby media, and pauses inactive videos.
-- [x] Atelier descriptions have rich formatting controls for selection-level font, color, HEX, spectrum picker, size, and preview.
-- [x] Website Content / Master Editor exposes public Home and About visible text by page and section with search, edit/delete, styling, preview, save, and restore-original behavior.
-- [x] Existing auth/RLS/storage boundaries remain in force; responsive behavior and project checks pass.
+- [x] Remove the current public Atelier section completely, including the Nakshatra image and all “Coming Soon” text, without changing other public sections.
+- [x] Run the supplied `setup-figma.py` workflow to transfer `code.jsx` and the provided Figma assets into the React application.
+- [x] Recreate the supplied 1440×920 white editorial composition with the black-and-white perfumer gesture image and caption on the left.
+- [x] Implement the right-side editorial hierarchy with the original chapter label, `[ 01 ]` marker, `L’Atelier` title, editorial statement, descriptive copy, craft philosophy, and `ENTER THE ATELIER` invitation.
+- [x] Make the invitation a semantic anchor with a clear hover and keyboard-focus state, preserving the supplied arrow asset.
+- [x] Replace the supplied embedded image URLs with local assets at `/assets/3-5.webp` and `/assets/3-23.svg`.
+- [x] Verify the final implementation against `frame.webp` at the desktop reference size and responsive viewport sizes, then resolve any visual or loading differences.
