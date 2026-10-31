@@ -185,6 +185,26 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="memory-editorial" aria-labelledby="memory-editorial-title">
+        <div className="memory-editorial-heading">
+          <p className="eyebrow">NOTES FROM THE HOUSE</p>
+          <h2 id="memory-editorial-title">Scent, memory<br /><em>&amp; the in-between.</em></h2>
+        </div>
+        <p className="memory-editorial-note">Essays on the invisible,<br />written from the world of ISTH</p>
+        <div className="memory-editorial-cards">
+          <article className="memory-editorial-card">
+            <div className="memory-editorial-frame memory-editorial-frame--square"><img src="/assets/isth-hero-golden-editorial.png" alt="Golden perfume bottle resting on soft fabric" loading="lazy" /></div>
+            <p className="memory-editorial-kicker">FIELD NOTES • MEMORY</p>
+            <h3>Why we remember in fragrance</h3>
+          </article>
+          <article className="memory-editorial-card">
+            <div className="memory-editorial-frame memory-editorial-frame--portrait"><img src="/assets/isth-editorial-about.webp" alt="Portrait of a woman experiencing a signature scent" loading="lazy" /></div>
+            <p className="memory-editorial-kicker">RITUALS • SIGNATURE</p>
+            <h3>The intimacy of a signature scent</h3>
+          </article>
+        </div>
+      </section>
+
       <section className="alter-ego-strip" aria-label="Find your alter ego">
         <p><span>Find your</span> <em>alter ego.</em></p>
       </section>
