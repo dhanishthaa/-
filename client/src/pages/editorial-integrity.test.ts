@@ -207,7 +207,7 @@ describe("isth editorial page integrity", () => {
   it("keeps the shared isth Parfums lock-up and mobile quote refinement aligned across pages", () => {
     const styles = readProjectFile("client/src/index.css");
 
-    expect(styles).toContain("--parfums-tracking:clamp(.03em,.35vw,.065em)");
+    expect(styles).toContain("--parfums-tracking:0");
     expect(styles).toContain("letter-spacing:var(--parfums-tracking)");
     expect(styles).toContain(".editorial-home .catalog-heading .catalog-label { gap:0; font-size:clamp(12px,1.1vw,15px);");
     expect(styles).toContain(".editorial-home .quote-video-copy .cherry-button { margin-top:clamp(16px,4vw,28px);");
@@ -299,9 +299,13 @@ describe("isth editorial page integrity", () => {
     expect(styles).toContain(".contact-section .eyebrow::before { content:none; }");
     expect(styles).toContain('font-family:var(--serif)');
     expect(styles).toContain('font-size:128px');
-    expect(styles).toContain('@keyframes contact-lockup-float');
-    expect(styles).toContain('.contact-lockup { animation:none; }');
-    expect(styles).toContain('transform:translateZ(10px)');
+    expect(styles).toContain("font-family:'Gilroy',var(--sans);");
+    expect(styles).toContain('font-weight:700');
+    expect(styles).toContain('.contact-lockup { --parfums-tracking:0;');
+    expect(styles).toContain('.contact-lockup::after { display:none; }');
+    expect(styles).toContain('text-shadow:none; transform:none;');
+    expect(styles).not.toContain('@keyframes contact-lockup-float');
+    expect(styles).not.toContain('transform:translateZ(10px)');
     expect(styles).toContain('.about-editorial .about-lockup');
     expect(styles).toContain('.about-editorial .about-lockup { justify-content:flex-start;');
     expect(styles).toContain('background:linear-gradient(110deg,rgba(91,13,24,.13),rgba(245,241,235,.88) 34%,rgba(181,154,98,.10))');
