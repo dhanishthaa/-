@@ -47,6 +47,8 @@ describe("isth editorial page integrity", () => {
     expect(atelier).toContain("ATELIER_AUTOPLAY_INTERVAL_MS = 5000");
     expect(atelier).toContain("srcSet={activeItem.smallUrl}");
     expect(atelier).toContain("sanitizeRichText(activeItem.description)");
+    expect(atelier).not.toContain("CraftPhilosophy");
+    expect(media).toContain("In our atelier, we compose slowly.");
     expect(atelier).toContain("setActiveIndex((current) => (current + 1) % items.length)");
     expect(styles).toContain(".AtelierMediaStage");
     expect(styles).toContain("border:0 !important");

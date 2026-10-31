@@ -47,7 +47,7 @@ export const DEFAULT_ATELIER: AtelierMedia[] = [
     largeUrl: "/assets/3-5.webp",
     smallUrl: "/assets/3-5.webp",
     caption: "A STUDY IN SENSATION",
-    description: "<strong>An intimate art.<br>An invisible signature.</strong><br><br>Before a fragrance touches skin, it begins with a gesture. A rare essence. An unexpected accord. The quiet pursuit of something that has never existed before.",
+    description: "<strong>An intimate art.<br>An invisible signature.</strong><br><br>Before a fragrance touches skin, it begins with a gesture. A rare essence. An unexpected accord. The quiet pursuit of something that has never existed before.<br><br>In our atelier, we compose slowly. By hand, by instinct, and always with emotion.",
   },
 ];
 

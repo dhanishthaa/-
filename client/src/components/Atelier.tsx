@@ -118,7 +118,6 @@ export default function Atelier() {
             className="AtelierDescription"
             dangerouslySetInnerHTML={{ __html: sanitizeRichText(activeItem.description) }}
           />
-          <p data-layer="Craft philosophy" data-node-id="3-19" className="CraftPhilosophy">In our atelier, we compose slowly. By hand, by instinct, and always with emotion.</p>
         </div>
         <a data-layer="Atelier invitation" data-node-id="3-20" className="AtelierInvitation" href="#contact" aria-label="Enter the atelier">
           <span data-layer="Discover the atelier" data-node-id="3-21" className="DiscoverTheAtelier">
