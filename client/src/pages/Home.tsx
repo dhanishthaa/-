@@ -171,6 +171,20 @@ export default function Home() {
         <div className="catalog-grid">{more.map((product, index) => <Reveal key={product.id} delay={(index % 3) * 60}><ProductBottle product={product} compact onOpen={openProduct} /></Reveal>)}</div>
       </section>
 
+      <section className="imperial-editorial" aria-labelledby="imperial-editorial-title">
+        <div className="imperial-editorial-media">
+          <div className="imperial-editorial-photo imperial-editorial-photo--bottles"><img src="/assets/isth-branded-cylindrical-bottle-still-life.webp" alt="isth Imperial perfume bottles among botanicals" loading="lazy" /></div>
+          <div className="imperial-editorial-photo imperial-editorial-photo--portrait"><img src="/assets/isth-editorial-about.webp" alt="Warm editorial portrait for the Imperial fragrance story" loading="lazy" /></div>
+          <div className="imperial-editorial-photo imperial-editorial-photo--linen"><img src="/assets/isth-ingredients-editorial_4fe9c8a1.png" alt="Perfume ingredients arranged on linen" loading="lazy" /></div>
+        </div>
+        <div className="imperial-editorial-copy">
+          <p className="eyebrow">THE RITUAL</p>
+          <h2 id="imperial-editorial-title">A scent should feel<br /><em>like déjà vu.</em></h2>
+          <p>Apply where your pulse lives. Let the warmth of skin reveal the composition slowly, one memory at a time.</p>
+          <a className="text-link" href="#contact">Meet Imperial <ArrowRight size={16} /></a>
+        </div>
+      </section>
+
       <section className="alter-ego-strip" aria-label="Find your alter ego">
         <p><span>Find your</span> <em>alter ego.</em></p>
       </section>
