@@ -3,7 +3,7 @@ import type { Product } from "@/data/products";
 
 export default function ProductBottleVisual({ product, modal = false }: { product: Product; modal?: boolean }) {
   const imageMedia = product.media?.find((item) => item.kind === "image");
-  const productImage = [imageMedia?.url, product.image].find((url) => Boolean(url && !url.startsWith("/assets/")));
+  const productImage = imageMedia?.url || product.image;
   const [imageSource, setImageSource] = useState(productImage);
   const [failed, setFailed] = useState(false);
 

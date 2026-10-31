@@ -80,7 +80,7 @@ export const defaultProducts: Product[] = [
 ];
 
 export function normalizeProductMedia(product: Product): Product {
-  const fallback = LOCAL_PRODUCT_IMAGE_FALLBACKS[product.id];
   const normalizedMedia = Array.isArray(product.media) ? product.media.filter((item) => item && (item.kind === "image" || item.kind === "video") && typeof item.url === "string" && item.url.length > 0) : [];
-  return { ...product, image: product.image || fallback, media: normalizedMedia };
+  // Keep absent image fields absent so home cards do not inherit a detail-page fallback.
+  return { ...product, media: normalizedMedia };
 }
