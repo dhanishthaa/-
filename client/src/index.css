@@ -1459,3 +1459,30 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
   .editorial-home .home-hero-reference-content { top:232px !important; }
   .editorial-home .hero-reference-queries { left:20px; bottom:74px; }
 }
+
+/* Background-aware navbar: white over the hero, ink on light sections, and the house cherry on interaction. */
+.editorial-home .site-nav:not(.is-scrolled) {
+  color:var(--ivory) !important;
+}
+.editorial-home .site-nav:not(.is-scrolled) .site-brand img {
+  filter:invert(1) brightness(1.12) !important;
+}
+.editorial-home .site-nav.is-scrolled {
+  color:var(--ink) !important;
+  background:rgba(245,241,235,.92) !important;
+  border-bottom-color:rgba(17,17,17,.14) !important;
+  box-shadow:0 10px 28px rgba(17,17,17,.08) !important;
+  backdrop-filter:blur(14px) saturate(110%) !important;
+  -webkit-backdrop-filter:blur(14px) saturate(110%) !important;
+}
+.editorial-home .site-nav.is-scrolled .site-brand img {
+  filter:none !important;
+}
+.editorial-home .site-nav .desktop-nav a:hover,
+.editorial-home .site-nav .desktop-nav a:focus-visible,
+.editorial-home .site-nav .desktop-nav a:active,
+.editorial-home .site-nav .menu-toggle:hover,
+.editorial-home .site-nav .menu-toggle:focus-visible,
+.editorial-home .site-nav .menu-toggle:active {
+  color:var(--cherry) !important;
+}
