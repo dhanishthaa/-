@@ -32,8 +32,27 @@ img { display:block; max-width:100%; }
 .mobile-drawer nav { display:flex; flex-direction:column; gap:24px; font:italic 32px var(--serif); }
 .mobile-drawer > span { color:var(--gold); font:10px var(--mono); letter-spacing:.16em; }
 .home-hero { height:min(100svh,920px); min-height:680px; position:relative; overflow:hidden; background:var(--ink); color:var(--ivory); isolation:isolate; }
-.after-hero-reference { width:100%; overflow:hidden; background:#b4a681; line-height:0; }
-.after-hero-reference img { display:block; width:100%; height:auto; max-width:none; }
+.after-hero-reference { position:relative; display:grid; grid-template-columns:minmax(0,.75fr) minmax(0,1.35fr) minmax(0,.7fr); align-items:stretch; min-height:clamp(660px,51.1vw,760px); padding:0 clamp(40px,7vw,100px); overflow:hidden; background:#afa17d; color:#17171b; }
+.after-hero-story-copy { position:relative; z-index:2; grid-column:2; grid-row:1; max-width:620px; margin-left:clamp(14px,1.7vw,24px); padding-top:4.1%; }
+.after-hero-story-kicker { margin:0; color:rgba(23,23,27,.82); font:500 9px/1.4 var(--mono); letter-spacing:.18em; text-transform:uppercase; }
+.after-hero-story-copy h2 { max-width:660px; margin:clamp(38px,4.3vw,62px) 0 0; font:400 clamp(72px,6.9vw,98px)/.85 var(--serif); letter-spacing:-.06em; }
+.after-hero-story-description { width:min(390px,calc(100% - 90px)); margin:clamp(42px,5.2vw,74px) 0 0 clamp(80px,7vw,100px); color:rgba(23,23,27,.87); font:400 clamp(16px,1.35vw,19px)/1.42 var(--serif); }
+.after-hero-story-link { display:inline-flex; align-items:center; gap:20px; margin:clamp(34px,4vw,54px) 0 0 clamp(80px,7vw,100px); padding:0 0 9px; border:0; border-bottom:1px solid rgba(23,23,27,.42); color:#17171b; font:500 9px/1.2 var(--mono); letter-spacing:.13em; text-transform:uppercase; }
+.after-hero-story-link svg { transition:transform .3s var(--ease); }
+.after-hero-story-link:hover svg { transform:translateX(4px); }
+.after-hero-story-link:focus-visible { outline:1px solid #17171b; outline-offset:5px; }
+.after-hero-story-figure { position:absolute; z-index:1; margin:0; border:0 !important; outline:0 !important; border-radius:0; box-shadow:none !important; }
+.after-hero-story-figure--left { left:7vw; bottom:7.1%; width:min(19.7vw,280px); }
+.after-hero-story-figure--right { top:7%; right:7vw; width:min(21vw,300px); }
+.after-hero-story-frame { width:100%; overflow:hidden; border:0 !important; outline:0 !important; border-radius:0; box-shadow:none !important; background:transparent; }
+.after-hero-story-frame--left { aspect-ratio:280/513; }
+.after-hero-story-frame--right { aspect-ratio:300/416; }
+.after-hero-story-frame img { display:block; width:100%; height:100%; border:0; outline:0; object-fit:cover; object-position:center; }
+.after-hero-story-frame--right img { object-position:48% 48%; }
+.after-hero-story-figure figcaption { margin-top:12px; color:rgba(23,23,27,.76); font:500 8px/1.4 var(--mono); letter-spacing:.12em; text-transform:uppercase; }
+.after-hero-story-side-note { position:absolute; top:31.5%; right:1.9%; margin:0; color:rgba(23,23,27,.76); font:500 7px/1.5 var(--mono); letter-spacing:.17em; text-transform:uppercase; writing-mode:vertical-rl; }
+@media (max-width:1100px) { .after-hero-reference { grid-template-columns:minmax(0,1fr) minmax(0,1fr); align-items:start; min-height:0; gap:38px 26px; padding:clamp(76px,9vw,104px) clamp(24px,6vw,60px) 56px; } .after-hero-story-copy { grid-column:1/-1; grid-row:1; width:min(100%,760px); max-width:760px; margin:0 auto; padding:0; } .after-hero-story-copy h2 { margin-top:32px; font-size:clamp(60px,8.5vw,88px); } .after-hero-story-description { width:min(480px,88%); margin:34px 0 0 12%; font-size:clamp(16px,2vw,19px); } .after-hero-story-link { margin:32px 0 0 12%; } .after-hero-story-figure { position:relative; top:auto; right:auto; bottom:auto; left:auto; width:100%; max-width:380px; } .after-hero-story-figure--left { grid-column:1; grid-row:2; justify-self:start; } .after-hero-story-figure--right { grid-column:2; grid-row:2; justify-self:end; margin-top:36px; } .after-hero-story-side-note { position:static; grid-column:1/-1; grid-row:3; justify-self:end; writing-mode:horizontal-tb; margin:-18px 0 0; } }
+@media (max-width:620px) { .after-hero-reference { gap:28px 12px; padding:72px 20px 44px; } .after-hero-story-copy h2 { margin-top:26px; font-size:clamp(46px,12vw,60px); line-height:.9; letter-spacing:-.055em; } .after-hero-story-description { width:100%; margin:28px 0 0; font-size:16px; line-height:1.45; } .after-hero-story-link { margin:26px 0 0; } .after-hero-story-figure--right { margin-top:24px; } .after-hero-story-figure figcaption { margin-top:9px; font-size:7px; letter-spacing:.08em; } .after-hero-story-side-note { margin:-12px 0 0; font-size:6.5px; letter-spacing:.11em; } }
 .alter-ego-strip { width:100%; overflow:hidden; background:#f6f0e7; color:#171511; line-height:.82; }
 .alter-ego-strip p { width:max-content; min-width:100%; margin:0; padding:clamp(24px,3.1vw,48px) 24px clamp(18px,2.7vw,40px); font:400 clamp(72px,12.2vw,174px)/.82 var(--serif); letter-spacing:-.105em; white-space:nowrap; }
 .alter-ego-strip em { color:#817b6d; font-style:normal; }

@@ -12,3 +12,5 @@
 - [x] Automatically change Atelier images every few seconds; each image must have its own specific description, and the description beside it must change in sync with the image.
 - [x] Keep the Atelier admin editor able to manage each paired image, caption and description. Reuse the existing Supabase `atelier` setting/RPC and schema support; make no redundant database migration.
 - [x] Keep carousel interaction responsive and usable: remove the slide-number indicators and previous/next arrows, use the item's responsive image URLs, pause autoplay while a user focuses the Atelier section, and respect reduced-motion preferences.
+- [x] Replace the flattened `isth-after-hero-story.png` homepage section image with proper responsive HTML/CSS: use the provided headline, eyebrow, body copy, story link and side label as code-driven text; match the reference's local fonts and warm color palette; display separate photographs in borderless frames and preserve the composition responsively.
+- [x] Update each public footer's Instagram link to show the Instagram icon and the label “Instagram” only; remove the words “ISTH on.”

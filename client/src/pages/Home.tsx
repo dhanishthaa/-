@@ -160,8 +160,21 @@ export default function Home() {
         <div className="hero-reference-footer"><p>Fragrance is the quiet space between<br className="hero-reference-break" /> who you are and who you become.</p><a href="#collection">Discover the collection <ArrowRight size={18} /></a></div>
       </section>
 
-      <section className="after-hero-reference" aria-label="Made for the stories on skin">
-        <img src="/assets/isth-after-hero-story.png" alt="Made for the stories on skin. Fragrance is a private language." loading="eager" />
+      <section className="after-hero-reference" aria-labelledby="house-story-title">
+        <div className="after-hero-story-copy">
+          <p className="after-hero-story-kicker">THE HOUSE OF ISTH</p>
+          <h2 id="house-story-title">Made for<br />the<br />stories on skin.</h2>
+          <p className="after-hero-story-description">We create expressive fragrances that move with you — intimate compositions of memory, instinct and unexpected notes. Each scent is less a finishing touch, and more a way of arriving.</p>
+          <Link className="after-hero-story-link" href="/about" aria-label="Read our story">READ OUR STORY <ArrowRight size={18} strokeWidth={1.2} aria-hidden="true" /></Link>
+        </div>
+        <figure className="after-hero-story-figure after-hero-story-figure--left">
+          <div className="after-hero-story-frame after-hero-story-frame--left"><img src="/assets/isth-private-language.webp" alt="Amber perfume bottle resting on soft fabric." loading="lazy" /></div>
+          <figcaption>PERFUME AS A PRIVATE LANGUAGE</figcaption>
+        </figure>
+        <figure className="after-hero-story-figure after-hero-story-figure--right">
+          <div className="after-hero-story-frame after-hero-story-frame--right"><img src="/assets/isth-editorial-about.webp" alt="A hand beside a perfume bottle on soft cream linen with botanicals." loading="lazy" /></div>
+        </figure>
+        <p className="after-hero-story-side-note">CRAFTED TO LINGER · DESIGNED TO BE REMEMBERED</p>
       </section>
 
       <section id="collection" className="collection-section"><div className="section-heading"><Reveal><h2 dangerouslySetInnerHTML={{ __html: content("home-collection-heading", "Find your<br><em>signature.</em>") }} /></Reveal><Reveal delay={80}><p dangerouslySetInnerHTML={{ __html: content("home-collection-copy", "Each isth composition is made to be worn close. Browse by feeling, not by family.") }} /></Reveal></div>
@@ -232,6 +245,6 @@ export default function Home() {
         </div>
       </DialogContent>}
     </Dialog>
-    <footer className="site-footer"><div className="footer-top"><div><a href="/home" className="footer-brand"><img className="brand-logo brand-logo-dark" src={readLogoUrl()} alt="isth" /></a><p>estd. 2021</p></div><div className="footer-links"><div><span>Explore</span><Link href="/about">About</Link><a href="#collection">The Collection</a><Link href="/guides/choosing-a-fragrance/">Choosing a fragrance</Link><a href="#atelier">Atelier</a></div><div><span>Direct</span><a href="mailto:isth.support@gmail.com">Email</a><a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noreferrer">WhatsApp</a><a className="footer-instagram" href={INSTAGRAM_URL} target="_blank" rel="noreferrer" aria-label="Follow ISTH on Instagram"><img src="/assets/instagram-icon.png" alt="" aria-hidden="true" width={16} height={16} />ISTH on Instagram</a></div></div></div><div className="footer-bottom"><span>© 2026 isth Fragrance House</span><span>Gujarat, India / Mon–Sat, 10am–7pm IST</span><span>Privacy · Terms</span></div></footer>
+    <footer className="site-footer"><div className="footer-top"><div><a href="/home" className="footer-brand"><img className="brand-logo brand-logo-dark" src={readLogoUrl()} alt="isth" /></a><p>estd. 2021</p></div><div className="footer-links"><div><span>Explore</span><Link href="/about">About</Link><a href="#collection">The Collection</a><Link href="/guides/choosing-a-fragrance/">Choosing a fragrance</Link><a href="#atelier">Atelier</a></div><div><span>Direct</span><a href="mailto:isth.support@gmail.com">Email</a><a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noreferrer">WhatsApp</a><a className="footer-instagram" href={INSTAGRAM_URL} target="_blank" rel="noreferrer" aria-label="Instagram"><img src="/assets/instagram-icon.png" alt="" aria-hidden="true" width={16} height={16} /><span>Instagram</span></a></div></div></div><div className="footer-bottom"><span>© 2026 isth Fragrance House</span><span>Gujarat, India / Mon–Sat, 10am–7pm IST</span><span>Privacy · Terms</span></div></footer>
   </div>;
 }

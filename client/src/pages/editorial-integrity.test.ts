@@ -29,6 +29,14 @@ describe("isth editorial page integrity", () => {
     expect(home).not.toContain("A scent can");
     expect(home).not.toContain("change the air.");
     expect(home).not.toContain("isth composes modern signatures from notes that stay close, then open slowly.");
+    expect(home).not.toContain('src="/assets/isth-after-hero-story.png"');
+    expect(home).toContain('className="after-hero-reference"');
+    expect(home).toContain('id="house-story-title">Made for<br />the<br />stories on skin.</h2>');
+    expect(home).toContain('/assets/isth-private-language.webp');
+    expect(home).toContain('/assets/isth-editorial-about.webp" alt="A hand beside a perfume bottle');
+    expect(styles).toContain('.after-hero-reference { position:relative; display:grid;');
+    expect(styles).toContain('background:#afa17d;');
+    expect(styles).toContain('.after-hero-story-frame { width:100%; overflow:hidden; border:0 !important;');
   });
 
   it("moves the screenshot story into paired, border-free Atelier carousel items", () => {
@@ -89,6 +97,23 @@ describe("isth editorial page integrity", () => {
     expect(home).toContain('className="contact-social-button"');
     expect(styles).toContain(".contact-social-button { display:inline-flex");
     expect(styles).toContain("background:transparent");
+  });
+
+  it("uses the Instagram icon and short label across site footers", () => {
+    const pages = [
+      readProjectFile("client/src/pages/Home.tsx"),
+      readProjectFile("client/src/pages/About.tsx"),
+      readProjectFile("client/src/pages/ProductDetail.tsx"),
+      readProjectFile("client/src/pages/ChoosingAFragrance.tsx"),
+    ];
+
+    for (const page of pages) {
+      expect(page).toContain('className="footer-instagram"');
+      expect(page).toContain('aria-label="Instagram"');
+      expect(page).toContain('/assets/instagram-icon.png');
+      expect(page).toContain("<span>Instagram</span></a>");
+      expect(page).not.toContain("ISTH on Instagram</a>");
+    }
   });
 
   it("keeps the standalone About page routeable with its original editorial copy", () => {
