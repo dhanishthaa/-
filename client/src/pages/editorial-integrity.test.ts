@@ -209,6 +209,9 @@ describe("isth editorial page integrity", () => {
     const styles = readProjectFile("client/src/index.css");
 
     expect(products).toContain('"kawaii-marshmallow": "/assets/kawaiimarshmallow.png"');
+    expect(products).toContain('"first-love": "/assets/firstlove.png"');
+    expect(products).toContain('"cashmere-oud": "/assets/cashmereoud.png"');
+    expect(products).toContain('LOCAL_PRODUCT_IMAGE_FALLBACKS[slugifyProductName(product.name ?? "")]');
     expect(products).toContain('product.image.startsWith("/manus-storage/")');
     expect(products).toContain("export function normalizeProductMedia");
     expect(visual).toContain('className={`bottle-stage ${modal ? "bottle-stage-modal" : ""} ${visibleImage ? "has-image" : "is-empty"}`}');

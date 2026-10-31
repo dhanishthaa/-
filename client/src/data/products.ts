@@ -36,13 +36,20 @@ export const PRODUCT_ROUTE_SLUGS_BY_ID: Record<string, string> = {
 
 const LOCAL_PRODUCT_IMAGE_FALLBACKS: Record<string, string> = {
   "eclat-courinne": "/assets/firstlove.png",
+  "first-love": "/assets/firstlove.png",
   "kawaii-marshmallow": "/assets/kawaiimarshmallow.png",
   "lesprit-epice": "/assets/cashmereoud.png",
+  "cashmere-oud": "/assets/cashmereoud.png",
   "17k-pirate": "/assets/orion.png",
+  orion: "/assets/orion.png",
   "sacree-marine": "/assets/theocean.png",
+  "the-ocean": "/assets/theocean.png",
   "nuit-de-velours": "/assets/velvetnight.png",
+  "velvet-night": "/assets/velvetnight.png",
   "enigme-imperial": "/assets/imperial.png",
+  imperial: "/assets/imperial.png",
   "reve-oud": "/assets/northernstar.png",
+  "northern-star": "/assets/northernstar.png",
   "fiery-soul": "/assets/fierysoul.png",
 };
 
@@ -54,12 +61,12 @@ export function getProductRouteSlug(product: Pick<Product, "id" | "name">) {
   return PRODUCT_ROUTE_SLUGS_BY_ID[product.id] ?? slugifyProductName(product.name);
 }
 
-export function getProductImageFallback(product: Pick<Product, "id" | "image">) {
+export function getProductImageFallback(product: Pick<Product, "id" | "image"> & Partial<Pick<Product, "name">>) {
   // The published Sweet Seduction asset URL currently returns 404. Do not emit
   // a broken photo URL or substitute another fragrance's image.
   if (product.id === "sweet-seduction" && product.image === "/assets/sweetseduction.png") return undefined;
   if (product.image && !product.image.startsWith("/manus-storage/")) return product.image;
-  return LOCAL_PRODUCT_IMAGE_FALLBACKS[product.id];
+  return LOCAL_PRODUCT_IMAGE_FALLBACKS[product.id] ?? LOCAL_PRODUCT_IMAGE_FALLBACKS[slugifyProductName(product.name ?? "")];
 }
 
 export function findProductByRouteSlug(slug: string, products: Product[] = defaultProducts) {
