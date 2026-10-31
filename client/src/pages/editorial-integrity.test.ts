@@ -22,13 +22,36 @@ describe("isth editorial page integrity", () => {
     expect(home).not.toContain("The rest of the library opens in its own time.");
     expect(home).toContain("Not a perfume");
     expect(home).toContain("<Atelier />");
-    expect(home).toContain("Between the");
+    expect(home).not.toContain("Between the");
     expect(home).toContain('content("home-hero-tagline"');
     expect(home).not.toContain('className="nakshatra-section editorial-motion-panel"');
     expect(home).not.toContain("<em>Become isth.</em>");
     expect(home).not.toContain("A scent can");
     expect(home).not.toContain("change the air.");
     expect(home).not.toContain("isth composes modern signatures from notes that stay close, then open slowly.");
+  });
+
+  it("moves the screenshot story into paired, border-free Atelier carousel items", () => {
+    const home = readProjectFile("client/src/pages/Home.tsx");
+    const atelier = readProjectFile("client/src/components/Atelier.tsx");
+    const media = readProjectFile("client/src/lib/supabase.ts");
+    const admin = readProjectFile("client/src/components/AdminAtelier.tsx");
+    const styles = readProjectFile("client/src/atelier-editor.css");
+
+    expect(home).not.toContain('className="story-section editorial-motion-panel"');
+    expect(home).not.toContain("story-note-grid");
+    expect(home).toContain("<Atelier />");
+    expect(media).toContain("/assets/isth-editorial-about.webp");
+    expect(media).toContain("Between the familiar");
+    expect(atelier).toContain("fetchPublicAtelier()");
+    expect(atelier).toContain("ATELIER_AUTOPLAY_INTERVAL_MS = 5000");
+    expect(atelier).toContain("srcSet={activeItem.smallUrl}");
+    expect(atelier).toContain("sanitizeRichText(activeItem.description)");
+    expect(atelier).toContain("setActiveIndex((current) => (current + 1) % items.length)");
+    expect(styles).toContain(".AtelierMediaStage");
+    expect(styles).toContain("border:0 !important");
+    expect(admin).toContain("Photo caption");
+    expect(admin).toContain("RichTextField value={item.description}");
   });
 
   it("recovers once from a stale cached dynamic-import chunk", () => {
@@ -256,7 +279,7 @@ describe("isth editorial page integrity", () => {
     expect(home).toContain('window.matchMedia("(pointer: coarse)")');
     expect(home).toContain('import Atelier from "@/components/Atelier";');
     expect(home).toContain('<Atelier />');
-    expect(home).toContain('className="story-section editorial-motion-panel"');
+    expect(home).not.toContain('className="story-section editorial-motion-panel"');
     expect(home).toContain('className="contact-section editorial-motion-panel"');
     expect(home).toContain('className="contact-lockup" aria-label="isth Parfums"');
     expect(home).toContain('<span>Parfums</span>');

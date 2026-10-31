@@ -29,10 +29,27 @@ type SecureProductPayload = {
 
 export type HeroSlide = { id: string; url: string; focalX: number; focalY: number };
 export type HeroCarouselSettings = { desktop: HeroSlide[]; mobile: HeroSlide[]; interval: number };
-export type AtelierMedia = { id: string; kind: "image" | "video"; largeUrl: string; smallUrl: string; description: string; originalDescription?: string };
+export type AtelierMedia = { id: string; kind: "image" | "video"; largeUrl: string; smallUrl: string; description: string; caption?: string; originalDescription?: string };
 export type WebsiteContentItem = { id: string; page: "Home" | "About" | "Guides" | "Shared"; section: string; label: string; html: string; originalHtml: string; deleted?: boolean };
 
-export const DEFAULT_ATELIER: AtelierMedia[] = [{ id: "figma-atelier", kind: "image", largeUrl: "/assets/3-5.webp", smallUrl: "/assets/3-5.webp", description: "A STUDY IN SENSATION" }];
+export const DEFAULT_ATELIER: AtelierMedia[] = [
+  {
+    id: "between-familiar-unknown",
+    kind: "image",
+    largeUrl: "/assets/isth-editorial-about.webp",
+    smallUrl: "/assets/isth-editorial-about.webp",
+    caption: "SACRÉE MARINE",
+    description: "<strong>Between the familiar<br>&amp; the unknown.</strong><br><br>isth is a lifestyle fragrance house built around the tension between what you recognise and what you cannot quite name. Familiar ingredients, given room to become something else.",
+  },
+  {
+    id: "figma-atelier",
+    kind: "image",
+    largeUrl: "/assets/3-5.webp",
+    smallUrl: "/assets/3-5.webp",
+    caption: "A STUDY IN SENSATION",
+    description: "<strong>An intimate art.<br>An invisible signature.</strong><br><br>Before a fragrance touches skin, it begins with a gesture. A rare essence. An unexpected accord. The quiet pursuit of something that has never existed before.",
+  },
+];
 
 export const DEFAULT_WEBSITE_CONTENT: WebsiteContentItem[] = [
   { id: "home-hero-tagline", page: "Home", section: "Hero", label: "Hero heading", html: "Become<br>isth.", originalHtml: "Become<br>isth." },
@@ -265,7 +282,7 @@ function parseSettingValue(value: unknown) {
 function isSafeAtelierItem(item: unknown): item is AtelierMedia {
   if (!item || typeof item !== "object") return false;
   const value = item as Partial<AtelierMedia>;
-  return typeof value.id === "string" && typeof value.largeUrl === "string" && typeof value.smallUrl === "string" && isSafeMediaUrl(value.largeUrl) && isSafeMediaUrl(value.smallUrl) && (value.kind === "image" || value.kind === "video") && typeof value.description === "string";
+  return typeof value.id === "string" && typeof value.largeUrl === "string" && typeof value.smallUrl === "string" && isSafeMediaUrl(value.largeUrl) && isSafeMediaUrl(value.smallUrl) && (value.kind === "image" || value.kind === "video") && typeof value.description === "string" && (value.caption === undefined || (typeof value.caption === "string" && value.caption.length <= 80));
 }
 
 export async function fetchPublicAtelier() {
