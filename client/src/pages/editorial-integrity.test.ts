@@ -39,6 +39,12 @@ describe("isth editorial page integrity", () => {
     expect(styles).toContain('.after-hero-story-frame { width:100%; overflow:hidden; border:0 !important;');
   });
 
+  it("keeps all website typography upright, including semantic emphasis", () => {
+    const styles = readProjectFile("client/src/index.css");
+    expect(styles).toContain("html body * { font-style:normal !important; }");
+    expect(styles).not.toMatch(/font(?:-style)?\s*:\s*italic\b/i);
+  });
+
   it("removes the three requested labels from the House of ISTH section only", () => {
     const home = readProjectFile("client/src/pages/Home.tsx");
     const section = home.split('<section className="after-hero-reference"')[1]?.split("</section>")[0] ?? "";
