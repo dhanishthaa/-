@@ -38,7 +38,6 @@ export const DEFAULT_ATELIER: AtelierMedia[] = [
     kind: "image",
     largeUrl: "/assets/isth-editorial-about.webp",
     smallUrl: "/assets/isth-editorial-about.webp",
-    caption: "SACRÉE MARINE",
     description: "<strong>Between the familiar<br>&amp; the unknown.</strong><br><br>isth is a lifestyle fragrance house built around the tension between what you recognise and what you cannot quite name. Familiar ingredients, given room to become something else.",
   },
   {

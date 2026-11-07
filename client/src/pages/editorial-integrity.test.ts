@@ -45,6 +45,33 @@ describe("isth editorial page integrity", () => {
     expect(styles).not.toMatch(/font(?:-style)?\s*:\s*italic\b/i);
   });
 
+  it("removes the requested editorial labels, chapter markers, and obsolete caption", () => {
+    const home = readProjectFile("client/src/pages/Home.tsx");
+    const atelier = readProjectFile("client/src/components/Atelier.tsx");
+    const media = readProjectFile("client/src/lib/supabase.ts");
+    const admin = readProjectFile("client/src/components/AdminAtelier.tsx");
+    const styles = readProjectFile("client/src/index.css");
+    const atelierStyles = readProjectFile("client/src/atelier-editor.css");
+
+    expect(home).not.toContain("THE RITUAL");
+    expect(atelier).not.toContain("THE ART OF PERFUME");
+    expect(atelier).not.toContain("[ 01 ]");
+    expect(atelier).not.toContain("ChapterRule");
+    expect(atelier).not.toContain("— The art of perfume");
+    expect(media).not.toContain('caption: "SACRÉE MARINE"');
+    expect(styles).not.toContain('content:"SACRÉE MARINE"');
+    expect(admin).not.toContain("SACRÉE MARINE");
+    expect(atelierStyles).not.toContain("ChapterRule");
+    expect(atelier).toContain("getVisibleCaption(activeItem.caption)");
+  });
+
+  it("slightly enlarges the visible support email", () => {
+    const home = readProjectFile("client/src/pages/Home.tsx");
+    const styles = readProjectFile("client/src/index.css");
+    expect(home).toContain('className="text-link support-email" href="mailto:isth.support@gmail.com"');
+    expect(styles).toContain(".contact-details .support-email { font-size:12px; }");
+  });
+
   it("removes the three requested labels from the House of ISTH section only", () => {
     const home = readProjectFile("client/src/pages/Home.tsx");
     const section = home.split('<section className="after-hero-reference"')[1]?.split("</section>")[0] ?? "";

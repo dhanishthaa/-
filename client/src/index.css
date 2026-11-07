@@ -198,7 +198,6 @@ em,i { font-style:normal; }
 .nakshatra-orbit span:nth-child(3) { width:3px; height:3px; inset:auto 30% 12% auto; background:var(--ivory); border:0; }
 .story-section { display:grid; grid-template-columns:1fr 1fr; min-height:650px; background:#e5ded6; }
 .story-image { min-height:580px; position:relative; overflow:hidden; background:radial-gradient(circle at 51% 42%,rgba(215,228,218,.95) 0 8%,transparent 8.5%),radial-gradient(ellipse at 50% 48%,rgba(121,88,72,.72) 0 13%,transparent 13.5%),radial-gradient(circle at 44% 33%,rgba(245,241,235,.85) 0 2%,transparent 2.5%),linear-gradient(135deg,#c4d0c4 0%,#e2d9cf 44%,#9b7167 100%); filter:saturate(.62) sepia(.1); }
-.story-image::after { content:"SACRÉE MARINE"; position:absolute; left:14%; bottom:12%; color:rgba(17,17,17,.64); font:11px var(--mono); letter-spacing:.2em; }
 .story-copy { align-self:center; padding:70px clamp(30px,8vw,130px) 70px clamp(30px,6vw,100px); }
 .story-copy h2 { font-size:clamp(48px,5vw,82px); }
 .story-copy>p:not(.eyebrow) { max-width:355px; margin:30px 0; }
@@ -216,6 +215,7 @@ em,i { font-style:normal; }
 .contact-details { align-self:end; padding-bottom:12px; display:flex; flex-direction:column; align-items:start; gap:20px; }
 .contact-details>p { margin:0; }
 .contact-details .cherry-button { margin-top:7px; }
+.contact-details .support-email { font-size:12px; }
 .site-footer { padding:72px clamp(20px,4vw,56px) 24px; background:#171815; color:var(--ivory); }
 .footer-top { display:flex; justify-content:space-between; gap:50px; padding-bottom:74px; }
 .footer-brand { color:var(--ivory); font-size:27px; }

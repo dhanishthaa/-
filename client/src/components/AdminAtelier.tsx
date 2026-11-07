@@ -146,7 +146,7 @@ export function AtelierAdmin({ onStatus }: { onStatus: (message: string) => void
                 </div>
                 <label>Large-screen image/video<label className="upload-control"><Upload size={13} /> Replace large<input type="file" accept="image/*,video/mp4,video/webm" onChange={(event) => { void upload(item.id, event.target.files?.[0], "largeUrl"); event.currentTarget.value = ""; }} /></label></label>
                 <label>Small-screen image/video<label className="upload-control"><Upload size={13} /> Replace small<input type="file" accept="image/*,video/mp4,video/webm" onChange={(event) => { void upload(item.id, event.target.files?.[0], "smallUrl"); event.currentTarget.value = ""; }} /></label></label>
-                <label>Photo caption<input maxLength={80} value={item.caption ?? ""} onChange={(event) => update(item.id, { caption: event.target.value })} placeholder="e.g. SACRÉE MARINE" /></label>
+                <label>Photo caption<input maxLength={80} value={item.caption ?? ""} onChange={(event) => update(item.id, { caption: event.target.value })} placeholder="e.g. A STUDY IN SENSATION" /></label>
                 <label>Description</label>
                 <RichTextField value={item.description} onChange={(html) => update(item.id, { description: html })} />
               </div>
