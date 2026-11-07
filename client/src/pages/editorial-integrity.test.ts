@@ -51,6 +51,7 @@ describe("isth editorial page integrity", () => {
     expect(styles).toContain("container-type:inline-size;");
     expect(styles).toContain("font-size:clamp(20px,9.5cqi,112px);");
     expect(styles).toContain("letter-spacing:.02em;");
+    expect(styles).toContain("text-align:left;");
     expect(styles).toContain("background:transparent;");
   });
 
