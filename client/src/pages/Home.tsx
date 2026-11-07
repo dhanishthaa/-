@@ -36,6 +36,15 @@ export default function Home() {
   const editorialRootRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    if (!menuOpen) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [menuOpen]);
+
+  useEffect(() => {
     window.scrollTo(0, 0);
     fetchRemoteProducts().then((remote) => { if (remote?.length) setProducts(remote); });
     fetchWebsiteContent().then((remote) => { if (remote) setWebsiteContent(remote); });
@@ -149,9 +158,9 @@ export default function Home() {
     <header className={`site-nav ${scrolled ? "is-scrolled" : ""} ${navLight ? "is-light-nav" : "is-dark-nav"} ${navFolded ? "is-folded" : ""}`}>
       <Link href="/home" className="site-brand"><img className="brand-logo brand-logo-dark" src={readLogoUrl()} alt="isth" /></Link>
       <nav className="desktop-nav" aria-label="Main navigation"><Link href="/about">Our Story</Link><a href="#collection">Fragrances</a><a href="#atelier">Atelier</a><a href="#contact">Contact</a></nav>
-      <div className="site-actions"><button className="menu-toggle" onClick={() => setMenuOpen((open) => !open)} aria-label={menuOpen ? "Close navigation" : "Open navigation"}>{menuOpen ? <X size={19} /> : <Menu size={19} />}</button></div>
+      <div className="site-actions"><button className="menu-toggle" onClick={() => setMenuOpen((open) => !open)} aria-label={menuOpen ? "Close navigation" : "Open navigation"} aria-expanded={menuOpen} aria-controls="mobile-navigation">{menuOpen ? <X size={19} /> : <Menu size={19} />}</button></div>
     </header>
-    <div className={`mobile-drawer ${menuOpen ? "is-open" : ""}`}><nav><Link href="/about" onClick={() => setMenuOpen(false)}>Our Story</Link><a href="#collection" onClick={() => setMenuOpen(false)}>Fragrances</a><a href="#atelier" onClick={() => setMenuOpen(false)}>Atelier</a><a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a></nav></div>
+    <div id="mobile-navigation" className={`mobile-drawer ${menuOpen ? "is-open" : ""}`} aria-hidden={!menuOpen} inert={!menuOpen}><nav aria-label="Mobile navigation"><Link href="/about" onClick={() => setMenuOpen(false)}>Our Story</Link><a href="#collection" onClick={() => setMenuOpen(false)}>Fragrances</a><a href="#atelier" onClick={() => setMenuOpen(false)}>Atelier</a><a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a></nav></div>
 
     <main>
       <section className="home-hero" onMouseEnter={pauseHeroForPointer} onMouseLeave={resumeHeroForPointer} onTouchStart={(event) => { heroTouchStart.current = event.touches[0]?.clientX ?? null; }} onTouchEnd={(event) => { const start = heroTouchStart.current; heroTouchStart.current = null; const end = event.changedTouches[0]?.clientX ?? start; if (start !== null && end !== null && Math.abs(end - start) > 42) advanceHero(end < start ? 1 : -1); }}>
