@@ -1,4 +1,4 @@
-import { useCallback, type CSSProperties } from "react";
+import { useCallback, useState, type SyntheticEvent, type CSSProperties } from "react";
 
 /*
  * TODO — AI INTEGRATION CONTRACT (keep this prompt with the implementation):
@@ -52,6 +52,7 @@ function SignatureGlyph({ id, className, width, height, path, strokes }: GlyphPr
           y="0"
           width={width}
           height={height}
+          style={{ maskType: "alpha" }}
         >
           {strokes.map((stroke, index) => (
             <path
@@ -163,12 +164,51 @@ function Signature({ staticLogo = false }: { staticLogo?: boolean }) {
 }
 
 export default function App() {
+  const [isReady, setIsReady] = useState(false);
+
   const enterHome = useCallback(() => {
     document.querySelector("#home")?.scrollIntoView({ behavior: "smooth", block: "start" });
   }, []);
 
+  const startExperience = useCallback(() => {
+    const releaseTimeline = () => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => setIsReady(true));
+      });
+    };
+
+    if ("fonts" in document) {
+      void document.fonts.ready.then(releaseTimeline, releaseTimeline);
+      return;
+    }
+
+    releaseTimeline();
+  }, []);
+
+  const handleHeroLoad = useCallback(
+    (event: SyntheticEvent<HTMLImageElement>) => {
+      const image = event.currentTarget;
+      void image.decode().then(startExperience, startExperience);
+    },
+    [startExperience],
+  );
+
   return (
     <>
+      <link
+        rel="preload"
+        href="https://static.figma.com/font/Italiana-Regular_1"
+        as="font"
+        type="font/woff2"
+        crossOrigin="anonymous"
+      />
+      <link
+        rel="preload"
+        href="https://static.figma.com/font/Manrope_wght__1"
+        as="font"
+        type="font/woff2"
+        crossOrigin="anonymous"
+      />
       <style>{`
         @font-face {
           font-family: 'Italiana:Regular';
@@ -228,8 +268,8 @@ export default function App() {
           background-image: url('/assets/landing/91b2f.jpg');
           background-size: cover;
           background-position: center;
-          filter: blur(18px);
-          transform: scale(1.08);
+          opacity: .72;
+          transform: translateZ(0) scale(1.08);
         }
         .scene-image {
           position: absolute;
@@ -238,10 +278,12 @@ export default function App() {
           display: block;
           width: 100%;
           height: 100%;
-          object-fit: contain;
+          object-fit: cover;
           object-position: center;
           pointer-events: none;
           user-select: none;
+          transform: translateZ(0);
+          backface-visibility: hidden;
         }
         .panel::after {
           content: '';
@@ -277,6 +319,7 @@ export default function App() {
           flex: none;
           transform-origin: 50% 50%;
           animation: signature-settle 3.55s cubic-bezier(.76,0,.24,1) both;
+          animation-play-state: paused;
           backface-visibility: hidden;
           will-change: transform;
         }
@@ -286,7 +329,8 @@ export default function App() {
           top: 50%;
           width: 320px;
           height: 195px;
-          transform: translate(-50%, -50%);
+          transform: translate3d(-50%, -50%, 0);
+          backface-visibility: hidden;
         }
         .signature-glyph {
           position: absolute;
@@ -302,16 +346,25 @@ export default function App() {
           stroke-dasharray: 0 1;
           stroke-dashoffset: 0;
           animation: write-stroke var(--stroke-duration) linear var(--stroke-delay) forwards;
-          will-change: stroke-dasharray;
+          animation-play-state: paused;
         }
         .completed-glyph {
           opacity: 0;
           animation: finish-glyph .01s linear 2.78s forwards;
+          animation-play-state: paused;
         }
         .editorial,
         .explore {
           opacity: 0;
           animation: reveal-content .8s cubic-bezier(.22,1,.36,1) 3.16s forwards;
+          animation-play-state: paused;
+        }
+        .landing-page.is-ready .signature-stage,
+        .landing-page.is-ready .ink-stroke,
+        .landing-page.is-ready .completed-glyph,
+        .landing-page.is-ready .editorial,
+        .landing-page.is-ready .explore {
+          animation-play-state: running;
         }
         .editorial {
           display: flex;
@@ -487,7 +540,7 @@ export default function App() {
             height: 152px;
             animation-name: signature-settle-mobile;
           }
-          .signature-art { transform: translate(-50%, -50%) scale(.78); }
+          .signature-art { transform: translate3d(-50%, -50%, 0) scale(.78); }
           .editorial { gap: 18px; }
           .editorial h1 { font-size: clamp(36px, 11.2vw, 46px); letter-spacing: -.5px; }
           .editorial p { font-size: 13px; line-height: 1.65; }
@@ -507,7 +560,7 @@ export default function App() {
             width: 220px;
             height: 134px;
           }
-          .signature-art { transform: translate(-50%, -50%) scale(.6875); }
+          .signature-art { transform: translate3d(-50%, -50%, 0) scale(.6875); }
           .editorial h1 { font-size: clamp(32px, 10.8vw, 39px); }
           .editorial p { font-size: 12px; }
           .explore { height: 54px; padding-inline: 21px; }
@@ -520,7 +573,7 @@ export default function App() {
             width: 210px;
             height: 128px;
           }
-          .signature-art { transform: translate(-50%, -50%) scale(.65625); }
+          .signature-art { transform: translate3d(-50%, -50%, 0) scale(.65625); }
           .editorial { gap: 12px; }
           .editorial h1 { font-size: clamp(29px, 8.8vw, 36px); }
           .editorial p { line-height: 1.5; }
@@ -548,7 +601,7 @@ export default function App() {
         }
       `}</style>
 
-      <main className="landing-page">
+      <main className={`landing-page${isReady ? " is-ready" : ""}`}>
         <section className="panel gateway" aria-label="ISTH invitation">
           <img
             className="scene-image"
@@ -558,6 +611,8 @@ export default function App() {
             height="848"
             decoding="async"
             fetchPriority="high"
+            onLoad={handleHeroLoad}
+            onError={startExperience}
           />
           <div className="invitation">
             <Signature />
