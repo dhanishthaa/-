@@ -39,6 +39,21 @@ describe("isth editorial page integrity", () => {
     expect(styles).toContain('.after-hero-story-frame { width:100%; overflow:hidden; border:0 !important;');
   });
 
+  it("places the alter-ego line beneath THE COLLECTION and fits it to the available width", () => {
+    const home = readProjectFile("client/src/pages/Home.tsx");
+    const styles = readProjectFile("client/src/index.css");
+    const collectionLabel = home.indexOf(">THE COLLECTION</p>");
+    const alterEgoLine = home.indexOf('className="alter-ego-strip"');
+    const catalogGrid = home.indexOf('className="catalog-grid"');
+
+    expect(alterEgoLine).toBeGreaterThan(collectionLabel);
+    expect(alterEgoLine).toBeLessThan(catalogGrid);
+    expect(styles).toContain("container-type:inline-size;");
+    expect(styles).toContain("font-size:clamp(20px,9.5cqi,112px);");
+    expect(styles).toContain("letter-spacing:.02em;");
+    expect(styles).toContain("background:transparent;");
+  });
+
   it("moves the screenshot story into paired, border-free Atelier carousel items", () => {
     const home = readProjectFile("client/src/pages/Home.tsx");
     const atelier = readProjectFile("client/src/components/Atelier.tsx");
