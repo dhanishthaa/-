@@ -167,7 +167,7 @@ export default function App() {
   const [isReady, setIsReady] = useState(false);
 
   const enterHome = useCallback(() => {
-    document.querySelector("#home")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.location.assign("/home");
   }, []);
 
   const startExperience = useCallback(() => {
@@ -648,31 +648,6 @@ export default function App() {
           </div>
         </section>
 
-        <section className="panel home" id="home" aria-labelledby="home-title">
-          <img
-            className="scene-image"
-            src="/assets/landing/91b2f.jpg"
-            alt=""
-            width="1264"
-            height="848"
-            decoding="async"
-            loading="lazy"
-          />
-          <nav className="home-nav" aria-label="ISTH collection">
-            <div className="home-mark">
-              <Signature staticLogo />
-            </div>
-            <span className="home-index">Fragrance collection · 01</span>
-          </nav>
-          <div className="home-copy">
-            <p>The art of becoming</p>
-            <h2 id="home-title">Fragrance as a second skin.</h2>
-            <p className="home-note">
-              Intimate compositions designed to live with you—never entering a room before you do,
-              never leaving before you are ready.
-            </p>
-          </div>
-        </section>
       </main>
     </>
   );
