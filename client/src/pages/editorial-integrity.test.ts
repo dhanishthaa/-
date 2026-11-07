@@ -39,6 +39,18 @@ describe("isth editorial page integrity", () => {
     expect(styles).toContain('.after-hero-story-frame { width:100%; overflow:hidden; border:0 !important;');
   });
 
+  it("removes the three requested labels from the House of ISTH section only", () => {
+    const home = readProjectFile("client/src/pages/Home.tsx");
+    const section = home.split('<section className="after-hero-reference"')[1]?.split("</section>")[0] ?? "";
+
+    expect(section).not.toContain("THE HOUSE OF ISTH");
+    expect(section).not.toContain("PERFUME AS A PRIVATE LANGUAGE");
+    expect(section).not.toContain("CRAFTED TO LINGER · DESIGNED TO BE REMEMBERED");
+    expect(section).toContain('id="house-story-title"');
+    expect(section).toContain('/assets/isth-private-language.webp');
+    expect(section).toContain('/assets/isth-editorial-about.webp');
+  });
+
   it("places the alter-ego line beneath THE COLLECTION and fits it to the available width", () => {
     const home = readProjectFile("client/src/pages/Home.tsx");
     const styles = readProjectFile("client/src/index.css");

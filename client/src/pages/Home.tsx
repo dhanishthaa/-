@@ -162,19 +162,16 @@ export default function Home() {
 
       <section className="after-hero-reference" aria-labelledby="house-story-title">
         <div className="after-hero-story-copy">
-          <p className="after-hero-story-kicker">THE HOUSE OF ISTH</p>
           <h2 id="house-story-title">Made for<br />the<br />stories on skin.</h2>
           <p className="after-hero-story-description">We create expressive fragrances that move with you — intimate compositions of memory, instinct and unexpected notes. Each scent is less a finishing touch, and more a way of arriving.</p>
           <Link className="after-hero-story-link" href="/about" aria-label="Read our story">READ OUR STORY <ArrowRight size={18} strokeWidth={1.2} aria-hidden="true" /></Link>
         </div>
         <figure className="after-hero-story-figure after-hero-story-figure--left">
           <div className="after-hero-story-frame after-hero-story-frame--left"><img src="/assets/isth-private-language.webp" alt="Amber perfume bottle resting on soft fabric." loading="lazy" /></div>
-          <figcaption>PERFUME AS A PRIVATE LANGUAGE</figcaption>
         </figure>
         <figure className="after-hero-story-figure after-hero-story-figure--right">
           <div className="after-hero-story-frame after-hero-story-frame--right"><img src="/assets/isth-editorial-about.webp" alt="A hand beside a perfume bottle on soft cream linen with botanicals." loading="lazy" /></div>
         </figure>
-        <p className="after-hero-story-side-note">CRAFTED TO LINGER · DESIGNED TO BE REMEMBERED</p>
       </section>
 
       <section id="collection" className="collection-section"><div className="section-heading"><Reveal><h2 dangerouslySetInnerHTML={{ __html: content("home-collection-heading", "Find your<br><em>signature.</em>") }} /></Reveal><Reveal delay={80}><p dangerouslySetInnerHTML={{ __html: content("home-collection-copy", "Each isth composition is made to be worn close. Browse by feeling, not by family.") }} /></Reveal></div>
