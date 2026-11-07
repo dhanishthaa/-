@@ -14,9 +14,12 @@
   }
 
 .zip-landing {
-    min-width: 320px;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     min-height: 100vh;
-    overflow-x: hidden;
+    min-height: 100svh;
+    min-height: 100dvh;
     background: #050505;
   }
 
@@ -32,6 +35,8 @@
 
 .zip-landing .gateway {
   min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
   background: #050505;
 }
 
@@ -45,6 +50,8 @@
   position: sticky;
   top: 0;
   height: 100vh;
+  height: 100svh;
+  height: 100dvh;
   overflow: hidden;
   background: #050505;
 }
@@ -252,8 +259,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
-  gap: 3.5rem;
-  min-width: 17.5rem;
+  gap: clamp(1rem, 8vw, 3.5rem);
+  min-width: min(17.5rem, 100%);
+  max-width: 100%;
   margin-top: 2.1rem;
   padding: 1.15rem 1.3rem 1.15rem 1.5rem;
   overflow: hidden;
