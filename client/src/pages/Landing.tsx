@@ -1,4 +1,4 @@
-import { useCallback, useState, type SyntheticEvent, type CSSProperties } from "react";
+import { useCallback, useEffect, useRef, useState, type SyntheticEvent, type CSSProperties } from "react";
 
 /*
  * TODO — AI INTEGRATION CONTRACT (keep this prompt with the implementation):
@@ -83,6 +83,7 @@ function SignatureGlyph({ id, className, width, height, path, strokes }: GlyphPr
         </mask>
       </defs>
       <path d={path} fill="white" mask={`url(#write-${id})`} />
+      <path className="glyph-complete-fallback" d={path} fill="white" />
     </svg>
   );
 }
@@ -165,6 +166,7 @@ function Signature({ staticLogo = false }: { staticLogo?: boolean }) {
 
 export default function App() {
   const [isReady, setIsReady] = useState(false);
+  const heroImageRef = useRef<HTMLImageElement>(null);
 
   const enterHome = useCallback(() => {
     window.location.assign("/home");
@@ -188,10 +190,32 @@ export default function App() {
   const handleHeroLoad = useCallback(
     (event: SyntheticEvent<HTMLImageElement>) => {
       const image = event.currentTarget;
+      if (typeof image.decode !== "function") {
+        startExperience();
+        return;
+      }
       void image.decode().then(startExperience, startExperience);
     },
     [startExperience],
   );
+
+  useEffect(() => {
+    const image = heroImageRef.current;
+    if (!image) return;
+
+    const releaseForCachedImage = () => {
+      if (!image.complete) return;
+      if (!image.naturalWidth || typeof image.decode !== "function") {
+        startExperience();
+        return;
+      }
+      void image.decode().then(startExperience, startExperience);
+    };
+
+    releaseForCachedImage();
+    const safetyTimer = window.setTimeout(startExperience, 5000);
+    return () => window.clearTimeout(safetyTimer);
+  }, [startExperience]);
 
   return (
     <>
@@ -353,6 +377,11 @@ export default function App() {
           animation: finish-glyph .01s linear 2.78s forwards;
           animation-play-state: paused;
         }
+        .glyph-complete-fallback {
+          opacity: 0;
+          animation: finish-glyph .01s linear 2.78s forwards;
+          animation-play-state: paused;
+        }
         .editorial,
         .explore {
           opacity: 0;
@@ -362,6 +391,7 @@ export default function App() {
         .landing-page.is-ready .signature-stage,
         .landing-page.is-ready .ink-stroke,
         .landing-page.is-ready .completed-glyph,
+        .landing-page.is-ready .glyph-complete-fallback,
         .landing-page.is-ready .editorial,
         .landing-page.is-ready .explore {
           animation-play-state: running;
@@ -595,6 +625,7 @@ export default function App() {
           .signature-stage { transform: none; }
           .ink-stroke { opacity: 1; stroke-dasharray: 1 1; }
           .completed-glyph,
+          .glyph-complete-fallback,
           .editorial,
           .explore { opacity: 1; transform: none; }
           .explore svg { transition: none; }
@@ -605,6 +636,7 @@ export default function App() {
         <section className="panel gateway" aria-label="ISTH invitation">
           <img
             className="scene-image"
+            ref={heroImageRef}
             src="/assets/landing/91b2f.jpg"
             alt=""
             width="1264"
