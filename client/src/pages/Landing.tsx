@@ -167,12 +167,16 @@ function Signature({ staticLogo = false }: { staticLogo?: boolean }) {
 export default function App() {
   const [isReady, setIsReady] = useState(false);
   const heroImageRef = useRef<HTMLImageElement>(null);
+  const startRequestedRef = useRef(false);
 
   const enterHome = useCallback(() => {
     window.location.assign("/home");
   }, []);
 
   const startExperience = useCallback(() => {
+    if (startRequestedRef.current) return;
+    startRequestedRef.current = true;
+
     const releaseTimeline = () => {
       requestAnimationFrame(() => {
         requestAnimationFrame(() => setIsReady(true));
@@ -180,7 +184,13 @@ export default function App() {
     };
 
     if ("fonts" in document) {
-      void document.fonts.ready.then(releaseTimeline, releaseTimeline);
+      const fontDeadline = new Promise<void>((resolve) => {
+        window.setTimeout(resolve, 1200);
+      });
+      void Promise.race([document.fonts.ready, fontDeadline]).then(
+        releaseTimeline,
+        releaseTimeline,
+      );
       return;
     }
 
@@ -615,19 +625,13 @@ export default function App() {
         }
         @media (prefers-reduced-motion: reduce) {
           html { scroll-behavior: auto; }
-          .signature-stage,
-          .ink-stroke,
-          .completed-glyph,
-          .editorial,
-          .explore {
-            animation: none !important;
-          }
-          .signature-stage { transform: none; }
-          .ink-stroke { opacity: 1; stroke-dasharray: 1 1; }
-          .completed-glyph,
-          .glyph-complete-fallback,
-          .editorial,
-          .explore { opacity: 1; transform: none; }
+          /* The site's global 0.01ms rule must not collapse the requested one-time brand draw. */
+          .landing-page .signature-stage { animation-duration: 3.55s !important; }
+          .landing-page .ink-stroke { animation-duration: var(--stroke-duration) !important; }
+          .landing-page .completed-glyph,
+          .landing-page .glyph-complete-fallback { animation-duration: .01s !important; }
+          .landing-page .editorial,
+          .landing-page .explore { animation-duration: .8s !important; }
           .explore svg { transition: none; }
         }
       `}</style>
