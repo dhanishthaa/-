@@ -31,7 +31,7 @@ export default function ChoosingAFragrance() {
 
         <section className="fragrance-guide-catalog" aria-labelledby="guide-catalog-title">
           <div className="fragrance-guide-catalog-heading"><p className="product-detail-kicker">The current collection</p><h2 id="guide-catalog-title">Compare the published fragrance notes</h2></div>
-          <div className="fragrance-guide-table-wrap"><table><thead><tr><th scope="col">ISTH fragrance</th><th scope="col">Listed notes</th><th scope="col">Published description</th></tr></thead><tbody>{defaultProducts.map((product) => <tr key={product.id}><th scope="row"><Link href={getProductPagePath(product)}>{product.name}<ArrowRight size={14} aria-hidden="true" /></Link></th><td>{product.notes}</td><td>{product.description}</td></tr>)}</tbody></table></div>
+          <div className="fragrance-guide-table-wrap"><table><thead><tr><th scope="col">ISTH fragrance</th><th scope="col">Listed notes</th><th scope="col">Published description</th></tr></thead><tbody>{defaultProducts.map((product) => <tr key={product.id}><th scope="row"><Link href={getProductPagePath(product)}>{product.name}<ArrowRight size={14} aria-hidden="true" /></Link></th><td data-label="Listed notes">{product.notes}</td><td data-label="Published description">{product.description}</td></tr>)}</tbody></table></div>
         </section>
 
         <section className="fragrance-guide-close"><div><h2>Found a composition to explore?</h2><p>Open its detail page for the published notes and description, then contact ISTH on WhatsApp for current ordering details.</p></div><Link className="cherry-button" href="/home/#collection">Browse the collection <ArrowRight size={15} /></Link></section>

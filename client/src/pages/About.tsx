@@ -13,6 +13,15 @@ export default function About() {
   const [websiteContent, setWebsiteContent] = useState<WebsiteContentItem[]>([]);
 
   useEffect(() => {
+    if (!menuOpen) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [menuOpen]);
+
+  useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
     fetchWebsiteContent().then((remote) => { if (remote) setWebsiteContent(remote); });
   }, []);
@@ -32,14 +41,14 @@ export default function About() {
         </nav>
         <div className="site-actions">
           <Link href="/home" className="action-link about-back-link">Back to Home</Link>
-          <button className="menu-toggle" onClick={() => setMenuOpen((open) => !open)} aria-label={menuOpen ? "Close navigation" : "Open navigation"}>
+          <button className="menu-toggle" onClick={() => setMenuOpen((open) => !open)} aria-label={menuOpen ? "Close navigation" : "Open navigation"} aria-expanded={menuOpen} aria-controls="mobile-navigation">
             {menuOpen ? <X size={19} /> : <Menu size={19} />}
           </button>
         </div>
       </header>
 
-      <div className={`mobile-drawer ${menuOpen ? "is-open" : ""}`}>
-        <nav>
+      <div id="mobile-navigation" className={`mobile-drawer ${menuOpen ? "is-open" : ""}`} aria-hidden={!menuOpen} inert={!menuOpen}>
+        <nav aria-label="Mobile navigation">
           <Link href="/about" onClick={() => setMenuOpen(false)}>Our Story</Link>
           <Link href="/home#collection" onClick={() => setMenuOpen(false)}>Fragrances</Link>
           <Link href="/home#atelier" onClick={() => setMenuOpen(false)}>Atelier</Link>
