@@ -3,8 +3,9 @@ import { describe, expect, it } from "vitest";
 import { SEO_PAGES, renderStaticSeoHead } from "./seo/site";
 
 const indexDocument = readFileSync(new URL("../index.html", import.meta.url), "utf8");
+const homeDocument = readFileSync(new URL("../home/index.html", import.meta.url), "utf8");
 const routeDocuments = [
-  readFileSync(new URL("../home/index.html", import.meta.url), "utf8"),
+  homeDocument,
   readFileSync(new URL("../about/index.html", import.meta.url), "utf8"),
 ];
 const routeBootstrap = readFileSync(new URL("../public/isth-route-bootstrap.js", import.meta.url), "utf8");
@@ -13,13 +14,16 @@ describe("static-host security policy", () => {
   it("declares a restrictive Content Security Policy compatible with Supabase and required assets", () => {
     expect(indexDocument).toContain('http-equiv="Content-Security-Policy"');
     expect(indexDocument).toContain("default-src 'self'");
-    expect(indexDocument).toContain("script-src 'self'");
+    expect(indexDocument).toContain("script-src 'self' https://www.instagram.com");
+    expect(indexDocument).toContain("frame-src https://www.instagram.com");
     expect(indexDocument).toContain("object-src 'none'");
     expect(indexDocument).toContain("base-uri 'self'");
     expect(indexDocument).toContain("connect-src 'self' https://nhdjqitrvyblhmbpgkax.supabase.co");
     expect(indexDocument).toContain("style-src 'self' 'unsafe-inline' https://fonts.googleapis.com");
     expect(indexDocument).toContain("font-src 'self' data: https://fonts.gstatic.com");
     expect(indexDocument).not.toContain("script-src 'self' 'unsafe-inline'");
+    expect(homeDocument).toContain("script-src 'self' https://www.instagram.com");
+    expect(homeDocument).toContain("frame-src https://www.instagram.com");
   });
 
   it("keeps the landing route bootstrap and its initial paint styles in same-origin assets", () => {

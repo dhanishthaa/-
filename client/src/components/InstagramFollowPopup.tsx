@@ -2,12 +2,19 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Instagram, MoveUpRight, X } from "lucide-react";
 import { INSTAGRAM_URL } from "@/data/brand";
 
-const SESSION_SEEN_KEY = "isth-instagram-follow-popup-seen-v2";
-const PROFILE_PREVIEW_IMAGE = "/assets/isth-instagram-profile-preview.webp";
+declare global {
+  interface Window {
+    instgrm?: { Embeds?: { process: () => void } };
+  }
+}
+
+const SESSION_SEEN_KEY = "isth-instagram-follow-popup-seen-v3";
+const INSTAGRAM_EMBED_SCRIPT = "https://www.instagram.com/embed.js";
 
 export default function InstagramFollowPopup() {
   const [visible, setVisible] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const [embedFailed, setEmbedFailed] = useState(false);
 
   useEffect(() => {
     try {
@@ -31,6 +38,42 @@ export default function InstagramFollowPopup() {
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [visible]);
+
+  useEffect(() => {
+    if (!visible) return;
+    let cancelled = false;
+    let script = document.querySelector<HTMLScriptElement>(`script[src="${INSTAGRAM_EMBED_SCRIPT}"]`);
+    const markEmbedUnavailable = () => {
+      if (!cancelled) setEmbedFailed(true);
+    };
+    const processEmbeds = () => {
+      if (!cancelled) window.instgrm?.Embeds?.process();
+    };
+    const fallbackTimer = window.setTimeout(() => {
+      if (!document.querySelector(".instagram-follow-popup-live-embed iframe")) {
+        markEmbedUnavailable();
+      }
+    }, 20000);
+
+    if (window.instgrm?.Embeds) {
+      processEmbeds();
+    } else if (script) {
+      script.addEventListener("load", processEmbeds, { once: true });
+      script.addEventListener("error", markEmbedUnavailable, { once: true });
+    } else {
+      script = document.createElement("script");
+      script.src = INSTAGRAM_EMBED_SCRIPT;
+      script.async = true;
+      script.onload = processEmbeds;
+      script.onerror = markEmbedUnavailable;
+      document.body.appendChild(script);
+    }
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(fallbackTimer);
     };
   }, [visible]);
 
@@ -65,7 +108,7 @@ export default function InstagramFollowPopup() {
             </p>
 
             <div className="instagram-follow-popup-profile">
-              <span className="instagram-follow-popup-avatar" aria-hidden="true"><Instagram size={22} strokeWidth={1.35} /></span>
+              <span className="instagram-follow-popup-avatar" aria-hidden="true"><Instagram size={20} strokeWidth={1.35} /></span>
               <div>
                 <strong>@isth.in</strong>
                 <span>ISTH fragrance house</span>
@@ -73,29 +116,33 @@ export default function InstagramFollowPopup() {
             </div>
 
             <a className="instagram-follow-popup-follow" href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" onClick={dismiss}>
-              <Instagram size={17} strokeWidth={1.6} aria-hidden="true" />
+              <Instagram size={16} strokeWidth={1.6} aria-hidden="true" />
               <span>Follow us on Instagram</span>
-              <ArrowRight size={16} strokeWidth={1.5} aria-hidden="true" />
+              <ArrowRight size={15} strokeWidth={1.5} aria-hidden="true" />
             </a>
-            <p className="instagram-follow-popup-signoff">A closer look at the notes, stories &amp; new compositions from the house.</p>
           </section>
 
-          <section className="instagram-follow-popup-preview" aria-label="Instagram profile preview">
+          <section className="instagram-follow-popup-preview" aria-label="Live Instagram profile preview">
             <div className="instagram-follow-popup-preview-bar">
-              <span><Instagram size={16} strokeWidth={1.5} aria-hidden="true" /> Instagram profile preview</span>
+              <span><Instagram size={15} strokeWidth={1.5} aria-hidden="true" /> LIVE FROM INSTAGRAM</span>
               <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" onClick={dismiss} aria-label="Open the live ISTH Instagram profile">
-                Open live profile <MoveUpRight size={13} aria-hidden="true" />
+                Open profile <MoveUpRight size={12} aria-hidden="true" />
               </a>
             </div>
-            <a className="instagram-follow-popup-preview-shot" href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" onClick={dismiss} aria-label="Open the live ISTH Instagram profile">
-              <img
-                src={PROFILE_PREVIEW_IMAGE}
-                alt="Preview of the @isth.in Instagram profile and recent fragrance posts"
-                width="520"
-                height="506"
-                fetchPriority="high"
-              />
-            </a>
+            <div className="instagram-follow-popup-live-frame">
+              <blockquote
+                className="instagram-media instagram-follow-popup-live-embed"
+                data-instgrm-permalink={INSTAGRAM_URL}
+                data-instgrm-version="14"
+              >
+                <div className="instagram-follow-popup-live-fallback">
+                  <Instagram size={24} strokeWidth={1.4} aria-hidden="true" />
+                  <strong>@isth.in</strong>
+                  <span>{embedFailed ? "The live preview is unavailable here. Visit the profile instead." : "Loading the live profile…"}</span>
+                  <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" onClick={dismiss}>View on Instagram</a>
+                </div>
+              </blockquote>
+            </div>
           </section>
         </div>
       </section>

@@ -1834,7 +1834,7 @@ html body * { font-style:normal !important; }
   position:relative;
   display:grid;
   grid-template-rows:auto minmax(0,1fr);
-  width:min(100%,1040px);
+  width:min(100%,820px);
   max-height:calc(100dvh - 2 * clamp(12px,2.5vw,36px));
   overflow-y:auto;
   border:1px solid rgba(17,17,17,.16);
@@ -1847,7 +1847,7 @@ html body * { font-style:normal !important; }
   z-index:5;
   top:0;
   display:flex;
-  min-height:66px;
+  min-height:58px;
   align-items:center;
   justify-content:space-between;
   padding:10px clamp(18px,2.5vw,30px);
@@ -1855,31 +1855,37 @@ html body * { font-style:normal !important; }
   background:rgba(245,241,235,.96);
   backdrop-filter:blur(12px);
 }
-.instagram-follow-popup-brand { display:flex; align-items:center; gap:20px; }
-.instagram-follow-popup-brand img { display:block; width:70px; max-height:38px; object-fit:contain; }
+.instagram-follow-popup-brand { display:flex; align-items:center; gap:14px; }
+.instagram-follow-popup-brand img { display:block; width:60px; max-height:34px; object-fit:contain; }
 .instagram-follow-popup-brand > span { color:#81786f; font:9px/1.4 var(--mono); letter-spacing:.15em; }
-.instagram-follow-popup-close { position:static; display:grid; flex:none; width:42px; height:42px; place-items:center; border:1px solid rgba(17,17,17,.18); background:transparent; color:var(--ink); cursor:pointer; transition:border-color .2s ease,color .2s ease,background .2s ease; }
+.instagram-follow-popup-close { position:static; display:grid; flex:none; width:38px; height:38px; place-items:center; border:1px solid rgba(17,17,17,.18); background:transparent; color:var(--ink); cursor:pointer; transition:border-color .2s ease,color .2s ease,background .2s ease; }
 .instagram-follow-popup-close:hover { border-color:var(--cherry); background:rgba(124,18,43,.06); }
 .instagram-follow-popup-body { display:grid; grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr); min-height:0; }
-.instagram-follow-popup-story { display:flex; min-width:0; flex-direction:column; align-items:flex-start; justify-content:center; padding:clamp(32px,5vw,66px); }
-.instagram-follow-popup-eyebrow { margin:0 0 18px; color:#857a70; font:9px/1.5 var(--mono); letter-spacing:.16em; text-transform:uppercase; }
-.instagram-follow-popup-story h2 { max-width:9ch; margin:0 0 20px; font:400 clamp(42px,5.7vw,72px)/.94 var(--serif); letter-spacing:-.06em; text-wrap:balance; }
+.instagram-follow-popup-story { display:flex; min-width:0; flex-direction:column; align-items:flex-start; justify-content:center; padding:clamp(22px,3vw,36px); }
+.instagram-follow-popup-eyebrow { margin:0 0 12px; color:#857a70; font:8px/1.5 var(--mono); letter-spacing:.16em; text-transform:uppercase; }
+.instagram-follow-popup-story h2 { max-width:10ch; margin:0 0 14px; font:400 clamp(34px,4vw,48px)/.96 var(--serif); letter-spacing:-.055em; text-wrap:balance; }
 .instagram-follow-popup-story h2 em { color:var(--cherry); font-weight:400; }
-.instagram-follow-popup-description { max-width:32ch; margin:0; color:#625c55; font:14px/1.75 var(--sans); }
-.instagram-follow-popup-profile { display:flex; width:100%; align-items:center; gap:13px; margin-top:30px; padding:19px 0; border-top:1px solid rgba(17,17,17,.15); border-bottom:1px solid rgba(17,17,17,.15); }
-.instagram-follow-popup-avatar { display:grid; width:48px; height:48px; flex:none; place-items:center; border:1px solid rgba(17,17,17,.14); border-radius:50%; background:linear-gradient(145deg,#f5e4d0,#efe2d3 45%,#7c122b 46%,#a0393c); color:#fffaf4; }
+.instagram-follow-popup-description { max-width:31ch; margin:0; color:#625c55; font:12px/1.65 var(--sans); }
+.instagram-follow-popup-profile { display:flex; width:100%; align-items:center; gap:11px; margin-top:21px; padding:12px 0; border-top:1px solid rgba(17,17,17,.15); border-bottom:1px solid rgba(17,17,17,.15); }
+.instagram-follow-popup-avatar { display:grid; width:42px; height:42px; flex:none; place-items:center; border:1px solid rgba(17,17,17,.14); border-radius:50%; background:linear-gradient(145deg,#f5e4d0,#efe2d3 45%,#7c122b 46%,#a0393c); color:#fffaf4; }
 .instagram-follow-popup-profile > div { display:grid; gap:5px; min-width:0; }
-.instagram-follow-popup-profile strong { color:var(--ink); font:500 13px/1.2 var(--sans); }
-.instagram-follow-popup-profile > div > span { color:#736c64; font:10px/1.45 var(--sans); }
-.instagram-follow-popup-follow { display:flex; width:100%; min-height:50px; align-items:center; justify-content:space-between; gap:14px; margin-top:24px; padding:0 17px; border:1px solid var(--cherry); background:var(--cherry); color:var(--ivory); font:10px/1.2 var(--mono); letter-spacing:.09em; text-decoration:none; text-transform:uppercase; transition:background .2s ease,color .2s ease,transform .2s ease; }
+.instagram-follow-popup-profile strong { color:var(--ink); font:500 12px/1.2 var(--sans); }
+.instagram-follow-popup-profile > div > span { color:#736c64; font:9px/1.45 var(--sans); }
+.instagram-follow-popup-follow { display:flex; width:100%; min-height:44px; align-items:center; justify-content:space-between; gap:12px; margin-top:17px; padding:0 13px; border:1px solid var(--cherry); background:var(--cherry); color:var(--ivory); font:9px/1.2 var(--mono); letter-spacing:.08em; text-decoration:none; text-transform:uppercase; transition:background .2s ease,color .2s ease,transform .2s ease; }
 .instagram-follow-popup-follow:hover { background:transparent; color:var(--cherry); transform:translateY(-2px); }
 .instagram-follow-popup-follow:focus-visible,.instagram-follow-popup-preview-bar a:focus-visible,.instagram-follow-popup-close:focus-visible { outline:2px solid var(--cherry); outline-offset:4px; }
-.instagram-follow-popup-signoff { max-width:34ch; margin:16px 0 0; color:#847a70; font:10px/1.6 var(--sans); }
-.instagram-follow-popup-preview { display:grid; grid-template-rows:auto minmax(0,1fr); min-width:0; padding:22px; border-left:1px solid rgba(17,17,17,.13); background:#ebe7e1; }
-.instagram-follow-popup-preview-bar { display:flex; min-height:42px; align-items:center; justify-content:space-between; gap:14px; }
-.instagram-follow-popup-preview-bar > span { display:flex; align-items:center; gap:8px; color:#655e57; font:9px/1.3 var(--mono); letter-spacing:.07em; text-transform:uppercase; }
-.instagram-follow-popup-preview-bar a { display:inline-flex; min-height:36px; flex:none; align-items:center; gap:6px; color:var(--cherry); font:9px/1.3 var(--mono); text-decoration:none; text-transform:uppercase; }
+.instagram-follow-popup-signoff { max-width:31ch; margin:11px 0 0; color:#847a70; font:9px/1.55 var(--sans); }
+.instagram-follow-popup-preview { display:grid; grid-template-rows:auto minmax(0,1fr); min-width:0; padding:14px; border-left:1px solid rgba(17,17,17,.13); background:#ebe7e1; }
+.instagram-follow-popup-preview-bar { display:flex; min-height:36px; align-items:center; justify-content:space-between; gap:10px; }
+.instagram-follow-popup-preview-bar > span { display:flex; align-items:center; gap:7px; color:#655e57; font:8px/1.3 var(--mono); letter-spacing:.07em; text-transform:uppercase; }
+.instagram-follow-popup-preview-bar a { display:inline-flex; min-height:32px; flex:none; align-items:center; gap:5px; color:var(--cherry); font:8px/1.3 var(--mono); text-decoration:none; text-transform:uppercase; }
 .instagram-follow-popup-preview-bar a:hover { text-decoration:underline; text-underline-offset:4px; }
+.instagram-follow-popup-live-frame { width:100%; height:clamp(320px,54vh,450px); min-width:0; overflow:auto; border:1px solid rgba(17,17,17,.13); background:#fff; box-shadow:0 6px 22px rgba(17,17,17,.07); }
+.instagram-follow-popup-live-embed { display:block; width:100% !important; max-width:100% !important; min-width:0 !important; margin:0 auto !important; border:0 !important; border-radius:0 !important; box-shadow:none !important; }
+.instagram-follow-popup-live-embed iframe { display:block; width:100% !important; max-width:100% !important; min-width:0 !important; margin:0 auto !important; }
+.instagram-follow-popup-live-fallback { display:grid; min-height:300px; align-content:center; justify-items:center; gap:12px; padding:24px; color:#625c55; font:12px/1.5 var(--sans); text-align:center; }
+.instagram-follow-popup-live-fallback strong { color:var(--ink); font:500 15px/1.2 var(--sans); }
+.instagram-follow-popup-live-fallback a { color:var(--cherry); font:9px/1.4 var(--mono); letter-spacing:.08em; text-decoration:underline; text-underline-offset:4px; text-transform:uppercase; }
 @keyframes instagram-popup-backdrop-in { from { opacity:0; } to { opacity:1; } }
 @keyframes instagram-popup-modal-in { from { opacity:0; transform:translateY(12px) scale(.985); } to { opacity:1; transform:translateY(0) scale(1); } }
 @media (max-width:760px) {
@@ -1924,4 +1930,36 @@ html body * { font-style:normal !important; }
 }
 @media (max-width:360px) {
   .instagram-follow-popup-preview-shot img { max-height:340px; }
+}
+
+
+/* Compact live-feed sizing for shorter viewports and touch screens. */
+@media (max-width:760px) {
+  .instagram-follow-popup-story { padding:24px clamp(19px,6vw,30px) 26px; }
+  .instagram-follow-popup-story h2 { font-size:clamp(32px,9vw,42px); }
+  .instagram-follow-popup-live-frame { height:clamp(260px,44vh,360px); }
+}
+@media (max-width:360px) {
+  .instagram-follow-popup-story { padding-inline:16px; }
+  .instagram-follow-popup-story h2 { font-size:clamp(28px,9vw,34px); }
+  .instagram-follow-popup-live-frame { height:clamp(250px,42vh,320px); }
+}
+@media (max-height:560px) and (min-width:761px) {
+  .instagram-follow-popup-live-frame { height:320px; }
+}
+
+
+@media (max-width:760px) {
+  .instagram-follow-popup { padding:16px; }
+  .instagram-follow-popup-modal { max-height:min(82dvh,720px); }
+  .instagram-follow-popup-live-frame { height:clamp(240px,32vh,280px); }
+  .instagram-follow-popup-story { padding:20px clamp(17px,6vw,26px) 22px; }
+  .instagram-follow-popup-profile { margin-top:15px; padding:10px 0; }
+  .instagram-follow-popup-follow { min-height:42px; margin-top:12px; }
+  .instagram-follow-popup-signoff { display:none; }
+}
+@media (max-width:360px) {
+  .instagram-follow-popup { padding:12px; }
+  .instagram-follow-popup-modal { max-height:min(84dvh,620px); }
+  .instagram-follow-popup-live-frame { height:clamp(220px,38vh,260px); }
 }
