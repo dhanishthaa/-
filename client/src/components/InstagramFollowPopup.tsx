@@ -92,7 +92,6 @@ export default function InstagramFollowPopup() {
         <header className="instagram-follow-popup-header">
           <div className="instagram-follow-popup-brand">
             <img src="/assets/isth-logo-20261026.svg" alt="isth" />
-            <span>FOLLOW OUR JOURNEY</span>
           </div>
           <button ref={closeButtonRef} className="instagram-follow-popup-close" type="button" onClick={dismiss} aria-label="Close Instagram invitation">
             <X size={20} strokeWidth={1.35} aria-hidden="true" />
@@ -101,19 +100,10 @@ export default function InstagramFollowPopup() {
 
         <div className="instagram-follow-popup-body">
           <section className="instagram-follow-popup-story">
-            <p className="instagram-follow-popup-eyebrow">A NOTE FROM THE HOUSE</p>
             <h2 id="instagram-follow-popup-title">Come a little <em>closer.</em></h2>
             <p id="instagram-follow-popup-description" className="instagram-follow-popup-description">
               Fragrance, rituals &amp; moments in between. Find the world of isth in your feed.
             </p>
-
-            <div className="instagram-follow-popup-profile">
-              <span className="instagram-follow-popup-avatar" aria-hidden="true"><Instagram size={20} strokeWidth={1.35} /></span>
-              <div>
-                <strong>@isth.in</strong>
-                <span>ISTH fragrance house</span>
-              </div>
-            </div>
 
             <a className="instagram-follow-popup-follow" href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" onClick={dismiss}>
               <Instagram size={16} strokeWidth={1.6} aria-hidden="true" />
@@ -124,7 +114,6 @@ export default function InstagramFollowPopup() {
 
           <section className="instagram-follow-popup-preview" aria-label="Live Instagram profile preview">
             <div className="instagram-follow-popup-preview-bar">
-              <span><Instagram size={15} strokeWidth={1.5} aria-hidden="true" /> LIVE FROM INSTAGRAM</span>
               <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" onClick={dismiss} aria-label="Open the live ISTH Instagram profile">
                 Open profile <MoveUpRight size={12} aria-hidden="true" />
               </a>
