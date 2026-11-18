@@ -276,11 +276,12 @@ describe("isth editorial page integrity", () => {
     expect(products).toContain('product.image.startsWith("/manus-storage/")');
     expect(products).toContain("export function normalizeProductMedia");
     expect(visual).toContain('className={`bottle-stage ${modal ? "bottle-stage-modal" : ""} ${visibleImage ? "has-image" : "is-empty"}`}');
-    expect(visual).toContain("const fallback = getProductImageFallback(product);");
-    expect(visual).toContain("const productImage = imageMedia?.url || fallback;");
+    expect(visual).toContain("const productImage = getProductImageFallback(product);");
+    expect(visual).toContain('const alternateImage = product.media?.find((item) => item.kind === "image" && item.url !== productImage)?.url;');
     expect(visual).toContain("getProductImageFallback");
     expect(visual).not.toContain("bottle-placeholder");
-    expect(products).toContain("return { ...product, image: product.image || fallback, media: normalizedMedia };");
+    expect(products).toContain("return { ...product, media: normalizedMedia };");
+    expect(products).toContain("export function getProductGalleryMedia(product: Product)");
     expect(visual).toContain("product.media?.find");
     expect(visual).toContain('objectFit: "contain"');
     const card = readProjectFile("client/src/components/ProductBottle.tsx");

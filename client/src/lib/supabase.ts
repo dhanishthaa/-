@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { normalizeProductMedia, type Product, type ProductMedia } from "@/data/products";
+import { MAX_PRODUCT_MEDIA_ITEMS, normalizeProductMedia, type Product, type ProductMedia } from "@/data/products";
 
 const url = import.meta.env.VITE_SUPABASE_URL as string | undefined;
 const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
@@ -12,8 +12,6 @@ const PRODUCT_LIMITS = {
   collection: 40,
   imageUrl: 2048,
 } as const;
-
-const PRODUCT_MEDIA_LIMIT = 12;
 
 type SecureProductPayload = {
   id: string;
@@ -123,7 +121,7 @@ function sanitizeProductMedia(value: unknown): ProductMedia[] {
     if (!item || typeof item !== "object") return false;
     const candidate = item as Partial<ProductMedia>;
     return (candidate.kind === "image" || candidate.kind === "video") && typeof candidate.url === "string" && isSafeMediaUrl(candidate.url);
-  }).slice(0, PRODUCT_MEDIA_LIMIT).map((item, index) => ({
+  }).slice(0, MAX_PRODUCT_MEDIA_ITEMS).map((item, index) => ({
     id: typeof item.id === "string" && item.id ? item.id.slice(0, 96) : `media-${index}`,
     kind: item.kind,
     url: item.url.slice(0, PRODUCT_LIMITS.imageUrl),
