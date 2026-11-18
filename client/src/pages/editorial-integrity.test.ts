@@ -297,8 +297,8 @@ describe("isth editorial page integrity", () => {
     expect(styles).toContain(".editorial-home .product-visual { overflow:hidden; background:transparent !important; border:0 !important;");
     expect(styles).toContain(".product-visual { position:relative; overflow:hidden; aspect-ratio:4/5;");
     expect(styles).toContain(".catalog-grid .product-visual { aspect-ratio:1/1.2;");
-    expect(styles).toContain(".editorial-home .featured-grid .bottle-stage > img,");
-    expect(styles).toContain(".editorial-home .catalog-grid .bottle-stage > img { -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 10%,#000 90%,transparent 100%);");
+    expect(styles).toContain(".editorial-home .featured-grid .product-visual img,");
+    expect(styles).toContain(".editorial-home .catalog-grid .product-visual img { -webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.18) 18%,rgba(0,0,0,.55) 30%,#000 45%,#000 55%,rgba(0,0,0,.55) 70%,rgba(0,0,0,.18) 82%,transparent 100%);");
     expect(styles).not.toContain(".product-gallery-frame img { -webkit-mask-image:");
     expect(styles).not.toContain(".editorial-home .product-visual { aspect-ratio:5/6;");
     expect(styles).toContain(".editorial-home .product-visual .bottle-stage.is-empty { background:transparent !important;");
