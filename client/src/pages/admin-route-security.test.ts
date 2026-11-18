@@ -82,4 +82,19 @@ describe("private Admin route", () => {
     expect(supabase).toContain('supabase.rpc("admin_delete_product", { product_id: id })');
     expect(supabase).toContain('supabase.rpc("admin_set_site_setting"');
   });
+
+  it("shows saved catalog images and provides add, replace, and delete controls for product media", () => {
+    const admin = source("client/src/pages/Admin.tsx");
+    const css = source("client/src/index.css");
+
+    expect(admin).toContain('className="admin-product-thumbnail"');
+    expect(admin).toContain('className="product-primary-image-preview"');
+    expect(admin).toContain('{coverImageUrl ? "Replace cover" : "Add cover image"}');
+    expect(admin).toContain('className="product-media-upload-actions"');
+    expect(admin).toContain('title={`Replace ${item.kind} ${index + 1}`}');
+    expect(admin).toContain('aria-label={`Delete ${item.kind} ${index + 1}`}');
+    expect(admin).toContain("const capacity = MAX_PRODUCT_MEDIA_ITEMS - media.length;");
+    expect(admin).toContain("const referencedAssets = new Set(next.flatMap(getManagedProductAssetUrls))");
+    expect(css).toContain(".product-media-replace input");
+  });
 });

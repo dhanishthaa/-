@@ -1,14 +1,9 @@
 import { useMemo, useRef, useState, type TouchEvent } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { getProductImageFallback, type Product, type ProductMedia } from "@/data/products";
+import { getProductGalleryMedia, type Product, type ProductMedia } from "@/data/products";
 
 export default function ProductGallery({ product }: { product: Product }) {
-  const fallback = getProductImageFallback(product);
-  const items = useMemo<ProductMedia[]>(() => {
-    const saved = product.media?.filter((item) => item.kind === "image" || item.kind === "video") ?? [];
-    if (saved.length) return saved;
-    return fallback ? [{ id: "primary-image", kind: "image", url: fallback, fit: "contain" }] : [];
-  }, [fallback, product.media]);
+  const items = useMemo<ProductMedia[]>(() => getProductGalleryMedia(product), [product.id, product.image, product.media, product.name]);
   const [index, setIndex] = useState(0);
   const [failedImageUrl, setFailedImageUrl] = useState<string | null>(null);
   const touchStart = useRef<number | null>(null);

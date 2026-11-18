@@ -20,6 +20,9 @@ export type ProductMedia = {
   alt?: string;
 };
 
+/** Maximum number of supplementary assets stored in the product gallery. */
+export const MAX_PRODUCT_MEDIA_ITEMS = 12;
+
 /** Legacy database IDs are retained, but public routes use each product's current name. */
 export const PRODUCT_ROUTE_SLUGS_BY_ID: Record<string, string> = {
   "eclat-courinne": "first-love",
@@ -61,11 +64,15 @@ export function getProductRouteSlug(product: Pick<Product, "id" | "name">) {
   return PRODUCT_ROUTE_SLUGS_BY_ID[product.id] ?? slugifyProductName(product.name);
 }
 
-export function getProductImageFallback(product: Pick<Product, "id" | "image"> & Partial<Pick<Product, "name">>) {
+export function getProductImageFallback(product: Pick<Product, "id" | "image"> & Partial<Pick<Product, "name" | "media">>) {
   // The published Sweet Seduction asset URL currently returns 404. Do not emit
   // a broken photo URL or substitute another fragrance's image.
-  if (product.id === "sweet-seduction" && product.image === "/assets/sweetseduction.png") return undefined;
+  if (product.id === "sweet-seduction" && product.image === "/assets/sweetseduction.png") {
+    return product.media?.find((item) => item.kind === "image")?.url;
+  }
   if (product.image && !product.image.startsWith("/manus-storage/")) return product.image;
+  const galleryImage = product.media?.find((item) => item.kind === "image")?.url;
+  if (galleryImage) return galleryImage;
   return LOCAL_PRODUCT_IMAGE_FALLBACKS[product.id] ?? LOCAL_PRODUCT_IMAGE_FALLBACKS[slugifyProductName(product.name ?? "")];
 }
 
@@ -87,7 +94,20 @@ export const defaultProducts: Product[] = [
 ];
 
 export function normalizeProductMedia(product: Product): Product {
-  const fallback = LOCAL_PRODUCT_IMAGE_FALLBACKS[product.id];
   const normalizedMedia = Array.isArray(product.media) ? product.media.filter((item) => item && (item.kind === "image" || item.kind === "video") && typeof item.url === "string" && item.url.length > 0) : [];
-  return { ...product, image: product.image || fallback, media: normalizedMedia };
+  return { ...product, media: normalizedMedia };
+}
+
+/** Keep the primary cover and supplementary gallery in the same visible order. */
+export function getProductGalleryMedia(product: Product): ProductMedia[] {
+  const saved = Array.isArray(product.media)
+    ? product.media.filter((item) => item && (item.kind === "image" || item.kind === "video") && typeof item.url === "string" && item.url.length > 0)
+    : [];
+  const cover = getProductImageFallback(product);
+  if (!cover) return saved;
+
+  const coverIndex = saved.findIndex((item) => item.kind === "image" && item.url === cover);
+  if (coverIndex === 0) return saved;
+  if (coverIndex > 0) return [saved[coverIndex], ...saved.slice(0, coverIndex), ...saved.slice(coverIndex + 1)];
+  return [{ id: `primary-${product.id}`, kind: "image", url: cover, fit: "contain" }, ...saved];
 }
